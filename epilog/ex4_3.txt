@@ -1,0 +1,2 @@
+parent(X,Y) & male(X) ==> ~parent(X,Y) & father(X,Y)
+parent(X,Y) & ~male(X) ==> ~parent(X,Y) & mother(X,Y)
