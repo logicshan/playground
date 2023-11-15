@@ -1,0 +1,8 @@
+module cubical_blog where
+
+data nat = zero
+     	 | suc (n : nat)
+
+add (m : nat) : nat -> nat = split
+  zero -> m
+  suc n -> suc (add m n)

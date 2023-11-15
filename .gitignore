@@ -1,0 +1,23 @@
+#  Ignore everything
+*
+
+# Except tex files
+
+!*.txt
+!.gitignore
+!*.tex
+!*.png
+!*.jpg
+!*.bib
+!*.html
+!*.md
+!*.sty
+!*.pdf
+!*.agda
+!*.lagda
+!*.ctt
+!README
+
+# ... even if they are in subdirectories
+
+!*/
