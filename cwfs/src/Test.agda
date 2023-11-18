@@ -6,6 +6,8 @@ open import Data.Vec hiding ([_] ; lookup)
 open import Data.Vec.Properties hiding (lookup-map ; map-lookup-allFin ; tabulate∘lookup)
 open import Function hiding (id)
 open import Relation.Binary.PropositionalEquality hiding ([_])
+
+{-
 open import Unityped.Ucwf
 
 open import Unityped.ImpSub
@@ -64,3 +66,17 @@ x2 = lookup (suc (suc zero)) r14   -- 4
 
 x3 : Ren 4 3
 x3 = tabulate suc
+-}
+
+open import SimpTyped.Old.Context
+open import SimpTyped.Old.Type
+open import SimpTyped.Old.ImpSub.Syntax
+
+Γ : Ctx
+Γ = ((ε ∙ (♭ ⇒ ♭)) ∙ (♭ ⇒ ♭ ⇒ ♭)) ∙ ((♭ ⇒ ♭) ⇒ ♭)
+
+idΓ : Sub Γ Γ   -- ((T × Tm Γ (♭ ⇒ ♭)) × Tm Γ (♭ ⇒ ♭ ⇒ ♭)) × Tm Γ ((♭ ⇒ ♭) ⇒ ♭)
+idΓ = id        -- ((tt , var (there (there here))) , var (there here)) , var here
+
+pΓ : Sub (Γ ∙ ♭) Γ  -- ((T × Tm (Γ ∙ ♭) (♭ ⇒ ♭)) × Tm (Γ ∙ ♭) (♭ ⇒ ♭ ⇒ ♭)) × Tm (Γ ∙ ♭) ((♭ ⇒ ♭) ⇒ ♭)
+pΓ = p              -- ((tt , var (there (there (there here)))) , var (there (there here))) , var (there here)

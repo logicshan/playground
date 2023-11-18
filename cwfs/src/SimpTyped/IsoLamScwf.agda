@@ -1,6 +1,6 @@
 module SimpTyped.IsoLamScwf where
 
-open import Data.Nat renaming (ℕ to Nat)
+open import Data.Nat hiding (_/_) renaming (ℕ to Nat)
 open import Data.Fin using (Fin ; zero ; suc)
 open import Data.Vec hiding ([_] ; lookup)
 open import Data.Product hiding (<_,_> ; map)

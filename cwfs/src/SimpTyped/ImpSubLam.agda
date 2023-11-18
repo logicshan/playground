@@ -1,6 +1,6 @@
 module SimpTyped.ImpSubLam  where
 
-open import Data.Nat renaming (ℕ to Nat)
+open import Data.Nat hiding (_/_) renaming (ℕ to Nat)
 open import Data.Vec as Vec hiding ([_] ; lookup)
 open import Data.Fin hiding (lift)
 open import Data.Product hiding (<_,_> ; map)
