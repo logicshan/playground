@@ -3,6 +3,7 @@
 
 # Except tex files
 
+!*.v
 !*.txt
 !.gitignore
 !*.tex
