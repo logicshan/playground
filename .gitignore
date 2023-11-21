@@ -3,6 +3,9 @@
 
 # Except tex files
 
+!*.hs
+!*.lhs
+!timing.lam
 !*.v
 !*.txt
 !.gitignore

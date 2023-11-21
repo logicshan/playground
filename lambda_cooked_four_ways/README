@@ -1,0 +1,8 @@
+https://github.com/steshaw/lennart-lambda
+https://github.com/mietek/cook
+
+$ ghc Main.hs
+$ ./Main U < ./timing.lam
+$ ./Main H < ./timing.lam
+$ ./Main D < ./timing.lam
+$ ./Main S < ./timing.lam

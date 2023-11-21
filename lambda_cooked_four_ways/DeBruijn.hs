@@ -1,0 +1,50 @@
+module DeBruijn(nf) where
+
+import Data.List(elemIndex)
+import Lambda
+import IdInt
+
+data DB = DVar !Int | DLam DB | DApp DB DB
+
+nf :: LC IdInt -> LC IdInt
+nf = fromDB . nfd . toDB
+
+nfd :: DB -> DB
+nfd e@(DVar _) = e
+nfd (DLam e) = DLam (nfd e)
+nfd (DApp f a) =
+  case whnf f of
+    DLam b -> nfd (subst 0 a b)
+    f' -> DApp (nfd f') (nfd a)
+
+whnf :: DB -> DB
+whnf e@(DVar _) = e
+whnf e@(DLam _) = e
+whnf (DApp f a) =
+  case whnf f of
+    DLam b -> whnf (subst 0 a b)
+    f' -> DApp f' a
+
+subst :: Int -> DB -> DB -> DB
+subst o s v@(DVar i) | i == o = adjust 0 s
+                     | i > o = DVar (i-1)
+                     | otherwise = v
+  where adjust n e@(DVar j) | j >= n = DVar (j+o)
+                            | otherwise = e
+        adjust n (DLam e) = DLam (adjust (n+1) e)
+        adjust n (DApp f a) = DApp (adjust n f) (adjust n a)
+subst o s (DLam e) = DLam (subst (o+1) s e)
+subst o s (DApp f a) = DApp (subst o s f) (subst o s a)
+
+toDB :: LC IdInt -> DB
+toDB = to []
+  where to vs (Var v@(IdInt i)) = maybe (DVar i) DVar (elemIndex v vs)
+        to vs (Lam x b) = DLam (to (x:vs) b)
+        to vs (App f a) = DApp (to vs f) (to vs a)
+
+fromDB :: DB -> LC IdInt
+fromDB = from firstBoundId
+  where from (IdInt n) (DVar i) | i < 0 = Var (IdInt i)
+                                | otherwise = Var (IdInt (n-i-1))
+        from n (DLam b) = Lam n (from (succ n) b)
+        from n (DApp f a) = App (from n f) (from n a)
