@@ -567,6 +567,7 @@ open import Relation.Nullary.Decidable using (True; toWitness)
 infix  4 _⊢_
 infix  4 _∋_
 infixl 5 _,_
+infixr 5 _`∷_
 
 infixr 7 _⇒_
 infixr 9 _`×_
@@ -589,6 +590,10 @@ data Type : Set where
   _⇒_   : Type → Type → Type
   Nat   : Type
   _`×_  : Type → Type → Type
+  _`⊎_  : Type → Type → Type
+  `⊤    : Type
+  `⊥    : Type
+  `List : Type → Type
 ```
 
 ### Contexts
@@ -711,6 +716,64 @@ data _⊢_ : Context → Type → Set where
       --------------
     → Γ ⊢ C
 
+  -- sums
+
+  `inj₁ : ∀ {Γ A B}
+    → Γ ⊢ A
+      -----------
+    → Γ ⊢ A `⊎ B
+
+  `inj₂ : ∀ {Γ A B}
+    → Γ ⊢ B
+      -----------
+    → Γ ⊢ A `⊎ B
+
+  case⊎ : ∀ {Γ A B C}
+    → Γ ⊢ A `⊎ B
+    → Γ , A ⊢ C
+    → Γ , B ⊢ C
+      -----------
+    → Γ ⊢ C
+
+  -- unit
+
+  `tt : ∀ {Γ}
+      ------
+    → Γ ⊢ `⊤
+
+  -- alternative formulation of unit
+
+  case⊤ : ∀ {Γ A}
+    → Γ ⊢ `⊤
+    → Γ ⊢ A
+      ------------
+    → Γ ⊢ A
+
+  -- empty
+
+  case⊥ : ∀ {Γ A}
+    → Γ ⊢ `⊥
+      ---------
+    → Γ ⊢ A
+
+  -- list
+
+  `[] : ∀ {Γ A}
+      -----------
+    → Γ ⊢ `List A
+
+  _`∷_ : ∀ {Γ A}
+    → Γ ⊢ A
+    → Γ ⊢ `List A
+      -------------
+    → Γ ⊢ `List A
+
+  caseL : ∀ {Γ A B}
+    → Γ ⊢ `List A
+    → Γ ⊢ B
+    → Γ , A , `List A ⊢ B
+      ----------------------------
+    → Γ ⊢ B
 ```
 
 ### Abbreviating de Bruijn indices
@@ -764,6 +827,16 @@ rename ρ `⟨ M , N ⟩     =  `⟨ rename ρ M , rename ρ N ⟩
 rename ρ (`proj₁ L)     =  `proj₁ (rename ρ L)
 rename ρ (`proj₂ L)     =  `proj₂ (rename ρ L)
 rename ρ (case× L M)    =  case× (rename ρ L) (rename (ext (ext ρ)) M)
+rename ρ (`inj₁ M)      =  `inj₁ (rename ρ M)
+rename ρ (`inj₂ N)      =  `inj₂ (rename ρ N)
+rename ρ (case⊎ L M N)  =  case⊎ (rename ρ L) (rename (ext ρ) M) (rename (ext ρ) N)
+rename ρ (`tt)          =  `tt
+rename ρ (case⊤ L M)    =  case⊤ (rename ρ L) (rename ρ M)
+rename ρ (case⊥ L)      =  case⊥ (rename ρ L)
+rename ρ `[]            =  `[]
+rename ρ (M `∷ N)       =  (rename ρ M) `∷ (rename ρ N)
+rename ρ (caseL L M N)  =  caseL (rename ρ L) (rename ρ M) (rename (ext (ext ρ)) N)
+
 ```
 
 ## Simultaneous Substitution
@@ -788,6 +861,15 @@ subst σ `⟨ M , N ⟩     =  `⟨ subst σ M , subst σ N ⟩
 subst σ (`proj₁ L)     =  `proj₁ (subst σ L)
 subst σ (`proj₂ L)     =  `proj₂ (subst σ L)
 subst σ (case× L M)    =  case× (subst σ L) (subst (exts (exts σ)) M)
+subst σ (`inj₁ M)      =  `inj₁ (subst σ M)
+subst σ (`inj₂ N)      =  `inj₂ (subst σ N)
+subst σ (case⊎ L M N)  =  case⊎ (subst σ L) (subst (exts σ) M) (subst (exts σ) N)
+subst σ (`tt)          =  `tt
+subst σ (case⊤ L M)    =  case⊤ (subst σ L) (subst σ M)
+subst σ (case⊥ L)      =  case⊥ (subst σ L)
+subst σ `[]            =  `[]
+subst σ (M `∷ N)       =  subst σ M `∷ subst σ N
+subst σ (caseL L M N)  =  caseL (subst σ L) (subst σ M) (subst (exts (exts σ)) N)
 ```
 
 ## Single and double substitution
@@ -853,6 +935,36 @@ data Value : ∀ {Γ A} → Γ ⊢ A → Set where
     → Value W
       ----------------
     → Value `⟨ V , W ⟩
+
+  -- sums
+
+  V-inj₁ : ∀ {Γ A B} {V : Γ ⊢ A}
+    → Value V
+      ---------------------------
+    → Value (`inj₁ {Γ} {A} {B} V)
+
+  V-inj₂ : ∀ {Γ A B} {W : Γ ⊢ B}
+    → Value W
+      ---------------------------
+    → Value (`inj₂ {Γ} {A} {B} W)
+
+  -- unit
+
+  V-tt : ∀ {Γ}
+      ---------------
+    → Value (`tt {Γ})
+
+  -- list
+
+  V-nil : ∀ {Γ A}
+      -------------------
+    → Value (`[] {Γ} {A})
+
+  V-⟨_∷_⟩ : ∀ {Γ A} {V : Γ ⊢ A} {W : Γ ⊢ `List A}
+    → Value V
+    → Value W
+      --------------
+    → Value (V `∷ W)
 ```
 
 Implicit arguments need to be supplied when they are
@@ -987,6 +1099,77 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
       ----------------------------------
     → case× `⟨ V , W ⟩ M —→ M [ V ][ W ]
 
+  -- sums
+
+  ξ-inj₁ : ∀ {Γ A B} {M M′ : Γ ⊢ A}
+    → M —→ M′
+      -------------------------------------------
+    → `inj₁ {Γ} {A} {B} M —→ `inj₁ {Γ} {A} {B} M′
+
+  ξ-inj₂ : ∀ {Γ A B} {N N′ : Γ ⊢ B}
+    → N —→ N′
+      -------------------------------------------
+    → `inj₂ {Γ} {A} {B} N —→ `inj₂ {Γ} {A} {B} N′
+
+  ξ-case⊎ : ∀ {Γ A B C} {L L′ : Γ ⊢ A `⊎ B} {M : Γ , A ⊢ C} {N : Γ , B ⊢ C}
+    → L —→ L′
+      ---------------------------
+    → case⊎ L M N —→ case⊎ L′ M N
+
+  β-inj₁ : ∀ {Γ A B C} {V : Γ ⊢ A} {M : Γ , A ⊢ C} {N : Γ , B ⊢ C}
+    → Value V
+      ------------------------------
+    → case⊎ (`inj₁ V) M N —→ M [ V ]
+
+  β-inj₂ : ∀ {Γ A B C} {W : Γ ⊢ B} {M : Γ , A ⊢ C} {N : Γ , B ⊢ C}
+    → Value W
+      ------------------------------
+    → case⊎ (`inj₂ W) M N —→ N [ W ]
+
+  -- alternative formulation of unit
+
+  ξ-case⊤ : ∀ {Γ A} → {L L′ : Γ ⊢ `⊤} → {M : Γ ⊢ A}
+    → L —→ L′
+      -----------------------
+    → case⊤ L M —→ case⊤ L′ M
+
+  β-case⊤ : ∀ {Γ A} {M : Γ ⊢ A}
+      ----------------
+    → case⊤ `tt M —→ M
+
+  -- empty
+
+  ξ-case⊥ : ∀ {Γ A} {L L′ : Γ ⊢ `⊥}
+    → L —→ L′
+      -----------------------------------
+    → case⊥ {A = A} L —→ case⊥ {A = A} L′
+
+  -- list
+
+  ξ-∷₁ : ∀ {Γ A} {M M′ : Γ ⊢ A} {N : (Γ ⊢ `List A)}
+    → M —→ M′
+      -----------------
+    → (M `∷ N) —→ (M′ `∷ N)
+
+  ξ-∷₂ : ∀ {Γ A} {V : Γ ⊢ A} {N N′ : Γ ⊢ `List A}
+    → Value V
+    → N —→ N′
+      -----------------
+    → V `∷ N —→ V `∷ N′
+
+  ξ-caseL : ∀ {Γ A B} {L L′ : Γ ⊢ `List A} {M : Γ ⊢ B} {N : Γ , A , `List A ⊢ B}
+    → L —→ L′
+      ---------------------------
+    → caseL L M N —→ caseL L′ M N
+
+  β-[] : ∀ {Γ A B} {M : Γ ⊢ B} {N : Γ , A , `List A ⊢ B}
+      ------------------
+    → caseL `[] M N —→ M
+
+  β-∷ : ∀ {Γ A B} {V : Γ ⊢ A} {W : Γ ⊢ `List A} {M : Γ ⊢ B} {N : Γ , A , `List A ⊢ B}
+    → Value (V `∷ W)
+      ----------------------------------
+    → caseL (V `∷ W) M N —→ N [ V ][ W ]
 ```
 
 ## Reflexive and transitive closure
@@ -1026,12 +1209,18 @@ V¬—→ : ∀ {Γ A} {M N : Γ ⊢ A}
   → Value M
     ----------
   → ¬ (M —→ N)
-V¬—→ V-ƛ          ()
-V¬—→ V-zero       ()
-V¬—→ (V-suc VM)   (ξ-suc M—→M′)     =  V¬—→ VM M—→M′
-V¬—→ V-con        ()
-V¬—→ V-⟨ VM , _ ⟩ (ξ-⟨,⟩₁ M—→M′)    =  V¬—→ VM M—→M′
-V¬—→ V-⟨ _ , VN ⟩ (ξ-⟨,⟩₂ _ N—→N′)  =  V¬—→ VN N—→N′
+V¬—→ V-ƛ ()
+V¬—→ V-zero ()
+V¬—→ (V-suc VM) (ξ-suc M—→M′) = V¬—→ VM M—→M′
+V¬—→ V-con ()
+V¬—→ V-⟨ VM , _ ⟩ (ξ-⟨,⟩₁ M—→M′) = V¬—→ VM M—→M′
+V¬—→ V-⟨ _ , VN ⟩ (ξ-⟨,⟩₂ _ N—→N′) = V¬—→ VN N—→N′
+V¬—→ (V-inj₁ VM) (ξ-inj₁ M—→M′) = V¬—→ VM M—→M′
+V¬—→ (V-inj₂ VN) (ξ-inj₂ N—→N′) = V¬—→ VN N—→N′
+V¬—→ V-tt ()
+V¬—→ V-nil ()
+V¬—→ V-⟨ V ∷ W ⟩ (ξ-∷₁ ¬V—→M′) = V¬—→ V ¬V—→M′
+V¬—→ V-⟨ V ∷ W ⟩ (ξ-∷₂ _ ¬W—→N′) = V¬—→ W ¬W—→N′
 ```
 
 
@@ -1093,6 +1282,33 @@ progress (`proj₂ L) with progress L
 progress (case× L M) with progress L
 ...    | step L—→L′                         =  step (ξ-case× L—→L′)
 ...    | done (V-⟨ VM , VN ⟩)               =  step (β-case× VM VN)
+progress (`inj₁ M) with progress M
+...    | step M—→M′                         =  step (ξ-inj₁ M—→M′)
+...    | done V                             =  done (V-inj₁ V)
+progress (`inj₂ N) with progress N
+...    | step N—→N′                         =  step (ξ-inj₂ N—→N′)
+...    | done V                             =  done (V-inj₂ V)
+progress (case⊎ L M N) with progress L
+...    | step L—→L′                         =  step (ξ-case⊎ L—→L′)
+...    | done (V-inj₁ V)                    =  step (β-inj₁ V)
+...    | done (V-inj₂ W)                    =  step (β-inj₂ W)
+progress (`tt)                              =  done V-tt
+progress (case⊤ L M) with progress L
+...    | step L—→L′                         =  step (ξ-case⊤ L—→L′)
+...    | done V-tt                          =  step β-case⊤
+progress (case⊥ L) with progress L
+...    | step L—→L′                         =  step (ξ-case⊥ L—→L′)
+...    | done ()
+progress `[]                                =  done V-nil
+progress (M `∷ N) with progress M
+...    | step M—→M′                         =  step (ξ-∷₁ M—→M′)
+...    | done VM with progress N
+...        | step N—→N′                     =  step (ξ-∷₂ VM N—→N′)
+...        | done VN                        =  done (V-⟨ VM ∷ VN ⟩)
+progress (caseL L M N) with progress L
+...    | step L—→L′                         =  step (ξ-caseL L—→L′)
+...    | done V-nil                         =  step β-[]
+...    | done V-⟨ V ∷ W ⟩                   =  step (β-∷ V-⟨ V ∷ W ⟩)
 ```
 
 
@@ -1228,6 +1444,29 @@ Please delimit any code you add as follows:
 
     -- begin
     -- end
+
+```agda
+swap⊎ : ∀ {A B} → ∅ ⊢ A `⊎ B ⇒ B `⊎ A
+swap⊎ = ƛ case⊎ (# 0) (`inj₂ (# 0)) (`inj₁ (# 0))
+
+to×⊤ : ∀ {A} → ∅ ⊢ A ⇒ A `× `⊤
+to×⊤ = ƛ `⟨ # 0 , `tt ⟩
+
+from×⊤ : ∀ {A} → ∅ ⊢ A `× `⊤ ⇒ A
+from×⊤ = ƛ `proj₁ (# 0)
+
+from×⊤-case : ∀ {A} → ∅ ⊢ A `× `⊤ ⇒ A
+from×⊤-case = ƛ case× (# 0) (case⊤ (# 0) (# 1))
+
+to⊎⊥ : ∀ {A} → ∅ ⊢ A ⇒ A `⊎ `⊥
+to⊎⊥ = ƛ `inj₁ (# 0)
+
+from⊎⊥ : ∀ {A} → ∅ ⊢ A `⊎ `⊥ ⇒ A
+from⊎⊥ = ƛ case⊎ (# 0) (# 0) (case⊥ (# 0))
+
+mapL : ∀ {A B} → ∅ ⊢ (A ⇒ B) ⇒ `List A ⇒ `List B
+mapL = μ ƛ ƛ caseL (# 0) `[] ((# 3) · (# 1) `∷ (# 4) · (# 3) · (# 0))
+```
 
 
 #### Exercise `double-subst` (stretch)
