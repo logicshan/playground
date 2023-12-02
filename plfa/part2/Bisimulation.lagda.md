@@ -130,6 +130,9 @@ are in bisimulation.
 We import our source language from
 Chapter [More](/More/):
 ```agda
+import Relation.Binary.PropositionalEquality as Eq
+open Eq using (_≡_; refl; sym)
+
 open import plfa.part2.More
 ```
 
@@ -182,7 +185,99 @@ to use a decidable predicate to pick out terms in the domain of `_†`, using
 [proof by reflection](/Decidable/#proof-by-reflection).
 
 ```agda
--- Your code goes here
+open import Relation.Nullary using (Dec; yes; no)
+open import Relation.Nullary.Decidable using (True; toWitness)
+open import plfa.part1.Isomorphism using (_⇔_)
+
+data In-†-domain : ∀ {Γ A} → Γ ⊢ A → Set where
+
+  †-` : ∀ {Γ A} → {x :  Γ ∋ A}
+        -----------------
+      → In-†-domain (` x)
+
+  †-ƛ : ∀ {Γ A B} {N : Γ , A ⊢ B}
+      → In-†-domain N
+        -------------------------
+      → In-†-domain (ƛ N)
+
+  †-· : ∀ {Γ A B} {M : Γ ⊢ A ⇒ B} {N : Γ ⊢ A}
+      → In-†-domain M
+      → In-†-domain N
+        -------------------
+      → In-†-domain (M · N)
+
+  †-let : ∀ {Γ A B} {M : Γ ⊢ A} {N : Γ , A ⊢ B}
+      → In-†-domain M
+      → In-†-domain N
+        ----------------------
+      → In-†-domain (`let M N)
+
+in-†-domain-dec : ∀ {Γ A} (M : Γ ⊢ A) → Dec (In-†-domain M)
+in-†-domain-dec (` x) = yes †-`
+in-†-domain-dec (ƛ M) with in-†-domain-dec M
+... | yes M = yes (†-ƛ M) 
+... | no ¬M = no λ{ (†-ƛ M) → ¬M M }
+in-†-domain-dec (M · N) with in-†-domain-dec M
+... | no ¬M = no λ{ (†-· M _) → ¬M M }
+... | yes M with in-†-domain-dec N
+...            | yes N = yes (†-· M N)
+...            | no ¬N = no λ{ (†-· _ N) → ¬N N }
+in-†-domain-dec `zero = no (λ ())
+in-†-domain-dec (`suc M) = no (λ ())
+in-†-domain-dec (case M M₁ M₂) = no (λ ())
+in-†-domain-dec (μ M) = no (λ ())
+in-†-domain-dec (con x) = no (λ ())
+in-†-domain-dec (M `* M₁) = no (λ ())
+in-†-domain-dec (`let M N) with in-†-domain-dec M
+... | no ¬M = no λ{ (†-let M _) → ¬M M }
+... | yes M with in-†-domain-dec N
+...            | yes N = yes (†-let M N)
+...            | no ¬N = no λ{ (†-let _ N) → ¬N N }
+in-†-domain-dec `⟨ M , M₁ ⟩ = no (λ ())
+in-†-domain-dec (`proj₁ M) = no (λ ())
+in-†-domain-dec (`proj₂ M) = no (λ ())
+in-†-domain-dec (case× M M₁) = no (λ ())
+in-†-domain-dec (`inj₁ M) = no (λ ())
+in-†-domain-dec (`inj₂ M) = no (λ ())
+in-†-domain-dec (case⊎ M M₁ M₂) = no (λ ())
+in-†-domain-dec `tt = no (λ ())
+in-†-domain-dec (case⊤ M M₁) = no (λ ())
+in-†-domain-dec (case⊥ M) = no (λ ())
+in-†-domain-dec `[] = no (λ ())
+in-†-domain-dec (M `∷ M₁) = no (λ ())
+in-†-domain-dec (caseL M M₁ M₂) = no (λ ())
+
+
+†-trans : ∀ {Γ A} → (M : Γ ⊢ A) → (M-in-†-domain : In-†-domain M) → Γ ⊢ A
+†-trans (` x) †-` = ` x
+†-trans (ƛ M) (†-ƛ M-in-†-domain) = ƛ (†-trans M M-in-†-domain)
+†-trans (M · N) (†-· M-in-†-domain N-in-†-domain) =
+  (†-trans M M-in-†-domain) · (†-trans N N-in-†-domain)
+†-trans `zero ()
+†-trans (`suc M) ()
+†-trans (case M M₁ M₂) ()
+†-trans (μ M) ()
+†-trans (con x) ()
+†-trans (M `* M₁) ()
+†-trans (`let M N) (†-let M-in-†-domain N-in-†-domain) =
+  (ƛ (†-trans N N-in-†-domain)) · (†-trans M M-in-†-domain)
+†-trans `⟨ M , M₁ ⟩ ()
+†-trans (`proj₁ M) ()
+†-trans (`proj₂ M) ()
+†-trans (case× M M₁) ()
+†-trans (`inj₁ M) ()
+†-trans (`inj₂ M) ()
+†-trans (case⊎ M M₁ M₂) ()
+†-trans `tt ()
+†-trans (case⊤ M M₁) ()
+†-trans (case⊥ M) ()
+†-trans `[] ()
+†-trans (M `∷ M₁) ()
+†-trans (caseL M M₁ M₂) ()
+
+_† : ∀ {Γ A} → (M : Γ ⊢ A) → {M-in-†-domain : True (in-†-domain-dec M)}
+  → Γ ⊢ A
+_† M {M-in-†-domain} = †-trans M (toWitness M-in-†-domain)
 ```
 
 
@@ -211,7 +306,15 @@ Show that this also holds in the reverse direction: if `M ~ M†`
 and `Value M†` then `Value M`.
 
 ```agda
--- Your code goes here
+~val⁻¹ : ∀ {Γ A} {M M† : Γ ⊢ A}
+  → M ~ M†
+  → Value M†
+    --------
+  → Value M
+~val⁻¹ ~` ()
+~val⁻¹ (~ƛ _) V-ƛ = V-ƛ
+~val⁻¹ (_ ~· _) ()
+~val⁻¹ (~let _ _) ()
 ```
 
 
