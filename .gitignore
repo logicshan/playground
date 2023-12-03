@@ -3,6 +3,7 @@
 
 # Except tex files
 
+!*.cf
 !*.hs
 !*.lhs
 !timing.lam
@@ -21,6 +22,7 @@
 !*.lagda
 !*.ctt
 !README
+!Makefile
 
 # ... even if they are in subdirectories
 
