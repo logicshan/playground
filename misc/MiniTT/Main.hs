@@ -212,18 +212,24 @@ lRho (UpDec rho _  ) = lRho rho
 
 eval :: Exp -> Rho -> G Val
 eval e0 rho = case e0 of
-    ESet          -> Right (Set)
-    EDec d e      -> eval e (UpDec rho d)
     ELam p e      -> Right (Lam $ mkCl p e rho)
+    EVar x        -> getRho rho x
+    EApp e1 e2    ->
+      do
+        evalE1Rho <- eval e1 rho
+        evalE2Rho <- eval e2 rho
+        app evalE1Rho evalE2Rho
     EPi  p a b    ->
       do
         evalERho <- eval a rho
         Right (Pi  evalERho $ mkCl p b rho)
-    ESig p a b    ->
+    ESet          -> Right (Set)
+    EDec d e      -> eval e (UpDec rho d)
+    EPair e1 e2   ->
       do
-        evalARho <- eval a rho
-        Right $ Sig evalARho $ mkCl p b rho
-    EOne          -> Right (One)
+        evalE1Rho <- eval e1 rho
+        evalE2Rho <- eval e2 rho
+        Right (Pair evalE1Rho evalE2Rho)
     Eunit         -> Right (Unit)
     EFst e        ->
       do
@@ -233,25 +239,19 @@ eval e0 rho = case e0 of
       do
         evalERho <- eval e rho
         vsnd evalERho
-    EApp e1 e2    ->
+    ESig p a b    ->
       do
-        evalE1Rho <- eval e1 rho
-        evalE2Rho <- eval e2 rho
-        app evalE1Rho evalE2Rho
-    EVar x        -> getRho rho x
-    EPair e1 e2   ->
-      do
-        evalE1Rho <- eval e1 rho
-        evalE2Rho <- eval e2 rho
-        Right (Pair evalE1Rho evalE2Rho)
+        evalARho <- eval a rho
+        Right $ Sig evalARho $ mkCl p b rho
+    EOne          -> Right (One)
     ECon c e1     ->
       do
         evalE1Rho <- eval e1 rho
         Right (Con c evalE1Rho)
-    EData (DataTk pos) cas
-                  -> Right (Data pos ([(c,a) | Summand c a <- cas], rho))
     ECase (CaseTk pos) ces
                   -> Right (Fun  pos ([(c,e) | Branch  c e <- ces], rho))
+    EData (DataTk pos) cas
+                  -> Right (Data pos ([(c,a) | Summand c a <- cas], rho))
     e -> Left $ "eval: should have been desugared\n e = " ++ printTree e
 
 -------------------------------------------
