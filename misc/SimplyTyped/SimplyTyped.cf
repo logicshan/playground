@@ -1,0 +1,15 @@
+Lam0. Exp ::= "λ" Ident ":" Type "." Exp ;
+App0. Exp1 ::= Exp1 Exp2 ;
+Var0. Exp2 ::= Ident ;
+
+coercions Exp 2 ;
+
+Base. Type ::= "B" ;
+Arrow. Type ::= Type "→" Type ;
+_. Type ::= "(" Type ")"
+
+
+-- λx:B.x
+-- λf:B→B.λx:B.f x
+-- λf:(B→B).λx:B.f x
+-- λf:(B→B)→(B→B).f

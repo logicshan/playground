@@ -1,0 +1,5 @@
+Lam0. Exp ::= "λ" Ident "." Exp ;
+App0. Exp1 ::= Exp1 Exp2 ;
+Var0. Exp2 ::= Ident ;
+
+coercions Exp 2 ;
