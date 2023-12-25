@@ -23,6 +23,11 @@
 !*.ctt
 !README
 !Makefile
+!*.ttc
+!*.ttf
+!*.otf
+!*.ipynb
+!*.pl
 
 # ... even if they are in subdirectories
 
