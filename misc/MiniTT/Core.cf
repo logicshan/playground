@@ -1,0 +1,56 @@
+--- Input file to BNF Converter
+---   This describes the labelled BNF Grammar of
+---   Mini-TT concrete syntax
+
+-- Expressions
+
+ELam.     Exp1   ::= "λ" Patt1 "." Exp1 ; -- λ _ . e 
+ESet.     Exp3   ::= "U" ;
+EPi.      Exp1   ::= "Π" Patt1 ":" Exp1 "." Exp1 ; -- Π _ : e1 . e2
+ESig.     Exp1   ::= "Σ" Patt1 ":" Exp1 "." Exp1 ; -- Σ _ : e1 . e2
+EOne.     Exp3   ::= "1";
+Eunit.    Exp3   ::= "0";
+EPair.    Exp    ::= Exp1 "," Exp ;                  -- a , b ∈ Σ
+ECon.     Exp2   ::= "$" Ident Exp3;
+EData.    Exp1   ::= DataTk "(" [Summand] ")" ; -- sum
+ECase.    Exp1   ::= CaseTk "(" [Branch] ")" ;  -- fun
+EFst.     Exp3   ::= Exp3 ".1" ;
+ESnd.     Exp3   ::= Exp3 ".2" ;
+EApp.     Exp2   ::= Exp2 Exp3 ;
+EVar.     Exp3   ::= Ident ;
+EVoid.    Exp3   ::= "Void" ;
+EDec.     Exp1   ::= Decl ";" Exp1 ;
+EPN.      Exp3   ::= "PN" ;
+
+-- syntax sugars
+eArrow.   Exp1   ::= Exp2 "→" Exp1 ;
+eTimes.   Exp1   ::= Exp2 "*"  Exp1 ;
+define eArrow a b = EPi  Punit a b ;
+define eTimes a b = ESig Punit a b ;
+
+coercions Exp 3 ;
+
+-- declarations
+Def.      Decl ::= "let"    Patt1 ":" Exp1 "=" Exp1 ;
+Drec.     Decl ::= "letrec" Patt1 ":" Exp1 "=" Exp1 ;
+
+-- patterns
+PPair.    Patt    ::= Patt1 "," Patt ;
+Punit.    Patt1   ::= "_" ;
+PVar.     Patt1   ::= Ident ;
+
+coercions Patt 1 ;
+
+Summand.  Summand ::= Ident      Exp3;  -- a U | b 0 | c 1 | d 1.1 | e 0.1 | f a | g Void | h PN
+separator Summand "|" ;
+
+Branch.   Branch  ::= Ident "→" Exp1 ; -- a → e1 | b → e2 | 
+separator Branch  "|" ;
+
+comment "--" ;
+comment "{-" "-}" ;
+
+separator nonempty Ident "" ;
+
+position token CaseTk {"fun"} ;
+position token DataTk {"Sum"} ;

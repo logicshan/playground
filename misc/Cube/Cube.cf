@@ -1,0 +1,20 @@
+Lam0. Exp ::= "λ" Ident ":" Exp "." Exp ;
+Pi0. Exp ::= "Π" Ident ":" Exp "." Exp ;
+Kind0. Exp ::= Kinds ;
+App0. Exp1 ::= Exp1 Exp2 ;
+Var0. Exp2 ::= Ident ;
+
+-- syntax sugars
+eArrow. Exp  ::= Exp "→" Exp ;
+define eArrow a b = Pi0  (Ident "_") a b ;
+
+
+coercions Exp 2 ;
+
+Star. Kinds ::= "★" ;
+Box. Kinds ::= "□" ;
+
+-- λA:★.λx:A.x
+-- λA:★.λf:A→A.λx:A.f x
+
+-- (A:★) -> (A→A) -> A -> A
