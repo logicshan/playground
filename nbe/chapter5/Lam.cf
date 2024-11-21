@@ -1,0 +1,16 @@
+token Name ((letter | '+') (letter | digit | '_')*) ;
+
+Ann.    Expr  ::= Expr1 "∈" Ty ;
+Lambda. Expr1 ::= "λ" Name "." Expr1 ;
+Add1.   Expr2 ::= "add1" Expr2 ;
+App.    Expr2 ::= Expr2 Expr3 ;
+Rec.    Expr2 ::= "rec" "[" Ty "]" Expr3 Expr3 Expr3;
+Var.    Expr3 ::= Name ;
+Zero.   Expr3 ::= "zero" ;
+
+coercions Expr 3 ;
+
+TArr. Ty  ::= Ty1 "->" Ty ;
+TNat. Ty1 ::= "Nat" ;
+
+coercions Ty 1 ;
