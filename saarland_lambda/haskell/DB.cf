@@ -1,0 +1,5 @@
+DBLam. Term ::= "λ" Term ;
+DBApp. Term1 ::= Term1 Term2 ;
+DBVar. Term2 ::= Integer ;
+
+coercions Term 2 ;

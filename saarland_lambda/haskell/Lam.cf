@@ -1,0 +1,5 @@
+Lam. Preterm ::= "λ" Integer "." Preterm ;
+App. Preterm1 ::= Preterm1 Preterm2 ;
+Var. Preterm2 ::= Integer ;
+
+coercions Preterm 2 ;

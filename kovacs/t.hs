@@ -4,11 +4,13 @@ type Lvl = Int
 data Tm      = Var Ix
              | Lam Tm
              | App Tm Tm
+  deriving (Show)
 data Closure = Close [Val] Tm
+  deriving (Show)
 data Val     = VVar Lvl
              | VApp Val Val
              | VLam Closure
-
+  deriving (Show)
 eval :: [Val] -> Tm -> Val
 eval env t = case t of
   Var x   -> env !! x
@@ -25,3 +27,9 @@ quote l t = case t of
 
 nf :: [Val] -> Tm -> Tm
 nf env t = quote (length env) (eval env t)
+
+term1 :: Tm
+term1_val :: Val
+
+term1 = Lam (App (Lam (App (Var 1) (Var 0))) (Var 0))
+term1_val = eval [] term1
