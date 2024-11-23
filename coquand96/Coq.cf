@@ -1,0 +1,20 @@
+-- M := x
+--    | λx.M
+--    | M N
+--    | (x:M)N
+--    | let x=M:A in N
+--    | Type
+
+token Id (letter (letter | digit | '_')*) ;
+
+Let.  Exp  ::= "let" Id "=" Exp1 ":" Exp3 "in" Exp ;
+Abs.  Exp1 ::= "λ" Id "." Exp1 ;
+Pi.   Exp2 ::= "(" Id ":" Exp3 ")" Exp2 ;
+App.  Exp3 ::= Exp3 Exp4 ;
+Type. Exp4 ::= "Type" ;
+Var.  Exp4 ::= Id ;
+
+coercions Exp 4 ;
+
+-- λA.λx.x : (A:Type)(x:A)A
+-- let x=M:A in N

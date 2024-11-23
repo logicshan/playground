@@ -110,4 +110,3 @@ Proof.
   intros H. unfold alpha_equiv.
   rewrite retract; trivial.
 Qed.
-  

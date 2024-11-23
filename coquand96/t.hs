@@ -1,5 +1,70 @@
 import Prelude hiding ( lookup )
 
+-- M := x
+--    | λx.M
+--    | M N
+--    | (x:M)N
+--    | let x=M:A in N
+--    | Type
+
+-- Ide: an infinite set of identifiers
+-- Env D: functions in `Ide -> D`
+
+-- a model is a tuple (D,App,eval,Type,:)
+-- D is a set
+-- App : D -> [D -> D]
+-- eval : Exp -> Env D -> D
+-- : ⊆ D × D (⊆ is a binary relation on D; the relation `a : d` means intuitively that the value `a ∈ D` is of type d)
+-- ⟦M⟧ := eval M ()
+
+-- ------------------------
+--    eval Type ρ = Type
+
+--    eval A ρ = eval C ρ         eval B (ρ,x=d) = eval D (ν,y=d)
+-- -----------------------------------------------------------------
+--               eval ((x:A)B) ρ = eval ((y:C)D) ν
+
+-- rules for types
+
+-- ---------------------
+--      Type : Type
+
+--     eval A ρ : Type     a : eval A ρ      eval B (ρ,x=a) : Type
+-- -------------------------------------------------------------------
+--                         eval ((x:A)B) ρ
+
+--       c : eval ((x:A)B) ρ     a : eval A ρ
+-- -----------------------------------------------
+--            App c a : eval B (ρ,x=a)
+
+--       a : eval A ρ     eval N (ν,y=a) : eval B (ρ,x=a)
+-- ------------------------------------------------------------
+--               eval (λy.N) ν : eval ((x:A)B) ρ
+
+-- values V
+
+-- Let G be an infinite set of new variables, the generic values. We write v₁,v₂,v₃... for
+-- elements of G.
+
+-- G ⊆ V
+-- if u,w ∈ V, then u w ∈ V
+-- Type ∈ V
+-- if M is an expression, ρ ∈ Env, FV(M) ⊆ dom(ρ), then Mρ ∈ V
+-- () ∈ Env, and dom(()) = ∅
+-- if ρ ∈ Env, x ∈ Ide, u ∈ V, then (ρ,x=u) ∈ Env, and dom((ρ,x=u)) = dom(ρ)∪{x}.
+
+-- We define `lookup x ρ` as before. In the following, assume u,v,w ∈ V.
+-- Any assignment `f ∈ G → D` extends uniquely to an `f ∈ V → D` such that
+-- - f Type = Type
+-- - f (u₁u₂) = App (f u₁) (f u₂)
+-- - f (Mρ) = eval M (f⃰ρ)
+-- where f⃰() = () and f⃰(ρ,x=u) = ((f⃰ρ),x=fu)
+--   We can define inductively when a generic value occurs in a given value,
+-- and prove that `f u = g u` if f and g agree on all generic values that
+-- occur in u.
+
+
+
 -- the main data types and general functions
 
 type Id = String
