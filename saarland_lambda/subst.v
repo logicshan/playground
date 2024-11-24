@@ -3,6 +3,8 @@ Require Import Setoid Equivalence Morphisms.
 
 Require Import confluence abstractLambdaBeta.
 
+Section deBruijn.
+
 Implicit Types (s t : term) (σ τ : nat -> term) (ξ : nat -> nat).
 
 Variable funext : forall X Y (f g : X -> Y), (forall x, f x = g x) -> f = g.
@@ -300,3 +302,5 @@ Corollary confluent_lambda_calculus :
 Proof.
   apply ALB. apply compat_beta_pstep.
 Qed.
+
+End deBruijn.
