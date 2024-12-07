@@ -1,67 +1,60 @@
-Abst0. Term ::= Term1 "->" Term ;                       -- *
-TDef. Term ::= "[" Ident ":" Term "=" Term "]" Term ;
-Abst. Term ::= "[" Ident ":" Term "]" Term ;
-Abstn. Term ::= "[" [Ident] ":" Term "]" Term ;         -- *
+arr.   Term ::= Term1 "->" Term ;
+TDef.  Term ::= "[" Ident ":" Term "=" Term "]" Term ;
+Abst.  Term ::= "[" Ident ":" Term "]" Term ;
+Abstn. Term ::= "[" [Ident] ":" Term "]" Term ;
 
-Sum. Term1 ::= Term2 "+" Term1 ;
-Sigma0. Term1 ::= Term2 "*" Term1 ;                     -- *
-Sigma. Term1 ::= "<" [Ident] ":" Term ">" Term ;
+define arr e1 e2 = Abst (Ident "") e1 e2 ;
+--define abstn vs t1 t2 = foldr (\i e -> Abst i t1 e) t2 vs ;
+
+Sum.     Term1 ::= Term2 "+" Term1 ;
+prod.    Term1 ::= Term2 "*" Term1 ;
+Sigma.   Term1 ::= "<" Ident ":" Term ">" Term ;
+Sigman.  Term1 ::= "<" [Ident] ":" Term ">" Term ;
 Partial. Term1 ::= "[" DisjFormula "]" Term1 ;
-Restr. Term1 ::= System Term1 ;
-Pair. Term1 ::= Term2 "," Term2 ;
+Restr.   Term1 ::= System Term1 ;
+Pair.    Term1 ::= Term2 "," Term2 ;
 
-App. Term2 ::= Term2 Term3 ;
-Ind. Term2 ::= "ind" Term3 Term3 Term3 Term3 ;
-Comp. Term2 ::= "comp" Term3 "(" DisjFormula ")" Term3 Term3 Term3 Term3 ;
+define prod e1 e2 = Sigma (Ident "") e1 e2 ;
+--define sigma vs e1 e2 = foldr (\i e -> Sigma i e1 e) e2 vs ;
+
+App.   Term2 ::= Term2 Term3 ;
+Ind.   Term2 ::= "ind" Term3 Term3 Term3 Term3 ;
+Comp.  Term2 ::= "comp" Term3 "(" DisjFormula ")" Term3 Term3 Term3 Term3 ;
 Comp0. Term2 ::= "comp" Term3 "(" ")" Term3 Term3 Term3 Term3 ;
-Succ. Term2 ::= "S" Term3 ;
-InL. Term2 ::= "inl" Term3 ;
-InR. Term2 ::= "inr" Term3 ;
+Succ.  Term2 ::= "S" Term3 ;
+InL.   Term2 ::= "inl" Term3 ;
+InR.   Term2 ::= "inr" Term3 ;
 Split. Term2 ::= "split" Term3 Term3 Term3 Term3 ;
 
-Var. Term3 ::= Ident ;
+Var.      Term3 ::= Ident ;
 Universe. Term3 ::= "U" ;
-Nat. Term3 ::= "N" ;
-Zero. Term3 ::= "Z" ;
-I. Term3 ::= "I" ;
-Fst. Term3 ::= ".1" ;
-Snd. Term3 ::= ".2" ;
-Sys. Term3 ::= System ;
-I0. Term3 ::= "0" ;
-I1. Term3 ::= "1" ;
+Nat.      Term3 ::= "N" ;
+Zero.     Term3 ::= "Z" ;
+I.        Term3 ::= "I" ;
+Fst.      Term3 ::= ".1" ;
+Snd.      Term3 ::= ".2" ;
+Sys.      Term3 ::= System ;
+I0.       Term3 ::= "0" ;
+I1.       Term3 ::= "1" ;
 
 coercions Term 3 ;
 
 separator nonempty Ident "," ;
 
-Definition. Toplevel ::= Ident ":" Term "=" Term ;
+Definition.  Toplevel ::= Ident ":" Term "=" Term ;
 Declaration. Toplevel ::= Ident ":" Term ;
-Example. Toplevel ::= Term ;
+Example.     Toplevel ::= Term ;
 
 --separator Toplevel ";" ;
 
-Eq0. AtomicFormula ::= Ident "=" "0" ;
-Eq1. AtomicFormula ::= Ident "=" "1" ;
+Eq0.  AtomicFormula ::= Ident "=" "0" ;
+Eq1.  AtomicFormula ::= Ident "=" "1" ;
 Diag. AtomicFormula ::= Ident "=" Ident ;
 
-{-
-(:[]). ConjFormula1 ::= AtomicFormula ;
-(:). ConjFormula1 ::= AtomicFormula "/\\" ConjFormula1 ;
-
-Conj. ConjFormula ::= ConjFormula1 ;
-_. ConjFormula ::= "(" ConjFormula ")" ;
--}
 
 Conj. ConjFormula ::= [AtomicFormula] ;
 _. ConjFormula ::= "(" ConjFormula ")" ;
 separator AtomicFormula "/\\" ;
-
-{-
-(:[]). DisjFormula1 ::= ConjFormula ;
-(:). DisjFormula1 ::= ConjFormula "\\/" DisjFormula1 ;
-
-Disj. DisjFormula ::= DisjFormula1 ;
--}
 
 Disj. DisjFormula ::= [ConjFormula] ;
 separator ConjFormula "\\/" ;
