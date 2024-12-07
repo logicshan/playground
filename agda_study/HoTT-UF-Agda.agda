@@ -137,10 +137,10 @@ record Σ {𝓤 𝓥} {X : 𝓤 ̇} (Y : X → 𝓥 ̇) : 𝓤 ⊔ 𝓥 ̇  wher
    x : X
    y : Y x
 
-pr₁ : {X : 𝓤 ̇ } {Y : X → 𝓥 ̇ } → Σ Y → X
+pr₁ : {X : 𝓤 ̇} {Y : X → 𝓥 ̇} → Σ Y → X
 pr₁ (x , y) = x
 
-pr₂ : {X : 𝓤 ̇ } {Y : X → 𝓥 ̇ } → (z : Σ Y) → Y (pr₁ z)
+pr₂ : {X : 𝓤 ̇} {Y : X → 𝓥 ̇} → (z : Σ Y) → Y (pr₁ z)
 pr₂ (x , y) = y
 
 -Σ : {𝓤 𝓥 : Universe} (X : 𝓤 ̇) (Y : X → 𝓥 ̇) → 𝓤 ⊔ 𝓥 ̇
@@ -148,13 +148,13 @@ pr₂ (x , y) = y
 
 syntax -Σ X (λ x → y) = Σ x ꞉ X , y
 
-Σ-induction : {X : 𝓤 ̇ } {Y : X → 𝓥 ̇ } {A : Σ Y → 𝓦 ̇ }
+Σ-induction : {X : 𝓤 ̇} {Y : X → 𝓥 ̇} {A : Σ Y → 𝓦 ̇}
             → ((x : X) (y : Y x) → A (x , y))
             → ((x , y) : Σ Y) → A (x , y)
 
 Σ-induction g (x , y) = g x y
 
-curry : {X : 𝓤 ̇ } {Y : X → 𝓥 ̇ } {A : Σ Y → 𝓦 ̇ }
+curry : {X : 𝓤 ̇} {Y : X → 𝓥 ̇} {A : Σ Y → 𝓦 ̇}
       → (((x , y) : Σ Y) → A (x , y))
       → ((x : X) (y : Y x) → A (x , y))
 
@@ -163,7 +163,7 @@ curry f x y = f (x , y)
 _×_ : 𝓤 ̇ → 𝓥 ̇ → 𝓤 ⊔ 𝓥 ̇
 X × Y = Σ x ꞉ X , Y
 
-Π : {X : 𝓤 ̇ } (A : X → 𝓥 ̇) → 𝓤 ⊔ 𝓥 ̇
+Π : {X : 𝓤 ̇} (A : X → 𝓥 ̇) → 𝓤 ⊔ 𝓥 ̇
 Π {𝓤} {𝓥} {X} A = (x : X) → A x
 
 -Π : {𝓤 𝓥 : Universe} (X : 𝓤 ̇) (Y : X → 𝓥 ̇) → 𝓤 ⊔ 𝓥 ̇
@@ -171,7 +171,7 @@ X × Y = Σ x ꞉ X , Y
 
 syntax -Π A (λ x → b) = Π x ꞉ A , b
 
-id : {X : 𝓤 ̇ } → X → X
+id : {X : 𝓤 ̇} → X → X
 id x = x
 
 𝑖𝑑 : (X : 𝓤 ̇) → X → X
@@ -196,28 +196,28 @@ type-of {𝓤} {X} x = X
 data Id {𝓤} (X : 𝓤 ̇) : X → X → 𝓤 ̇  where
  refl : (x : X) → Id X x x
 
-_＝_ : {X : 𝓤 ̇ } → X → X → 𝓤 ̇
+_＝_ : {X : 𝓤 ̇} → X → X → 𝓤 ̇
 x ＝ y = Id _ x y
 
-𝕁 : (X : 𝓤 ̇ ) (A : (x y : X) → x ＝ y → 𝓥 ̇ )
+𝕁 : (X : 𝓤 ̇) (A : (x y : X) → x ＝ y → 𝓥 ̇)
   → ((x : X) → A x x (refl x))
   → (x y : X) (p : x ＝ y) → A x y p
 
 𝕁 X A f x x (refl x) = f x
 
-ℍ : {X : 𝓤 ̇ } (x : X) (B : (y : X) → x ＝ y → 𝓥 ̇ )
+ℍ : {X : 𝓤 ̇} (x : X) (B : (y : X) → x ＝ y → 𝓥 ̇)
   → B x (refl x)
   → (y : X) (p : x ＝ y) → B y p
 
 ℍ x B b x (refl x) = b
 
-𝕁' : (X : 𝓤 ̇ ) (A : (x y : X) → x ＝ y → 𝓥 ̇ )
+𝕁' : (X : 𝓤 ̇) (A : (x y : X) → x ＝ y → 𝓥 ̇)
    → ((x : X) → A x x (refl x))
    → (x y : X) (p : x ＝ y) → A x y p
 
 𝕁' X A f x = ℍ x (A x) (f x)
 
-𝕁s-agreement : (X : 𝓤 ̇ ) (A : (x y : X) → x ＝ y → 𝓥 ̇ )
+𝕁s-agreement : (X : 𝓤 ̇) (A : (x y : X) → x ＝ y → 𝓥 ̇)
                (f : (x : X) → A x x (refl x)) (x y : X) (p : x ＝ y)
              → 𝕁 X A f x y p ＝ 𝕁' X A f x y p
 
@@ -288,7 +288,146 @@ module 𝕁→ℍ where
                → H x D d y p ＝ H x D d y p
   Hs-agreement x D d x (refl x) = refl d
 
---infix   0 _∼_
+
+transport : {X : 𝓤 ̇} (A : X → 𝓥 ̇) {x y : X}
+          → x ＝ y → A x → A y
+
+transport A (refl x) = 𝑖𝑑 (A x)
+
+
+transport𝕁 : {X : 𝓤 ̇} (A : X → 𝓥 ̇) {x y : X}
+           → x ＝ y → A x → A y
+
+transport𝕁 {𝓤} {𝓥} {X} A {x} {y} = 𝕁 X (λ x y _ → A x → A y) (λ x → 𝑖𝑑 (A x)) x y
+
+
+nondep-ℍ : {X : 𝓤 ̇} (x : X) (A : X → 𝓥 ̇)
+         → A x → (y : X) → x ＝ y → A y
+nondep-ℍ x A = ℍ x (λ y _ → A y)
+
+transportℍ : {X : 𝓤 ̇} (A : X → 𝓥 ̇) {x y : X}
+           → x ＝ y → A x → A y
+transportℍ A {x} {y} p a = nondep-ℍ x A a y p
+
+transports-agreement : {X : 𝓤 ̇} (A : X → 𝓥 ̇) {x y : X} (p : x ＝ y)
+                     → (transportℍ A p ＝ transport A p)
+                     × (transport𝕁 A p ＝ transport A p)
+
+transports-agreement A (refl x) = refl (transport A (refl x)) ,
+                                  refl (transport A (refl x))
+
+lhs : {X : 𝓤 ̇} {x y : X} → x ＝ y → X
+lhs {𝓤} {X} {x} {y} p = x
+
+rhs : {X : 𝓤 ̇} {x y : X} → x ＝ y → X
+rhs {𝓤} {X} {x} {y} p = y
+
+_∙_ : {X : 𝓤 ̇} {x y z : X} → x ＝ y → y ＝ z → x ＝ z
+p ∙ q = transport (lhs p ＝_) q p
+
+_＝⟨_⟩_ : {X : 𝓤 ̇} (x : X) {y z : X} → x ＝ y → y ＝ z → x ＝ z
+x ＝⟨ p ⟩ q = p ∙ q
+
+_∎ : {X : 𝓤 ̇} (x : X) → x ＝ x
+x ∎ = refl x
+
+_⁻¹ : {X : 𝓤 ̇} → {x y : X} → x ＝ y → y ＝ x
+p ⁻¹ = transport (_＝ lhs p) p (refl (lhs p))
+
+_∙'_ : {X : 𝓤 ̇} {x y z : X} → x ＝ y → y ＝ z → x ＝ z
+p ∙' q = transport (_＝ rhs q) (p ⁻¹) q
+
+∙agreement : {X : 𝓤 ̇} {x y z : X} (p : x ＝ y) (q : y ＝ z)
+           → p ∙' q ＝ p ∙ q
+
+∙agreement (refl x) (refl x) = refl (refl x)
+
+rdnel : {X : 𝓤 ̇} {x y : X} (p : x ＝ y)
+      → p ∙ refl y ＝ p
+
+rdnel p = refl p
+
+
+rdner : {X : 𝓤 ̇} {y z : X} (q : y ＝ z)
+      → refl y  ∙' q ＝ q
+
+rdner q = refl q
+
+ap : {X : 𝓤 ̇} {Y : 𝓥 ̇} (f : X → Y) {x x' : X} → x ＝ x' → f x ＝ f x'
+ap f {x} {x'} p = transport (λ - → f x ＝ f -) p (refl (f x))
+
+_∼_ : {X : 𝓤 ̇} {A : X → 𝓥 ̇} → Π A → Π A → 𝓤 ⊔ 𝓥 ̇
+f ∼ g = ∀ x → f x ＝ g x
+
+¬¬ ¬¬¬ : 𝓤 ̇ → 𝓤 ̇
+¬¬  A = ¬(¬ A)
+¬¬¬ A = ¬(¬¬ A)
+
+dni : (A : 𝓤 ̇) → A → ¬¬ A
+dni A a u = u a
+
+contrapositive : {A : 𝓤 ̇} {B : 𝓥 ̇} → (A → B) → (¬ B → ¬ A)
+contrapositive f v a = v (f a)
+
+tno : (A : 𝓤 ̇) → ¬¬¬ A → ¬ A
+tno A = contrapositive (dni A)
+
+_⇔_ : 𝓤 ̇ → 𝓥 ̇ → 𝓤 ⊔ 𝓥 ̇
+X ⇔ Y = (X → Y) × (Y → X)
+
+lr-implication : {X : 𝓤 ̇} {Y : 𝓥 ̇} → (X ⇔ Y) → (X → Y)
+lr-implication = pr₁
+
+rl-implication : {X : 𝓤 ̇} {Y : 𝓥 ̇} → (X ⇔ Y) → (Y → X)
+rl-implication = pr₂
+
+absurdity³-is-absurdity : {A : 𝓤 ̇ } → ¬¬¬ A ⇔ ¬ A
+absurdity³-is-absurdity {𝓤} {A} = firstly , secondly
+ where
+  firstly : ¬¬¬ A → ¬ A
+  firstly = contrapositive (dni A)
+
+  secondly : ¬ A → ¬¬¬ A
+  secondly = dni (¬ A)
+
+_≠_ : {X : 𝓤 ̇ } → X → X → 𝓤 ̇
+x ≠ y = ¬(x ＝ y)
+
+≠-sym : {X : 𝓤 ̇ } {x y : X} → x ≠ y → y ≠ x
+≠-sym {𝓤} {X} {x} {y} u = λ (p : y ＝ x) → u (p ⁻¹)
+
+Id→Fun : {X Y : 𝓤 ̇ } → X ＝ Y → X → Y
+Id→Fun {𝓤} = transport (𝑖𝑑 (𝓤 ̇ ))
+
+Id→Fun' : {X Y : 𝓤 ̇ } → X ＝ Y → X → Y
+Id→Fun' (refl X) = 𝑖𝑑 X
+
+Id→Funs-agree : {X Y : 𝓤 ̇ } (p : X ＝ Y)
+              → Id→Fun p ＝ Id→Fun' p
+
+Id→Funs-agree (refl X) = refl (𝑖𝑑 X)
+
+𝟙-is-not-𝟘 : 𝟙 ≠ 𝟘
+𝟙-is-not-𝟘 p = Id→Fun p ⋆
+
+₁-is-not-₀ : ₁ ≠ ₀
+₁-is-not-₀ p = 𝟙-is-not-𝟘 q
+ where
+  f : 𝟚 → 𝓤₀ ̇
+  f ₀ = 𝟘
+  f ₁ = 𝟙
+
+  q : 𝟙 ＝ 𝟘
+  q = ap f p
+
+₁-is-not-₀[not-an-MLTT-proof] : ¬(₁ ＝ ₀)
+₁-is-not-₀[not-an-MLTT-proof] ()
+
+
+
+
+
+infix   0 _∼_
 infixr 50 _,_
 infixr 30 _×_
 infixr 20 _+_
@@ -296,9 +435,9 @@ infixl 70 _∘_
 infix   0 Id
 infix   0 _＝_
 --infix  10 _⇔_
---infixl 30 _∙_
---infixr  0 _＝⟨_⟩_
---infix   1 _∎
+infixl 30 _∙_
+infixr  0 _＝⟨_⟩_
+infix   1 _∎
 --infix  40 _⁻¹
 --infix  10 _◁_
 --infixr  0 _◁⟨_⟩_
