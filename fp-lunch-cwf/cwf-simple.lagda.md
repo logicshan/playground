@@ -61,28 +61,28 @@ El (A ×U B) = El A × El B
 open CwF-simple
 
 model : CwF-simple
-Con model = U
-Ty model = U
-Tm model Γ A = El Γ → El A
-Tms model Γ Δ = El Γ → El Δ
-id model x = x
-_∘_ model f g x = f (g x)
-idl model = refl
-idr model = refl
-ass model = refl
+Con  model = U
+Ty   model = U
+Tm   model Γ A = El Γ → El A
+Tms  model Γ Δ = El Γ → El Δ
+id   model = λ x → x
+_∘_  model f g x = f (g x)
+idl  model = refl
+idr  model = refl
+ass  model = refl
 _[_] model f g x = f (g x)
 [id] model = refl
-[∘] model = refl
-• model = ⊤U
-ε model = λ x → tt
-•-η model = refl
-_▷_ model A B = A ×U B
+[∘]  model = refl
+•    model = ⊤U
+ε    model = λ x → tt
+•-η  model = refl
+_▷_  model A B = A ×U B
 CwF-simple._,_ model f g x = (f x) Data.Product., (g x)
-π₀ model f x = proj₁ (f x)
-π₁ model f x  = proj₂ (f x)
+π₀   model f x = proj₁ (f x)
+π₁   model f x  = proj₂ (f x)
 ▷-β₀ model = refl
 ▷-β₁ model = refl
-▷-η model = refl
-π₀∘ model = refl
-π₁∘ model = refl
+▷-η  model = refl
+π₀∘  model = refl
+π₁∘  model = refl
 ```
