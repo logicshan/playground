@@ -28,8 +28,15 @@ quote l t = case t of
 nf :: [Val] -> Tm -> Tm
 nf env t = quote (length env) (eval env t)
 
-term1 :: Tm
-term1_val :: Val
+term1, term2 :: Tm
+term1_val, term2_val :: Val
 
-term1 = Lam (App (Lam (App (Var 1) (Var 0))) (Var 0))
+-- λ ((λ 1 0) 0)
+-- λ x . (λ y . (x y) y)
+term1 = Lam (App (Lam (App (Var 1) (Var 0))) (Var 0))  
 term1_val = eval [] term1
+
+-- (λ x . x) (λ y . y)
+-- (λ 0) (λ 0)
+term2 = App (Lam (Var 0)) (Lam (Var 0))
+term2_val = eval [] term2
