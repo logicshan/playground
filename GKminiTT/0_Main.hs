@@ -2,19 +2,14 @@
 -- Main module
 -----------------------------------------
 
-module Main2 where
+module Main where
 
 import Prelude hiding ((*))
-
-import Core.Abs
-import Core.Print
-import Core.ErrM
-import Core.Par
 
 ----------------------------------------------------------
 -- Expressions
 -----------------------------------------------------------
-{-
+
 type Name = String
 
 data Exp = -- M,N,A,B
@@ -48,18 +43,10 @@ data Patt = -- p
   deriving (Eq,Ord,Show)
 
 type Branch = [(Name,Exp)]  -- S ∷= () | (cM,S)
--}
+
 -----------------------------------------------------------
 -- Values
 -----------------------------------------------------------
-
-type Name = Ident
-
-unsum :: Summand -> (Name,Exp)
-unsum (Summand c a) = (c,a)
-
-unfun :: Branch -> (Name,Exp)
-unfun (Branch c e) = (c,e)
 
 data Val = -- u,v,t
      Lam Clos         -- λf
@@ -83,8 +70,7 @@ data Neut = -- k
   |  NtFun SClos Neut -- sk
   deriving Show
 
--- type SClos = (Branch, Rho)   -- s ∷= ⟨S,ρ⟩
-type SClos = ([(Name,Exp)], Rho)
+type SClos = (Branch, Rho)   -- s ∷= ⟨S,ρ⟩
 
 -- Function closures
 data Clos = -- f,g
@@ -177,8 +163,8 @@ eval e0 rho = case e0 of
   EVar x      -> getRho rho x
   EPair e1 e2 -> Pair (eval e1 rho) (eval e2 rho)
   ECon c e1   -> Con c (eval e1 rho)
-  ESum cas'   -> Sum (cas, rho) where cas = [(c,a) | Summand c a <- cas']
-  EFun ces'   -> Fun (ces, rho) where ces = [(c,e) | Branch  c e <- ces']
+  ESum cas    -> Sum (cas, rho)
+  EFun ces    -> Fun (ces, rho)
   e -> error $ "eval: " ++ show e 
 
 -----------------------------------------------------------
@@ -205,8 +191,7 @@ data NNeut = -- K
   |  NNtFun NSClos NNeut  -- ⟨S,α⟩K
   deriving (Eq,Show)
 
---type NSClos = (Branch, NRho)  -- ⟨S,α⟩
-type NSClos = ([(Name,Exp)], NRho)
+type NSClos = (Branch, NRho)  -- ⟨S,α⟩
 
 data NRho = -- α
      NRNil                   -- ()
@@ -245,7 +230,6 @@ rbRho _ RNil            = NRNil
 rbRho i (UpVar rho p v) = NUpVar (rbRho i rho) p (rbV i v)
 rbRho i (UpDec rho d )  = NUpDec (rbRho i rho) d
 
-
 ------------------------------------------------
 -- Error monad and type environment
 ------------------------------------------------
@@ -267,7 +251,7 @@ instance Monad G where
     (Fail s) >>= _ = Fail s
 
 instance MonadFail G where
-    fail = Fail . Ident
+    fail = Fail
 
 type Γ = [(Name,Val)]
 
@@ -326,13 +310,11 @@ check k rho gma e0 t0 =
     (ECon c e , Sum (cas,rho1))->
       do a <- lookupG c cas
          check k rho gma e (eval a rho1)
-    (EFun ces', Pi (Sum (cas, rho1)) g) ->
+    (EFun ces, Pi (Sum (cas, rho1)) g) ->
       if map fst ces == map fst cas
       then sequence_ [check k rho gma e (Pi (eval a rho1) (clCmp g c))
                      | ((c,e), (_,a)) <- zip ces cas]
       else fail "case branches does not match the data type"
-      where
-        ces = map unfun ces'
     (Eunit , One)-> return ()
     (EOne  , Set)-> return ()
     (EPi p a b , Set)->
@@ -342,7 +324,7 @@ check k rho gma e0 t0 =
          check (k+1) (UpVar rho p gen) gma1 b Set
     (ESig p a b , Set)-> check k rho gma (EPi p a b) Set
     (ESum cas, Set) ->
-      sequence_ [check k rho gma a Set | Summand _ a <- cas]
+      sequence_ [check k rho gma a Set | (_,a) <- cas]
     (EDec d e , t )-> do gma1 <- checkD k rho gma d
                          check k (UpDec rho d) gma1 e t
     (e        , t )-> do t1 <- checkI k rho gma e
@@ -406,12 +388,11 @@ checkMain e = check 0 RNil [] e One
 -- checking a string input
 checkStr :: String -> IO()
 checkStr s =
---  case parseExp $ myLex s of -- parsing using routines
-  case pExp $ myLexer s of -- parsing using routines
-    Left msg -> putStrLn $ "Parse error: " ++ msg
-    Right e ->
+  case parseExp $ myLex s of -- parsing using routines
+    Fail msg -> putStrLn $ "Parse error: " ++ msg
+    Success (e,_) ->
       case checkMain e of
-        Fail (Ident msg') ->
+        Fail msg' ->
           putStrLn ("type-checking failed:\n" ++ msg')
         Success _ ->
           putStrLn ("type-checking succeded.")

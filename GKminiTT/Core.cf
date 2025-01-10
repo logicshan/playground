@@ -4,16 +4,16 @@
 
 -- Expressions
 
-ELam.     Exp1   ::= "\\" Patt1 "." Exp1 ;
+ELam.     Exp1   ::= "λ" Patt1 "." Exp1 ;
 ESet.     Exp3   ::= "U" ;
-EPi.      Exp1   ::= "Pi"  Patt1 ":" Exp1 "." Exp1 ;
-ESig.     Exp1   ::= "Sig" Patt1 ":" Exp1 "." Exp1 ;
+EPi.      Exp1   ::= "Π"  Patt1 ":" Exp1 "." Exp1 ;
+ESig.     Exp1   ::= "Σ" Patt1 ":" Exp1 "." Exp1 ;
 EOne.     Exp3   ::= "1";
 Eunit.    Exp3   ::= "0";
 EPair.    Exp    ::= Exp1 "," Exp ;
 ECon.     Exp2   ::= "$" Ident Exp3;
-EData.    Exp1   ::= DataTk "(" [Summand] ")" ;
-ECase.    Exp1   ::= CaseTk "(" [Branch] ")" ;
+ESum.     Exp1   ::= "Sum" "(" [Summand] ")" ;
+EFun.     Exp1   ::= "fun" "(" [Branch] ")" ;
 EFst.     Exp3   ::= Exp3 ".1" ;
 ESnd.     Exp3   ::= Exp3 ".2" ;
 EApp.     Exp2   ::= Exp2 Exp3 ;
@@ -23,7 +23,7 @@ EDec.     Exp1   ::= Decl ";" Exp1 ;
 EPN.      Exp3   ::= "PN" ;
 
 -- syntax sugars
-eArrow.   Exp1   ::= Exp2 "->" Exp1 ;
+eArrow.   Exp1   ::= Exp2 "→" Exp1 ;
 eTimes.   Exp1   ::= Exp2 "*"  Exp1 ;
 define eArrow a b = EPi  Punit a b ;
 define eTimes a b = ESig Punit a b ;
@@ -44,13 +44,16 @@ coercions Patt 1 ;
 Summand.  Summand ::= Ident      Exp3;
 separator Summand "|" ;
 
-Branch.   Branch  ::= Ident "->" Exp1 ;
+Branch.   Branch  ::= Ident "→" Exp1 ;
 separator Branch  "|" ;
 
 comment "--" ;
 comment "{-" "-}" ;
 
-separator nonempty Ident "" ;
+-- separator nonempty Ident "" ;
 
-position token CaseTk {"fun"} ;
-position token DataTk {"Sum"} ;
+-- position token CaseTk {"fun"} ;
+-- position token DataTk {"Sum"} ;
+
+-- token CaseTk {"fun"} ;
+-- token DataTk {"Sum"} ;
