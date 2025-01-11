@@ -1,0 +1,5 @@
+$ bnfc -d -m Core.cf
+
+$ ghci Mini.hs
+
+ghci> checkFile "example.tt"

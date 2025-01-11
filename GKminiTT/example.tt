@@ -1,0 +1,71 @@
+-- Examples from the Mini-TT paper (section 6.3)
+
+let id : Π A : U . A → A = λA . λx . x ;
+
+let Bool : U = Sum (true 1 | false 1) ;
+let valueTrue : Bool = $ true 0 ;
+let valueFalse : Bool = $ false 0 ;
+
+{-
+let elimBool
+  :  Π C : Bool → U
+  .  C ($ false 0)
+  → C ($ true 0)
+  → Π b : Bool
+  .  C b
+  = λC . λh0 . λh1 . fun (true → λ_ . h1 | false → λ_ . h0)
+  ;
+-}
+
+letrec Nat : U = Sum(zero 1 | succ Nat) ;
+
+let valueZero : Nat = $ zero 0 ;
+let valueOne  : Nat = $ succ valueZero ;
+let valueOneB : Nat = $ succ ($ zero 0) ;
+let valueTwo  : Nat = $ succ valueOne ;
+
+letrec List
+  : U → U
+  = λA . Sum (nil 1 | cons (A × List A))
+  ;
+
+let valuePair : Nat × List Nat = (valueZero , ($ nil 0)) ;
+let valuePairB : Nat × List Nat = (valueZero , ($ nil 0)) ;
+
+let valueListNatEmpty : List Nat = $ nil 0 ;
+let valueListNatSingle : List Nat = $ cons (valueZero , ($ nil 0)) ;
+let valueListNat012 : List Nat
+  = $ cons (valueZero ,
+  ( $ cons (valueOne ,
+  ( $ cons (valueTwo ,
+  ( $ nil 0 )))))) ;
+{-
+letrec natrec
+  :  Π C : Nat → U
+  .  C ($ zero 0)
+  → (Π n : Nat . C n → C ($ succ n))
+  → Π n : Nat . C n
+  = λC . λa . λg . fun (zero → λ_ . a | succ → λn1 . g n1 (natrec C a g n1))
+  ;
+-}
+
+letrec add
+  : Nat → Nat → Nat
+  = λx . fun (zero → λ_ . x | succ → λy . $ succ (add x y))
+  ;
+
+letrec eqNat
+  : Nat → Nat → Bool
+  = fun
+    ( zero → λ_ . fun (zero → λ_ . $ true 0  | succ → λy . $ false 0)
+    | succ → λx . fun (zero → λ_ . $ false 0 | succ → λy . eqNat x y)
+    ) ;
+
+-- inductive-recusive example
+letrec (V, T)
+  : Σ X : U . X → U
+  = ( Sum (nat 1 | pi (Σ x : V . T x → V))
+    , fun (nat → λ_ . Nat | pi → λ(x, f) . Π y : T x . T (f y))
+    ) ;
+
+0

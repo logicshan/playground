@@ -24,7 +24,7 @@ EPN.      Exp3   ::= "PN" ;
 
 -- syntax sugars
 eArrow.   Exp1   ::= Exp2 "→" Exp1 ;
-eTimes.   Exp1   ::= Exp2 "*"  Exp1 ;
+eTimes.   Exp1   ::= Exp2 "×"  Exp1 ;
 define eArrow a b = EPi  Punit a b ;
 define eTimes a b = ESig Punit a b ;
 

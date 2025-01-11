@@ -2,7 +2,7 @@
 -- Main module
 -----------------------------------------
 
-module Main2 where
+module Mini where
 
 import Prelude hiding ((*))
 
