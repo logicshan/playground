@@ -1,24 +1,41 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
+-- build the ΠU-cwf 𝓝
+
 data Exp = Var Int
          | App Exp Exp
          | Lam Exp
          | Pi Exp Exp
          | U
-  deriving (Eq)
+  deriving (Show, Eq)
 
 type Ty    = Exp
 type Subst = [Exp]
 type Cxt   = [Ty]
 
+-- Checking contexts
 isCo ∷ Cxt → Bool
 isCo []      = True
 isCo (a:cxt) = isCo cxt && isTy cxt a
+-- checks whether a list of expressions represents a correct context.
+-- Such lists of expressions will be the objects in the category of contexts of 𝓝.
 
+-- 替换 σ: Γ → Δ 的语义是将 Δ 中的变量映射到 Γ 中的项
+{-
+Let's say Δ = x₁:A₁, x₂:A₂, ..., xₙ:Aₙ. A substitution σ: Γ → Δ will provide terms t₁, t₂, ..., tₙ such that:
+
+    t₁ is a term of type A₁[σ] in context Γ. Here, A₁[σ] means the type A₁ where the variables from Δ are substituted according to σ. Since A₁ is defined in context Δ, substituting with σ makes sense in context Γ.
+
+    t₂ is a term of type A₂[σ] in context Γ.
+
+    ...
+
+    tₙ is a term of type Aₙ[σ] in context Γ.
+-}
 isSu ∷ Cxt → Cxt → Subst → Bool
-isSu cxt []     []     = True
-isSu cxt (b:bs) (t:ts) = isSu cxt bs ts &&
-                         isTm cxt (subst b cxt) t
+isSu cxt []     []         = True
+isSu cxt (b:bs) sub@(t:ts) = isSu cxt bs ts &&
+                             isTm cxt (subst b sub) t
 
 isTy ∷ Cxt → Ty → Bool
 isTy cxt (Pi a b) = isTy cxt a && isTy (a:cxt) b

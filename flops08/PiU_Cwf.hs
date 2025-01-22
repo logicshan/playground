@@ -13,8 +13,8 @@ isCo (a:cxt) = isCo cxt && isTy cxt a
 
 isSu :: Cxt -> Cxt -> Subst -> Bool
 isSu cxt []     []     = True
-isSu cxt (b:bs) (t:ts) = isSu cxt bs ts &&
-                         isTm cxt (subst b cxt) t
+isSu cxt (b:bs) sub@(t:ts) = isSu cxt bs ts &&
+                         isTm cxt (subst b sub) t
 
 isTy :: Cxt -> Ty -> Bool
 isTy cxt (Pi a b) = isTy cxt a && isTy (a:cxt) b
