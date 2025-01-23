@@ -2,10 +2,7 @@ open import Agda.Builtin.Int    using (Int; pos)
 open import Data.Integer.Base   using (_+_; _-_)
 open import Agda.Builtin.Bool   using (Bool; true; false)
 open import Data.Bool.Base      using (_∧_)
-open import Agda.Builtin.String using (String; primStringEquality)
-
-_==_ : String → String → Bool
-_==_ = primStringEquality
+open import Agda.Builtin.String using (String)
 
 _≤_ : Int → Int → Bool
 x ≤ y with y - x
