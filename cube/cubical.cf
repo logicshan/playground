@@ -1,9 +1,16 @@
 {-
-abstn :: [Ident] -> Term -> Term -> Term
-abstn vs e1 e2 = foldr (\i e -> Abst i e1 e) e2 vs
+BNFC 不能嵌入 Haskell 代码
+在处理语法糖 [x₁,...,xₙ:A]M 的时候，如下代码不能直接嵌入
+可以在生成的 Abs.hs 文件中找到相应定义，替换为如下代码
+(还需要显式引入 foldr: `import Prelude (String, foldr)`)
 
-sigman :: [Ident] -> Term -> Term -> Term
-sigman vs e1 e2 = foldr (\i e -> Sigma i e1 e) e2 vs ;
+
+abstn :: Ident -> [Ident] -> Term -> Term -> Term
+abstn v vs e1 e2 = Abst v e1 (foldr (\i e -> Abst i e1 e) e2 vs)
+
+
+sigman :: Ident -> [Ident] -> Term -> Term -> Term
+sigman v vs e1 e2 = Sigma v e1 (foldr (\i e -> Sigma i e1 e) e2 vs) ;
 -}
 
 TDef.  Term ::= "[" Ident ":" Term "=" Term "]" Term ; -- [x:A=M]M' `let x be of type A and 
@@ -13,22 +20,22 @@ Abst.  Term ::= "[" Ident ":" Term "]" Term ;          -- It is used both for th
 						       -- (i.e. Πx:A.M).
 arr.   Term ::= Term1 "->" Term ;                      -- When x does not appear in M, we shall simply
                                                        -- write A → M.
-abstn. Term ::= "[" [Ident] ":" Term "]" Term ;
+abstn. Term ::= "[" Ident "," [Ident] ":" Term "]" Term ;
 
 
 define arr e1 e2 = Abst (Ident "") e1 e2 ;
-define abstn vs t1 t2 = abstn vs t1 t2 ;
+define abstn v vs e1 e2 = abstn v vs e1 e2 ;
 
 Sum.     Term1 ::= Term2 "+" Term1 ;               -- Coproduct types A + B
 Sigma.   Term1 ::= "<" Ident ":" Term ">" Term ;   -- Dependent sum types ⟨x:A⟩M (i.e. Σx:A.M)
 prod.    Term1 ::= Term2 "*" Term1 ;               -- When x does not appear in M, we shall simply write A*M.
 Pair.    Term1 ::= Term2 "," Term2 ;               -- Pair constructor (M₁,M₂)
-sigman.  Term1 ::= "<" [Ident] ":" Term ">" Term ;
+sigman.  Term1 ::= "<" Ident "," [Ident] ":" Term ">" Term ;
 Partial. Term1 ::= "[" DisjFormula "]" Term1 ;
 Restr.   Term1 ::= System Term1 ;
 
 define prod e1 e2 = Sigma (Ident "") e1 e2 ;
-define sigman vs e1 e2 = sigman vs e1 e2 ;
+define sigman v vs e1 e2 = sigman v vs e1 e2 ;
 
 App.   Term2 ::= Term2 Term3 ;                          -- Application (M₁M₂)
 Ind.   Term2 ::= "ind" Term3 Term3 Term3 Term3 ;
@@ -68,7 +75,7 @@ Diag. AtomicFormula ::= Ident "=" Ident ;
 
 
 Conj. ConjFormula ::= [AtomicFormula] ;
---_. ConjFormula ::= "(" ConjFormula ")" ;
+_. ConjFormula ::= "(" ConjFormula ")" ;
 separator AtomicFormula "/\\" ;
 
 Disj. DisjFormula ::= [ConjFormula] ;
