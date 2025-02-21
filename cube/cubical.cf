@@ -1,7 +1,10 @@
 {-
 BNFC 不能嵌入 Haskell 代码
 在处理语法糖 [x₁,...,xₙ:A]M 的时候，如下代码不能直接嵌入
-可以在生成的 Abs.hs 文件中找到相应定义，替换为如下代码
+由于我们在下面使用了 `define abstn v vs e1 e2 = abstn v vs e1 e2 ;`
+查看生成的 Par.y 文件, 里面有语句
+  | '[' Ident ',' ListIdent ':' Term ']' Term { Cubical.Abs.abstn $2 $4 $6 $8 }
+这样我们可以在生成的 Abs.hs 文件中找到相应定义，替换为如下代码
 (还需要显式引入 foldr: `import Prelude (String, foldr)`)
 
 
