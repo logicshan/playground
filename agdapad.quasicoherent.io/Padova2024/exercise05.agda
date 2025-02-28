@@ -469,11 +469,7 @@ module WfNat where
   lemma-G-is-computed-by-digits' : (a : ℕ) → Acc a → G a (digits a)
   lemma-G-is-computed-by-digits' zero _ = base
   lemma-G-is-computed-by-digits' (succ a) (acc f) rewrite lemma-digits a
-    = step (subst (G (half (succ a))) petit ((lemma-G-is-computed-by-digits' (half (succ a))) (f (half (succ a)) (lemma-half< a))))
-      where
-      petit : (digits (half (succ a)))
-              ≡ (go (half (succ a)) (theorem-ℕ-well-founded (half (succ a))))
-      petit = refl
+    = step ((lemma-G-is-computed-by-digits' (half (succ a))) (f (half (succ a)) (lemma-half< a)))
 
   lemma-G-is-computed-by-digits : (a : ℕ) → G a (digits a)
   lemma-G-is-computed-by-digits a = lemma-G-is-computed-by-digits'
