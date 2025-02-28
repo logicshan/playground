@@ -12,6 +12,12 @@ symm refl = refl
 trans : {A : Set} {x y z : A} → x ≡ y → y ≡ z → x ≡ z
 trans refl q = q
 
+subst : ∀ {A : Set} {x y : A} (P : A → Set)
+  → x ≡ y
+    ---------
+  → P x → P y
+subst P refl px = px
+
 infix  3 _∎
 infixr 2 _≡⟨_⟩_ _≡⟨⟩_
 infix  1 begin_

@@ -217,7 +217,7 @@ proposition = case-zero
 -- Type-theoretic reading: "first-theorem" is a function which reads two inputs,
 -- namely a number "n" and a witness that "n" is zero, and outputs a witness that "n" is zero.
 first-theorem : (n : ℕ) → IsZero n → IsZero n
-first-theorem n p = {!!}
+first-theorem n p = p
 
 -- EXERCISE: Prove that the sum of two numbers, both of which are zero, is zero again.
 -- Computational reading: "sum-zero" is a function which reads as input
@@ -238,9 +238,9 @@ sum-zero zero zero case-zero case-zero = case-zero
 -- (3) a witness that "x" is nonzero, and
 -- produces as output a witness that "x + y" is nonzero.
 sum-nonzero : (x y : ℕ) → IsNonzero x → IsNonzero (x + y)
-sum-nonzero x y p = {!!}
+sum-nonzero x y (case-succ n) = case-succ (n + y)
 
 -- EXERCISE: Prove that the (contradictory) assumption that zero is nonzero implies
 -- the (also contradictory) statement that succ zero is zero.
 zero-is-not-nonzero : IsNonzero zero → IsZero (succ zero)
-zero-is-not-nonzero = {!!}
+zero-is-not-nonzero = λ ()

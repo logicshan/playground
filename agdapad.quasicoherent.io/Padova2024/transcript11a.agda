@@ -83,8 +83,8 @@ module _ where private
   h' : X → State S Z
   h' x = do
     y ← f x
-    z ← g y
-    {!!}
+    g y
+--    return z
   -- "overloading semicolon"
 
 -- The type of binary trees, with leaves labelled with elements of X.

@@ -1,6 +1,7 @@
 {-# OPTIONS --cubical --allow-unsolved-metas #-}
 
 open import Cubical.Core.Primitives
+open import Cubical.Foundations.Prelude
 
 data ⊥ : Set where
 
@@ -38,10 +39,43 @@ unordered-ex' = mk two one
 
 _ : unordered-ex ≡ unordered-ex'
 _ = swap 
+{-
++comm : {x y : ℕ} → (x + y) ≡ (y + x)
++comm {zero} {zero} = refl
++comm {zero} {succ y} = cong succ (symm (+zero {y})) 
++comm {succ x} {zero} = cong succ (+zero {x})
++comm {succ x} {succ y} rewrite lemma-+-succ x y | lemma-+-succ y x
+  = cong (λ z → succ (succ z)) (+comm {x} {y})
+-}
+{-
+cong : {A B : Set} {x y : A} (f : A → B) → x ≡ y → f x ≡ f y
+cong f p = λ i → f (p i)
+-}
++zero : {x : ℕ} → x + zero ≡ x
++zero {zero} = λ i → zero
++zero {succ x} = cong succ (+zero {x})
+
++succ : {x y : ℕ} → x + (succ y) ≡ succ (x + y)
++succ {zero} {y} = refl
++succ {succ x} {y} = cong succ (+succ {x} {y})
+
++comm : {x y : ℕ} → (x + y) ≡ (y + x)
++comm {zero} {zero} = λ i → zero
++comm {zero} {succ y} = cong succ (sym (+zero {y}))
++comm {succ x} {zero} = cong succ (+zero {x})
++comm {succ x} {succ y} =
+  succ (x + succ y)
+    ≡⟨ cong succ (+succ {x} {y}) ⟩
+  succ (succ (x + y))
+    ≡⟨ cong (λ a → succ (succ a)) (+comm {x} {y}) ⟩
+  succ (succ (y + x))
+    ≡⟨ cong succ (sym (+succ {y} {x})) ⟩
+  succ (y + succ x) ∎
+
 
 unordered-sum : UnorderedPair → ℕ
 unordered-sum (mk a b) = a + b
-unordered-sum (swap i) = {!!}
+unordered-sum (swap {a} {b} i) = +comm {a} {b} i
 
 -- with unordered pairs, the following function should NOT be implementable, and indeed, it isn't
 first : UnorderedPair → ℕ
@@ -63,8 +97,6 @@ data ℤmod4 : Set where
 --      v                   |
 --      +--->---->--->--->--+
 
-cong : {A B : Set} {x y : A} (f : A → B) → x ≡ y → f x ≡ f y
-cong = {!!}
 
 _ : suc zer ≡ suc (suc (suc (suc (suc zer))))
 _ = cong suc loop
@@ -95,13 +127,29 @@ data ℤ : Set where
 
 succℤ : ℤ → ℤ
 succℤ (a ⊝ b) = succ a ⊝ b
-succℤ (cancel a b i) = {!!}
+succℤ (cancel a b i) = cancel (succ a) b i
 
 _+ℤ_ : ℤ → ℤ → ℤ
 (a ⊝ b) +ℤ (a' ⊝ b') = (a + a') ⊝ (b + b')
-(x ⊝ x₁) +ℤ cancel a b i = {!!}
-cancel a b i +ℤ z' = {!!}
-
+(a ⊝ b) +ℤ cancel a' b' i  = p i
+  where
+  p : (a + a') ⊝ (b + b') ≡ (a + succ a') ⊝ (b + succ b')
+  p =
+    (a + a') ⊝ (b + b')
+      ≡⟨ cancel (a + a') (b + b') ⟩
+    succ (a + a') ⊝ succ (b + b')
+      ≡⟨ cong₂ _⊝_ (sym (+succ {a} {a'})) (sym (+succ {b} {b'})) ⟩
+    (a + succ a') ⊝ (b + succ b') ∎
+cancel a b i +ℤ (a' ⊝ b') = cancel (a + a') (b + b') i
+cancel a b i +ℤ cancel a' b' j = {!!}
+{-
+cancel a b i +ℤ cancel a' b' j = hcomp (λ k → λ { (i = i0) (j = i0) → (a + a') ⊝ (b + b')
+                                        ; (i = i1) (j = i1) → (succ a + succ a') ⊝ (succ b + succ b')
+                                        ; (i = i0) (j = i1) → (a + succ a') ⊝ (b + succ b')
+                                        ; (i = i1) (j = i0) → (succ a + a') ⊝ (succ b + b') })
+                                       ?
+--                                       (cancel (a + a') (b + b') i)
+-}
 -- Indeed, in Cubical Agda, the type "x ≡ y" can not only (as usual) be read
 -- as the type of witnesses that x and y are the same, but it can also be read
 -- as the type of paths from x to y.
@@ -146,9 +194,10 @@ data FilledSquare : Set where
 -- logical reading: for any set/type X, for any element x : X, it is the case that x equals x.
 -- computational reading: "refl" is a function which inputs a set/type X and an element x : X, and outputs a witness that x equals x.
 -- homotopical reading: for any space X, for any point x : X, there is a path from x to x.
+{-
 refl : (X : Set) (x : X) → x ≡ x
 refl X x = λ i → x
-
+-}
 symm : (X : Set) (x y : X) → x ≡ y → y ≡ x
 symm X x y p = λ i → p (~ i)   -- in blackboard mathematics: p (1 - i)
 
@@ -188,7 +237,12 @@ data _⊎_ (X Y : Set) : Set where
   right : Y → X ⊎ Y
 
 _≤?_ : (a b : ℕ) → (a ≤ b) ⊎ (b ≤ a)
-x ≤? y = {!!}
+zero ≤? zero = left base
+zero ≤? succ y = left base
+succ x ≤? zero = right base
+succ x ≤? succ y with x ≤? y
+... | left x≤y = left (step x≤y)
+... | right y≤x = right (step y≤x)
 
 -- a "smart constructor"
 mk' : ℕ → ℕ → OrderedPair

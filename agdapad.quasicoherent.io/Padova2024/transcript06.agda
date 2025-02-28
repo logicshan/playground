@@ -61,11 +61,13 @@ module Verification₁
   lemma₀ = {!!}
 
   lemma : (x : A) (ys : List A) → IsOrdered ys → IsOrdered (insert x ys)
-  lemma x []             empty       = singleton
-  lemma x (y ∷ [])       singleton   with cmp? x y
-  ... | left  x≤y = cons x≤y singleton
+  lemma x [] empty = singleton
+  lemma x (y ∷ []) singleton with cmp? x y
+  ... | left x≤y = cons x≤y singleton
   ... | right y≤x = cons y≤x singleton
-  lemma x (y ∷ (z ∷ ys)) (cons y≤z p) = {!!}
+  lemma x (y ∷ (z ∷ xs)) yzxs@(cons v p) with cmp? x y
+  ... | left x≤y = cons x≤y (cons v p)
+  ... | right y≤x = {!!}
 
   theorem : (xs : List A) → IsOrdered (sort xs)
   theorem []       = empty
@@ -105,3 +107,4 @@ module CorrectByConstruction₁
   _ : {l : A} (xs : OList l) → sort (forget xs) ≡ xs
   _ = ?
   -}
+

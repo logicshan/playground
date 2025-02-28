@@ -34,8 +34,12 @@ data Bool : Set where
 data ℕ : Set where
   zero : ℕ
   succ : ℕ → ℕ
+{-# BUILTIN NATURAL ℕ #-}
 
 data ⊥ : Set where
+
+⊥-elim : {A : Set} → ⊥ → A
+⊥-elim ()
 
 infixr 5 _∷_
 data List (A : Set) : Set where
@@ -87,18 +91,31 @@ module _ where private
 
   -- EXERCISE. Verify that "eq?" works as intended by filling in the next two holes.
   lemma-correct₁ : (x y : ℕ) → eq? x y ≡ true → x ≡ y
-  lemma-correct₁ = {!!}
+  lemma-correct₁ zero zero p = refl
+  lemma-correct₁ (succ x) (succ y) p = cong succ (lemma-correct₁ x y p)
 
   lemma-correct₂ : (x y : ℕ) → x ≡ y → eq? x y ≡ true
-  lemma-correct₂ = {!!}
+  lemma-correct₂ zero     .zero     refl = refl
+  lemma-correct₂ (succ x) .(succ x) refl = lemma-correct₂ x x refl
 
   -- EXERCISE. Now follow the approach "correct by construction", by disregarding
   -- the implementation "eq?" and its correctness lemmas and instead filling in the
   -- next hole.
   dec : (x y : ℕ) → (x ≡ y) ⊎ ¬ (x ≡ y)
-  dec x y = {!!}
+  dec zero     zero     = left refl
+  dec zero     (succ y) = right λ ()
+  dec (succ x) zero     = right λ ()
+  dec (succ x) (succ y) with dec x y
+  ... | left p = left (cong succ p)
+  ... | right p = right λ q → p (lemma x y q)
+    where
+    lemma : (x y : ℕ) → succ x ≡ succ y → x ≡ y
+    lemma zero zero refl = refl
+    lemma zero (succ y) ()
+    lemma (succ x) zero ()
+    lemma (succ x) (succ .x) refl = refl
 
-module _ where private
+module ℕ-≤ where
   data _≤_ : ℕ → ℕ → Set where
     base : {y : ℕ} → zero ≤ y
     step : {x y : ℕ} → x ≤ y → succ x ≤ succ y
@@ -107,18 +124,31 @@ module _ where private
   -- if the first argument is smaller than or equal to the second argument,
   -- and "false" else. For instance "cmp? zero (succ zero)" should be "true".
   cmp? : ℕ → ℕ → Bool
-  cmp? x y = {!!}
+  cmp? zero zero = true
+  cmp? zero (succ y) = true
+  cmp? (succ x) zero = false
+  cmp? (succ x) (succ y) = cmp? x y
 
   -- EXERCISE. Verify the correctness of "cmp?" as follows.
   lemma-correct₁ : (x y : ℕ) → cmp? x y ≡ true → x ≤ y
-  lemma-correct₁ = {!!}
+  lemma-correct₁ zero zero p = base
+  lemma-correct₁ zero (succ y) p = base
+  lemma-correct₁ (succ x) (succ y) p = step (lemma-correct₁ x y p)
 
   lemma-correct₂ : (x y : ℕ) → x ≤ y → cmp? x y ≡ true
-  lemma-correct₂ = {!!}
+  lemma-correct₂ zero zero base = refl
+  lemma-correct₂ zero (succ y) base = refl
+  lemma-correct₂ (succ x) zero ()
+  lemma-correct₂ (succ x) (succ y) (step p) = lemma-correct₂ x y p
 
   -- EXERCISE. Now with "correct by construction".
   dec : (x y : ℕ) → (x ≤ y) ⊎ (y ≤ x)
-  dec = {!!}
+  dec zero zero = left base
+  dec zero (succ y) = left base
+  dec (succ x) zero = right base
+  dec (succ x) (succ y) with dec x y
+  ... | left p = left (step p)
+  ... | right p = right (step p)
 
 
 -- ────────────────────────
@@ -132,11 +162,25 @@ data Dec (A : Set) : Set where
 
 -- EXERCISE. For every pair of numbers x, y, verify that "x ≡ y" is decidable.
 dec-eq : (x y : ℕ) → Dec (x ≡ y)
-dec-eq x y = {!!}
+dec-eq zero zero = yes refl
+dec-eq zero (succ y) = no λ ()
+dec-eq (succ x) zero = no λ ()
+dec-eq (succ x) (succ y) with dec-eq x y
+... | yes p = yes (cong succ p)
+... | no p = no λ q → p (lemma x y q)
+  where
+  lemma : (x y : ℕ) → succ x ≡ succ y → x ≡ y
+  lemma zero zero refl = refl
+  lemma zero (succ y) ()
+  lemma (succ x) zero ()
+  lemma (succ x) (succ .x) refl = refl
 
 -- EXERCISE. Prove that, if "X" and "Y" are decidable, so is "X → Y".
 dec-→ : {X Y : Set} → Dec X → Dec Y → Dec (X → Y)
-dec-→ = {!!}
+dec-→ (yes _) (yes y) = yes λ _ → y
+dec-→ (yes x) (no ¬y) = no λ f → ¬y (f x)
+dec-→ (no _) (yes y) = yes (λ _ → y)
+dec-→ (no ¬x) (no _) = yes λ x → ⊥-elim (¬x x)
 
 
 -- ──────────────────────────
@@ -153,10 +197,14 @@ module Implementation
   -- but with "x" inserted at the correct place to ensure that the
   -- resulting list is again ordered.
   insert : (x : A) → List A → List A
-  insert = {!!}
+  insert x [] = x ∷ []
+  insert x L@(y ∷ ys) with cmp? x y
+  ... | left x≤y = x ∷ L
+  ... | right y≤x = y ∷ insert x ys
 
   sort : List A → List A
-  sort = {!!}
+  sort [] = []
+  sort (x ∷ xs) = insert x (sort xs) 
 
 module Verification₂ {A : Set} (_≤_ : A → A → Set) (cmp : (x y : A) → (x ≤ y) ⊎ (y ≤ x)) where
   open Implementation _≤_ cmp
@@ -178,15 +226,19 @@ module Verification₂ {A : Set} (_≤_ : A → A → Set) (cmp : (x y : A) → 
 
   -- EXERCISE: Fill in this hole.
   example : (x y z : A) → IsPerm (x ∷ y ∷ z ∷ []) (z ∷ x ∷ y ∷ [])
-  example x y z = {!!}
+  example x y z = cons (there here) (cons (there here) (cons here empty))
 
   -- EXERCISE: Verify this lemma.
   lemma : (x : A) (ys : List A) → x ◂ ys ↝ insert x ys
-  lemma x ys = {!!}
+  lemma x [] = here
+  lemma x (y ∷ ys) with cmp x y
+  ... | left x≤y = here
+  ... | right y≤x = there (lemma x ys)
 
   -- EXERCISE: Deduce this theorem.
   theorem : (xs : List A) → IsPerm xs (sort xs)
-  theorem xs = {!!}
+  theorem [] = empty
+  theorem (x ∷ xs) = cons (lemma x (sort xs)) (theorem xs)
 
 -- A variant of what we did in the lecture.
 module CorrectByConstruction₀
@@ -212,7 +264,17 @@ module CorrectByConstruction₀
   head (cons x xs _) = x
 
   insert : A → OList → OList
-  insert x ys = {!!}
+  insert x nil = cons x nil ≤max
+  insert x OL@(cons y ys p) with cmp x y
+  ... | left x≤y = cons x OL x≤y
+  ... | right y≤x = cons y (insert x ys) (lemma x y ys y≤x p)
+    where
+    lemma : (x y : A) → (ys : OList) → y ≤ x → y ≤ head ys → y ≤ head (insert x ys)
+    lemma x y nil p q = p
+    lemma x y (cons x₁ ys x₂) p q with cmp x x₁
+    ... | left x₃ = {!!}
+    ... | right x₃ = {!!}
+  
 
   sort : List A → OList
   sort []       = nil
@@ -235,13 +297,58 @@ module CorrectByConstruction₂
     nil  : OPList l []
     cons : {ys xys : List A} → (x : A) → OPList x ys → l ≤ x → (x ◂ ys ↝ xys) → OPList l xys
 
+  
+
   -- EXERCISE: Fill this in.
-  insert : {!!}
-  insert = {!!}
+  insert : {l : A} {xs : List A} → (x : A) → l ≤ x → OPList l xs → OPList l (x ∷ xs)
+  insert x l≤x nil = cons x nil l≤x here
+  insert x l≤x (cons y ys l≤y p) with cmp x y
+  ... | left x≤y = cons x (cons y ys x≤y p) l≤x here
+  ... | right y≤x = cons y (insert x y≤x ys) l≤y (there p)
+
 
   -- EXERCISE: Fill this in.
   sort : (xs : List A) → OPList min xs
-  sort = {!!}
+  sort [] = nil
+  sort (x ∷ xs) = insert x min≤ (sort xs)
+
+  forget : {l : A} → {xs : List A} → OPList l xs → List A
+  forget nil = []
+  forget (cons x xs _ _) = x ∷ forget xs
+
+
+module _ where
+
+  open ℕ-≤
+  open module SortListℕ = CorrectByConstruction₂ {ℕ} _≤_ 0 base dec
+
+  o1 : OPList 0 (2 ∷ 1 ∷ 0 ∷ [])
+  o1 = cons 0
+        (cons 1
+         (cons 2 nil
+          (step base) here)
+         base (there here))
+        base
+        (there
+         (there here))
+
+  o2 : OPList 0 (1 ∷ 2 ∷ 0 ∷ [])
+  o2 = cons 0
+        (cons 1
+         (cons 2 nil
+          (step base) here)
+         base here)
+        base
+        (there
+         (there here))
+
+
+  s : List ℕ
+  s = forget (sort (2 ∷ 1 ∷ 0 ∷ []))
+
+  _ : s ≡ (0 ∷ 1 ∷ 2 ∷ [])
+  _ = refl
+
 
 -- The modules CorrectByConstruction₁ and CorrectByConstruction₂ require a least element "min".
 -- EXERCISE: Define for any type A together with a relation _≤_ on A a new
@@ -249,9 +356,64 @@ module CorrectByConstruction₂
 -- this construction to get rid of the additional requirement.
 data *_ (A : Set) : Set where
   -- EXERCISE: fill this in
+  -∞ : * A
+  ⋆  : A → * A
 
-module Lift {A : Set} (_≤_ : A → A → Set) where
+
+module Lift {A : Set} (_≤_ : A → A → Set) (cmp : (x y : A) → (x ≤ y) ⊎ (y ≤ x)) where
   -- EXERCISE: Define a relation _≼_ on * A.
   -- EXERCISE: Verify that there is a least element for this relation.
   -- EXERCISE: Verify that if we have a function cmp for A then we also have such a function for * A.
   -- EXERCISE: Define a correct-by-construction sort function for A, by using * A.
+  data _≼_ : * A → * A → Set where
+     bot : {*x : * A} → -∞ ≼ *x
+     up≤   : {x y : A} → x ≤ y → ⋆ x ≼ ⋆ y
+
+  min : * A
+  min = -∞
+    
+  min≼ : {x : * A} → min ≼ x
+  min≼ = bot
+
+  cmp≼ : (cmp : (x y : A) → (x ≤ y) ⊎ (y ≤ x)) → (s t : * A) → (s ≼ t) ⊎ (t ≼ s)
+  cmp≼ cmp -∞ -∞ = left bot
+  cmp≼ cmp -∞ (⋆ x) = left bot
+  cmp≼ cmp (⋆ x) -∞ = right bot
+  cmp≼ cmp (⋆ x) (⋆ y) with cmp x y
+  ... | left x≤y = left (up≤ x≤y)
+  ... | right y≤x = right (up≤ y≤x)
+
+  data OList (l : * A) : Set where
+    nil  : OList l
+    cons : (x : * A) → l ≼ x → OList x → OList l
+
+  insert : {l : * A} → (x : * A) → l ≼ x → OList l → OList l
+  insert x l≼x nil = cons x l≼x nil
+  insert x l≼x (cons y l≼y ys) with cmp≼ cmp x y
+  ... | left x≼y = cons x l≼x (cons y x≼y ys)
+  ... | right y≼x = cons y l≼y (insert x y≼x ys)
+
+  sort : List A → OList -∞
+  sort []       = nil
+  sort (x ∷ xs) = insert (⋆ x) min≼ (sort xs)
+
+  forget : {l : * A} → OList l → List A
+  forget nil           = []
+  forget (cons -∞ _ xs) = forget xs
+  forget (cons (⋆ x) _ xs) = x ∷ forget xs
+
+module _ where
+  open ℕ-≤
+  open Lift {ℕ}
+
+  l : List ℕ
+  l = 2 ∷ 0 ∷ 1 ∷ []
+  
+  sl : OList _≤_ dec -∞
+  sl = sort _≤_ dec l
+
+  l₁ : List ℕ
+  l₁ = forget _≤_ dec sl
+
+  _ : l₁ ≡ (0 ∷ 1 ∷ 2 ∷ [])
+  _ = refl
