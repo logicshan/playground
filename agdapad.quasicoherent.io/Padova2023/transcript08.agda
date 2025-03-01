@@ -98,7 +98,7 @@ fromℕ zer     = zero
 fromℕ (suc n) = succ (fromℕ n)
 
 fromℕ-monotonic : Monotonic fromℕ
-fromℕ-monotonic = {!!}
+fromℕ-monotonic n = {!!}
 
 ω : O
 ω = lim fromℕ fromℕ-monotonic

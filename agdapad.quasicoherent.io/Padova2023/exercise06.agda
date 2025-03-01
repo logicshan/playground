@@ -129,12 +129,26 @@ example₃ = ≤-limiting (λ n → ≤-cocone {n = suc n} (lemma n))
 
 -- EXERCISE: Prove this.
 +-zero : (a : O) → (zero + a) ≤ a
-+-zero = {!!}
++-zero zero = ≤-zero
++-zero (succ a) = ≤-succ-mon (+-zero a)
++-zero (lim f x) = lim-mon λ n → +-zero (f n)
 
 -- EXERCISE: Prove this. For some clauses, you may need to case split
 -- on the implicit variable a.
 +-mon' : {x y a : O} → x ≤ y → (x + a) ≤ (y + a)
-+-mon' {a = a} p = {!!}
++-mon' {a = zero} ≤-zero = ≤-zero
++-mon' {a = succ _} ≤-zero = ≤-succ-mon (+-mon' ≤-zero)
++-mon' {a = lim _ _} ≤-zero = lim-mon λ n → +-mon' ≤-zero
++-mon' (≤-trans p q) = ≤-trans (+-mon' p) (+-mon' q)
++-mon' {a = zero} (≤-succ-mon p) = ≤-succ-mon p
++-mon' {a = succ _} (≤-succ-mon p) = ≤-succ-mon (+-mon' (≤-succ-mon p))
++-mon' {a = lim _ _} (≤-succ-mon p) = lim-mon λ n → +-mon' (≤-succ-mon p)
++-mon' {a = zero} (≤-cocone p) = ≤-cocone (+-mon' p)
++-mon' {a = succ _} (≤-cocone p) = ≤-succ-mon (+-mon' (≤-cocone p))
++-mon' {a = lim _ _} (≤-cocone p) = lim-mon λ n → +-mon' (≤-cocone p)
++-mon' {a = zero} (≤-limiting x) = ≤-limiting x
++-mon' {a = succ _} (≤-limiting x) = ≤-succ-mon (+-mon' (≤-limiting x))
++-mon' {a = lim _ _} (≤-limiting x) = lim-mon λ n → +-mon' (≤-limiting x)
 
 
 -----------------------------------
@@ -184,14 +198,15 @@ f simulates g = (a : ℕ) → Σ ℕ (λ b → g a ≤ f b)
 comparison-lemma
   : {f g : ℕ → O} {fmon : Monotonic f} {gmon : Monotonic g}
   → f simulates g → lim g gmon ≤ lim f fmon
-comparison-lemma sim = {!!}
+comparison-lemma sim = ≤-limiting λ n → ≤-cocone (proj₂ (sim n))
+
 
 -- EXERCISE: Reprove "lim-mon" from above using "comparison-lemma".
 lim-mon'
   : {f g : ℕ → O} {fmon : Monotonic f} {gmon : Monotonic g}
   → ((n : ℕ) → f n ≤ g n)
   → lim f fmon ≤ lim g gmon
-lim-mon' p = comparison-lemma (λ n → n , p n)
+lim-mon' p = comparison-lemma (λ n → (n , p n))
 
 
 --------------------------------------

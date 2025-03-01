@@ -64,16 +64,27 @@ module Classical where
     oracle : (A : Set) → A ⊎ (¬ A)
 
   double-negation-elimination : {A : Set} → ¬ ¬ A → A
-  double-negation-elimination p = {!!}
+  double-negation-elimination {A} p with oracle A
+  ... | inj₁ q = q
+  ... | inj₂ q = ⊥-elim (p q)
 
   -- Logical reading: If it is NOT the case that ¬ A and ¬ B, then
   de-morgan : {A B : Set} → ¬ ((¬ A) × (¬ B)) → A ⊎ B
-  de-morgan f = {!!}
+  de-morgan {A} {B} f with oracle A | oracle B
+  ... | inj₁ a  | inj₁ b  = inj₁ a
+  ... | inj₁ a  | inj₂ ¬b = inj₁ a
+  ... | inj₂ ¬a | inj₁ b  = inj₂ b
+  ... | inj₂ ¬a | inj₂ ¬b = ⊥-elim (f (¬a , ¬b))
 
   -- Logical reading: If it is NOT the case that for all x : A, B x is false,
   -- then B x is true for at least one x.
   de-morgan∞ : {A : Set} {B : A → Set} → ¬ ((x : A) → ¬ (B x)) → Σ A B
-  de-morgan∞ = {!!}
+  de-morgan∞ {A} {B} P with oracle (Σ A B)
+  ... | inj₁ (x , Bx) = x , Bx
+  ... | inj₂ ¬xBx = ⊥-elim (P q)
+        where
+        q : (x : A) → ¬ (B x)
+        q x Bx = ¬xBx (x , Bx)
 
   -- Logical reading: Every function α : ℕ → ℕ attains a minimal value α i,
   -- i.e. there is some number i such that α i ≤ α j for all j.
@@ -163,7 +174,7 @@ module Sarcastic (⊥ : Set) where
     return (i , αi≤α1+i)
 
   foo : ¬ ¬ ℕ
-  foo f = {!!}
+  foo f = f zero
 
 module Constructive where
   module _ (α : ℕ → ℕ) where

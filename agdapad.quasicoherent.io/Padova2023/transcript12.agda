@@ -180,7 +180,7 @@ data FilledSquare : Set where
 toℕ : ℤmod4' → ℕ
 toℕ zer'      = zero
 toℕ (suc' x)  = succ (toℕ x)
-toℕ (wrap' i) = {!!}
+toℕ (wrap' i) = {!!}                  -- cong toℕ wrap' i
 
 -- Note: toℕ (suc' zer') will be succ zero.
 --       toℕ (suc' (suc' (suc' (suc' (suc' zer'))))) will be 5.

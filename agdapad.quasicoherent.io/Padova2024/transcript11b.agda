@@ -14,12 +14,36 @@ data _⊎_ (X Y : Set) : Set where
   left  : X → X ⊎ Y
   right : Y → X ⊎ Y
 
+data _×_ (X Y : Set) : Set where
+  _,_ : X → Y → X × Y
+
+_+ℕ_ : ℕ → ℕ → ℕ
+zero +ℕ y = y
+succ x +ℕ y = succ (x +ℕ y)
+
+_×ℕ_ : ℕ → ℕ → ℕ
+zero ×ℕ y = zero
+succ x ×ℕ y = y +ℕ (x ×ℕ y)
+
 data Empty : Set where
 
 -- "Fin n" will be a datatype consisting of exactly n many inhabitants.
 data Fin : ℕ → Set where
   zero : {n : ℕ} → Fin (succ n)
   succ : {n : ℕ} → Fin n → Fin (succ n)
+
+data One : Set where
+  tt : One
+
+record Σ (A : Set) (B : A → Set) : Set where
+  constructor ⟨_,_⟩
+  field
+    proj₁ : A
+    proj₂ : B proj₁
+
+Σ-syntax = Σ
+infix 2 Σ-syntax
+syntax Σ-syntax A (λ x → Bx) = Σ[ x ∈ A ] Bx
 
 module _ where private
   example-0 : Fin (succ (succ (succ zero)))
@@ -62,19 +86,19 @@ Env n = Fin n → ℕ
 eval₀ : {n : ℕ} → Env n → Term n → ℕ
 eval₀ env Z       = zero
 eval₀ env (S s)   = succ (eval₀ env s)
-eval₀ env (s + t) = {!!}
-eval₀ env (s · t) = {!!}
+eval₀ env (s + t) = eval₀ env s +ℕ eval₀ env t
+eval₀ env (s · t) = eval₀ env s ×ℕ eval₀ env t
 eval₀ env (var x) = env x
 
 -- "eval env φ" should be the Agda proposition that the PA-formula φ is true (wrt the given environment).
 eval : {n : ℕ} → Env n → Form n → Set
-eval env ⊤        = {!!}
+eval env ⊤        = One
 eval env ⊥        = Empty
-eval env (φ ∧ ψ)  = {!!}
+eval env (φ ∧ ψ)  = eval env φ × eval env ψ
 eval env (φ ∨ ψ)  = eval env φ ⊎ eval env ψ
 eval env (φ ⇒ ψ) = eval env φ → eval env ψ
 eval env (FA φ)   = (n : ℕ) → eval (λ { zero → n ; (succ i) → env i }) φ
-eval env (TE φ)   = {!!}
+eval env (TE φ)   = Σ[ n ∈ ℕ ] eval (λ { zero → n ; (succ i) → env i }) φ 
 eval env (s ≈ t)  = eval₀ env s ≡ eval₀ env t
 -- "s ≡ t" is NOT what we mean, for instance Z and Z + Z would be deemed NON-equal.
 
@@ -104,6 +128,7 @@ ex-sound = λ n → refl
 data _⊢_ : {n : ℕ} → Form n → Form n → Set where   -- \vdash
   identity : {n : ℕ} {φ : Form n} → φ ⊢ φ
   disj-introₗ : {n : ℕ} {φ ψ : Form n} → φ ⊢ (φ ∨ ψ)
+  disj-introᵣ : {n : ℕ} {φ ψ : Form n} → ψ ⊢ (φ ∨ ψ)
   conj-intro
     : {n : ℕ} {φ ψ χ : Form n}
     → (φ ⊢ ψ)
