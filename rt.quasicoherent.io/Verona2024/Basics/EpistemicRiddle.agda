@@ -32,7 +32,19 @@ postulate
   e-transcendental  : Transcendental e
 
 theorem₁ : ¬ (Algebraic (e + π) ∧ Algebraic (e - π))
-theorem₁ (p , q) = {!!}
+theorem₁ (p , q) = e-transcendental e-algebraic
+  where
+  helper₁ : ((e + π) + (e - π)) ≡ (two * e)
+  helper₁ = eq₁ e π
+  helper₂ : (onehalf * (two * e)) ≡ e
+  helper₂ = eq₂ e
+  helper₃ : Algebraic (two * e)
+  helper₃ = subst Algebraic helper₁ (sum-algebraic p q)
+  helper₄ : Algebraic (onehalf * (two * e))
+  helper₄ = product-algebraic onehalf-algebraic helper₃
+  e-algebraic : Algebraic e
+  e-algebraic = subst Algebraic helper₂ helper₄
+  
 
 -- Additional postulates are required for this; determine which ones!
 theorem₂ : ¬ (Algebraic (e + π) ∧ Algebraic (e * π))
@@ -44,7 +56,7 @@ postulate
   de-morgan : {A B : Set} → ¬ (A ∧ B) → ¬ A ∨ ¬ B
 
 theorem₁' : Transcendental (e + π) ∨ Transcendental (e - π)
-theorem₁' = {!!}
+theorem₁' = de-morgan theorem₁
 
 theorem₂' : Transcendental (e + π) ∨ Transcendental (e * π)
-theorem₂' = {!!}
+theorem₂' = de-morgan theorem₂

@@ -18,8 +18,8 @@ module Classical where
   ¬ X = X → ⊥
   
   not-true-is-false : {x : Bool} → ¬ (true ≡ x) → false ≡ x
-  not-true-is-false {false} p = {!!}
-  not-true-is-false {true}  p = {!!}
+  not-true-is-false {false} p = refl
+  not-true-is-false {true}  p = ⊥-elim (p refl)
 
   -- "Boundedly α P" expresses that the predicate P is satisfied by the values
   -- of α only finitely often.
@@ -35,19 +35,24 @@ module Classical where
     oracle : {A : Set} → A ⊎ (¬ A)
 
   lemma : {X : Set} → {α : ℕ → X} {P : X → Set} → ¬ Boundedly α P → Infinitely α P
-  lemma {P = P} p a with oracle
+  lemma {α = α} {P = P} p a with oracle {Σ[ b ∈ ℕ ] b ≥ a × P (α b)}
   ... | inj₁ q = q
-  ... | inj₂ q = {!!}
+  ... | inj₂ q = ⊥-elim (p (a , (λ b b≥a → λ pαb → q (b , b≥a , pαb))))
 
   module _ (α : ℕ → Bool) where
+
     theorem : Infinitely α (false ≡_) ⊎ Infinitely α (true ≡_)
     theorem with oracle {Boundedly α (true ≡_)}
-    ... | inj₁ (a , p) = {!!}
-    ... | inj₂ p       = {!!}
+    ... | inj₁ (a , p) = inj₁ λ a' → (a' ⊔ a) , m≤m⊔n a' a , not-true-is-false (p (a' ⊔ a) (m≤n⊔m a' a))
+    ... | inj₂ p       = inj₂ (lemma {P = true ≡_} p)
 
     go : {x : Bool} → Infinitely α (x ≡_) → ∃[ i ] ∃[ j ] i < j × α i ≡ α j
     go p =
-      {!!}
+      let
+        (b , b≥zero , x≡αb) = p zero
+        (c , c≥sucb , x≡αc) = p (suc b)
+      in
+        b , c , c≥sucb , trans (sym x≡αb) x≡αc
 
     corollary : ∃[ i ] ∃[ j ] i < j × α i ≡ α j
     corollary with theorem
@@ -71,8 +76,8 @@ module ConstructiveButUninformative (⊥ : Set) where
   escape m = m (λ a → a)
 
   not-true-is-false : {x : Bool} → ¬ (true ≡ x) → ¬ ¬ (false ≡ x)
-  not-true-is-false {false} p = {!!}
-  not-true-is-false {true}  p = {!!}
+  not-true-is-false {false} p = λ z → z refl
+  not-true-is-false {true}  p = λ z → p refl
 
   Boundedly : {X : Set} → (ℕ → X) → (X → Set) → Set
   Boundedly f P = Σ[ a ∈ ℕ ] ((b : ℕ) → b ≥ a → ¬ P (f b))
@@ -84,14 +89,20 @@ module ConstructiveButUninformative (⊥ : Set) where
   oracle = λ k → k (inj₂ (λ x → k (inj₁ x)))
 
   lemma : {X : Set} → {α : ℕ → X} {P : X → Set} → ¬ Boundedly α P → Infinitely α P
-  lemma {α = α} {P = P} p a = {!!}
+  lemma {α = α} {P = P} p a = λ z → p (a , (λ b z₁ z₂ → z (b , z₁ , z₂)))
 
   module _ (α : ℕ → Bool) where
+
     theorem : ¬ ¬ (Infinitely α (false ≡_) ⊎ Infinitely α (true ≡_))
-    theorem = {!!}
+    theorem = oracle {Boundedly α (true ≡_)} ⟫= λ
+      { (inj₁ (a , p)) → λ k → k (inj₁ (λ a' → not-true-is-false (p (a' ⊔ a) (m≤n⊔m a' a)) ⟫= λ eq → return ((a' ⊔ a) , m≤m⊔n a' a , eq)))
+      ; (inj₂ p) → λ k → k (inj₂ (lemma {P = true ≡_} p))
+      }
 
     go : {x : Bool} → Infinitely α (x ≡_) → ¬ ¬ (∃[ i ] ∃[ j ] i < j × α i ≡ α j)
-    go p = {!!}
+    go {x} p = p zero ⟫= λ
+      (b , b≥zero , x≡αb) → p (suc b) ⟫= λ
+      (c , c≥sucb , x≡αc) → return (b , c , c≥sucb , trans (sym x≡αb) x≡αc)
 
     corollary : ¬ ¬ (∃[ i ] ∃[ j ] i < j × α i ≡ α j)
     corollary = theorem ⟫= λ { (inj₁ p) → go p; (inj₂ p) → go p }

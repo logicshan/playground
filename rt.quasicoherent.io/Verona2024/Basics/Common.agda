@@ -23,6 +23,9 @@ data ℕ : Set where
 data _≡_ {X : Set} : X → X → Set where
   refl : {x : X} → x ≡ x
 
+trans : {X : Set} {x y z : X} → x ≡ y → y ≡ z → x ≡ z
+trans refl refl = refl
+
 data Bool : Set where
   false true : Bool
 

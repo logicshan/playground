@@ -78,7 +78,7 @@ prop₁ x = refl
 
 module _ {A B : Set} (f : A → B) {x y : A} where
   cong : x ≡ y → f x ≡ f y
-  cong p = {!!}
+  cong refl = refl
 
 prop₂ : (x : ℕ) → (x + zero) ≡ x
 prop₂ zero     = refl
