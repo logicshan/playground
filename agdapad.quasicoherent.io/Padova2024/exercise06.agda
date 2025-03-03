@@ -82,6 +82,7 @@ funext : {A B : Set} (f g : A → B) → ((x : A) → f x ≡ g x) → f ≡ g
 funext f g pntEq i = λ x → pntEq x i
 
 -- EXERCISE: Implement the successor operation on ℤ.
+-- https://github.com/agda/cubical/blob/master/Cubical/Data/Int/MoreInts/DeltaInt/Base.agda
 data ℤ : Set where
   _⊝_ : ℕ → ℕ → ℤ     -- \o- \ominus
   cancel : (a b : ℕ) → a ⊝ b ≡ succ a ⊝ succ b
@@ -189,58 +190,27 @@ ref (succ a) = ref a
 
 -- Hint: Use "J" or "transport"!
 
-pred : (n : ℕ) → ℕ
-pred zero = zero
-pred (succ n) = n
-
-little-lemma₀ : {n : ℕ} → pred (succ n) ≡ n
-little-lemma₀ = refl
-
-little-lemma : {a b : ℕ} → (succ a ≡ succ b) → a ≡ b
-little-lemma p = cong pred p
-
-toCode : (a b : ℕ) → a ≡ b → Code a b
-toCode zero zero p = *
-toCode zero (succ b) p = lemma-nontrivial' p
-toCode (succ a) zero p = lemma-nontrivial' (sym p)
-toCode (succ a) (succ b) p = toCode a b (little-lemma p)
-
-
-{-
 toCode : (a b : ℕ) → a ≡ b → Code a b
 toCode a b p = transport (λ i → Code (p i0) (p i)) (ref a)
 
-lemma-ℕ-discrete : isDiscrete ℕ
-lemma-ℕ-discrete a b p q = cong (fromCode a b) (lemma-code-prop a b (toCode a b p) (toCode a b q))
-  where
-    lemma-code-prop : (a b : ℕ) → (c d : Code a b) → c ≡ d
-    lemma-code-prop zero     zero     c d = 𝟙-isProp c d
-    lemma-code-prop (succ a) (succ b) c d = lemma-code-prop a b c d
-
--}
-{-
 lemma-code-prop : (a b : ℕ) → isProp' (Code a b)
 lemma-code-prop zero zero * * = refl
 lemma-code-prop zero (succ b) () ()
 lemma-code-prop (succ a) zero () ()
 lemma-code-prop (succ a) (succ b) p q = lemma-code-prop a b p q
 
+lemma-fromCode : {a : ℕ} → fromCode a a (ref a) ≡ refl
+lemma-fromCode {zero} = refl
+lemma-fromCode {succ a} = cong (cong succ) lemma-fromCode
+
+lemma-toCode : {a : ℕ} → toCode a a refl ≡ ref a
+lemma-toCode {a} = lemma-code-prop a a (toCode a a refl) (ref a)
+
 fromCode∘toCode : (a b : ℕ) (p : a ≡ b) → fromCode a b (toCode a b p) ≡ p
-fromCode∘toCode a b p =
-  J (λ b p → fromCode a b (toCode a b p) ≡ p) {!!} p
--}
-{-
-fromCode∘toCode : (a b : ℕ) (p : a ≡ b) → fromCode a b (toCode a b p) ≡ p
-fromCode∘toCode a b p =
-  J (λ b p → fromCode a b (toCode a b p) ≡ p)
-    (fromCode a a (toCode a a refl) ≡⟨ cong (fromCode a a) refl ⟩
-     fromCode a a (ref a)           ≡⟨ ? ⟩
-     refl                           ∎)
-    p
--}
-{-
-fromCode∘toCode : (a b : ℕ) (p : a ≡ b) → fromCode a b (toCode a b p) ≡ p
-fromCode∘toCode a b p = J (λ b p → fromCode a b (toCode a b p) ≡ p) (λ i → fromCode a a (ref a)) p
+fromCode∘toCode a b p =  J
+                         (λ b p → fromCode a b (toCode a b p) ≡ p)
+                         (cong (fromCode a a) (lemma-toCode {a}) ∙ lemma-fromCode)
+                         p
 
 lemma-ℕ-discrete : isDiscrete ℕ
 lemma-ℕ-discrete a b p q =
@@ -251,49 +221,3 @@ lemma-ℕ-discrete a b p q =
   fromCode a b (toCode a b q)
     ≡⟨ fromCode∘toCode a b q ⟩
   q ∎
--}
-{-
-lemma-code-prop : (a b : ℕ) → isProp' (Code a b)
-lemma-code-prop zero zero * * = refl
-lemma-code-prop zero (succ b) () ()
-lemma-code-prop (succ a) zero () ()
-lemma-code-prop (succ a) (succ b) p q = lemma-code-prop a b p q
-
-fromCode∘toCode : (a b : ℕ) (p : a ≡ b) → fromCode a b (toCode a b p) ≡ p
-fromCode∘toCode a b p = J (λ b p → fromCode a b (toCode a b p) ≡ p)
-  (λ i → fromCode a a (ref a))
-  p
-
-lemma-ℕ-discrete : isDiscrete ℕ
-lemma-ℕ-discrete a b p q =
-  p
-    ≡⟨ sym (fromCode∘toCode a b p) ⟩
-  fromCode a b (toCode a b p)
-    ≡⟨ cong (fromCode a b) (lemma-code-prop a b (toCode a b p) (toCode a b q)) ⟩
-  fromCode a b (toCode a b q)
-    ≡⟨ fromCode∘toCode a b q ⟩
-  q ∎
--}
-
-lemma-code-prop : (a b : ℕ) → isProp' (Code a b)
-lemma-code-prop zero zero * * = refl
-lemma-code-prop zero (succ b) () ()
-lemma-code-prop (succ a) zero () ()
-lemma-code-prop (succ a) (succ b) p q = lemma-code-prop a b p q
-
-fromCode∘toCode : (a b : ℕ) (p : a ≡ b) → fromCode a b (toCode a b p) ≡ p
-fromCode∘toCode a b p =
-  J (λ b p → fromCode a b (toCode a b p) ≡ p)
-    (cong (fromCode a a) (transportRefl (ref a)))
-    p
-
-lemma-ℕ-discrete : isDiscrete ℕ
-lemma-ℕ-discrete a b p q =
-  p
-    ≡⟨ sym (fromCode∘toCode a b p) ⟩
-  fromCode a b (toCode a b p)
-    ≡⟨ cong (fromCode a b) (lemma-code-prop a b (toCode a b p) (toCode a b q)) ⟩
-  fromCode a b (toCode a b q)
-    ≡⟨ fromCode∘toCode a b q ⟩
-  q ∎
-
