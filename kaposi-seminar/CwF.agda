@@ -12,6 +12,7 @@ record CwF : Set₁ where
   infixl 7 _∘_
   infixl 6 _[_]T _[_]t
   infixl 5 _▷_
+  infixl 4 _,_
 
   field
     Con : Set
@@ -42,4 +43,4 @@ record CwF : Set₁ where
           → (λ δ → Tm Γ (A [ δ ]T)) ⊢ subst (Tm Γ) (sym [∘]) (q [ σ , t ]t) ≡[ ▷β₁ ]≡ t
     ▷η  : {Γ : Con}{A : Ty Γ} → (p , q) ≡ id {Γ ▷ A}
     ,∘  : {Γ Δ Θ : Con}{A : Ty Θ}{σ : Sub Δ Θ}{δ : Sub Γ Δ}{t : Tm Δ (A [ σ ]T)}
-          → (σ , t) ∘ δ ≡ ((σ ∘ δ) , (subst (Tm Γ) (sym [∘]) (t [ δ ]t)))
+          → (σ , t) ∘ δ ≡ (σ ∘ δ , subst (Tm Γ) (sym [∘]) (t [ δ ]t))
