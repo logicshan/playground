@@ -2,6 +2,8 @@ open import Relation.Binary.PropositionalEquality
 open import Data.Product using (proj₁; proj₂; _,_) renaming (_×_ to _x_)
 open import Category.Category
 
+module Hom_functor where
+
 open Category
 
 op : Category → Category

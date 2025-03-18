@@ -185,3 +185,15 @@ Category.comp SET f g = g Fun.∘′ f
 Category.assoc SET = refl
 Category.identityˡ SET = refl
 Category.identityʳ SET = refl
+
+module _ where
+  open Category
+
+  op : Category → Category
+  Obj (op C) = Obj C
+  Hom (op C) X Y = Hom C Y X
+  id (op C) = id C
+  comp (op C) f g = comp C g f
+  assoc (op C) {f = f} {g} {h} = sym (assoc C {f = h} {g} {f})
+  identityˡ (op C) = identityʳ C
+  identityʳ (op C) = identityˡ C
