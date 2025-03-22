@@ -13,8 +13,9 @@ open import Categories.Category
 open import Categories.Functor
 open import Categories.NaturalTransformation
 open import Categories.Monad
-open import Categories.Category.Instance.Sets using (Sets)
 -}
+open import Categories.Category.Instance.Sets using (Sets)
+
 
 --open import Algebra.Lattice.Morphism.Structures using (IsLatticeHomomorphism)
 open import Relation.Binary.Morphism.Structures using (IsRelHomomorphism)
@@ -71,7 +72,7 @@ id-DeMorganHom : ∀ {c ℓ} {L : DeMorganAlgebra c ℓ} → DeMorganHom L L
 id-DeMorganHom {L = L} = let module L = DeMorganAlgebra L in
   record
                   { ⟦_⟧ = id
-                  ; isRelHomomorphism = record { cong = λ {x} {y} z → z }
+                  ; isRelHomomorphism = record { cong = id }
                   ; pres-∨ = λ x y → L.refl
                   ; pres-∧ = λ x y → L.refl
                   ; pres-¬ = λ x → L.refl
@@ -85,24 +86,20 @@ DeMorganCategory : ∀ c ℓ → Category _ _ _
 DeMorganCategory c ℓ = record
              { Obj = DeMorganAlgebra c ℓ
              ; _⇒_ = DeMorganHom
-             ; _≈_ = λ {A} {B} f g → ∀ x → (DeMorganHom.⟦ f ⟧ x) ≡ (DeMorganHom.⟦ g ⟧ x)
+             ; _≈_ = λ {A} {B} f g → let open DeMorganHom in (Sets c [ ⟦ f ⟧ ≈ ⟦ g ⟧ ])
              ; id = id-DeMorganHom
              ; _∘_ = ∘-DeMorganHom
-             ; assoc = λ {A} {B} {C} {D} {f} {g} {h} x → refl
-             ; sym-assoc = λ {A} {B} {C} {D} {f} {g} {h} x → refl
-             ; identityˡ = λ {A} {B} {f} x → refl
-             ; identityʳ = λ {A} {B} {f} x → refl
-             ; identity² = λ {A} x → refl
-             ; equiv = λ {A} {B} →
-                     record
-                       { refl = λ x → refl
-                       ; sym = λ x x₁ → sym (x x₁)
-                       ; trans = λ {i} {j} {k} z z₁ x → trans (z x) (z₁ x)
-                       }
-             ; ∘-resp-≈ = λ {A} {B} {C} {f} {g} {h} {i} x x₁ x₂ → let open ≡-Reasoning in begin
-                  DeMorganHom.⟦ f ⟧ (DeMorganHom.⟦ h ⟧ x₂)
-                    ≡⟨ cong DeMorganHom.⟦ f ⟧ (x₁ x₂) ⟩
-                  DeMorganHom.⟦ f ⟧ (DeMorganHom.⟦ i ⟧ x₂)
-                    ≡⟨ x (DeMorganHom.⟦ i ⟧ x₂) ⟩
-                  DeMorganHom.⟦ g ⟧ (DeMorganHom.⟦ i ⟧ x₂) ∎
+             ; assoc = λ _ → refl
+             ; sym-assoc = λ _ → refl
+             ; identityˡ = λ _ → refl
+             ; identityʳ = λ _ → refl
+             ; identity² = λ _ → refl
+             ; equiv = record
+                 { refl = λ _ → refl
+                 ; sym = λ x x₁ → sym (x x₁)
+                 ; trans = λ z z₁ x → trans (z x) (z₁ x)
+                 }
+             ; ∘-resp-≈ = λ {f = f} {g} {h} {i} x x₁ x₂ → let open ≡-Reasoning
+                                                              open DeMorganHom in begin
+                  ⟦ f ⟧ (⟦ h ⟧ x₂) ≡⟨ cong ⟦ f ⟧ (x₁ x₂) ⟩ ⟦ f ⟧ (⟦ i ⟧ x₂) ≡⟨ x (⟦ i ⟧ x₂) ⟩ ⟦ g ⟧ (⟦ i ⟧ x₂) ∎
   }

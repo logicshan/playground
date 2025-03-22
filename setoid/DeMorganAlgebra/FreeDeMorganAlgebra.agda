@@ -85,22 +85,32 @@ DeMorganAlgebra._∧_ (freeDeMorgan X) = _∧_
 DeMorganAlgebra.¬ freeDeMorgan X = ¬_
 DeMorganAlgebra.⊤ (freeDeMorgan X) = ⊤
 DeMorganAlgebra.⊥ (freeDeMorgan X) = ⊥
-IsLattice.isEquivalence (IsDistributiveLattice.isLattice (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)))) = ≈-isEquivalence
-IsLattice.∨-comm (IsDistributiveLattice.isLattice (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)))) x y = ∨-comm
-IsLattice.∨-assoc (IsDistributiveLattice.isLattice (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)))) x y z = ∨-assoc
-IsLattice.∨-cong (IsDistributiveLattice.isLattice (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)))) = ∨-cong
-IsLattice.∧-comm (IsDistributiveLattice.isLattice (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)))) x y = ∧-comm
-IsLattice.∧-assoc (IsDistributiveLattice.isLattice (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)))) x y z = ∧-assoc
-IsLattice.∧-cong (IsDistributiveLattice.isLattice (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)))) = ∧-cong
-IsLattice.absorptive (IsDistributiveLattice.isLattice (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)))) = (λ x y → absorb-∨∧) , (λ x y → absorb-∧∨)
-IsDistributiveLattice.∨-distrib-∧ (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X))) = (λ x y z → ∨-distrib-∧ˡ) , (λ x y z → ∨-distrib-∧ʳ)
-IsDistributiveLattice.∧-distrib-∨ (IsDeMorganAlgebra.isDistributiveLattice (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X))) = (λ x y z → ∧-distrib-∨ˡ) , λ x y z → ∧-distrib-∨ʳ
-IsDeMorganAlgebra.¬-involution (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)) = λ x → ¬-involution
-IsDeMorganAlgebra.¬-cong (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)) = ¬-cong
-IsDeMorganAlgebra.de-morgan₁ (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)) = de-morgan₁
-IsDeMorganAlgebra.de-morgan₂ (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)) = de-morgan₂
-IsDeMorganAlgebra.⊤-∧-identity (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)) = λ x → ⊤-∧-identity
-IsDeMorganAlgebra.⊥-∨-identity (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)) = λ x → ⊥-∨-identity
+DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X) = record
+          { isDistributiveLattice = record
+            { isLattice = record
+              { isEquivalence = record
+                { refl = refl
+                ; sym = sym
+                ; trans = trans
+                }
+              ; ∨-comm = λ x y → ∨-comm
+              ; ∨-assoc = λ x y z → ∨-assoc
+              ; ∨-cong = ∨-cong
+              ; ∧-comm = λ x y → ∧-comm
+              ; ∧-assoc = λ x y z → ∧-assoc
+              ; ∧-cong = ∧-cong
+              ; absorptive = (λ x y → absorb-∨∧) , (λ x y → absorb-∧∨)
+              }
+            ; ∨-distrib-∧ = (λ x y z → ∨-distrib-∧ˡ) , (λ x y z → ∨-distrib-∧ʳ)
+            ; ∧-distrib-∨ = (λ x y z → ∧-distrib-∨ˡ) , (λ x y z → ∧-distrib-∨ʳ)
+            }
+          ; ¬-involution = λ x → ¬-involution
+          ; ¬-cong = λ {x} {y} → ¬-cong
+          ; de-morgan₁ = de-morgan₁
+          ; de-morgan₂ = de-morgan₂
+          ; ⊤-∧-identity = λ x → ⊤-∧-identity
+          ; ⊥-∨-identity = λ x → ⊥-∨-identity
+          }
 
 module _ where
 
@@ -153,7 +163,7 @@ module _ where
 
   identity FreeDeMorganFunctor {X} = functor-id
     where
-      functor-id : ∀ {o} → ∀ {X} → ∀ (x : FreeDeMorgan {o} X) →
+      functor-id : ∀ {o} → ∀ {X} → ∀ (x : FreeDeMorgan {o} X) → let open DeMorganHom in
         DeMorganHom.⟦ F₁ FreeDeMorganFunctor (Category.id (Sets _)) ⟧ x ≡ x
       functor-id (η x) = refl
       functor-id ⊤ = refl

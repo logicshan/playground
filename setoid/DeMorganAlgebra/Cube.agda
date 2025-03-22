@@ -49,13 +49,13 @@ module _ where
 
   DM⟦_⟧ : ∀ {o} → Obj (Sets o) → Obj (Sets o)
   DM⟦_⟧ = Functor.F₀ (Monad.F DM)
-
+{-
   Hom[_,_] : ∀ {o} → Obj (Sets o) → Obj (Sets o) → Set o
   Hom[_,_] {o} = _⇒_ (Sets o)
-
+-}
   Cube : Category lzero lzero lzero
   Obj Cube = ℕ
-  _⇒_ Cube I J = Hom[ Fin J , DM⟦ Fin I ⟧ ]
+  _⇒_ Cube I J = Sets lzero [ Fin J , DM⟦ Fin I ⟧ ]
   _≈_ Cube f g = ∀ x → f x ≡ g x
   id Cube = η
   Category._∘_ Cube = Category._∘_ Kᵒᵖ
