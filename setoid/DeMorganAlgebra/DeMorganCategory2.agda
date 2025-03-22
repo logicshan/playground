@@ -56,6 +56,8 @@ data _≈_ {X : Set ℓ} : Rel (FreeDeMorgan X) ℓ where
   de-morgan₁  : ∀ {t s} → ¬ (t ∨ s) ≈ (¬ t ∧ ¬ s)
   de-morgan₂  : ∀ {t s} → ¬ (t ∧ s) ≈ (¬ t ∨ ¬ s)
   ¬-involution : ∀ {t} → ¬ (¬ t) ≈ t
+--  ∧-∨-distrib : ∀ {t s r} → (t ∧ (s ∨ r)) ≈ ((t ∧ s) ∨ (t ∧ r))
+--  ∨-∧-distrib : ∀ {t s r} → (t ∨ (s ∧ r)) ≈ ((t ∨ s) ∧ (t ∨ r))
   ∨-distrib-∧ˡ : ∀ {t s r} → (t ∨ (s ∧ r)) ≈ ((t ∨ s) ∧ (t ∨ r))
   ∨-distrib-∧ʳ : ∀ {t s r} → (s ∧ r) ∨ t ≈ (s ∨ t) ∧ (r ∨ t)
   ∧-distrib-∨ˡ : ∀ {t s r} → t ∧ (s ∨ r) ≈ ((t ∧ s) ∨ (t ∧ r))
@@ -103,30 +105,72 @@ IsDeMorganAlgebra.⊤-∧-identity (DeMorganAlgebra.isDeMorganAlgebra (freeDeMor
 IsDeMorganAlgebra.⊥-∨-identity (DeMorganAlgebra.isDeMorganAlgebra (freeDeMorgan X)) = λ x → ⊥-∨-identity
 
 module _ where
-
   open Functor
 
-  FreeDeMorganFunctor : ∀ {o} → Functor (Sets o) (DeMorganCategory o o)
-  F₀ FreeDeMorganFunctor = freeDeMorgan
-  F₁ FreeDeMorganFunctor f = record
-    { ⟦_⟧ = mapTerm f
-    ; isRelHomomorphism = record { cong = cong-f }
-    ; pres-∨ = λ x y → refl
-    ; pres-∧ = λ x y → refl
-    ; pres-¬ = λ x → refl
-    ; pres-⊤ = refl
-    ; pres-⊥ = refl
-    }
-    where
-      mapTerm : ∀ {X Y} → (X → Y) → FreeDeMorgan X → FreeDeMorgan Y
-      mapTerm g (η x) = η (g x)
-      mapTerm g ⊤ = ⊤
-      mapTerm g ⊥ = ⊥
-      mapTerm g (x ∨ y) = mapTerm g x ∨ mapTerm g y
-      mapTerm g (x ∧ y) = mapTerm g x ∧ mapTerm g y
-      mapTerm g (¬ x) = ¬ (mapTerm g x)
+  private
+    size : ∀ {X} → FreeDeMorgan {ℓ} X → ℕ
+    size (η x) = 1
+    size ⊤ = 1
+    size ⊥ = 1
+    size (x ∨ y) = 1 + size x + size y
+    size (x ∧ y) = 1 + size x + size y
+    size (¬ x) = 1 + size x
 
-      cong-f : ∀ {x y} → x ≈ y → mapTerm f x ≈ mapTerm f y
+
+  FreeDeMorganFunctor : ∀ {o} →  Functor (Sets o) (DeMorganCategory o o)
+  F₀ FreeDeMorganFunctor = freeDeMorgan
+  DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ (η x) = η (f x)
+  DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ ⊤ = ⊤
+  DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ ⊥ = ⊥
+  DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ (x ∨ x₁)
+    = DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x ∨ DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x₁
+  DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ (x ∧ x₁)
+    = DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x ∧ DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x₁
+  DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ (¬ x) = ¬ (DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x)
+{-
+  IsRelHomomorphism.cong (DeMorganHom.isRelHomomorphism (F₁ FreeDeMorganFunctor f)) {x} {y} x₁ = lemma x₁
+    where
+    𝕗 : (DeMorganCategory _ _ Category.⇒ F₀ FreeDeMorganFunctor _)
+         (F₀ FreeDeMorganFunctor _)
+    𝕗 = F₁ FreeDeMorganFunctor f
+    module 𝕗 = DeMorganHom 𝕗
+    f⟦⟧ : DeMorganAlgebra.Carrier (F₀ FreeDeMorganFunctor _) →
+         DeMorganAlgebra.Carrier (F₀ FreeDeMorganFunctor _)
+    f⟦⟧ = 𝕗.⟦_⟧
+    cong⟦⟧ : Homomorphic₂
+              (DeMorganAlgebra.Carrier (F₀ FreeDeMorganFunctor _))
+              (DeMorganAlgebra.Carrier (F₀ FreeDeMorganFunctor _))
+              (DeMorganAlgebra._≈_ (F₀ FreeDeMorganFunctor _))
+              (DeMorganAlgebra._≈_ (F₀ FreeDeMorganFunctor _)) DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧
+    cong⟦⟧ = IsRelHomomorphism.cong 𝕗.isRelHomomorphism
+    lemma : (x ≈ y) → DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x ≈ DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ y
+    lemma refl = refl
+    lemma (sym p) = sym (cong⟦⟧ p)
+    lemma (trans p p₁) = trans (cong⟦⟧ p) (cong⟦⟧ p₁) -- cong⟦⟧ (trans p p₁)
+    lemma (∧-cong p p₁) = ∧-cong (cong⟦⟧ p) (cong⟦⟧ p₁)
+    lemma (∨-cong p p₁) = ∨-cong (cong⟦⟧ p) (cong⟦⟧ p₁)
+    lemma (¬-cong p) = ¬-cong (cong⟦⟧ p)
+    lemma ∧-assoc = ∧-assoc
+    lemma ∨-assoc = ∨-assoc
+    lemma ∧-comm = ∧-comm
+    lemma ∨-comm = ∨-comm
+    lemma ∧-idem = ∧-idem
+    lemma ∨-idem = ∨-idem
+    lemma absorb-∧∨ = absorb-∧∨
+    lemma absorb-∨∧ = absorb-∨∧
+    lemma de-morgan₁ = de-morgan₁
+    lemma de-morgan₂ = de-morgan₂
+    lemma ¬-involution = ¬-involution
+    lemma ∨-distrib-∧ˡ = ∨-distrib-∧ˡ
+    lemma ∨-distrib-∧ʳ = ∨-distrib-∧ʳ
+    lemma ∧-distrib-∨ˡ = ∧-distrib-∨ˡ
+    lemma ∧-distrib-∨ʳ = ∧-distrib-∨ʳ
+    lemma ⊤-∧-identity = ⊤-∧-identity
+    lemma ⊥-∨-identity = ⊥-∨-identity
+-}
+  DeMorganHom.isRelHomomorphism (F₁ FreeDeMorganFunctor f) = record { cong = cong-f }
+    where
+      cong-f : ∀ {x y} → x ≈ y → DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x ≈ DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ y
       cong-f refl = refl
       cong-f (sym p) = sym (cong-f p)
       cong-f (trans p q) = trans (cong-f p) (cong-f q)
@@ -150,119 +194,32 @@ module _ where
       cong-f ∧-distrib-∨ʳ = ∧-distrib-∨ʳ
       cong-f ⊤-∧-identity = ⊤-∧-identity
       cong-f ⊥-∨-identity = ⊥-∨-identity
-
-  identity FreeDeMorganFunctor {X} = functor-id
-    where
-      functor-id : ∀ {o} → ∀ {X} → ∀ (x : FreeDeMorgan {o} X) →
-        DeMorganHom.⟦ F₁ FreeDeMorganFunctor (Category.id (Sets _)) ⟧ x ≡ x
-      functor-id (η x) = refl
-      functor-id ⊤ = refl
-      functor-id ⊥ = refl
-      functor-id (x ∨ x₁) = cong₂ _∨_ (functor-id x) (functor-id x₁)
-      functor-id (x ∧ x₁) = cong₂ _∧_ (functor-id x) (functor-id x₁)
-      functor-id (¬ x) = cong ¬_ (functor-id x)
-
-  homomorphism FreeDeMorganFunctor {X} {Y} {Z} {f} {g} = functor-hom X Y Z f g
-    where
-      functor-hom : ∀ X Y Z (f : X → Y) (g : Y → Z) → 
-                   ∀ (x : FreeDeMorgan X) → 
-                   DeMorganHom.⟦ F₁ FreeDeMorganFunctor (g ∘ f) ⟧ x ≡
-                   DeMorganHom.⟦ F₁ FreeDeMorganFunctor g ⟧ (DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x)
-      functor-hom X Y Z f g (η x) = refl
-      functor-hom X Y Z f g ⊤ = refl
-      functor-hom X Y Z f g ⊥ = refl
-      functor-hom X Y Z f g (x ∨ y) = cong₂ _∨_ (functor-hom X Y Z f g x) (functor-hom X Y Z f g y)
-      functor-hom X Y Z f g (x ∧ y) = cong₂ _∧_ (functor-hom X Y Z f g x) (functor-hom X Y Z f g y)
-      functor-hom X Y Z f g (¬ x) = cong ¬_ (functor-hom X Y Z f g x)
-
-  F-resp-≈ FreeDeMorganFunctor {X} {Y} {f} {g} p = functor-resp X Y f g p
-    where
-      functor-resp : ∀ X Y (f g : X → Y) → 
-                    (∀ x → f x ≡ g x) → 
-                    ∀ (x : FreeDeMorgan X) → 
-                    DeMorganHom.⟦ F₁ FreeDeMorganFunctor f ⟧ x ≡ DeMorganHom.⟦ F₁ FreeDeMorganFunctor g ⟧ x
-      functor-resp X Y f g p (η x) rewrite p x = refl
-      functor-resp X Y f g p ⊤ = refl
-      functor-resp X Y f g p ⊥ = refl
-      functor-resp X Y f g p (x ∨ y) = cong₂ _∨_ (functor-resp X Y f g p x) (functor-resp X Y f g p y)
-      functor-resp X Y f g p (x ∧ y) = cong₂ _∧_ (functor-resp X Y f g p x) (functor-resp X Y f g p y)
-      functor-resp X Y f g p (¬ x) = cong ¬_ (functor-resp X Y f g p x)
-
-  open DeMorganAlgebra
-
-  Forgetful : ∀ {o} → Functor (DeMorganCategory o o) (Sets o)
-  F₀ Forgetful DM = DM .Carrier
-  F₁ Forgetful = DeMorganHom.⟦_⟧
-  identity Forgetful = λ x → _≡_.refl
-  homomorphism Forgetful = λ x → _≡_.refl
-  F-resp-≈ Forgetful p x = p x
-
-  DM-Endo : ∀ {o} → Functor (Sets o) (Sets o)
-  DM-Endo = Forgetful ∘F FreeDeMorganFunctor
-
-  DM : ∀ {o} → Monad (Sets o)
-  Monad.F DM = DM-Endo
-  NaturalTransformation.η (Monad.η DM) X = η
-  NaturalTransformation.commute (Monad.η DM) f x = _≡_.refl
-  NaturalTransformation.sym-commute (Monad.η DM) f x = _≡_.refl
-  NaturalTransformation.η (Monad.μ DM) X = FFX→FX
-    where
-      FFX→FX : ∀ {o} → ∀ {X} → FreeDeMorgan {o} (FreeDeMorgan X) → FreeDeMorgan X
-      FFX→FX (η fx) = fx
-      FFX→FX ⊤ = FreeDeMorgan.⊤
-      FFX→FX ⊥ = FreeDeMorgan.⊥
-      FFX→FX (ffx ∨ ffx₁) = (FFX→FX ffx) FreeDeMorgan.∨ (FFX→FX ffx₁)
-      FFX→FX (ffx ∧ ffx₁) = (FFX→FX ffx) FreeDeMorgan.∧ (FFX→FX ffx₁)
-      FFX→FX (¬ ffx) = FreeDeMorgan.¬ (FFX→FX ffx)
-  NaturalTransformation.commute (Monad.μ DM) f (η x) = _≡_.refl
-  NaturalTransformation.commute (Monad.μ DM) f FreeDeMorgan.⊤ = _≡_.refl
-  NaturalTransformation.commute (Monad.μ DM) f FreeDeMorgan.⊥ = _≡_.refl
-  NaturalTransformation.commute (Monad.μ DM) f (x FreeDeMorgan.∨ x₁)
-    = cong₂ FreeDeMorgan._∨_ 
-            (NaturalTransformation.commute (Monad.μ DM) f x)
-            (NaturalTransformation.commute (Monad.μ DM) f x₁)
-  NaturalTransformation.commute (Monad.μ DM) f (x FreeDeMorgan.∧ x₁)
-    = cong₂ FreeDeMorgan._∧_ 
-            (NaturalTransformation.commute (Monad.μ DM) f x)
-            (NaturalTransformation.commute (Monad.μ DM) f x₁)
-  NaturalTransformation.commute (Monad.μ DM) f (FreeDeMorgan.¬ x)
-    = cong FreeDeMorgan.¬_ (NaturalTransformation.commute (Monad.μ DM) f x)
-  NaturalTransformation.sym-commute (Monad.μ DM) f (η x) = _≡_.refl
-  NaturalTransformation.sym-commute (Monad.μ DM) f FreeDeMorgan.⊤ = _≡_.refl
-  NaturalTransformation.sym-commute (Monad.μ DM) f FreeDeMorgan.⊥ = _≡_.refl
-  NaturalTransformation.sym-commute (Monad.μ DM) f (x FreeDeMorgan.∨ x₁)
-    = cong₂ FreeDeMorgan._∨_
-            (NaturalTransformation.sym-commute (Monad.μ DM) f x)
-            (NaturalTransformation.sym-commute (Monad.μ DM) f x₁)
-  NaturalTransformation.sym-commute (Monad.μ DM) f (x FreeDeMorgan.∧ x₁)
-    = cong₂ FreeDeMorgan._∧_
-            (NaturalTransformation.sym-commute (Monad.μ DM) f x)
-            (NaturalTransformation.sym-commute (Monad.μ DM) f x₁)
-  NaturalTransformation.sym-commute (Monad.μ DM) f (FreeDeMorgan.¬ x)
-    = cong FreeDeMorgan.¬_ (NaturalTransformation.sym-commute (Monad.μ DM) f x)
-  Monad.assoc DM (η x) = _≡_.refl
-  Monad.assoc DM FreeDeMorgan.⊤ = _≡_.refl
-  Monad.assoc DM FreeDeMorgan.⊥ = _≡_.refl
-  Monad.assoc DM (x FreeDeMorgan.∨ x₁)
-    = cong₂ FreeDeMorgan._∨_ (Monad.assoc DM x) (Monad.assoc DM x₁)
-  Monad.assoc DM (x FreeDeMorgan.∧ x₁)
-    = cong₂ FreeDeMorgan._∧_ (Monad.assoc DM x) (Monad.assoc DM x₁)
-  Monad.assoc DM (FreeDeMorgan.¬ x) = cong FreeDeMorgan.¬_ (Monad.assoc DM x)
-  Monad.sym-assoc DM (η x) = _≡_.refl
-  Monad.sym-assoc DM FreeDeMorgan.⊤ = _≡_.refl
-  Monad.sym-assoc DM FreeDeMorgan.⊥ = _≡_.refl
-  Monad.sym-assoc DM (x FreeDeMorgan.∨ x₁)
-    = cong₂ FreeDeMorgan._∨_ (Monad.sym-assoc DM x) (Monad.sym-assoc DM x₁)
-  Monad.sym-assoc DM (x FreeDeMorgan.∧ x₁)
-    = cong₂ FreeDeMorgan._∧_ (Monad.sym-assoc DM x) (Monad.sym-assoc DM x₁)
-  Monad.sym-assoc DM (FreeDeMorgan.¬ x) = cong FreeDeMorgan.¬_ (Monad.sym-assoc DM x)
-  Monad.identityˡ DM (η x) = _≡_.refl
-  Monad.identityˡ DM FreeDeMorgan.⊤ = _≡_.refl
-  Monad.identityˡ DM FreeDeMorgan.⊥ = _≡_.refl
-  Monad.identityˡ DM (x FreeDeMorgan.∨ x₁)
-    = cong₂ FreeDeMorgan._∨_ (Monad.identityˡ DM x) (Monad.identityˡ DM x₁)
-  Monad.identityˡ DM (x FreeDeMorgan.∧ x₁)
-    = cong₂ FreeDeMorgan._∧_ (Monad.identityˡ DM x) (Monad.identityˡ DM x₁)
-  Monad.identityˡ DM (FreeDeMorgan.¬ x)
-    = cong FreeDeMorgan.¬_ (Monad.identityˡ DM x)
-  Monad.identityʳ DM = λ x → _≡_.refl
+  DeMorganHom.pres-∨ (F₁ FreeDeMorganFunctor f) = λ x y → refl
+  DeMorganHom.pres-∧ (F₁ FreeDeMorganFunctor f) = λ x y → refl
+  DeMorganHom.pres-¬ (F₁ FreeDeMorganFunctor f) = λ x → refl
+  DeMorganHom.pres-⊤ (F₁ FreeDeMorganFunctor f) = refl
+  DeMorganHom.pres-⊥ (F₁ FreeDeMorganFunctor f) = refl
+  identity FreeDeMorganFunctor (η x) = refl
+  identity FreeDeMorganFunctor ⊤ = refl
+  identity FreeDeMorganFunctor ⊥ = refl
+  identity FreeDeMorganFunctor (x ∨ x₁) 
+    = ∨-cong (identity FreeDeMorganFunctor x) (identity FreeDeMorganFunctor x₁)
+  identity FreeDeMorganFunctor (x ∧ x₁) 
+    = ∧-cong (identity FreeDeMorganFunctor x) (identity FreeDeMorganFunctor x₁)
+  identity FreeDeMorganFunctor (¬ x) = ¬-cong (identity FreeDeMorganFunctor x)
+  homomorphism FreeDeMorganFunctor (η x) = refl
+  homomorphism FreeDeMorganFunctor ⊤ = refl
+  homomorphism FreeDeMorganFunctor ⊥ = refl
+  homomorphism FreeDeMorganFunctor (x ∨ x₁)
+    = ∨-cong (homomorphism FreeDeMorganFunctor x) (homomorphism FreeDeMorganFunctor x₁)
+  homomorphism FreeDeMorganFunctor (x ∧ x₁) 
+    = ∧-cong (homomorphism FreeDeMorganFunctor x) (homomorphism FreeDeMorganFunctor x₁)
+  homomorphism FreeDeMorganFunctor (¬ x) = ¬-cong (homomorphism FreeDeMorganFunctor x)
+  F-resp-≈ FreeDeMorganFunctor p (η x) rewrite p x = refl
+  F-resp-≈ FreeDeMorganFunctor p ⊤ = refl
+  F-resp-≈ FreeDeMorganFunctor p ⊥ = refl
+  F-resp-≈ FreeDeMorganFunctor p (x ∨ x₁)
+    = ∨-cong (F-resp-≈ FreeDeMorganFunctor p x) (F-resp-≈ FreeDeMorganFunctor p x₁)
+  F-resp-≈ FreeDeMorganFunctor p (x ∧ x₁)
+    = ∧-cong (F-resp-≈ FreeDeMorganFunctor p x) (F-resp-≈ FreeDeMorganFunctor p x₁)
+  F-resp-≈ FreeDeMorganFunctor p (¬ x) = ¬-cong (F-resp-≈ FreeDeMorganFunctor p x)

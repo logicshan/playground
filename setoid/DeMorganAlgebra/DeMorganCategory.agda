@@ -6,7 +6,7 @@ open import Relation.Binary using (Rel; Setoid; IsEquivalence)
 open import Algebra.Lattice using (Lattice; DeMorganAlgebra; IsLattice; IsDistributiveLattice; IsDeMorganAlgebra)
 open import Function using (id; _∘_)
 open import Data.Product using (_×_; _,_)
-open import Relation.Binary.PropositionalEquality as ≡ using (_≡_; refl; cong; cong₂)
+open import Relation.Binary.PropositionalEquality as ≡ using (_≡_; refl; sym; trans; cong; cong₂; module ≡-Reasoning)
 
 open import Categories.Category
 {-
@@ -25,7 +25,7 @@ record DeMorganHom {c₁ ℓ₁ c₂ ℓ₂} (A : DeMorganAlgebra c₁ ℓ₁) (
   open DeMorganAlgebra B using () renaming (Carrier to ∣B∣; _≈_ to _≈B_; _∨_ to _∨B_; _∧_ to _∧B_; ¬_ to ¬B; ⊤ to ⊤B; ⊥ to ⊥B)
 
   field
-    
+
 
     ⟦_⟧ : ∣A∣ → ∣B∣                                   -- 载体集合之间的映射
     isRelHomomorphism : IsRelHomomorphism _≈A_ _≈B_ ⟦_⟧
@@ -85,24 +85,24 @@ DeMorganCategory : ∀ c ℓ → Category _ _ _
 DeMorganCategory c ℓ = record
              { Obj = DeMorganAlgebra c ℓ
              ; _⇒_ = DeMorganHom
-             ; _≈_ = λ {A} {B} f g → ∀ x → B .DeMorganAlgebra._≈_ (DeMorganHom.⟦ f ⟧ x)  (DeMorganHom.⟦ g ⟧ x)
+             ; _≈_ = λ {A} {B} f g → ∀ x → (DeMorganHom.⟦ f ⟧ x) ≡ (DeMorganHom.⟦ g ⟧ x)
              ; id = id-DeMorganHom
              ; _∘_ = ∘-DeMorganHom
-             ; assoc = λ {A} {B} {C} {D} {f} {g} {h} x → let module D = DeMorganAlgebra D in D.refl
-             ; sym-assoc = λ {A} {B} {C} {D} {f} {g} {h} x → let module D = DeMorganAlgebra D in D.refl
-             ; identityˡ = λ {A} {B} {f} x → let module B = DeMorganAlgebra B in B.refl
-             ; identityʳ = λ {A} {B} {f} x → let module B = DeMorganAlgebra B in B.refl
-             ; identity² = λ {A} x → let module A = DeMorganAlgebra A in A.refl
-             ; equiv = λ {A} {B} → let module B = DeMorganAlgebra B in
+             ; assoc = λ {A} {B} {C} {D} {f} {g} {h} x → refl
+             ; sym-assoc = λ {A} {B} {C} {D} {f} {g} {h} x → refl
+             ; identityˡ = λ {A} {B} {f} x → refl
+             ; identityʳ = λ {A} {B} {f} x → refl
+             ; identity² = λ {A} x → refl
+             ; equiv = λ {A} {B} →
                      record
-                       { refl = λ x → B.refl
-                       ; sym = λ x x₁ → B.sym (x x₁)
-                       ; trans = λ {i} {j} {k} z z₁ x → B.trans (z x) (z₁ x)
+                       { refl = λ x → refl
+                       ; sym = λ x x₁ → sym (x x₁)
+                       ; trans = λ {i} {j} {k} z z₁ x → trans (z x) (z₁ x)
                        }
-  ; ∘-resp-≈ = λ {A} {B} {C} {f} {g} {h} {i} x x₁ x₂ → let module C = DeMorganAlgebra C
-                                                           module f = DeMorganHom f in
-             C.trans
-             (IsRelHomomorphism.cong f.isRelHomomorphism (x₁ x₂))
-             (x (DeMorganHom.⟦ i ⟧ x₂))
-
-             }
+             ; ∘-resp-≈ = λ {A} {B} {C} {f} {g} {h} {i} x x₁ x₂ → let open ≡-Reasoning in begin
+                  DeMorganHom.⟦ f ⟧ (DeMorganHom.⟦ h ⟧ x₂)
+                    ≡⟨ cong DeMorganHom.⟦ f ⟧ (x₁ x₂) ⟩
+                  DeMorganHom.⟦ f ⟧ (DeMorganHom.⟦ i ⟧ x₂)
+                    ≡⟨ x (DeMorganHom.⟦ i ⟧ x₂) ⟩
+                  DeMorganHom.⟦ g ⟧ (DeMorganHom.⟦ i ⟧ x₂) ∎
+  }
