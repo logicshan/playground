@@ -120,12 +120,56 @@ ass m n o = Assno.⟦_⟧ m
 \begin{exe}[recommended]
 Show that \verb$0$ is right unit for addition using another dependent model.
 \end{exe}
+\begin{code}
+Identityʳ : DepModel
+Identityʳ = record
+  { Nat∙ = λ x → x +' I.Zero ≡ x
+  ; Zero∙ = refl
+  ; Suc∙ = cong suc
+  }
+
+identityʳ : (x : I.Nat) → (x +' I.Zero ≡ x)
+identityʳ = Identityʳ.⟦_⟧
+  where
+    module Identityʳ = DepModel Identityʳ
+\end{code}
 \begin{exe}[recommended]
 Show that \verb$+$ is commutative. You will need two separate dependent models.
 \end{exe}
+\begin{code}
+
++Suc' : (y : I.Nat) → DepModel
++Suc' y = record
+  { Nat∙ = λ x → x +' (I.Suc y) ≡ I.Suc (x +' y)
+  ; Zero∙ = refl
+  ; Suc∙ = cong suc
+  }
+
++suc' : (x y : I.Nat) → x +' (suc y) ≡ suc (x +' y)
++suc' x y = +Suc'.⟦ x ⟧
+  where
+    module +Suc' = DepModel (+Suc' y)
+
+
+Comm : (y : I.Nat) → DepModel
+Comm y = record
+  { Nat∙ = λ x → x +' y ≡ y +' x
+  ; Zero∙ = identityʳ (I.Zero +' y) ⁻¹
+  ; Suc∙ = λ {x} p → cong suc p ◾ +suc' y x ⁻¹
+  }
+
+comm : (x y : I.Nat) → x +' y ≡ y +' x
+comm x y = Comm.⟦ x ⟧
+  where
+    module Comm = DepModel (Comm y)
+\end{code}
 \begin{exe}[recommended]
 Show that the operators of the syntax are disjoint: \verb$I.Suc i ≠ I.Zero$.
 \end{exe}
+\begin{code}
+suc≠zero' : ∀ {i} → ¬ (I.Suc i ≡ I.Zero)
+suc≠zero' = λ ()
+\end{code}
 \begin{exe}[recommended]
 Show that \verb$I.Suc$ is injective.
 \end{exe}

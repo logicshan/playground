@@ -33,45 +33,47 @@ module Monoid {ℓ} (A : Set ℓ) where
 
 
   infixr 5 _∷_
-  data List : Set ℓ where
-    []  : List
-    _∷_ : (x : A) (xs : List) → List
+  data List {ℓ} (A : Set ℓ) : Set ℓ where
+    []  : List A
+    _∷_ : (x : A) (xs : List A) → List A
 
   infixr 5 _++_
-  _++_ : List → List → List
+  _++_ : List A → List A → List A
   []       ++ ys = ys
   (x ∷ xs) ++ ys = x ∷ (xs ++ ys)
 
-  ++-assoc : (xs ys zs : List) → ((xs ++ ys) ++ zs) ≡ (xs ++ (ys ++ zs))
-  ++-assoc []       ys zs = refl
-  ++-assoc (x ∷ xs) ys zs = cong (x ∷_) (++-assoc xs ys zs)
+  ++-assoc : {xs ys zs : List A} → ((xs ++ ys) ++ zs) ≡ (xs ++ (ys ++ zs))
+  ++-assoc {[]} {ys} {zs} = refl
+  ++-assoc {x ∷ xs} {ys} {zs} = cong (x ∷_) (++-assoc {xs} {ys} {zs})
 
-  ++-identityʳ : (xs : List) → xs ++ [] ≡ xs
-  ++-identityʳ []       = refl
-  ++-identityʳ (x ∷ xs) = cong (x ∷_) (++-identityʳ xs)
+  ++-identityʳ : {xs : List A} → xs ++ [] ≡ xs
+  ++-identityʳ {[]}       = refl
+  ++-identityʳ {x ∷ xs} = cong (x ∷_) (++-identityʳ {xs})
 
+  Nf : Set ℓ
+  Nf = List A
 
   N : Model
   N = record
-       { C = List
+       { C = Nf
        ; f = _∷ []
        ; _∘_ = _++_
        ; id = []
-       ; ass = λ {a} {b} {c} → ++-assoc a b c
-       ; idl = λ {a} → refl
-       ; idr = λ {a} → ++-identityʳ a
+       ; ass = λ {a} {b} {c} → ++-assoc {a} {b} {c}
+       ; idl = refl
+       ; idr = ++-identityʳ
        }
 
   module N = Model N
 
-  norm : I.C → List
+  norm : I.C → Nf
   norm = N.⟦_⟧
 
-  ⌜_⌝ : List → I.C
+  ⌜_⌝ : Nf → I.C
   ⌜ [] ⌝ = I.id
   ⌜ x ∷ xs ⌝ = I.f x I.∘ ⌜ xs ⌝
 
-  stab : (v : List) → norm ⌜ v ⌝ ≡ v
+  stab : (v : Nf) → norm ⌜ v ⌝ ≡ v
   stab [] = refl
   stab (x ∷ v) = cong (x ∷_) (stab v)
 
