@@ -1,3 +1,11 @@
+-- standard-library/src/Algebra/Definitions.agda
+DeMorgan₁ : Op₁ A → Op₂ A → Op₂ A → Set _
+DeMorgan₁ ¬_ _∨_ _∧_ = ∀ {x y} → (¬ (x ∨ y)) ≈ ((¬ x) ∧ (¬ y))
+
+DeMorgan₂ : Op₁ A → Op₂ A → Op₂ A → Set _
+DeMorgan₂ ¬_ _∧_ _∨_ = ∀ {x y} → (¬ (x ∧ y)) ≈ ((¬ x) ∨ (¬ y))
+
+
 -- standard-library/src/Algebra/Lattice/Bundles.agda
 record DeMorganAlgebra c ℓ : Set (suc (c ⊔ ℓ)) where
   infix  8 ¬_

@@ -35,49 +35,19 @@ data FreeDM (A : Set ℓ) : Set ℓ where
   deMorgan-∧ : ∀ x y → PathP (λ i → FreeDM A) (¬ (x ∧ y)) ((¬ x) ∨ (¬ y))
   deMorgan-∨ : ∀ x y → PathP (λ i → FreeDM A) (¬ (x ∨ y)) ((¬ x) ∧ (¬ y))
 
+  squash : (x y : FreeDM A) → (p q : x ≡ y) → p ≡ q
+
 DM : Set ℓ → Set ℓ
 DM = FreeDM
 
 mapDM : (A → B) → DM A → DM B
-mapDM f (var x) = var (f x)
-mapDM f 𝟎 = 𝟎
-mapDM f 𝟏 = 𝟏
-mapDM f (x ∧ y) = mapDM f x ∧ mapDM f y
-mapDM f (x ∨ y) = mapDM f x ∨ mapDM f y
-mapDM f (¬ x) = ¬ (mapDM f x)
-mapDM f (∧-comm x y i) = ∧-comm (mapDM f x) (mapDM f y) i
-mapDM f (∧-assoc x y z i) = ∧-assoc (mapDM f x) (mapDM f y) (mapDM f z) i
-mapDM f (∨-comm x y i) = ∨-comm (mapDM f x) (mapDM f y) i
-mapDM f (∨-assoc x y z i) = ∨-assoc (mapDM f x) (mapDM f y) (mapDM f z) i
-mapDM f (∧-absorb x y i) = ∧-absorb (mapDM f x) (mapDM f y) i
-mapDM f (∨-absorb x y i) = ∨-absorb (mapDM f x) (mapDM f y) i
-mapDM f (∧-identity x i) = ∧-identity (mapDM f x) i
-mapDM f (∨-identity x i) = ∨-identity (mapDM f x) i
-mapDM f (involution x i) = involution (mapDM f x) i
-mapDM f (deMorgan-∧ x y i) = deMorgan-∧ (mapDM f x) (mapDM f y) i
-mapDM f (deMorgan-∨ x y i) = deMorgan-∨ (mapDM f x) (mapDM f y) i
+mapDM f = {!!}
 
 η : A → DM A
 η = var
 
 interpretDM : (A → DM B) → DM A → DM B
-interpretDM f (var x) = f x
-interpretDM f 𝟎 = 𝟎
-interpretDM f 𝟏 = 𝟏
-interpretDM f (x ∧ y) = interpretDM f x ∧ interpretDM f y
-interpretDM f (x ∨ y) = interpretDM f x ∨ interpretDM f y
-interpretDM f (¬ x) = ¬ (interpretDM f x)
-interpretDM f (∧-comm x y i) = ∧-comm (interpretDM f x) (interpretDM f y) i
-interpretDM f (∧-assoc x y z i) = ∧-assoc (interpretDM f x) (interpretDM f y) (interpretDM f z) i
-interpretDM f (∨-comm x y i) = ∨-comm (interpretDM f x) (interpretDM f y) i
-interpretDM f (∨-assoc x y z i) = ∨-assoc (interpretDM f x) (interpretDM f y) (interpretDM f z) i
-interpretDM f (∧-absorb x y i) = ∧-absorb (interpretDM f x) (interpretDM f y) i
-interpretDM f (∨-absorb x y i) = ∨-absorb (interpretDM f x) (interpretDM f y) i
-interpretDM f (∧-identity x i) = ∧-identity (interpretDM f x) i
-interpretDM f (∨-identity x i) = ∨-identity (interpretDM f x) i
-interpretDM f (involution x i) = involution (interpretDM f x) i
-interpretDM f (deMorgan-∧ x y i) = deMorgan-∧ (interpretDM f x) (interpretDM f y) i
-interpretDM f (deMorgan-∨ x y i) = deMorgan-∨ (interpretDM f x) (interpretDM f y) i
+interpretDM f = {!!}
 
 _>>=DM_ : DM A → (A → DM B) → DM B
 m >>=DM f = interpretDM f m
@@ -101,46 +71,14 @@ dmMonad = record
   }
   where
     leftId : ∀ {x : A} {f : A → DM B} → PathP (λ i → DM B) ((η x) >>=DM f) (f x)
-    leftId {x = x} {f = f} = refl  -- Since (η x) >>=DM f = interpretDM f (var x) = f x
+    leftId {x = x} {f = f} = {!!}  -- Since (η x) >>=DM f = interpretDM f (var x) = f x
 
     rightId : ∀ {m : DM A} → PathP (λ i → DM A) (m >>=DM η) m
-    rightId {m = var x} = refl
-    rightId {m = 𝟎} = refl
-    rightId {m = 𝟏} = refl
-    rightId {m = m ∧ n} = λ i → rightId {m = m} i ∧ rightId {m = n} i
-    rightId {m = m ∨ n} = λ i → rightId {m = m} i ∨ rightId {m = n} i
-    rightId {m = ¬ m} = λ i → ¬ (rightId {m = m} i)
-    rightId {m = ∧-comm x y i} = λ j → ∧-comm (rightId {m = x} j) (rightId {m = y} j) i
-    rightId {m = ∧-assoc x y z i} = λ j → ∧-assoc (rightId {m = x} j) (rightId {m = y} j) (rightId {m = z} j) i
-    rightId {m = ∨-comm x y i} = λ j → ∨-comm (rightId {m = x} j) (rightId {m = y} j) i
-    rightId {m = ∨-assoc x y z i} = λ j → ∨-assoc (rightId {m = x} j) (rightId {m = y} j) (rightId {m = z} j) i
-    rightId {m = ∧-absorb x y i} = λ j → ∧-absorb (rightId {m = x} j) (rightId {m = y} j) i
-    rightId {m = ∨-absorb x y i} = λ j → ∨-absorb (rightId {m = x} j) (rightId {m = y} j) i
-    rightId {m = ∧-identity x i} = λ j → ∧-identity (rightId {m = x} j) i
-    rightId {m = ∨-identity x i} = λ j → ∨-identity (rightId {m = x} j) i
-    rightId {m = involution x i} = λ j → involution (rightId {m = x} j) i
-    rightId {m = deMorgan-∧ x y i} = λ j → deMorgan-∧ (rightId {m = x} j) (rightId {m = y} j) i
-    rightId {m = deMorgan-∨ x y i} = λ j → deMorgan-∨ (rightId {m = x} j) (rightId {m = y} j) i
+    rightId {m = m} = {!!}
 
     assoc : ∀ {m : DM A} {f : A → DM B} {g : B → DM C} →
             PathP (λ i → DM C) ((m >>=DM f) >>=DM g) (m >>=DM (λ x → f x >>=DM g))
-    assoc {m = var x} = refl
-    assoc {m = 𝟎} = refl
-    assoc {m = 𝟏} = refl
-    assoc {m = m ∧ n} = λ i → assoc {m = m} i ∧ assoc {m = n} i
-    assoc {m = m ∨ n} = λ i → assoc {m = m} i ∨ assoc {m = n} i
-    assoc {m = ¬ m} = λ i → ¬ (assoc {m = m} i)
-    assoc {m = ∧-comm x y i} = λ j → ∧-comm (assoc {m = x} j) (assoc {m = y} j) i
-    assoc {m = ∧-assoc x y z i} = λ j → ∧-assoc (assoc {m = x} j) (assoc {m = y} j) (assoc {m = z} j) i
-    assoc {m = ∨-comm x y i} = λ j → ∨-comm (assoc {m = x} j) (assoc {m = y} j) i
-    assoc {m = ∨-assoc x y z i} = λ j → ∨-assoc (assoc {m = x} j) (assoc {m = y} j) (assoc {m = z} j) i
-    assoc {m = ∧-absorb x y i} = λ j → ∧-absorb (assoc {m = x} j) (assoc {m = y} j) i
-    assoc {m = ∨-absorb x y i} = λ j → ∨-absorb (assoc {m = x} j) (assoc {m = y} j) i
-    assoc {m = ∧-identity x i} = λ j → ∧-identity (assoc {m = x} j) i
-    assoc {m = ∨-identity x i} = λ j → ∨-identity (assoc {m = x} j) i
-    assoc {m = involution x i} = λ j → involution (assoc {m = x} j) i
-    assoc {m = deMorgan-∧ x y i} = λ j → deMorgan-∧ (assoc {m = x} j) (assoc {m = y} j) i
-    assoc {m = deMorgan-∨ x y i} = λ j → deMorgan-∨ (assoc {m = x} j) (assoc {m = y} j) i
+    assoc {m = m} = {!!}
 
 
 

@@ -1,0 +1,7 @@
+These are self-contained Agda files that don't use any library function.
+(c) Martin Escardo & Paulo Oliva 2008-2010.
+Free to anybody to use with proper academic citation.
+
+To see the contents of the Agda files in a web browser, it is
+necessary to choose UTF-8 encoding if the browser doesn't do that
+automatically, by navigating the menus.

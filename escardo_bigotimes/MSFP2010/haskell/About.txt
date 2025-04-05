@@ -1,0 +1,17 @@
+There are two subdirectories:
+
+   modular
+
+     It contains tiny modules that clearly show how each separate
+     task is accomplished on itws own, sometimes with the help of
+     other staks given in other modules.
+
+   monolitic
+ 
+     It contains self-contained programs that show putting everything
+     together for specific "major" tasks still gives rise to small
+     programs.
+
+
+The modular version is the useful one, and the monolitic version is
+the one that illustrates mangnitude of the programming task.

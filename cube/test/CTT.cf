@@ -1,0 +1,99 @@
+{-
+BNFC 不能嵌入 Haskell 代码
+在处理语法糖 [x₁,...,xₙ:A]M 的时候，如下代码不能直接嵌入
+可以在生成的 Abs.hs 文件中找到相应定义，替换为如下代码
+(还需要显式引入 foldr: `import Prelude (String, foldr)`)
+
+
+abstn :: Ident -> [Ident] -> Term -> Term -> Term
+abstn v vs e1 e2 = Abst v e1 (foldr (\i e -> Abst i e1 e) e2 vs)
+
+
+sigman :: Ident -> [Ident] -> Term -> Term -> Term
+sigman v vs e1 e2 = Sigma v e1 (foldr (\i e -> Sigma i e1 e) e2 vs) ;
+-}
+
+TDef.  Term ::= "[" Ident ":" Term "=" Term "]" Term ; -- [x:A=M]M' `let x be of type A and 
+                                                       -- judgmentally equal to M inside M'`
+Abst.  Term ::= "[" Ident ":" Term "]" Term ;          -- It is used both for the λ-abstraction for terms
+                                                       -- (i.e. λx:A.M) and for dependent product types
+						       -- (i.e. Πx:A.M).
+arr.   Term ::= Term1 "->" Term ;                      -- When x does not appear in M, we shall simply
+                                                       -- write A → M.
+abstn. Term ::= "[" Ident "," [Ident] ":" Term "]" Term ;  -- λx₁,...,xₙ:A.M
+
+
+define arr e1 e2 = Abst (Ident "") e1 e2 ;
+define abstn v vs e1 e2 = abstn v vs e1 e2 ;
+
+Sum.     Term1 ::= Term2 "+" Term1 ;               -- Coproduct types A + B
+Sigma.   Term1 ::= "<" Ident ":" Term ">" Term ;   -- Dependent sum types ⟨x:A⟩M (i.e. Σx:A.M)
+prod.    Term1 ::= Term2 "*" Term1 ;               -- When x does not appear in M, we shall simply write A*M.
+Pair.    Term1 ::= Term2 "," Term2 ;               -- Pair constructor (M₁,M₂)
+sigman.  Term1 ::= "<" Ident "," [Ident] ":" Term ">" Term ;
+Partial. Term1 ::= "[" DisjFormula "]" Term1 ;
+Restr.   Term1 ::= System Term1 ;
+
+define prod e1 e2 = Sigma (Ident "") e1 e2 ;
+define sigman v vs e1 e2 = sigman v vs e1 e2 ;
+
+App.   Term2 ::= Term2 Term3 ;                          -- Application (M₁M₂)
+Ind.   Term2 ::= "ind" Term3 Term3 Term3 Term3 ;
+Comp.  Term2 ::= "comp" Term3 "(" DisjFormula ")" Term3 Term3 Term3 Term3 ;
+comp0. Term2 ::= "comp" Term3 "(" ")" Term3 Term3 Term3 Term3 ;
+Succ.  Term2 ::= "S" Term3 ;
+InL.   Term2 ::= "inl" Term3 ;                          -- Left injection `inl M`
+InR.   Term2 ::= "inr" Term3 ;                          -- Right injection `inr M`
+Split. Term2 ::= "split" Term3 Term3 Term3 Term3 ;      -- Elimination rule for coproduct types
+                                                        -- `split A Mₗ Mᵣ M`
+define comp0 e2 e5 e6 e7 e8 = Comp e2 (Disj []) e5 e6 e7 e8 ;
+
+Var.      Term3 ::= Ident ; -- Variables x,y,z,...
+Universe. Term3 ::= "U" ;   -- A universe of types, U.
+Nat.      Term3 ::= "N" ;
+Zero.     Term3 ::= "Z" ;
+I.        Term3 ::= "I" ;
+Fst.      Term3 ::= Term3 ".1" ;
+Snd.      Term3 ::= Term3 ".2" ;
+Sys.      Term3 ::= System ;
+I0.       Term3 ::= "0" ;
+I1.       Term3 ::= "1" ;
+
+coercions Term 3 ;
+
+separator nonempty Ident "," ;
+
+Definition.  Toplevel ::= Ident ":" Term "=" Term ;
+Declaration. Toplevel ::= Ident ":" Term ;
+Example.     Toplevel ::= Term ;
+
+--separator Toplevel ";" ;
+
+Eq0.  AtomicFormula ::= Ident "=" "0" ;
+Eq1.  AtomicFormula ::= Ident "=" "1" ;
+Diag. AtomicFormula ::= Ident "=" Ident ;
+
+
+Conj. ConjFormula ::= [AtomicFormula] ;
+_. ConjFormula ::= "(" ConjFormula ")" ;
+separator AtomicFormula "/\\" ;
+
+Disj. DisjFormula ::= [ConjFormula] ;
+separator ConjFormula "\\/" ;
+
+
+
+SysElem. SysElem ::= ConjFormula "->" Term ;
+
+System. System ::= "[" [SysElem] "]" ;
+
+separator SysElem "|" ;
+
+Program. Program ::= [Toplevel] ;
+
+terminator Toplevel ";" ;
+
+entrypoints Program, Toplevel, Term ;
+
+comment "--" ;
+comment "{-" "-}" ;

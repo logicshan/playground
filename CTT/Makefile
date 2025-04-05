@@ -14,12 +14,12 @@ ALEX_OPTS  = --ghc
 
 # Default goal.
 
-all : TestCTTv
+all : CTTv/Test
 
 # Rules for building the parser.
 
-AbsCTTv.hs LexCTTv.x ParCTTv.y PrintCTTv.hs TestCTTv.hs : CTTv1.cf
-	bnfc --haskell CTTv1.cf
+CTTv/Abs.hs CTTv/Lex.x CTTv/Par.y CTTv/Print.hs CTTv/Test.hs : CTTv1.cf
+	bnfc --haskell -d CTTv1.cf
 
 %.hs : %.y
 	${HAPPY} ${HAPPY_OPTS} $<
@@ -27,16 +27,16 @@ AbsCTTv.hs LexCTTv.x ParCTTv.y PrintCTTv.hs TestCTTv.hs : CTTv1.cf
 %.hs : %.x
 	${ALEX} ${ALEX_OPTS} $<
 
-TestCTTv : AbsCTTv.hs LexCTTv.hs ParCTTv.hs PrintCTTv.hs TestCTTv.hs
+CTTv/Test : CTTv/Abs.hs CTTv/Lex.hs CTTv/Par.hs CTTv/Print.hs CTTv/Test.hs
 	${GHC} ${GHC_OPTS} $@
 
 # Rules for cleaning generated files.
 
 clean :
-	-rm -f *.hi *.o *.log *.aux *.dvi
+	-rm -f CTTv/*.hi CTTv/*.o CTTv/*.log CTTv/*.aux CTTv/*.dvi
 
 distclean : clean
-	-rm -f AbsCTTv.hs AbsCTTv.hs.bak ComposOp.hs ComposOp.hs.bak DocCTTv.txt DocCTTv.txt.bak ErrM.hs ErrM.hs.bak LayoutCTTv.hs LayoutCTTv.hs.bak LexCTTv.x LexCTTv.x.bak ParCTTv.y ParCTTv.y.bak PrintCTTv.hs PrintCTTv.hs.bak SkelCTTv.hs SkelCTTv.hs.bak TestCTTv.hs TestCTTv.hs.bak XMLCTTv.hs XMLCTTv.hs.bak ASTCTTv.agda ASTCTTv.agda.bak ParserCTTv.agda ParserCTTv.agda.bak IOLib.agda IOLib.agda.bak Main.agda Main.agda.bak CTTv1.dtd CTTv1.dtd.bak TestCTTv LexCTTv.hs ParCTTv.hs ParCTTv.info ParDataCTTv.hs Makefile
-
+	-rm -f CTTv/Abs.hs CTTv/Abs.hs.bak CTTv/ComposOp.hs CTTv/ComposOp.hs.bak CTTv/Doc.txt CTTv/Doc.txt.bak CTTv/ErrM.hs CTTv/ErrM.hs.bak CTTv/Layout.hs CTTv/Layout.hs.bak CTTv/Lex.x CTTv/Lex.x.bak CTTv/Par.y CTTv/Par.y.bak CTTv/Print.hs CTTv/Print.hs.bak CTTv/Skel.hs CTTv/Skel.hs.bak CTTv/Test.hs CTTv/Test.hs.bak CTTv/XML.hs CTTv/XML.hs.bak CTTv/AST.agda CTTv/AST.agda.bak CTTv/Parser.agda CTTv/Parser.agda.bak CTTv/IOLib.agda CTTv/IOLib.agda.bak CTTv/Main.agda CTTv/Main.agda.bak CTTv/CTTv1.dtd CTTv/CTTv1.dtd.bak CTTv/Test CTTv/Lex.hs CTTv/Par.hs CTTv/Par.info CTTv/ParData.hs Makefile
+	-rmdir -p CTTv/
 
 # EOF

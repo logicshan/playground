@@ -1,0 +1,35 @@
+position token Id ((char - ["\\\n\t~[]():;,.0123456789_ "]) (char - ["\\\n\t~[]():;,. "])*);
+
+entrypoints Context, Exp, Decl;
+
+Ctx. Context ::= [Decl] ;
+
+U.        Exp2 ::= "*" ;
+Var.      Exp2 ::= Ref ;
+SVar.     Exp2 ::= Ref "[" [Exp] "]" "." Id ;
+App.      Exp1 ::= Exp1 Exp2 ;
+Arr.      Exp  ::= Exp1 "->" Exp ;
+Abs.      Exp  ::= "[" Id ":" Exp "]" Exp ;
+Let.      Exp  ::= "[" Id ":" Exp "=" Exp "]" Exp ;
+
+Dec.      Decl ::= Id ":" Exp ;
+Def.      Decl ::= Id ":" Exp "=" Exp ;
+Seg.      Decl ::= Id "=" "seg" "{" [Decl] "}" ;
+SInst.    Decl ::= Id "=" Ref "[" [Exp] "]" ; 
+
+Rid.      Ref  ::= Id ;
+Rns.      Ref  ::= Ref "." Id ;
+
+separator Decl ";" ;
+
+separator Exp "," ;
+
+coercions Exp 2;
+
+layout "seg";
+
+layout toplevel;
+
+comment "--";
+
+comment "{-" "-}";

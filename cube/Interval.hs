@@ -52,8 +52,8 @@ addDiag dirs@(zeros,ones,diags) s1 s2
   | s1 == s2 = dirs -- Trivial, nothing to do
   | s1 `elem` zeros = addZero dirs s2 -- `s1` already zero -> set `s2` to zero
   | s2 `elem` zeros = addZero dirs s1 -- `s2` already zero -> set `s1` to zero
-  | s1 `elem` ones = addOne dirs s2 -- `s1` already one -> set `s2` to one
-  | s2 `elem` ones = addOne dirs s1 -- `s2` already one -> set `s1` to zero
+  | s1 `elem` ones  = addOne  dirs s2 -- `s1` already one -> set `s2` to one
+  | s2 `elem` ones  = addOne  dirs s1 -- `s2` already one -> set `s1` to zero
   | otherwise = let
 {-
 λ> let dirs = ([],[],[[(Ident "i"),(Ident "k")],[(Ident "j"),(Ident "l")]])
