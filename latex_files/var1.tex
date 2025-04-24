@@ -1,0 +1,18 @@
+\starttext
+Test Test
+
+\definefont[bahnlight][name:bahnschriftlight*default]
+\definefont[bahnsemilight][name:bahnschriftsemilight*default]
+\definefont[bahnregular][name:bahnschriftregular*default]
+
+\startMPcode
+picture pic;
+pic := thelabel(textext("\bahnlight This is Bahnschrift light in Metafont 0123456789"), (0, 0));
+draw pic;
+pic := thelabel(textext("\bahnsemilight This is Bahnschrift semilight in Metafont 0123456789"), (0, 15));
+draw pic;
+pic := thelabel(textext("\bahnregular This is Bahnschrift regular in Metafont 0123456789"), (0, 30));
+draw pic;
+\stopMPcode
+
+\stoptext

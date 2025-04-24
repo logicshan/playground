@@ -1,0 +1,62 @@
+% Usage:
+%   context variable-fonts.tex
+
+\definefontfeature[w300][default][axis={weight:300}]
+\definefontfeature[w400][default][axis={weight:400}]
+\definefontfeature[w500][default][axis={weight:500}]
+\definefontfeature[w600][default][axis={weight:600}]
+\definefontfeature[w700][default][axis={weight:700}]
+
+\definefont [Bahnschrift@300] [file:bahnschrift.ttf*w300]
+\definefont [Bahnschrift@400] [file:bahnschrift.ttf*w400]
+\definefont [Bahnschrift@500] [file:bahnschrift.ttf*w500]
+\definefont [Bahnschrift@600] [file:bahnschrift.ttf*w600]
+\definefont [Bahnschrift@700] [file:bahnschrift.ttf*w700]
+
+\definefontfeature[w200c0][default][axis={weight:200,contrast=0}]
+\definefontfeature[w300c0][default][axis={weight:300,contrast=0}]
+\definefontfeature[w400c0][default][axis={weight:400,contrast=0}]
+\definefontfeature[w500c0][default][axis={weight:500,contrast=0}]
+\definefontfeature[w600c0][default][axis={weight:600,contrast=0}]
+\definefontfeature[w700c0][default][axis={weight:700,contrast=0}]
+\definefontfeature[w800c0][default][axis={weight:800,contrast=0}]
+\definefontfeature[w900c0][default][axis={weight:900,contrast=0}]
+\definefontfeature[w900c1][default][axis={weight:900,contrast=25}]
+\definefontfeature[w900c2][default][axis={weight:900,contrast=50}]
+\definefontfeature[w900c3][default][axis={weight:900,contrast=75}]
+\definefontfeature[w900c4][default][axis={weight:900,contrast=100}]
+
+\definefont [AdobeVF@w200+c0] [file:AdobeVFPrototype.ttf*w200c0]
+\definefont [AdobeVF@w300+c0] [file:AdobeVFPrototype.ttf*w300c0]
+\definefont [AdobeVF@w400+c0] [file:AdobeVFPrototype.ttf*w400c0]
+\definefont [AdobeVF@w500+c0] [file:AdobeVFPrototype.ttf*w500c0]
+\definefont [AdobeVF@w600+c0] [file:AdobeVFPrototype.ttf*w600c0]
+\definefont [AdobeVF@w700+c0] [file:AdobeVFPrototype.ttf*w700c0]
+\definefont [AdobeVF@w800+c0] [file:AdobeVFPrototype.ttf*w800c0]
+\definefont [AdobeVF@w900+c0] [file:AdobeVFPrototype.ttf*w900c0]
+\definefont [AdobeVF@w900+c1] [file:AdobeVFPrototype.ttf*w900c1]
+\definefont [AdobeVF@w900+c2] [file:AdobeVFPrototype.ttf*w900c2]
+\definefont [AdobeVF@w900+c3] [file:AdobeVFPrototype.ttf*w900c3]
+\definefont [AdobeVF@w900+c4] [file:AdobeVFPrototype.ttf*w900c4]
+
+
+\starttext
+
+\csname Bahnschrift@300\endcsname  Bahnschrift, weight=300\par
+\csname Bahnschrift@400\endcsname  Bahnschrift, weight=400\par
+\csname Bahnschrift@500\endcsname  Bahnschrift, weight=500\par
+\csname Bahnschrift@600\endcsname  Bahnschrift, weight=600\par
+\csname Bahnschrift@700\endcsname  Bahnschrift, weight=700\par
+
+\csname AdobeVF@w200+c0\endcsname  Adobe Variable Font Prototype (fi), weight=200, contrast=0\par
+\csname AdobeVF@w300+c0\endcsname  Adobe Variable Font Prototype (fi), weight=300, contrast=0\par
+\csname AdobeVF@w400+c0\endcsname  Adobe Variable Font Prototype (fi), weight=400, contrast=0\par
+\csname AdobeVF@w500+c0\endcsname  Adobe Variable Font Prototype (fi), weight=500, contrast=0\par
+\csname AdobeVF@w600+c0\endcsname  Adobe Variable Font Prototype (fi), weight=600, contrast=0\par
+\csname AdobeVF@w700+c0\endcsname  Adobe Variable Font Prototype (fi), weight=700, contrast=0\par
+\csname AdobeVF@w800+c0\endcsname  Adobe Variable Font Prototype (fi), weight=800, contrast=0\par
+\csname AdobeVF@w900+c0\endcsname  Adobe Variable Font Prototype (fi), weight=900, contrast=0\par
+\csname AdobeVF@w900+c1\endcsname  Adobe Variable Font Prototype (fi), weight=900, contrast=25\par
+\csname AdobeVF@w900+c2\endcsname  Adobe Variable Font Prototype (fi), weight=900, contrast=50\par
+\csname AdobeVF@w900+c3\endcsname  Adobe Variable Font Prototype (fi), weight=900, contrast=75\par
+\csname AdobeVF@w900+c4\endcsname  Adobe Variable Font Prototype (fi), weight=900, contrast=100\par

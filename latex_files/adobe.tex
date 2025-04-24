@@ -1,0 +1,39 @@
+\starttext
+
+\startMPcode
+  draw outlinetext.b ("\definedfont
+    [name:adobevariablefontprototypeextralight]%
+    foo@bar+FipP")
+  (withcolor "gray")
+  (withcolor red withpen pencircle scaled 1/10)
+  xsized .45TextWidth ;
+\stopMPcode
+\startMPcode
+  draw outlinetext.b ("\definedfont
+    [name:adobevariablefontprototypelight]%
+    foo@bar+FipP")
+  (withcolor "gray")
+  (withcolor red withpen pencircle scaled 1/10)
+  xsized .45TextWidth ;
+\stopMPcode
+\startMPcode
+  draw outlinetext.b ("\definedfont
+    [name:adobevariablefontprototypebold]%
+    foo@bar+FipP")
+  (withcolor "gray")
+  (withcolor red withpen pencircle scaled 1/10)
+  xsized .45TextWidth ;
+\stopMPcode
+\startMPcode
+  draw outlinetext.b
+  ("\definefontfeature[whatever]%
+  [axis={weight:350}]%
+    \definedfont
+      [name:adobevariablefontprototype*whatever]%
+      foo@bar+FipP")
+    (withcolor "gray")
+    (withcolor red withpen pencircle scaled 1/10)
+    xsized .45TextWidth ;
+\stopMPcode
+
+\stoptext

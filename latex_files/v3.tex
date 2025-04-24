@@ -1,0 +1,14 @@
+% !TEX program = lualatex
+
+\documentclass{article}
+
+\usepackage{forloop}
+\usepackage{fontspec}
+\setmainfont{Hundred.ttf} % https://github.com/edward-martyr/Hundred-ASCII/blob/master/Hundred.ttf ，字重是 3–126
+
+\begin{document}
+
+\newcounter{weight}
+\forloop{weight}{20}{\value{weight} < 101}{{\addfontfeatures{RawFeature={+axis={wght=\arabic{weight}}}}a}}
+
+\end{document}

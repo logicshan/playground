@@ -1,0 +1,12 @@
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Bahnschrift.ttf}
+\newcommand{\Bahnschrift}[2]{{\addfontfeatures{RawFeature={+axis={wght=#1}}}#2}}
+\begin{document}
+\Huge
+\Bahnschrift{300}{Bahnschrift, weight=300}\par
+\Bahnschrift{400}{Bahnschrift, weight=400}\par
+\Bahnschrift{500}{Bahnschrift, weight=500}\par
+\Bahnschrift{600}{Bahnschrift, weight=600}\par
+\Bahnschrift{700}{Bahnschrift, weight=700}\par
+\end{document}

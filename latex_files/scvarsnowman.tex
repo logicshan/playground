@@ -1,0 +1,25 @@
+%#!lualatex
+\documentclass{article}
+\usepackage[a6paper, scale=0.88]{geometry}
+\usepackage{fontspec}
+% Font available at https://github.com/zr-tex8r/SCVarSnowman
+\newfontface\fSCVS{SCVarSnowman.ttf}[Renderer=HarfBuzz]
+\newcommand*{\cItem}[1]{%
+  \item \makebox[5em][l]{\ttfamily MOOD=#1}%
+    % 'MOOD' axis: +100=smiling .. 0=neutral .. -100=frowning
+    {\fSCVS\addfontfeatures{RawFeature={+axis={MOOD=#1}}}%
+      \LARGE ☃⛄%                   with a red muffler
+      {\addfontfeatures{StylisticSet=3}☃⛄}% ss03 green
+      {\addfontfeatures{StylisticSet=4}☃⛄}% ss04 blue
+      {\addfontfeatures{StylisticSet=5}☃⛄}% ss05 yellow
+      {\addfontfeatures{StylisticSet=6}☃⛄}}%ss06 purple
+}
+\begin{document}
+\begin{itemize}
+\cItem{-100}
+\cItem{-50}
+\cItem{0}
+\cItem{50}
+\cItem{100}
+\end{itemize}
+\end{document}

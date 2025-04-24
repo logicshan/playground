@@ -1,0 +1,28 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fontspec}
+
+\setmainfont[
+   Renderer=HarfBuzz,
+   ItalicFont=Recursive-VariableFont_CASL_CRSV_MONO_slnt_wght.ttf,
+   BoldFont=Recursive-VariableFont_CASL_CRSV_MONO_slnt_wght.ttf,
+   BoldItalicFont=Recursive-VariableFont_CASL_CRSV_MONO_slnt_wght.ttf,
+    BoldFeatures={RawFeature={+axis={wght=500}}},
+    BoldItalicFeatures={RawFeature={+axis={wght=900}}},
+    ItalicFeatures = {RawFeature={+axis={CRSV=1}}}
+    ]{Recursive-VariableFont_CASL_CRSV_MONO_slnt_wght.ttf}
+
+    \setmonofont{Recursive-VariableFont_CASL_CRSV_MONO_slnt_wght.ttf}[%
+    Renderer=HarfBuzz,
+    RawFeature={+axis={MONO=1}}]
+
+
+    
+\begin{document}
+\par the quick brown fox jumps over the lazy dog.
+\par\textit{the quick brown fox jumps over the lazy dog.}
+\par\textbf{the quick brown fox jumps over the lazy dog.}
+\par\textbf{\textit{the quick brown fox jumps over the lazy dog.}}
+
+\texttt{Es irrt der Mensch..}
+
+\end{document}

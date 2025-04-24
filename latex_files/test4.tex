@@ -1,0 +1,20 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fontspec}
+\defaultfontfeatures{RawFeature={+axis={wght=100}}}
+\setmainfont[
+    ItalicFont=SourceSansVariable-Italic.otf,
+%    ItalicFont=SourceSans3VF-Italic.otf,
+    BoldFont=SourceSansVariable-Roman.otf,
+%    BoldFont=SourceSans3VF-Upright.otf,
+    BoldItalicFont=SourceSansVariable-Italic.otf,
+%    BoldItalicFont=SourceSans3VF-Italic.otf,
+    BoldFeatures={RawFeature={+axis={wght=900}}},
+    BoldItalicFeatures={RawFeature={+axis={wght=900}}}
+]{SourceSansVariable-Roman.otf}
+%]{SourceSans3VF-Upright.otf}
+\begin{document}
+\par the quick brown fox jumps over the lazy dog.
+\par\textit{the quick brown fox jumps over the lazy dog.}
+\par\textbf{the quick brown fox jumps over the lazy dog.}
+\par\textbf{\textit{the quick brown fox jumps over the lazy dog.}}
+\end{document} 

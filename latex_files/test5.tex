@@ -1,0 +1,21 @@
+\definefontfeature[w300][default][axis={weight:300}]
+\definefontfeature[w400][default][axis={weight:400}]
+\definefontfeature[w500][default][axis={weight:500}]
+\definefontfeature[w600][default][axis={weight:600}]
+\definefontfeature[w700][default][axis={weight:700}]
+
+\definefont[Bahnschrift@300][file:bahnschrift.ttf*w300]
+\definefont[Bahnschrift@400][file:bahnschrift.ttf*w400]
+\definefont[Bahnschrift@500][file:bahnschrift.ttf*w500]
+\definefont[Bahnschrift@600][file:bahnschrift.ttf*w600]
+\definefont[Bahnschrift@700][file:bahnschrift.ttf*w700]
+
+\starttext
+
+\csname Bahnschrift@300\endcsname Bahnschrift, weight=300\par
+\csname Bahnschrift@400\endcsname Bahnschrift, weight=400\par
+\csname Bahnschrift@500\endcsname Bahnschrift, weight=500\par
+\csname Bahnschrift@600\endcsname Bahnschrift, weight=600\par
+\csname Bahnschrift@700\endcsname Bahnschrift, weight=700\par
+
+\stoptext

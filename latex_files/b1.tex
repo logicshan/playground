@@ -1,0 +1,16 @@
+% latexmk -lualatex b1.tex
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Bahnschrift}%
+ [
+  BoldFont={Bahnschrift},
+  BoldFeatures={FakeBold=1.6},  % {RawFeature={embolden=1.6}}  with lualatex
+  ItalicFont={Bahnschrift},
+  ItalicFeatures={FakeSlant=0.2},
+  BoldItalicFont={Bahnschrift},
+  BoldItalicFeatures={FakeSlant=0.2,FakeBold=1.6},
+ ]
+
+\begin{document}
+blub {\bfseries blub \itshape blub} \itshape blub
+\end{document}

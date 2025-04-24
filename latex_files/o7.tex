@@ -1,0 +1,29 @@
+\documentclass{ctexart}
+\usepackage{fontspec,xunicode-addon}
+\setmainfont{Source Han Serif SC}
+
+% XeLaTeX 下需要把全体带圈数字都设置成 Default 类
+% LuaLaTeX 下无须额外设置
+\xeCJKDeclareCharClass{Default}{"24EA, "2460->"2473, "3251->"32BF}
+
+% 将中文字体声明为（西文）字体族
+\newfontfamily\EnclosedNumbers{Source Han Serif SC}
+
+% 放置钩子，只让带圈字符才需更换字体
+\AtBeginUTFCommand[\textcircled]{\begingroup\EnclosedNumbers}
+\AtEndUTFCommand[\textcircled]{\endgroup}
+
+\begin{document}
+\ExplSyntaxOn
+\cs_set:Npn \TESTi
+  {
+    \int_step_inline:nnn { 0 } { 999 } { \textcircled{##1} ~ }
+  }
+\ExplSyntaxOff
+\textcircled{1}
+\textcircled{25}
+\textcircled{a}
+\textcircled{Z}
+
+\TESTi
+\end{document}
