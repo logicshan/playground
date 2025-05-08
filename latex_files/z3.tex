@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{fontspec}
+% 使用 LaTeX3 以简化代码
+\ExplSyntaxOn
+\clist_map_inline:nn
+  {
+    Two, Four, Eight, Hair, Thin, UltraLight, ExtraLight, Light,
+    Book, Medium, SemiBold, Bold, ExtraBold, Heavy, Ultra
+  }
+  {
+    % LaTeX3 中要用 ~ 代替空格
+    \exp_args:Nc \newfontfamily { Fira #1 } { Fira~ Sans~ #1 }
+      [ ItalicFont = Fira~ Sans~ #1~ Italic ]
+  }
+\ExplSyntaxOff
+% Regular 字重需单独处理
+\newfontfamily\FiraRegular{Fira Sans Regular}[ItalicFont = Fira Sans Italic]
+\begin{document}
+\begin{tabular}{ll}
+  \FiraTwo        Fira Sans \itshape Two        Italic & \FiraFour       Fira Sans \itshape Four       Italic \\
+  \FiraEight      Fira Sans \itshape Eight      Italic & \FiraHair       Fira Sans \itshape Hair       Italic \\
+  \FiraThin       Fira Sans \itshape Thin       Italic & \FiraUltraLight Fira Sans \itshape UltraLight Italic \\
+  \FiraExtraLight Fira Sans \itshape ExtraLight Italic & \FiraLight      Fira Sans \itshape Light      Italic \\
+  \FiraBook       Fira Sans \itshape Book       Italic & \FiraRegular    Fira Sans \itshape Regular    Italic \\
+  \FiraMedium     Fira Sans \itshape Medium     Italic & \FiraSemiBold   Fira Sans \itshape SemiBold   Italic \\
+  \FiraBold       Fira Sans \itshape Bold       Italic & \FiraExtraBold  Fira Sans \itshape ExtraBold  Italic \\
+  \FiraHeavy      Fira Sans \itshape Heavy      Italic & \FiraUltra      Fira Sans \itshape Ultra      Italic \\
+\end{tabular}
+\end{document}

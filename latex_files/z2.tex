@@ -1,0 +1,25 @@
+% lualatex
+\documentclass{article}
+
+\usepackage{fontspec}
+\setsansfont{IBMPlexSans}[
+  Extension      = .otf,
+  UprightFont    = *-Text,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-TextItalic,
+  BoldItalicFont = *-BoldItalic]
+
+\begin{document}
+\sffamily
+Ut enim ad minim veniam, quis nostrud exercitation ullamco
+laboris nisi ut aliquip ex ea commodo consequat.
+
+\textbf{Svo hölt, yxna kýr þegði jú um dóp í fé á bæ.
+  Muzicologă în bej vând whisky și tequila, preț fix.}
+
+\textit{Που έτσι κι αλλιώς δεν ξέρει από χιόνια.
+  Άγιο Στέφανο, Στα βόρεια 3 με 5 βαθμούς χαμηλότερη.}
+
+\textbf{\textit{Также было установлено, эта разница в
+  10 раз меньше, в предгорьях и горах.}}
+\end{document}

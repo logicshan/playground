@@ -1,0 +1,14 @@
+% 使用凭据表
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\tl_set:Nn \l_tmpa_tl 
+  { \tl_set:Nn \l_tmpa_tl { ABC } }
+% 将凭据表转换一个字符串并输出
+\tl_to_str:N \l_tmpa_tl .\par
+% 使用凭据表，\tl_use:N 可以省略
+\tl_use:N \l_tmpa_tl .\par
+% \tl_to_str:n 的变体
+\tl_to_str:V \l_tmpa_tl .\par
+\ExplSyntaxOff
+\end{document}

@@ -1,0 +1,16 @@
+% 步进函数 inline 和 varialbe
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 前三个参数一样，
+% 最后一个参数用于定义循环体，接收 #1 参数
+\int_step_inline:nnnn 
+  { 0 } { 2 } { 7 } 
+  { Current~step~is:~#1 \par }
+% 前三个参数一样，第四个参数为凭据表变量（当前值）
+% 最后一个参数用于定义循环体，不能使用 #1 参数
+\int_step_variable:nnnNn
+  { 0 } { 2 } { 7 } \l_tmpa_tl
+  { Current~step~is:~\tl_use:N \l_tmpa_tl \par }
+\ExplSyntaxOff
+\end{document}

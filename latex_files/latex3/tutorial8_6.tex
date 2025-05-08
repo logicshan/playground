@@ -1,0 +1,30 @@
+% 拆分控制序列
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% #1 需要有三部分，不然 \my_func:nnn 会缺参数报错
+\cs_new:Nn \my_func:n 
+  { 
+    \str_set:Nn \l_tmpa_str { #1 }
+    \str_use:N \l_tmpa_str \par
+    \my_func:nnn #1 
+  }
+\cs_new:Nn \my_func:nnn 
+  { 
+    \str_set:Nn \l_tmpa_str { #1 }
+    \str_set:Nn \l_tmpb_str { #2 }
+    \bool_set:Nn \l_tmpa_bool { #3 }
+    \str_use:N \l_tmpa_str.~
+    \str_use:N \l_tmpb_str.~
+    \bool_if:NTF \l_tmpa_bool 
+      { Yes } { No } \par
+  }
+% 让 \cs_split_function:N 的结果传递给 \my_func:n
+% 后者有三部分， 经 \my_func:n 转手后传递给  \my_func:nnn
+\exp_args:Ne \my_func:n 
+  { \cs_split_function:N \my_func:n } 
+% 变量凭据也是一种控制序列
+\exp_args:Ne \my_func:n 
+  { \cs_split_function:N \l_tmpa_int } 
+\ExplSyntaxOff
+\end{document}

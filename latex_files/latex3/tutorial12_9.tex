@@ -1,0 +1,19 @@
+% 凭据表的头与剩余部分
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\tl_set:Nn \l_tmpa_tl 
+  { ~ { ABC } ~.~ 123 ~ }
+% 将第一个项目留在输入流中，丢弃其余部分。
+\tl_head:N \l_tmpa_tl +
+% 第一个项目并将剩余凭据留在输入流中。
+\tl_tail:N \l_tmpa_tl +
+% 输出第 n 个项目
+\tl_item:Nn \l_tmpa_tl { 2 } +
+% 随机输出某个项目
+\tl_rand_item:N \l_tmpa_tl +
+% 输出指定区间的项目
+\tl_range:Nnn \l_tmpa_tl { -3 } { 4 } +
+\ExplSyntaxOff
+\end{document}
+% 结果均为 ABC+ . 123 +.+???+12+

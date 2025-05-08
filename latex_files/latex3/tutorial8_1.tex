@@ -1,0 +1,13 @@
+% 两个无操作函数
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_new:Nn \my_show_args:n 
+  { \tl_to_str:n { #1 } }
+\cs_generate_variant:Nn \my_show_args:n { o }
+1. \cs_meaning:N \prg_do_nothing: \par % 宏
+2. \cs_meaning:N \scan_stop: \par % 原语 \relax
+3. \my_show_args:o { \prg_do_nothing: } \par
+4. \my_show_args:o { \scan_stop: } \par
+\ExplSyntaxOff
+\end{document}

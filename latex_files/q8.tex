@@ -1,0 +1,14 @@
+\documentclass[svgnames, pstricks, border=10pt]{standalone}
+    \usepackage{pst-plot}
+
+    \begin{document}
+
+    \begin{pspicture*}(-2.95,-2.8)(2.95,2.95)
+    \psset{plotpoints=1000, showorigin=false, arrowinset=0.12, linejoin=1}
+    \everypsbox{\scriptsize}
+    \pscustom[fillstyle =solid, fillcolor=LavenderBlush!50]{\psplot[algebraic, linecolor=Tomato, linewidth=1pt]{-3}{3}{sqrt(abs(x))}\psline(3,1.732)(3,3)(-3,3)\closepath}
+    \pscustom[fillstyle =solid, fillcolor=WhiteSmoke, linecolor=RoyalBlue]{\psplot[algebraic, linewidth=1pt]{-3}{3}{sqrt(abs(x))}\psline(3,1.732)(3,-3)(-3,-3)\closepath}
+    \psaxes[labelFontSize=\scriptstyle, tickstyle=full, ticksize=2pt -2pt, Dx=1, labelFontSize=\scriptstyle, Dy=1, linecolor=LightSteelBlue]{->}(0,0)(-3,-2.8)(2.96,2.95)[$x$,-120][$y$,210]
+    \end{pspicture*}
+
+    \end{document} 

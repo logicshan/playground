@@ -1,0 +1,20 @@
+% 重复
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\int_new:N \l_my_i_int
+\int_new:N \l_my_fact_int
+\int_set:Nn \l_my_i_int { 0 }
+\int_set:Nn \l_my_fact_int { 1 }
+\cs_new:Nn \my_func: 
+  { 
+    \int_incr:N \l_my_i_int 
+    \int_set:Nn \l_my_fact_int 
+      { \l_my_fact_int * \l_my_i_int }
+    \int_use:N \l_my_i_int !\ =\ 
+    \int_use:N \l_my_fact_int 
+  }
+\prg_replicate:nn { 5 } 
+  { \my_func: \par }
+\ExplSyntaxOff
+\end{document}

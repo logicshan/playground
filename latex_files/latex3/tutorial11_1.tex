@@ -1,0 +1,20 @@
+% 布尔基本使用
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 布尔变量初始化为假。
+\bool_new:N \l_my_sample_bool 
+\bool_set:Nn \l_my_sample_bool 
+  {
+    % 检测变量是否已定义（与是否为布尔变量无关） 
+    \bool_if_exist_p:N \l_my_sample_bool 
+  }
+% 将后者的值赋值给前者
+\bool_set_eq:NN \l_tmpa_bool \l_my_sample_bool
+% 布尔值比较特殊，其一般与条件句
+
+一起使用
+\bool_if:NTF \l_tmpa_bool { A } { B }
+\ExplSyntaxOff
+\end{document}
+% 结果为 A

@@ -1,0 +1,24 @@
+% 第一个凭据的测试
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 第一个凭据的类别码是否与 #2 相同
+\tl_if_head_eq_catcode:nNTF 
+  { ABC } B { A } { B }
+% 第一个凭据的字符码是否与 #2 相同
+\tl_if_head_eq_charcode:nNTF
+  { \{ BC \} } \l_tmpa_tl { A } { B }
+% 第一个凭据的含义是否与 #2 相同
+\tl_if_head_eq_meaning:nNTF
+  { \l_tmpa_tl } \l_tmpb_tl { A } { B }
+% 第一个凭据是否为组开始符
+\tl_if_head_is_group:nTF
+  { { ABC } 123 } { A } { B }
+% 第一个凭据是否是一个常规的 N 类型参数
+\tl_if_head_is_N_type:nTF
+  { \l_tmpa_tl } { A } { B }
+\tl_if_head_is_space:nTF
+ { ~A123 } { A } { B }
+\ExplSyntaxOff
+\end{document}
+% 结果为 AAAAAA

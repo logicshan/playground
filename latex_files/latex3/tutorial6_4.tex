@@ -1,0 +1,24 @@
+% 受保护的函数示例
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\str_new:N \l_my_tmp_str
+\str_set:Nn \l_my_tmp_str { 123 }
+% 定义两个函数体相同的函数
+\cs_set:Nn \my_func_a: 
+  { \str_use:N \l_my_tmp_str }
+\cs_set_protected:Nn \my_func_b: 
+  { \str_use:N \l_my_tmp_str }
+% 定义使用示例函数
+\cs_new:Nn \my_func_c:nn 
+  { 
+    Arg~1:~\tl_to_str:n { #1 } \par
+    Arg~2:~\tl_to_str:n { #2 } \par
+    \str_set:Nn \l_my_tmp_str { ABC }
+    #1 <-.-> #2 \par
+  }
+\cs_generate_variant:Nn \my_func_c:nn { ee }
+% 在 e 参数中使用函数体相同的两个函数
+\my_func_c:ee  { \my_func_a: } { \my_func_b: }
+\ExplSyntaxOff
+\end{document}

@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{ctex}
+\begin{document}
+\ExplSyntaxOn
+% 定义条件句，函数名不直接带 p,T,F 字样
+% 而是由一个 n 参数指定（逗号分隔）
+% 这里的 p 是 “_p” 断言， 和 cs_new:Npn 里的 p 参数意义不一样
+\prg_new_conditional:Nnn \my_if_ge_zero:n { p , T , F, TF }
+  { 
+    % 函数体内只需要返回逻辑真与假即可
+    % 其余由 \prg_new_conditional:Nnn 函数处理
+    \int_compare:nNnTF
+      { #1 } > { 0 }
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+% 此时定义了如下四个函数变体
+\my_if_ge_zero:nTF { 1 } { Y } { N } \par
+\my_if_ge_zero:nT { 2 } { 大于零 } \par
+\my_if_ge_zero:nF { 3 } { 小于零 } \par
+\my_if_ge_zero_p:n { 4 } \par
+\ExplSyntaxOff
+\end{document}

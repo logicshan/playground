@@ -1,0 +1,39 @@
+\documentclass[export]{standalone}
+
+\usepackage{animate}
+\usepackage{pst-ode,pst-3dplot}
+
+\begin{document}
+
+\begin{animateinline}{10}
+\multiframe{71}{i=0+1,rt=0+0.5}{  
+  \begin{pspicture}(-2,-2)(2,2.2)%
+  %\pstThreeDSphere[fillstyle=solid,opacity=0.0,linewidth=0.1pt](0,0,0){1}
+  % lower half-space
+  \pstODEsolve[algebraic]{XYZa}{0 1 2}{0}{\rt}{500}{1e-9 0.0 -1.0}{
+    -x[1]+x[0]*x[2]^2 |
+    x[0]+x[1]*x[2]^2 |
+    -x[2]*(x[0]^2+x[1]^2)
+  }
+  \ifnum\i>20
+    \listplotThreeD[arrows=->, linecolor=blue]{XYZa}
+  \else  
+    \listplotThreeD[linecolor=blue]{XYZa}
+  \fi
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2,IIIDticks]
+  % upper half-space
+  \pstODEsolve[algebraic]{XYZb}{0 1 2}{0}{\rt}{500}{1e-9 0.0 1.0}{
+    -x[1]+x[0]*x[2]^2 |
+    x[0]+x[1]*x[2]^2 |
+    -x[2]*(x[0]^2+x[1]^2)
+  }
+  \ifnum\i>20
+    \listplotThreeD[arrows=->, linecolor=green, linewidth=0.4pt]{XYZb}
+  \else  
+    \listplotThreeD[linecolor=green, linewidth=0.4pt]{XYZb}
+  \fi
+  \end{pspicture}
+}
+\end{animateinline}
+
+\end{document}

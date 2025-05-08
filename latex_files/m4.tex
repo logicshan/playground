@@ -1,0 +1,15 @@
+\documentclass{article}
+\usepackage{fontspec}
+\directlua{
+  fonts.handlers.otf.addfeature {
+    name = "oneb",
+    type = "substitution",
+    data = {
+      ["1"] = "one.ss01",
+    }
+  }
+}
+\setmainfont{Vollkorn-Regular.otf}[RawFeature=+oneb]
+\begin{document}
+1234567890
+\end{document}

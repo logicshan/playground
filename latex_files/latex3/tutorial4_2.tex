@@ -1,0 +1,23 @@
+% 展开的示例
+\documentclass{article}
+\usepackage{ctex}
+\begin{document}
+\ExplSyntaxOn
+\str_new:N \l_my_tmp_str
+\str_set:Nn \l_my_tmp_str { ABC }
+\cs_new:Nn \my_func: { \l_my_tmp_str }
+\str_set:Nn \l_tmpa_str { 123 }
+% 展开一次
+\exp_args:NNo \str_set:Nn \l_tmpb_str { \my_func: \l_tmpa_str }
+展开一次（o）的效果：\str_use:N \l_tmpb_str \par
+% 彻底展开
+\exp_args:NNx \str_set:Nn \l_tmpb_str { \my_func: \l_tmpa_str }
+彻底展开（x）的效果：\str_use:N \l_tmpb_str \par
+% 完全展开
+\exp_args:NNe \str_set:Nn \l_tmpb_str { \my_func: \l_tmpa_str }
+完全展开（e）的效果：\str_use:N \l_tmpb_str \par
+% 全展开（Full Expansion），
+\exp_args:NNf \str_set:Nn \l_tmpb_str { \my_func: \l_tmpa_str }
+全展开（f）的效果：\str_use:N \l_tmpb_str \par
+\ExplSyntaxOff
+\end{document}

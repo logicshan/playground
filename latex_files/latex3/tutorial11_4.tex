@@ -1,0 +1,35 @@
+% 短路求值
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 第一个参数里的所有条件为真则执行真分支
+\bool_lazy_all:nTF 
+  { 
+    { \int_compare_p:n { 2 = 3 } }
+    { \int_compare_p:n { 4 <= 1 / 0 } }
+  }
+  { Yes }
+  { No } 
+% 第一个参数里的任一条件为真则执行真分支
+\bool_lazy_any:nTF 
+  { 
+    { \int_compare_p:n { 2 = 2 } }
+    { \int_compare_p:n { 4 <= 1 / 0 } }
+  }
+  { Yes }
+  { No }
+% && 的短路求值版
+\bool_lazy_and:nnTF 
+  { \int_compare_p:n { 2 = 3 } }
+  { \int_compare_p:n { 4 <= 1 / 0 } }
+  { Yes }
+  { No } 
+% || 的短路求值版
+\bool_lazy_or:nnTF 
+  { \int_compare_p:n { 2 = 2 } }
+  { \int_compare_p:n { 4 <= 1 / 0 } }
+  { Yes }
+  { No }
+\ExplSyntaxOff
+\end{document}
+% 结果为 NoYesNoYes

@@ -1,0 +1,20 @@
+% 递归
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\int_new:N \l_fact_int
+\cs_new:Nn \my_func:n
+  {
+    \int_compare:nNnTF
+      { #1 } = { 1 }
+      { 1 }
+      {         
+        \my_func:e { \int_eval:n { #1 - 1 } } * #1
+        \int_set:Nn \l_fact_int { \l_fact_int * #1 }    
+      }
+  }
+\cs_generate_variant:Nn \my_func:n { e }
+\int_set:Nn \l_fact_int { 1 }
+\my_func:n { 3 }  = \int_use:N \l_fact_int
+\ExplSyntaxOff
+\end{document}

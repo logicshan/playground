@@ -1,0 +1,37 @@
+% Overlay specifications \alt command
+\documentclass{beamer}
+
+% Theme choice:
+\usetheme{Frankfurt}
+
+\begin{document}
+
+\begin{frame}{Overlay specifications Math environment}
+    \begin{definition}<1->
+    When something is repeated more than three times, we say it is spam
+\end{definition}
+
+\begin{example}<2->
+    An example of spam is: eggs, eggs, eggs
+\end{example}
+
+\begin{theorem}<3->
+    I don’t like spam!
+\end{theorem}
+
+\begin{proof}<5->
+    This proof is shown after the corollary.
+\end{proof}
+
+\begin{corollary}<4->
+    Spam is considered something bad
+\end{corollary}
+
+\LaTeX test
+
+\Latex{} test
+
+{\LaTeX} test
+\end{frame}
+
+\end{document}

@@ -1,0 +1,14 @@
+% 提取宏内容
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_new_protected:Nn \my_func:n 
+  { ABC.#1~ }
+% 提取前缀：\long \protected 等
+\cs_prefix_spec:N \my_func:n \par
+% 提取参数：#1#2 等
+\cs_parameter_spec:N \my_func:n \par
+% 提取置换文本
+\cs_replacement_spec:N \my_func:n \par
+\ExplSyntaxOff
+\end{document}

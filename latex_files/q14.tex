@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{tikz-3dplot} % 关键修复：加载宏包
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+%\tdplotsetmaincoords{70}{110}  % Parameters are elevation and azimuth angles
+%\tdplotsetmaincoords{60}{130}  % Parameters are elevation and azimuth angles
+\tdplotsetmaincoords{80}{45}   % Parameters are elevation and azimuth angles
+\begin{figure}[!h]
+  \centering
+  
+   \tikzset{surface/.style={draw=blue!70!black, fill=blue!20!white, fill opacity=.6}}
+  
+   \newcommand{\coneback}[4][]{
+   \draw[canvas is xy plane at z=#2, #1] (45-#4:#3) arc (45-#4:225+#4:#3) -- (O) --cycle;
+   }
+   \newcommand{\conefront}[4][]{
+   \draw[canvas is xy plane at z=#2, #1] (45-#4:#3) arc (45-#4:-135+#4:#3) -- (O) --cycle;
+   }
+   \begin{tikzpicture}[tdplot_main_coords, grid/.style={help lines,violet!40!white,opacity=0.5},scale=1]
+    \coordinate (O) at (0,0,0);
+    
+       \coneback[surface]{-3}{2}{-12}
+     \conefront[surface]{-3}{2}{-12} 
+    
+     \fill[violet!40!white,opacity=0.5] (-4,-4,0) -- (-4,4,0) -- (4,4,0) -- (4,-4,0) -- cycle;
+    
+     \foreach \x in {-4,...,4}
+       \foreach \y in {-4,...,4}
+       {
+           \draw[grid] (\x,-4) -- (\x,4);
+           \draw[grid] (-4,\y) -- (4,\y);
+           \draw[violet] (-4,4)--(-4,-4)--(4,-4)--(4,4)--cycle;
+       }
+  
+     \draw[->] (-4,0,0) -- (4,0,0) {};
+     \draw[->] (0,-4,0) -- (0,4,0) {};
+     \coneback[surface]{3}{2}{12}
+     \draw[-,dashed] (0,0,-2.65) -- (0,0,2.65) node[above] {};
+     \draw[-,dashed] (0,0,-4) -- (0,0,-3.35) node[above] {};
+     \draw[->,dashed] (0,0,3.35) -- (0,0,4) node[above] {$time$};
+     \conefront[surface]{3}{2}{12}
+     \fill (4,0,2) circle (2pt) node[above right] {$C$};
+     \fill (0,0,0) circle (2pt) {};
+     \fill (-0.5,-0.85,2.2) circle (2pt) node[above left] {$A$};
+     \fill (1.3,0.5,2) circle (2pt) node[above left] {$B$};
+     \draw[->,red] (0,0,0) -- (4,0,2) node[below, pos=0.6, rotate=26.5651,scale=0.70,black] {$\textbf{spacelike vector}$};
+     \draw[->,red] (0,0,0) -- (1.3,0.5,2) node[below, pos=0.65, rotate=55.1459,scale=0.70,black] {$\textbf{lightlike vector}$};
+     \draw[->,red] (0,0,0) -- (-0.5,-0.85,2.2) node[above, pos=0.57, rotate=-65.8557,scale=0.70,black] {$\textbf{timelike vector}$};
+     \node[black] at (0,0,3) {$Future\,\,Light\,\,Cone$};
+     \node[black] at (0,0,-3) {$Past\,\,Light\,\,Cone$};
+     \node[black] at (0,0.05,0.3) {$O$};
+     \node[black] at (0,4.7,0) {$space$};
+     \node[black] at (5,-0.3,0) {$space$};
+   \end{tikzpicture}
+   \caption{Light Cone in 2d Space plus a Time Dimension}
+   \label{cone}
+  \end{figure}
+\end{document}

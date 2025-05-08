@@ -1,0 +1,11 @@
+% 凭据表的含义
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\tl_set:Nn \l_tmpa_tl { ABC }
+\token_to_meaning:N \l_tmpa_tl. \par
+\token_to_meaning:N \c_empty_tl. \par
+\token_to_meaning:N \c_novalue_tl. \par
+\token_to_meaning:N \c_space_tl. \par
+\ExplSyntaxOff
+\end{document}

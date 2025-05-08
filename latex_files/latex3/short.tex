@@ -1,0 +1,48 @@
+\documentclass{article}
+
+\begin{document}
+\def\contents{contents}
+\uppercase{prefix\contents}
+
+\expandafter\uppercase\expandafter{\expandafter p\expandafter r\expandafter e\expandafter f\expandafter i\expandafter x\contents}
+
+\ExplSyntaxOn
+\int_new:N \l_my_lipsum_int
+
+\int_set:Nn \l_my_lipsum_int {6}
+
+\int_eval:n {\l_my_lipsum_int*142857}
+
+\str_new:N \l_my_good_str % 声明
+\str_set:Nn \l_my_good_str {!!@^w@r!} % 赋值
+\l_my_good_str % 显示
+
+\seq_set_split:Nnn \l_my_good_seq { , } { a , b , cd , {ef} , g }
+
+\seq_use:Nn \l_my_good_seq {~=>~}
+\par
+\seq_map_function:NN \l_my_good_seq \uppercase
+\par
+\seq_map_inline:Nn \l_my_good_seq {
+    ~[\uppercase{#1}]~
+}
+\par
+\str_item:Nn \l_my_good_str {2} % -> h 
+
+\seq_item:Nn \l_my_good_seq {1}  % -> a
+\seq_item:Nn \l_my_good_seq {4}  % -> d
+\seq_item:Nn \l_my_good_seq {-1} % -> g
+
+\str_set:Nn \l_tmpa_str {LaTeX3}
+\bool_if:nTF {
+    !\int_compare_p:n {4 <= 3 <= 2} % !(4 <= 3 <= 2) 等于 true
+    || \str_if_eq_p:nn {latex2} {\l_tmpa_str} % 不相等 false
+}
+% 最终布尔表达式的值为true，执行 ⟨true code⟩ ，转为大写
+{
+    \str_uppercase:f{\l_tmpa_str}
+}{
+    \str_lowercase:f{\l_tmpa_str}
+}
+\ExplSyntaxOn
+\end{document}

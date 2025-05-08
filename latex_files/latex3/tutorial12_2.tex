@@ -1,0 +1,20 @@
+% 凭据表变量的集合设置
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\tl_set:Nn \l_tmpa_tl { . }
+% 清空凭据表变量的元素
+\tl_clear:N \l_tmpb_tl
+% 如果变量不存在，则先新建（使用 \tl_clear:N），
+% 然后应用 \tl_-clear:N 使凭据表变量为空。
+\tl_clear_new:N \l_my_sample_tl
+% 将 #2 与 #3 的值合并，再赋值给 #1
+\tl_concat:NNN \l_my_sample_tl \l_tmpa_tl \l_tmpb_tl
+% 向凭据表左端添加内容
+\tl_put_left:Nn \l_my_sample_tl { ABC }
+% 向凭据表右端添加内容
+\tl_put_right:Nn \l_my_sample_tl { 123 }
+\tl_use:N \l_my_sample_tl
+\ExplSyntaxOff
+\end{document}
+% 结果为 ABC.123

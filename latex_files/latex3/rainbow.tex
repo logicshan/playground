@@ -1,0 +1,42 @@
+\documentclass{l3doc}
+\usepackage{tikz} 
+\usepackage{subfig}
+
+
+\begin{document}
+\ExplSyntaxOn
+
+\seq_set_split:Nnn \g_my_color_seq {,} {red,cyan,green,brown,orange,purple}
+\begin{figure*}
+    \centering
+    \subfloat[Rotate~$60^\circ$]{
+        \begin{tikzpicture}[scale=0.6]
+            \fp_step_inline:nnnn {1}{1}{360}{
+                \draw [\seq_item:Nn \g_my_color_seq {\int_mod:nn{#1}{6}+1}] 
+                      (\int_mod:nn{#1-1}{6}*60+#1 \c_colon_str \fp_eval:n{(#1-1)/60}) -- 
+                      (\int_mod:nn{#1}{6}*60+#1 \c_colon_str #1/60);
+            }
+        \end{tikzpicture}
+    }
+    \subfloat[Rotate~$30^\circ$]{
+        \begin{tikzpicture}[scale=0.6]
+            \fp_step_variable:nnnNn {1}{1}{360}{\i}{
+                \draw [
+                    \int_case:nn {\int_mod:nn{\i}{6}}
+                    {
+                        {0} {magenta}
+                        {1} {lime}
+                        {2} {olive}
+                        {3} {orange}
+                        {4} {pink}
+                        {5} {violet}
+                    } 
+                ] 
+                      (\int_mod:nn{\i-1}{6}*30+\i \c_colon_str \fp_eval:n{(\i-1)/60}) -- 
+                      (\int_mod:nn{\i}{6}*30+\i \c_colon_str \i/60);
+            }
+        \end{tikzpicture}
+    }
+\end{figure*}
+\ExplSyntaxOff
+\end{document}

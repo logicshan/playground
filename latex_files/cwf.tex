@@ -1,0 +1,69 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\C{\mathbf{C}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.4}[1]{\_}}}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{族范畴}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{元素范畴}
+  \begin{itemize}
+    \item $P : \C^{op} \to \Set$ 是一个预层 \pause
+    \item $P$ 的元素范畴 $\int P$ \pause，对象为 $(X,p)$\pause(其中 $X\in\C$, $p\in P(X)$); \pause 态射 $f : (X,p)\to(X',p')$\pause($f$是$\C$中的态射且满足$P(f)(p')=p$)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{族范畴}
+\begin{itemize}
+  \item 上下文范畴$\C$\pause(对象代表类型论的context,态射代表substitution). \pause 这个范畴要有一个终对象$\bfone$, 表示空的上下文.
+  \item 函子$\Ty:\C^{op}\to\Set$\pause (对上下文$\Gamma$, $\Ty(\Gamma)$代表上下文$\Gamma$中的类型).\pause 对态射$\gamma:\Delta\to\Gamma$, 类型$A\in\Ty(\Gamma)$, 用 $A[\gamma]$ 表示 $\Ty(\gamma)(A)\in\Ty(\Delta)$.\pause
+  \item 函子$\Ter:(\int\Ty)^{op}\to\Set$ (对每个上下文 $\Gamma$, 类型$A\in\Ty(\Gamma)$, $\Ter(\Gamma,A)$表示在上下文$\Gamma$中类型为$A$的项).\pause ($\Ter(\Gamma,A)$也记为$\Ter(\Gamma\vdash A)$) \pause 取$\int\Ty$ 中的态射 $\gamma:(\Delta,B)\to(\Gamma,A)$ \pause(那么, $\gamma:\Delta\to\Gamma$是$\C$ 中的态射, $B=A[\gamma]$). \pause $\Ter(\gamma):\Ter(\Gamma,A)\to\Ter(\Delta,B)$. 那么对$a\in\Ter(\Gamma\vdash A)$, 用$a[\gamma]$表示$\Ter(\gamma)(a)\in\Ter(\Delta\vdash A[\gamma])$.\pause
+  \item 上下文扩展操作$\extop$ \pause 对$\Gamma\in\C$, $A\in\Ty(\Gamma)$, 返回对象 $\Gamma.A\in\C$, 并且有一个态射$\ttp:\Gamma.A\to\Gamma$ \pause (表示context weakening), \pause 一个项$\ttq\in\Ter(\Gamma.A\vdash A[\ttp])$ \pause (表示新添加的类型为$A$的变量). \pause 这个操作满足以下万有性质: 对任意替换$\gamma:\Delta\to\Gamma$, 项 $a\in\Ter(\Delta\vdash A[\gamma])$, 存在唯一态射$\langle\gamma,a\rangle:\Delta\to\Gamma.A$, 使得 $\ttp\circ\langle\gamma,a\rangle=\gamma$, $\ttq[\langle\gamma,a\rangle]=a$ \pause (此处两个$\langle\gamma,a\rangle$意义不一样, $\ttp\circ\langle\gamma,a\rangle=\gamma$ 中的 $\langle\gamma,a\rangle$表示$\C$中态射, $\ttq[\langle\gamma,a\rangle]=a$ 中的 $\langle\gamma,a\rangle$ 表示 $\int\Ty$ 中的态射 $\langle\gamma,a\rangle : (\Delta,B)\to (\Gamma.A,A[\ttp])$, 其中 $B=A[\ttp][\langle\gamma,a\rangle]=A[\ttp\circ\langle\gamma,a\rangle]=A[\gamma]$)
+\end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,19 @@
+% 中断映射 
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\clist_map_inline:nn { ABE, DEF, HGI }
+  {
+    \str_map_inline:nn { #1 } 
+      {
+        \str_if_eq:nnT
+          { ##1 } { B } 
+          { \str_map_break:n { - } } % 中断内层映射
+        \str_if_eq:nnT
+          { ##1 } { E } 
+          { \clist_map_break:n { = } } % 中断外层映射
+        ##1##1    
+      } 
+  }
+\ExplSyntaxOff
+\end{document}

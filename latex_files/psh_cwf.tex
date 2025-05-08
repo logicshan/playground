@@ -1,0 +1,111 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.4}[1]{\_}}}
+
+\DeclareMathOperator\obj{obj}
+%\DeclareMathOperator\hom{hom}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{从预层范畴到族范畴}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{背景}
+\begin{itemize}
+  \item $\C$ 是一个小范畴(此处略含糊)
+  \item $\widehat{\C}=\Set^{\C^{op}}$ 是一个预层范畴
+  \item 下面展示, 怎样从 $\widehat{\C}$ 得到一个族范畴
+\end{itemize}
+\end{frame}
+
+\begin{frame}{上下文范畴}
+\begin{itemize}
+  \pause
+  \item 上下文范畴就取为 $\widehat{\C}$
+  \pause
+  \item 每一个这样的预层范畴都有一个终对象 $\bfone: \C^{op} \to \Set$, 它把任意 $\C$ 中对象都映为仅有一个元素的集合 $\{\ast\}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$\Ty:\psC^{op}\to\Set$}
+  \begin{itemize}
+    \item 对 $\Gamma\in\obj\psC$, $\Ty(\Gamma)\triangleq \obj(\Set^{(\int\Gamma)^{op}})$ \\
+    也就是对类型$A\in\Ty(\Gamma)$, $I\in\C$, $\rho\in\Gamma(I)$, $f:J\to I$, $A(I,\rho)$ 是一个集合, $A(f) : A(I,\rho) \to A(J,\Gamma(f)(\rho))$, 满足 $A(id) = id$, $A(g\circ f) = A(f)\circ A(g)$
+    \item 对$\Gamma,\Delta\in\obj\psC$, 态射$\gamma:\Delta\to\Gamma$是一个自然变换, 可以诱导元素范畴间的一个函子$\int\gamma:\int\Delta\to\int\Gamma$, $(I,\delta)\in\int\Delta$, $(\int\gamma)(I,\delta)=(I,\gamma_{I}(\delta))$, 进一步得到函子 $(\int\gamma)^{op}:(\int\Delta)^{op}\to(\int\Gamma)^{op}$. $\Ty(\gamma):\Ty(\Gamma)\to\Ty(\Delta)$ 就可以定义为复合 $A\circ(\int\gamma)^{op}:(\int\Delta)^{op}\to(\int\Gamma)^{op}\to\Set$. $\Ty(\gamma)(A)$ 可记为 $A[\gamma]$, 即 $A[\gamma](I,\delta)\triangleq A(I,\gamma_{I}(\delta))$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{$\Ter:(\int\Ty)^{op}\to\Set$}
+\begin{itemize}
+  \item 函子 $\Ter$ 定义为类型$A$在预层范畴$\Set^{(\int\Gamma)^{op}}$中的全局切片\[\Ter(\Gamma\vdash A)\triangleq\hom(\bfone,A) \]
+  \item 若$a\in\Ter(\Gamma\vdash A)$, 对任意$I\in\C$和$\rho\in\Gamma(I)$, $a_{(I,\rho)}:\bfone(I,\rho) \to A(I,\rho)$, 即 $a_{(I,\rho)}:\{\ast\} \to A(I,\rho)$. 我们把$a_{(I,\rho)}(\ast)$记为$a(I,\rho)$, 那么 $a(I,\rho)\in A(I,\rho)$. 对$f:J\to I$, 我们有$A(f)(a(I,\rho))=a(J,\Gamma(f)(\rho))$ ($f$应该看作$\int\Gamma$中的态射$f:(J,\Gamma(f)(\rho))\to(I,\rho)$, $A(f):A(I,\rho)\to A(J,\Gamma(f)(\rho))$).
+  \item 给定 $\int\Ty$ 中的态射 $\gamma:(\Delta,A')\to(\Gamma,A)$, 那么 $\Ter(\gamma):\Ter(\Gamma,A)\to\Ter(\Delta,A')$, $a\in\Ter(\Gamma,A)$, 把$\Ter(\gamma)(a)$记为$a[\gamma]$, 对任意 $I\in\C$, $\delta\in\Delta(I)$, 定义
+  \[ a[\gamma](I,\delta)\triangleq a(I,\gamma_{I}(\delta))\quad\in\quad A(I,\gamma_{I}(\delta))=A[\gamma](I,\delta)=A'(I,\delta) \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{扩展操作$\extop$}
+  \begin{itemize}
+    \item 给定$\Gamma\in\psC$, $A\in\Ty(\Gamma)$, 扩展上下文$\Gamma.A\in\psC$定义为\[ (\Gamma.A)(I)\triangleq\{ (\rho,a)\mid\rho\in\Gamma(I), a\in A(I,\rho)\} \]
+    对态射$f:J\to I$, 定义
+    \[ (\Gamma.A)(f)(\rho,a)\triangleq (\Gamma(f)(\rho),A(f)(a)) \]
+    $\int\Gamma$ 中的态射 $f:(J,\Gamma(f)(\rho))\to(I,\rho)$, $A(f):A(I,\rho)\to A(J,\Gamma(f)(\rho))$, $A(f)(a)\in A(J,\Gamma(f)(\rho))$. 由$\Gamma(f)(\rho)\in\Gamma(J)$
+    \[ (\Gamma(f)(\rho),A(f)(a)) \in (\Gamma.A)(J) \triangleq \{ (\rho,a)\mid\rho\in\Gamma(J),a\in A(J,\rho) \} \]
+    \item 态射$\ttp:\Gamma.A\to\Gamma$ 和项$\ttq\in\Ter(\Gamma.A\vdash A[\ttp])$就简单地定义为(逐点)第一和第二投影
+    \[ \ttp_{I}(\rho,a)\triangleq \rho \qquad \ttq(I,(\rho,a))\triangleq a \]
+    回忆一下, $\ttq(I,(\rho,a)) = \ttq_{(I,\Gamma.A(I))}(\ast) = \ttq_{(I,(\rho,a))}(\ast) \in A[\ttp](I,(\rho,a))=A(I,p_{I}(\rho,a))=A(I,\rho)$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{扩展操作$\extop$ (续)}
+\begin{itemize}
+\item 对$\gamma:\Delta\to\Gamma$, $a\in\Ter(\Delta\vdash A[\gamma])$, 满足万有性质的唯一态射$\langle\gamma,a\rangle:\Delta\to\Gamma.A$定义为
+\[ \langle\gamma,a\rangle_{I}(\delta)\triangleq(\gamma_{I}(\delta),a(I,\delta)) \]
+其中 $I\in\C$, $\delta\in\Delta(I)$. 因为 $a\in\Ter(\Delta\vdash A[\gamma])$, 所以 $a(I,\delta) = a_{(I,\delta)}(\ast)\in A[\gamma](I,\delta)=A(I,\gamma_{I}(\delta))$, 而且 $\gamma_{I} : \Delta(I) \to \Gamma(I)$, 因此 $(\gamma_{I}(\delta),a(I,\delta))\in(\Gamma.A)(I)\triangleq\{ (\rho,a)\mid\rho\in\Gamma(I), a\in A(I,\rho)\}$.
+\end{itemize}
+\end{frame}
+\end{document}

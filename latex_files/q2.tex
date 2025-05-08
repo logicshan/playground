@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage[x11names]{xcolor}
+\usepackage{tikz}
+% from https://tex.stackexchange.com/a/167024/121799
+\newcommand{\ClaudioList}{red,DarkOrange1,Goldenrod1,Green3,blue!50!cyan,DarkOrchid2}
+\newcommand{\SebastianoItem}[1]{\foreach \X[count=\Y] in \ClaudioList
+{\ifnum\Y=#1\relax
+\xdef\SebastianoColor{\X}
+\fi
+}
+\tikz[baseline=(SebastianoItem.base),remember
+picture]{%
+\node[fill=\SebastianoColor,inner sep=4pt,font=\sffamily,fill opacity=0.5] (SebastianoItem){#1)};}
+}
+\newcommand{\SebastianoHighlight}{\tikz[overlay,remember picture]{%
+\fill[\SebastianoColor,fill opacity=0.5] ([yshift=4pt,xshift=-\pgflinewidth]SebastianoItem.east) -- ++(4pt,-4pt)
+-- ++(-4pt,-4pt) -- cycle;
+}}
+\begin{document}
+\renewcommand{\labelenumi}{\SebastianoItem{\arabic{enumi}}}
+Some general advices.
+  \begin{enumerate}
+    \item No fast food.
+    \item Don't drink to much alcohol.
+    \item No pineapple on pizza. \SebastianoHighlight
+    \item Don't use onions in food.
+  \end{enumerate}
+\end{document}

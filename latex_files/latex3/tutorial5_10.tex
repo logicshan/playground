@@ -1,0 +1,13 @@
+% 字符串映射
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_new:Nn \my_func:n
+  { Current~item~is:~#1 \par }
+% 对于 AZ9 的每个元素（字符）都调用一次 \my_func:n；
+% 等效于：\my_func:n { A } 
+% \my_func:n { Z } \my_func:n { 9 } 
+\str_map_function:nN 
+  { AZ9 } \my_func:n
+\ExplSyntaxOff
+\end{document}

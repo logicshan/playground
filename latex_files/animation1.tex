@@ -1,0 +1,24 @@
+\documentclass{standalone}
+\usepackage{tikz,amsmath}
+\usepackage{graphicx}
+\usepackage[autoplay]{animate}
+\usetikzlibrary{arrows.meta}
+\tikzset{>=Stealth}
+\begin{document}
+\begin{animateinline}[loop]{10}%
+  \multiframe{60}{rx = 0 + pi/30}{
+  \begin{tikzpicture}
+    \draw [->] (-1,0) -- (0,0) node[below left]{$O$} 
+               -- (2*pi,0) node[below]{$2\pi$} 
+               -- (7,0) node[below]{$x$};
+    \draw [->] (0,-2) -- (0,2.4) node[left]{$y$};
+    \node at (3,-1) {$\begin{cases}
+      x = t - \sin t \\
+      y = 1 - \cos t
+    \end{cases}$};
+    \draw [blue] (\rx,1) circle (1);
+    \draw [domain=0:\rx,red] plot({\x-sin(\x r)},{1-cos(\x r)});
+  \end{tikzpicture}
+  }
+\end{animateinline}
+\end{document}

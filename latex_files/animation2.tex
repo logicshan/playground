@@ -1,0 +1,25 @@
+\documentclass{standalone}
+\usepackage{tikz,amsmath}
+\usepackage{graphicx}
+\usepackage[autoplay]{animate}
+\usetikzlibrary{arrows.meta}
+\tikzset{>=Stealth}
+\begin{document}
+\begin{animateinline}[loop]{10}%
+  \multiframe{60}{rx = 0 + 6}{
+  \begin{tikzpicture}
+    \draw [->] (-5,0) -- (0,0) node[below left]{$O$}
+               -- (5,0)  node[below]{$x$};
+    \draw [->] (0,-5) -- (0,5) node[left]{$y$};
+    \draw (0,0) circle (4) ;
+    \draw [blue] (\rx:3) circle (1);
+    \node at (4,4) {$\begin{cases}
+      x = a\cos ^3t\\
+      y = a\sin ^3 t
+    \end{cases}$};
+    \draw [domain=0:\rx,red,samples=200] plot({4*(cos(\x))^3},{4*(sin(\x))^3});
+  \end{tikzpicture}
+  }
+\end{animateinline}
+
+\end{document}

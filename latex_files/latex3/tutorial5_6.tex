@@ -1,0 +1,13 @@
+% 步进函数
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_new:Nn \my_func:n
+  { Current~step~is:~#1 \par }
+\int_step_function:nnnN 
+  { 0 } { 2 } { 7 } \my_func:n
+\int_step_function:nN 
+  { 2 } \my_func:n
+% 还有一个 \int_step_function:nnN 函数 
+\ExplSyntaxOff
+\end{document}

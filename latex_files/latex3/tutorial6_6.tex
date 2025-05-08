@@ -1,0 +1,30 @@
+% 凭据的含义
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\str_set:Nn \l_tmpa_str { ABC }
+% \cs_meaning:N 等效于 原语 \meaning
+% \token_to_meaning:N 等效于 \meaning
+\cs_meaning:N \cs_meaning:N \par
+\cs_meaning:N \token_to_meaning:N \par
+% 控制序列
+\cs_meaning:N \ \par
+\cs_meaning:N \newline \par
+\cs_meaning:N \my_undefine_func: \par
+\cs_meaning:N \l_tmpa_str \par
+\cs_meaning:N \l_tmpa_int \par
+\cs_meaning:N \l_tmpa_dim \par
+% 字符（类别码 字符码）
+\token_to_meaning:N { \par
+\token_to_meaning:N $ \par
+\token_to_meaning:N ^ \par
+\token_to_meaning:N # \par
+\token_to_meaning:N a \par
+\token_to_meaning:N @ \par
+% \ExplSyntaxOn 将 _ 与 : 改为字母了
+\token_to_meaning:N _ \par 
+\token_to_meaning:N : \par 
+\ExplSyntaxOff
+% LaTeX2e 环境，_ 有特殊意义
+\meaning _
+\end{document}

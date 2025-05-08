@@ -1,0 +1,22 @@
+% lualatex
+\documentclass[12pt, border=1mm]{standalone}
+\usepackage{luamplib}
+    \mplibsetformat{metafun}
+    \mplibtextextlabel{enable}
+\begin{document}
+\begin{mplibcode}
+    beginfig(1);
+        u = 3cm; n = 5;
+        for i = 1 upto n:
+            z[i] = u*dir(90+(i-1)*360/n);
+        endfor;
+        for i = 1 upto n:
+            draw z[i]--z[(i+2) mod n + 1];
+            freelabel("$V_" & char(96+i) & "$", z[i], origin); 
+        endfor;
+        for i = 1 upto n:
+            drawdot z[i] withpen pencircle scaled 3bp withcolor red;
+        endfor;
+    endfig;
+\end{mplibcode}
+\end{document}

@@ -1,0 +1,73 @@
+% 使用 fontset=none 以关闭默认字体设置
+\documentclass[fontset=none]{ctexart}
+
+% 修改章节标题格式（演示）
+\ctexset{section/format+=\sffamily}
+
+% 修改页眉页脚（演示）
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyhead[C]{\small 某某大学本科毕业论文（2019）}
+\fancyfoot[C]{\small \thepage}
+\pagestyle{fancy}
+
+% 西文字体
+\setmainfont{Times New Roman}
+\setsansfont{Helvetica}  % Windows 下可使用类似的 Arial 字体
+\setmonofont{Courier New}
+
+% 中文字体（macOS）
+%\def\WordPath{/Applications/Microsoft Word.app/Contents/Resources/DFonts/}
+\def\CJKFontOptions{AutoFakeBold, AutoFakeSlant}
+%\def\CJKFontOptions{Path=\WordPath, AutoFakeBold, AutoFakeSlant}
+%\def\CJKFontFamilyOptions{Path=\WordPath, BoldFont=*, ItalicFont=*, BoldItalicFont=*}
+\def\CJKFontFamilyOptions{BoldFont=*, ItalicFont=*, BoldItalicFont=*}
+\setCJKmainfont{SimSun.ttf}[\CJKFontOptions]
+\setCJKsansfont{SimHei.ttf}[\CJKFontOptions]
+\setCJKmonofont{FangSong.ttf}[\CJKFontOptions]
+\newCJKfontfamily[zhsong]\songti{SimSun.ttf}[\CJKFontFamilyOptions]
+\newCJKfontfamily[zhhei]\heiti{SimHei.ttf}[\CJKFontFamilyOptions]
+\newCJKfontfamily[zhkai]\kaishu{Kaiti.ttf}[\CJKFontFamilyOptions]
+\newCJKfontfamily[zhfs]\fangsong{FangSong.ttf}[\CJKFontFamilyOptions]
+
+% 重定义 \emph 和 \strong 的样式，参见 fontspec 宏包文档
+\emfontdeclare{\kaishu\itshape}
+\strongfontdeclare{\heiti\bfseries}
+
+\begin{document}
+
+\section{中文字体}
+
+\subsection{文本标记}
+
+\begin{center}
+  \begin{tabular}{ccc}
+    & \verb|\emph{...}| & \verb|\strong{...}| \\
+    \hline
+    文本 text & \emph{强调 emph}  & \strong{关键字 strong}
+  \end{tabular}
+\end{center}
+
+\subsection{字体命令}
+
+\begin{center}
+  \begin{tabular}{c|cccc}
+    & & \verb|\itshape| & \verb|\bfseries| & \verb|\itshape\bfseries| \\
+    \hline
+    \verb|\rmfamily| & \rmfamily 罗马体 roman & \rmfamily\itshape 倾斜 italic & \rmfamily\bfseries 加粗 bold & \rmfamily\itshape\bfseries 粗斜 bold-italic \\
+    \verb|\sffamily| & \sffamily 无衬线 sans  & \sffamily\itshape 倾斜 italic & \sffamily\bfseries 加粗 bold & \sffamily\itshape\bfseries 粗斜 bold-italic \\
+    \verb|\ttfamily| & \ttfamily 打字机 mono  & \ttfamily\itshape 倾斜 italic & \ttfamily\bfseries 加粗 bold & \ttfamily\itshape\bfseries 粗斜 bold-italic
+  \end{tabular}
+\end{center}
+
+\subsection{更多字体命令}
+
+\begin{center}
+  \begin{tabular}{cccc}
+    \verb|\songti|    & \verb|\heiti|   & \verb|\kaishu|   & \verb|\fangsong| \\
+    \hline
+    \songti 宋体 song & \heiti 黑体 hei & \kaishu 楷体 kai & \fangsong 仿宋 fang
+  \end{tabular}
+\end{center}
+
+\end{document}

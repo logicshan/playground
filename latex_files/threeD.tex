@@ -1,0 +1,35 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{3d}
+\begin{document}
+
+\tdplotsetmaincoords{70}{110}
+\begin{tikzpicture}[tdplot_main_coords]
+\pgfmathsetmacro{\mytheta}{asin(sqrt(2/3))}
+\typeout{\mytheta}
+% cube
+\tdplotsetcoord{P}{sqrt(3)*4}{\mytheta}{45}
+\draw[dashed] 
+  (0,0,0) -- (Px)
+  (0,0,0) -- (Py)
+  (0,0,0) -- (Pz);
+\draw[->] 
+  (Px) -- ++ (1,0,0) node[anchor=north east]{$x$};
+\draw[->]
+   (Py) -- ++(0,1,0) node[anchor=north west]{$y$};
+\draw[->] 
+  (Pz) -- ++(0,0,1) node[anchor=south]{$z$};
+
+\draw[thick]
+  (Pxz) -- (P) -- (Pxy) -- (Px) -- (Pxz) -- (Pz) -- (Pyz) -- (P); 
+\draw[thick]
+  (Pyz) -- (Py) -- (Pxy);
+
+\filldraw[dashed,blue] (0,0,0)-- (P) circle (2pt);
+
+\draw[green!70!black] (4,4,4) circle (3pt);
+
+\draw[red] (xyz spherical cs:radius={4*sqrt(3)},
+  longitude=45,latitude=90-\mytheta) circle (4pt);
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,19 @@
+% 基于凭据表的映射
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\tl_set:Nn \l_tmpa_tl 
+  { \tl_set:Nn \l_tmpa_tl { ABC } }
+\cs_new:Nn \my_func:n 
+  { \my_func:nn { > } {#1} }
+\cs_new:Nn \my_func:nn
+  { \tl_to_str:n {#1#2} ~ }
+% 为凭据表变量中的每一个项目应用指定函数
+\tl_map_function:NN
+  \l_tmpa_tl \my_func:n \par
+% #1 中的每一个参数放到 #2 的未尾并执行
+\tl_map_tokens:Nn
+  \l_tmpa_tl { \my_func:nn { > } }
+\ExplSyntaxOff
+\end{document}
+% 两个的结果均为 >\tl_set:Nn >\l_tmpa_tl >ABC

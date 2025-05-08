@@ -1,0 +1,305 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{expl3}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+
+\begin{document}
+
+
+
+\ExplSyntaxOn
+\cs_set:Npn \my_vert_str:n #1 {
+  % store argument as string
+  \str_set:Nn \l_tmpa_str {#1}
+  % traverse the string
+  \str_map_inline:Nn \l_tmpa_str {
+      % center each character at their own line
+      \centering ##1 \par
+  }
+}
+% declare latex interface
+\newcommand{\vertstr}[1]{
+  \my_vert_str:n {#1}
+}
+\ExplSyntaxOff
+
+\begin{tikzpicture}
+\node[draw=black, text width=1cm] {\vertstr{ab$c$d~\\\\}};
+\end{tikzpicture}
+
+\ExplSyntaxOn
+% declare new boolean value
+\bool_new:N \l_my_bool
+% set to true
+\bool_set_true:N \l_my_bool
+% set to false
+\bool_set_false:N \l_my_bool
+% boolean based conditional statement
+\bool_if:nTF {\l_my_bool} {true} {false} %false
+% boolean based while loop
+\bool_do_while:nn {\l_my_bool} {}
+% boolean based until loop
+% boolean functions support C/C++
+% style !, || and && operations
+\bool_do_until:nn {!\l_my_bool} {}
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+\cs_set:Npn \my_mod:nn #1#2 {
+  % store #1//#2 in \l_tmpa_int
+  \int_set:Nn \l_tmpa_int { \int_div_truncate:nn {#1}{#2} }
+  % compute (#1)-\l_tmpa_int*(#2)
+  % make sure to surround operands with parentheses
+  % so that when #1 is an expression (e.g. 3-2)
+  % the order of arithmetic will not change
+  \int_eval:n { (#1) - \l_tmpa_int * (#2) }
+}
+% define LaTeX interface
+\newcommand{\mymod}[2]{
+  \my_mod:nn {#1} {#2}
+}
+\ExplSyntaxOff
+\mymod{5}{3}\mymod{6}{3}\mymod{7}{1+2}%201
+
+\ExplSyntaxOn
+\cs_set:Npn \my_caesar_cipher:n #1 {
+  % transform #1 to lower case and store in \l_tmpa_str
+  \str_set:Nx \l_tmpa_str {\tl_lower_case:n {#1}}
+  % clear \l_tmpb_str to store results
+  \str_clear:N \l_tmpb_str
+  % \str_map_inline:Nn traverses the string
+  % and pass each character as first argument
+  \str_map_inline:Nn \l_tmpa_str {
+      % `##1 gives the ASCII code of ##1
+      % 91 is the ASCII code of 'a'
+      % this allows us to compute the offset of ##1
+      \int_set:Nn \l_tmpa_int { \int_eval:n {`##1 - 97} }
+      % suppose the shifting of our Ceaser cipher is 3
+      \int_set:Nn \l_tmpb_int { \int_mod:nn {\l_tmpa_int + 3}{26} }
+      % place new character in \l_tmpb_str
+      \str_put_right:Nx \l_tmpb_str {
+          % this function generates a character given
+          % character code and category code
+          % because we are dealing with English letters
+          % the category code is 11
+          \char_generate:nn {\l_tmpb_int + 97}{11}
+      }
+  }
+  % outputs \l_tmpb_str
+  \str_use:N \l_tmpb_str
+}
+\my_caesar_cipher:n {helloworld}%khoorzruog
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+% declare one more scratch variable
+\int_new:N \l_tmpc_int
+\cs_set:Npn \my_gcd:nn #1#2 {
+  % put #1 in \l_tmpa_int
+  \int_set:Nn \l_tmpa_int {#1}
+  % put #2 in \l_tmpb_int
+  \int_set:Nn \l_tmpb_int {#2}
+  % loop until \l_tmpb_int equals 0
+  \int_do_until:nNnn {\l_tmpb_int} = {0} {
+      % update three variables
+      \int_set:Nn \l_tmpc_int { \l_tmpb_int }
+      \int_set:Nn \l_tmpb_int { \int_mod:nn {\l_tmpa_int}{\l_tmpb_int} }
+      \int_set:Nn \l_tmpa_int {\l_tmpc_int}
+  }
+  % outputs \l_tmpa_int
+  \int_use:N \l_tmpa_int
+}
+\my_gcd:nn {6}{3}~\my_gcd:nn {270}{192}% 3 6
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+\cs_set:Npn \my_gcd_recursive:nn #1#2 {
+	\group_begin:
+	% all variable assignments will be constrained in this group
+	\int_compare:nNnTF {#2} = {0} {
+		\int_gset:Nn \g_tmpa_int {#1}
+	} {
+		\int_set:Nn \l_tmpa_int {\int_mod:nn {#1}{#2}}
+		\int_set:Nn \l_tmpb_int {\int_div_truncate:nn {#1}{#2}}
+		\exp_args:Nnx \my_gcd_recursive:nn {#2} {\int_use:N \l_tmpa_int}
+		% output debug message
+		\par $\int_use:N \l_tmpb_int \times #2 + \int_use:N \l_tmpa_int = #1$
+	}
+	\group_end:
+}
+\my_gcd_recursive:nn {12546}{156}
+\par $\operatorname{gcd}(12546, 156) = \int_use:N \g_tmpa_int$
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+% used to store the name of each student
+\tl_new:N \l_student2_group_tl
+\newcommand{\student}[1]{
+  #1% outputs student name
+  % put student name in group and then
+  % insert into \l_student2_group_tl
+  \tl_put_right:Nn \l_student2_group_tl {{#1}}
+}
+\newcommand{\allstudent}{
+  %\tl_count:N returns the length of a token list
+  %\int_step_inline:nn traverses all integers in 
+  % the range (1, #1) and pass the loop variable as
+  % #1
+  \int_step_inline:nn {\tl_count:N \l_student2_group_tl}{
+      % get the ##1-th element from \l_student2_group_tl
+      \tl_item:Nn \l_student2_group_tl {##1}
+      % determine if it is the last element
+      % otherwise, append comma
+      \int_compare:nNnTF {##1} = {\tl_count:N \l_student2_group_tl} {} {,~}
+  }
+}
+\newcommand{\thestudent}[1]{
+  % outputs the #1-th item in \l_student2_group_tl
+  \tl_item:Nn \l_student2_group_tl {#1}
+}
+\ExplSyntaxOff
+
+% John and Lisa and David and Emily
+\student{John} and \student{Lisa} and \student{David} and \student{Emily}
+
+% John, Lisa, David, Emily
+\par\allstudent
+
+% Emily and David and Lisa and John
+\par\thestudent{4} and \thestudent{3} and \thestudent{2} and \thestudent{1}
+
+\ExplSyntaxOn
+\par
+\int_step_variable:nNn {4} \l_tmpa_tl {
+    \int_step_variable:nNn {4} \l_tmpb_tl{
+        (\l_tmpa_tl,\l_tmpb_tl)
+    }
+}
+\par
+\int_step_inline:nn {4}  {
+    \int_step_inline:nn {4}  {
+        (#1,##1)
+    }
+}
+\par
+\int_set:Nn \l_tmpa_int {1}
+\int_do_while:nNnn {\l_tmpa_int} < {5} {
+    \int_set:Nn \l_tmpb_int {1}
+    \int_do_while:nNnn {\l_tmpb_int} < {5} {
+        (\int_use:N \l_tmpa_int,\int_use:N \l_tmpb_int)
+        \int_incr:N \l_tmpb_int
+    }
+    \int_incr:N \l_tmpa_int
+}
+\ExplSyntaxOff
+
+\tikzset{
+  mynode/.style={
+    minimum height=1cm,
+    minimum width=1cm,
+    draw,
+    anchor=north west
+  }
+}
+
+\ExplSyntaxOn
+\begin{tikzpicture}
+\int_step_inline:nn {6} {
+  \int_step_inline:nn {8} {
+    \node[mynode] at (##1, -#1) {\tiny \int_eval:n {(#1 - 1) * 8 + ##1}};
+  }
+}
+\end{tikzpicture}
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+\fp_set:Nn \l_tmpa_fp {2.0}
+\par\fp_eval:n {sqrt(\l_tmpa_fp)}% 1.414213562373095
+\par\fp_eval:n {sin(\l_tmpa_fp)}% 0.9092974268256817
+\par \fp_eval:n {sin(\c_pi_fp)}% 0.0000000000000002384626433832795
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+% set width and height of each cell
+\dim_new:N \l_w_dim
+\dim_set:Nn \l_w_dim {1.2cm}
+\dim_new:N \l_h_dim
+\dim_set:Nn \l_h_dim {0.5cm}
+
+\tikzset{
+  mynode/.style={
+    minimum~height=\l_h_dim,
+    minimum~width=\l_w_dim,
+    draw,
+    anchor=north~west
+  }
+}
+
+\begin{tikzpicture}
+\int_step_inline:nn {6} {
+  \int_step_inline:nn {8} {
+    \node[mynode] at 
+    (\fp_eval:n {##1 * \l_w_dim} pt, -\fp_eval:n {#1 * \l_h_dim} pt) 
+    {\tiny \int_eval:n {(#1 - 1) * 8 + ##1}};
+  }
+}
+\end{tikzpicture}
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+\begin{tikzpicture}
+	% draw points on the circle
+	\int_step_inline:nn {10} {
+		\node[fill=black,
+        		circle,
+        		inner~sep=0pt,
+			outer~sep=0pt,
+			minimum~width=1mm] (n#1) at (
+			\fp_eval:n {cos(#1 * 36 * \c_one_degree_fp)} cm,
+			\fp_eval:n {sin(#1 * 36 * \c_one_degree_fp)} cm
+		) {};
+	}
+	% connect points pairwise
+	\int_step_inline:nn {10} {
+		\int_step_inline:nn {10} {
+			\draw (n#1)--(n##1);
+		}
+	}
+		
+	
+\end{tikzpicture}
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+% create and compile regex
+\regex_new:N \l_chn_regex
+% the regular expression for Chinese characters
+\regex_set:Nn \l_chn_regex {[\x{3400}-\x{9FBF}]}
+
+\cs_set:Npn \my_is_chn:n #1 {
+  % store #1 as string
+  \str_set:Nn \l_tmpa_str {#1}
+  % clear result queue
+  \seq_clear:N \l_tmpa_seq
+  % traverse the string
+  \str_map_inline:Nn \l_tmpa_str {
+      % check if the string matches \l_chn_regex
+      \regex_match:NnTF \l_chn_regex {##1} {
+          % if so, output Y
+          \seq_put_right:Nn \l_tmpa_seq {Y}
+      } {
+          % otherwise, output N
+          \seq_put_right:Nn \l_tmpa_seq {N}
+      }
+  }
+  % show all contents in the queue, separated by white space
+  \seq_use:Nn \l_tmpa_seq {\space}
+}
+
+% Y N Y N
+\par\my_is_chn:n {中a文b}
+% N N N N N N N Y Y Y
+\par\my_is_chn:n {바탕체ヒラギノ細明體}
+\ExplSyntaxOff
+\end{document}

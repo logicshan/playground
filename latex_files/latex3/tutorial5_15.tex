@@ -1,0 +1,21 @@
+% 稍微复杂的中断示例
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\seq_new:N \l_example_seq
+\seq_set_from_clist:Nn \l_example_seq 
+  {one, two, three, four, five}
+\cs_new:Nn \my_func:n
+  {
+    #1:~<
+    \str_if_eq:nnT { #1 } { two } 
+      { \prg_break:n { ...> } }   % 条件执行中断 
+    \str_map_inline:nn { #1 } { ##1. }       
+    { \prg_break_point: > } 
+    \prg_break_point: ;~          % 中断标记点
+  }
+\my_func:n { one }
+\my_func:n { two }
+\my_func:n { three }
+\ExplSyntaxOff
+\end{document}

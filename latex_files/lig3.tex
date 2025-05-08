@@ -1,0 +1,17 @@
+
+\documentclass{article}
+\edef\pdfgentounicode{\pdfvariable gentounicode}
+\protected\def\pdfglyphtounicode{\pdfextension glyphtounicode }
+\pdfgentounicode=1
+\pdfglyphtounicode{fi}{0066 0069}
+\pdfglyphtounicode{ff}{0066 0066}
+\pdfglyphtounicode{fl}{0066 006C}
+\pdfglyphtounicode{ffi}{0066 0066 0069}
+\pdfglyphtounicode{ffl}{0066 0066 006C}
+\begin{document}
+\char'14 $\mapsto$ \texttt{f + i}\par
+\char'13 $\mapsto$ \texttt{f + f}\par
+\char'15 $\mapsto$ \texttt{f + l}\par
+\char'16 $\mapsto$ \texttt{f + f + i}\par
+\char'17 $\mapsto$ \texttt{f + f + l}\par
+\end{document}

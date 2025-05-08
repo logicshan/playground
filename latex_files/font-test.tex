@@ -1,0 +1,10 @@
+% font-test.tex
+\font\fa="[SourceHanSerifSC-Regular.otf]"
+\font\fb="[SourceHanSerifSC-Regular.otf]:+aalt"
+
+\def\blackrect{\vbox{\tenrm\hrule width 1ex height .88em depth .12em}}
+
+\blackrect\fa “字体”\blackrect\par
+\blackrect\fb “字体”\blackrect\par
+
+\bye

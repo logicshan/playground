@@ -1,0 +1,10 @@
+% 原始的示例
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_new:Nn \my_func: { ABC }
+\str_set:Nn \l_tmpa_str { 123 }
+\str_set:Nn \l_tmpb_str { \my_func: \l_tmpa_str }
+\str_use:N \l_tmpb_str
+\ExplSyntaxOff
+\end{document}

@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage[charter]{mathdesign}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+\usetikzlibrary{arrows.meta}
+\begin{document}
+\[\tikzmarknode{int}{}\int\limits
+  _{\tikzmarknode[inner sep=.2em]{a}{a}}
+  ^{\tikzmarknode{b}{b}}\tikzmarknode{f}{f(x)}
+  \,\tikzmarknode{d}{\mathrm{d}}\tikzmarknode{x}{x}\]
+\begin{tikzpicture}[overlay,remember picture,cyan,>=Stealth]
+  \draw[<-] (int) -- ++ (-1,0) node[left] {{\bfseries Integral}};
+  \draw[<-] (a) -- ++ (0,-1) node[anchor=168,align=left]
+    {{\bfseries Some bold text}\\Some lighter text about something};
+\end{tikzpicture}
+\end{document}

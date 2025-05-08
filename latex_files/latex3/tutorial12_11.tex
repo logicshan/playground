@@ -1,0 +1,23 @@
+% 另一种排序方法
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\prg_new_conditional:Nnn \my_func:nn { TF }
+  {
+    \str_compare:nNnTF 
+    {#1} > {#2}
+    { \prg_return_true: }
+    { \prg_return_false: }
+  }
+\tl_set:Nn \l_tmpa_tl { = }
+\tl_sort:nN
+  { 
+    \l_tmpa_tl ~
+    { abc } ~
+    { \l_tmpa_tl. }~
+    123~
+  }
+  \my_func:nnTF
+\ExplSyntaxOff
+\end{document}
+% 结果为 abc=.=321

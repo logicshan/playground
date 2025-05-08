@@ -1,0 +1,23 @@
+% 其它函数
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 测试布尔表达式的值，然后执行对应分支。
+\bool_if:nTF
+  { 
+    % 函数版 !
+    \bool_not_p:n 
+      { \int_compare_p:n { 2 = 3 } }
+  }
+  { Yes }
+  { No } 
+% 异或（Exclusive Or）操作
+% 两个布尔表达式的结果不相同时为真
+\bool_xor:nnTF
+  { \int_compare_p:n { 2 = 2 } }
+  { \int_compare_p:n { 4 <= 1 } }
+  { Yes }
+  { No } 
+\ExplSyntaxOff
+\end{document}
+% 结果为 YesYes

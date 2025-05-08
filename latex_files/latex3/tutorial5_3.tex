@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{ctex}
+\begin{document}
+\ExplSyntaxOn
+\prg_new_conditional:Nnn \my_if_ge_zero:n { p , T , F, TF }
+  { 
+    \int_compare:nNnTF
+      { #1 } > { 0 }
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+% 为 T, TF 条件句定义了 V 变体
+\prg_generate_conditional_variant:Nnn 
+  \my_if_ge_zero:n { V } { T, TF } 
+\int_set:Nn \l_tmpa_int { 1 + 2 }
+% 只有这两个条件句有变体
+\my_if_ge_zero:VTF \l_tmpa_int { Y } { N } \par
+\my_if_ge_zero:VT \l_tmpa_int { 大于零 } \par
+% 下面两个变体是没有定义
+% \my_if_ge_zero:VF \l_tmpa_int { 小于零 } \par
+% \my_if_ge_zero_p:V \l_tmpa_int \par
+\ExplSyntaxOff
+\end{document}

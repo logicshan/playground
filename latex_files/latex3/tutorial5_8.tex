@@ -1,0 +1,14 @@
+% 逻辑 Do 循环
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\bool_new:N \l_flag_bool
+\bool_set_false:N \l_flag_bool
+\bool_do_until:Nn \l_flag_bool
+  { a \bool_set_true:N \l_flag_bool }
+\bool_do_until:Nn \l_flag_bool
+  { b }
+\bool_until_do:Nn \l_flag_bool
+  { c }
+\ExplSyntaxOff
+\end{document}

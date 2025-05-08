@@ -1,0 +1,14 @@
+% 凭据表变量的基本使用
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\tl_new:N \l_my_sample_tl
+\tl_set:Nn \l_my_sample_tl
+  { ABC { 123 } }
+\tl_set_eq:NN \l_tmpa_tl \l_my_sample_tl
+\tl_use:N \l_tmpa_tl
+% 检测变量是否已定义（与是否为凭据表变量无关） 
+\tl_if_exist:NTF \l_tmpa_bool { A } { B }
+\ExplSyntaxOff
+\end{document}
+% 结果为 ABC123A

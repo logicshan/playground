@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage{fontspec}
+\setmonofont{FiraCode-Regular.ttf}[Contextuals=Alternate]
+\usepackage{pygmentex}
+\begin{document}
+\noindent\small
+\begin{pygmented}[lang=hs]
+qsort2 :: Ord a => [a] -> [a]
+qsort2 []     = []
+qsort2 (x:xs) = qsort2 lesser ++ equal ++ qsort2 greater
+    where
+        (lesser,equal,greater) = part x xs ([],[x],[])
+
+part :: Ord a => a -> [a] -> ([a],[a],[a]) -> ([a],[a],[a])
+part _ [] (l,e,g) = (l,e,g)
+part p (x:xs) (l,e,g)
+    | x > p     = part p xs (l,e,x:g)
+    | x < p     = part p xs (x:l,e,g)
+    | otherwise = part p xs (l,x:e,g)
+\end{pygmented}
+\end{document}

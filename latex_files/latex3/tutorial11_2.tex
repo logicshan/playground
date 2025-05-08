@@ -1,0 +1,16 @@
+% 布尔的特殊函数
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 设置为真
+\bool_set_true:N \l_tmpa_bool 
+% 设置为假
+\bool_set_false:N \l_tmpb_bool 
+% 颠倒真假值
+\bool_set_inverse:N \l_tmpb_bool 
+% 没有 \bool_use，要输出使用下面函数
+% 转换为字符串（true/false）
+\bool_to_str:N \l_tmpb_bool 
+\ExplSyntaxOff
+\end{document}
+% 结果为 true

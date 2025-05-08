@@ -1,0 +1,23 @@
+% 受保护的函数与`f` 与 `o` 展开的示例
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\str_new:N \l_my_tmp_str
+\cs_set:Nn \my_func_a: 
+  { \str_use:N \l_my_tmp_str}
+\cs_set_protected:Nn \my_func_b: 
+  { \str_use:N \l_my_tmp_str }
+\cs_new:Nn \my_func_c:nn 
+  { 
+    Arg~1:~\tl_to_str:n { #1 } \par
+    Arg~2:~\tl_to_str:n { #2 } \par
+    \str_set:Nn \l_my_tmp_str { ABC }
+    #1 <-.-> #2 \par
+  }
+\cs_generate_variant:Nn \my_func_c:nn { oo, ff }
+\str_set:Nn \l_my_tmp_str { 123 }
+\my_func_c:ff  { \my_func_a: } { \my_func_b: }
+\str_set:Nn \l_my_tmp_str { 123 }
+\my_func_c:oo  { \my_func_a: } { \my_func_b: }
+\ExplSyntaxOff
+\end{document}

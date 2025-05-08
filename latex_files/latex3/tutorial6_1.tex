@@ -1,0 +1,25 @@
+% 全局赋值与内局部赋值示例
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\int_new:N \l_my_a_int:
+\int_new:N \g_my_a_int:
+\int_set:Nn \l_my_a_int: { 1 }
+\int_gset:Nn \g_my_a_int: { 1 }
+{ % 组开始
+  \int_new:N \l_my_b_int:
+  \int_new:N \g_my_b_int:
+  \int_gset:Nn \g_my_a_int: { 2 }
+  \int_set:Nn \l_my_b_int: { 2 }
+  \int_gset:Nn \g_my_b_int: { 2 }
+  \int_use:N \l_my_a_int: % 1 延用值
+  \int_use:N \g_my_a_int: % 2 新设置
+  \int_use:N \l_my_b_int: % 2
+  \int_use:N \g_my_b_int: % 2
+} % 组结束
+\int_use:N \l_my_a_int: % 1 
+\int_use:N \g_my_a_int: % 2 组内修改，影响组外
+\int_use:N \l_my_b_int: % 0 组内定义，赋值不影响组外
+\int_use:N \g_my_b_int: % 2 组内定义，影响组外
+\ExplSyntaxOff
+\end{document}

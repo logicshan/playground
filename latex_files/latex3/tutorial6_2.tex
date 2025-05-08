@@ -1,0 +1,13 @@
+% 全局与局部定义
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\group_begin: % 组开始
+\cs_set:Nn \my_func_a: { ABC } % 组内定义，全局无效
+\cs_gset:Nn \my_func_b: { 123 } % 组内定义，全局有效
+\my_func_a: \my_func_b:
+\group_end: % 组结束
+\cs_if_free:NTF \my_func_a: { Yes } { No }
+\cs_if_free:NTF \my_func_b: { Yes } { No }
+\ExplSyntaxOff
+\end{document}

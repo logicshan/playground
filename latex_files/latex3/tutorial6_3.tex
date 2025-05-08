@@ -1,0 +1,12 @@
+% Nopar 函数定义
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_set:Nn \my_func_a:n { ABC#1 \par }
+\cs_set_nopar:Nn \my_func_b:n { ABC#1 \par }
+\my_func_a:n { 123\par }
+% 此命令将报错
+\my_func_b:n { 123 }
+==
+\ExplSyntaxOff
+\end{document}

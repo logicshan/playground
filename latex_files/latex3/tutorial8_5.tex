@@ -1,0 +1,17 @@
+% 转换控制序列
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_new:Npn \abc { ABC.~ }
+\str_set:Nn \l_tmpa_str { a b c }
+% 先将参数转换成控制序列，再使用
+\cs:w \l_tmpa_str \cs_end: % 原语 \csname 和 \endcsname
+\use:c { a b c } % 宏：内部由 \csname 和 \endcsname 实现
+\cs_meaning:N \use:c \par
+% 如果控制序列存在，则使用
+\cs_if_exist_use:N \abc
+\cs_if_exist_use:NTF \abcd { Yes } { No } .~
+% 将控制序列名（不含转义符）转换为字符
+\cs_to_str:N \abc
+\ExplSyntaxOff
+\end{document}

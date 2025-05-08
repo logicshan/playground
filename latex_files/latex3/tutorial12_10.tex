@@ -1,0 +1,45 @@
+% 排序
+\documentclass{article}
+\linespread{1.3}
+\begin{document}
+\ExplSyntaxOn
+\tl_set:Nn \l_tmpa_tl 
+  { 
+    \l_tmpb_tl ~
+    { abc } ~
+    { \l_tmpb_tl. }~
+    321~
+  }
+\tl_set:Nn \l_tmpb_tl { = }
+  % 输出排序前变量
+\tl_to_str:N \l_tmpa_tl \par
+% 保存排序过程
+\tl_gset:Nn \g_tmpa_tl 
+  { 
+    \begin{tabular}{|c|c|c|}
+    \hline Arg1 & Arg2 & Action \\ 
+  }
+% 排序函数
+\tl_sort:Nn \l_tmpa_tl 
+  {
+    \tl_gput_right:Nn \g_tmpa_tl 
+      { \hline \tl_to_str:n {#1} & \tl_to_str:n {#2} & }
+    \str_compare:nNnTF 
+      {#1} > {#2}
+      { 
+        \tl_gput_right:Nn \g_tmpa_tl { keep\\ } 
+        \sort_return_same: % 保持原顺序
+      } 
+      { 
+        \tl_gput_right:Nn \g_tmpa_tl { swap\\ } 
+        \sort_return_swapped: % 交换顺序
+      } 
+  }
+\tl_gput_right:Nn \g_tmpa_tl 
+  { \hline \end{tabular} } 
+% 输出排序后变量
+\tl_to_str:N \l_tmpa_tl \par
+\g_tmpa_tl \par % 输出排序过程
+\l_tmpa_tl \par % 执行排序后凭据表
+\ExplSyntaxOff
+\end{document}

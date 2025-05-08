@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{animate}
+\usepackage{pst-ode,pst-3dplot}
+
+\begin{document}
+
+% 生成可点击播放的动画
+\begin{animateinline}[controls,loop]{10}
+\multiframe{71}{i=0+1,rt=0+0.5}{  
+  \begin{pspicture}(-2,-2)(2,2.2)
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2,IIIDticks]
+  
+  % Lower trajectory
+  \pstODEsolve[algebraic]{XYZa}{0 1 2}{0}{\rt}{500}{1e-9 0.0 -1.0}{
+    -x[1]+x[0]*x[2]^2 |
+    x[0]+x[1]*x[2]^2 |
+    -x[2]*(x[0]^2+x[1]^2)
+  }
+  \listplotThreeD[linecolor=blue,arrows=->]{XYZa}
+
+  % Upper trajectory
+  \pstODEsolve[algebraic]{XYZb}{0 1 2}{0}{\rt}{500}{1e-9 0.0 1.0}{
+    -x[1]+x[0]*x[2]^2 |
+    x[0]+x[1]*x[2]^2 |
+    -x[2]*(x[0]^2+x[1]^2)
+  }
+  \listplotThreeD[linecolor=green,arrows=->]{XYZb}
+  \end{pspicture}
+}
+\end{animateinline}
+
+\end{document}

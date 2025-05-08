@@ -1,0 +1,20 @@
+% 复杂中断的应用示例
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\clist_map_inline:nn { ABC, DEF }
+  {
+    \str_map_inline:nn { #1 } 
+      {
+        \str_if_eq:nnTF 
+          { ##1 } { B } 
+          { \prg_map_break:Nn \l_tmpa_clist: { - } }
+          { ##1##1 }  
+        % 位置1       
+      } 
+    % 位置2  
+    \prg_break_point:Nn \l_tmpa_clist: { . }    
+  }
+% 位置3
+\ExplSyntaxOff
+\end{document}

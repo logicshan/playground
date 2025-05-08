@@ -1,0 +1,30 @@
+% 计数、反转、修剪凭据表
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\tl_set:Nn \l_tmpa_tl 
+  { \tl_set:Nn \l_tmpa_tl { ABC } }
+\tl_set:Nn \l_tmpb_tl 
+  { ~ { ABC } .~ { 123 } ~ }
+% 凭据表中项目的数量（不含未保护的空白）
+\tl_count:N \l_tmpa_tl % 3
+% 凭据表中凭据的数量
+\tl_count_tokens:n % 7
+  { \tl_set:Nn \l_tmpa_tl { ABC } } +\par
+% 反转凭据表中的项目顺序
+% 性能不如 \tl_reverse_items:n
+\tl_reverse:N \l_tmpa_tl 
+\tl_to_str:N \l_tmpa_tl +\par
+% 反转凭据表中的项目顺序
+% 本操作会移除凭据表中未保护的空白
+% 返回的结果是不可展开的
+\tl_reverse_items:n
+  { ~ { ABC } .~ { 123 } ~ } +\par
+% 删除凭据表中的前导及尾随显示空白符
+\tl_trim_spaces:N \l_tmpb_tl 
+\l_tmpb_tl +\par
+% 删除凭据表中的前导及尾随显示空白符，然后再传递给函数
+\tl_trim_spaces_apply:nN
+  { ~ { ABC } .~ { 123 } ~ } \tl_to_str:n +\par
+\ExplSyntaxOff
+\end{document}

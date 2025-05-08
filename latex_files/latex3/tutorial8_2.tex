@@ -1,0 +1,19 @@
+% 向组结束后插入指定凭据
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\str_set:Nn \l_tmpa_str { 1.ABC~ }
+{
+  \str_set:Nn \l_tmpa_str { 2.ABC~ }
+  \group_begin:
+  \str_set:Nn \l_tmpa_str { 3.ABC~ }
+  \group_insert_after:N 0
+  \group_insert_after:N \$ 
+  \group_insert_after:N \l_tmpa_str
+  \group_insert_after:N \par
+  123456\par
+  \group_end:
+  =====
+}
+\ExplSyntaxOff
+\end{document}

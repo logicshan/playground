@@ -1,0 +1,22 @@
+% 函数定义嵌套
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_new:Nn \my_func:n
+  { 
+    Current~Arg~is:~#1;~
+    \cs_if_free:NTF \my_test:n
+      {
+        Define function; \par   
+        \cs_new:Nn \my_test:n
+          { 
+            Outer~Args~is:~#1;~
+            Inner~Args~is:~##1; \par
+          }
+      }
+      {  Do nothing; \par }
+  }
+\my_func:n { A } \my_test:n { ABC } \ \par
+\my_func:n { B } \my_test:n { 123 }
+\ExplSyntaxOff
+\end{document}

@@ -1,0 +1,34 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.54cm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+%\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{fontspec}
+
+\title{% added <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+\normalsize{\raggedright\setlength{\fboxsep}{4pt}% 
+\colorbox{black}{\parbox{\dimexpr\linewidth-2\fboxsep}{\textcolor{white}{\hfill\KUS \hfill}}}   \\[1ex]
+\parbox{\dimexpr0.5\linewidth-0.5\wlogo}{\oriart}%
+\parbox{\wlogo}{\LOGO}\\[1ex]
+\colorbox{black}{\parbox{\dimexpr\linewidth-2\fboxsep}{\textcolor{white}{\hfill\KUni\hfill}}}\\[3ex]
+            }\titleofArt
+}
+
+\newlength{\wlogo}
+
+% ****************************** data to be filled by the user <<<<<<<<<<<<<<<<<<<<
+\author{Author Name}
+\date{} 
+\newcommand{\KUS}{\small\bfseries\itshape Khulna University Studies}
+\newcommand{\KUni}{\small\bfseries\itshape Copyright\/©Khulna University}
+\newcommand{\oriart}{\small\bfseries ORIGINAL ARTICLE}
+\setlength{\wlogo}{1.5cm}
+\newcommand{\LOGO}{\includegraphics[width=\wlogo]{example-image-10x16}}
+\newcommand{\titleofArt}{\Large Here Goes The Title}
+% ******************************
+
+\begin{document}
+    \maketitle  
+\end{document}

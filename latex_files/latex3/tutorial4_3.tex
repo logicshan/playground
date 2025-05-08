@@ -1,0 +1,19 @@
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\str_new:N \l_my_tmp_str
+\str_set:Nn \l_tmpa_str { ABC }
+% 常规
+\str_set:Nn \l_my_tmp_str { \l_my_tmp_str }
+\str_use:N \l_my_tmp_str \par
+% c 展开
+\exp_args:NNc \str_set:Nn \l_my_tmp_str { l_my_tmp_str }
+\str_use:N \l_my_tmp_str \par
+% V 展开
+\exp_args:NNV \str_set:Nn \l_my_tmp_str \l_tmpa_str
+\str_use:N \l_my_tmp_str \par
+% v 展开
+\exp_args:NNv \str_set:Nn \l_my_tmp_str { l_tmpa_str }
+\str_use:N \l_my_tmp_str \par
+\ExplSyntaxOff
+\end{document}

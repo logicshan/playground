@@ -1,0 +1,144 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.4}[1]{\_}}}
+
+\DeclareMathOperator\obj{obj}
+%\DeclareMathOperator\hom{hom}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{族范畴中的相等类型}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{背景}
+\begin{itemize}
+  \item 族范畴提供了解释依赖类型论中类型和项的基本框架
+  \item 但是解释依赖和, 依赖积, 内蕴相等类型需要更多的结构
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Id}
+  $\Gamma\vdash A$, $\Gamma\vdash a:A$. CwF 支持内蕴相等类型, 如果它支持以下结构
+  \begin{itemize}
+    \item 相等类型 \inferrule{\Gamma\vdash b:A}{\Gamma\vdash\Id_{A}(a,b)}
+    \item 反身项 \inferrule{ }{\Gamma\vdash\refl_{A}(a):\Id_{A}(a,a)}
+    \item 归纳原理\[ \inferrule{\Gamma.A.\Id_{A[\ttp]}(a[\ttp],\ttq)\vdash C \\ \Gamma\vdash c_{0}:C[a,\refl_{A}(a)] \\ \Gamma\vdash b:A \\ \Gamma\vdash u:\Id_{A}(a,b)}{\Gamma\vdash J_{A}(a,C,c_0,b,u):C[b,u]} \]
+  \end{itemize}
+  并且有以下等式(说的是这些构造和替换交换)
+  \begin{align*}
+  \Id_{A}(a,b)[\gamma] &= \Id_{A[\gamma]}(a[\gamma],b[\gamma]) \\
+  \refl_{A}(a)[\gamma] &= \refl_{A[\gamma]}(a[\gamma]) \\
+  J_{A}(a,C,c_0,b,u)[\gamma] &= J_{A[\gamma]}(a[\gamma],C[\gamma'],c_0[\gamma],b[\gamma],u[\gamma])
+  \end{align*}
+\end{frame}
+
+\begin{frame}{$[a,b]$ 符号的解释}
+  CwF 中有规则 \inferrule{\gamma:\Delta\to\Gamma \\ \Gamma\vdash A \\ \Delta\vdash a:A[\gamma]}{\langle\gamma,a\rangle:\Delta\to\Gamma.A}
+
+  取特例
+  \begin{itemize}
+    \item \phantom{ }\inferrule{id:\Gamma\to\Gamma \\ \Gamma\vdash A \\ \Gamma\vdash a:A[id]=A}{\langle id,a\rangle:\Gamma\to\Gamma.A}
+    \item \phantom{ }\inferrule{\langle id,a\rangle:\Gamma\to\Gamma.A \\ \Gamma.A\vdash B \\ \Gamma\vdash b:B[\langle id,a\rangle]}{\langle\langle id,a\rangle,b\rangle:\Gamma\to\Gamma.A.B}
+  \end{itemize}
+  把 $\langle\langle id,a\rangle,b\rangle$ 记为 $[a,b]$
+\end{frame}
+
+\begin{frame}{$  J_{A}(a,C,c_0,b,u)[\gamma] = J_{A[\gamma]}(a[\gamma],C[\gamma'],c_0[\gamma],b[\gamma],u[\gamma]$}
+  \begin{itemize}
+  \item \phantom{ }$\gamma:\Delta\to\Gamma$
+  \item \phantom{ }\inferrule{\Delta.A[\gamma].\Id_{A[\gamma][\ttp]}(a[\gamma][\ttp],\ttq)\vdash C[\gamma'] \\ \Delta\vdash c_0[\gamma]:C[\gamma'][a[\gamma,\refl_{A[\gamma]}(a[\gamma])]] \\ \Delta\vdash b[\gamma]:A[\gamma] \\ \Delta\vdash u[\gamma]:\Id_{A[\gamma]}(a[\gamma],b[\gamma])}{\Delta\vdash J_{A[\gamma]}(a[\gamma],C[\gamma'],c_0[\gamma],b[\gamma],u[\gamma]):C[\gamma'][b[\gamma],u[\gamma]]}
+  \item \phantom{ }$\gamma' :\Delta.A[\gamma].\Id_{A[\gamma][\ttp]}(a[\gamma][\ttp],\ttq) \to\Gamma.A.\Id_{A[\ttp]}(a[\ttp],\ttq)$
+%  \item\phantom{ }\inferrule{\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp:\Delta.A[\gamma].\Id_{A[\gamma][\ttp]}(a[\gamma][\ttp],\ttq) \to\Gamma.A \\ \Gamma.A\vdash\Id_{A[\ttp]}(a[\ttp],\ttq) \\ \Delta.A[\gamma].\Id_{A[\gamma][\ttp]}(a[\gamma][\ttp],\ttq) \vdash \ttq:\Id_{A[\ttp]}(a[\ttp],\ttq)[\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp]}{}
+  \item \phantom{ }\inferrule{\gamma\circ\ttp : \Delta.A[\gamma]\to\Delta\to \Gamma \\ \Gamma\vdash A \\ \Delta.A[\gamma]\vdash \ttq:A[\gamma\circ\ttp]=A[\gamma][\ttp]}{\langle\gamma\circ\ttp,\ttq\rangle:\Delta.A[\gamma]\to\Gamma.A}
+  \end{itemize}
+\end{frame}
+\begin{frame}{续}
+  \begin{itemize}
+    \item \phantom{ }\inferrule{\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp:\Delta.A[\gamma].\Id_{A[\gamma][\ttp]}(a[\gamma][\ttp],\ttq) \to \Delta.A[\gamma] \to \Gamma.A \\\\ \Gamma.A\vdash\Id_{A[\ttp]}(a[\ttp],\ttq) \\\\ \Delta.A[\gamma].\Id_{A[\gamma][\ttp]}(a[\gamma][\ttp],\ttq) \vdash \ttq:\Id_{A[\ttp]}(a[\ttp],\ttq)[\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp]\\\\
+    =\Id_{A[\ttp][\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp]}(a[\ttp][\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp],\ttq[\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp])\\\\
+    =\Id_{A[\gamma\circ\ttp\circ\ttp]}(a[\gamma\circ\ttp\circ\ttp],\ttq[\langle\gamma\circ\ttp\circ\ttp,\ttq[\ttp]\rangle)\\\\
+    =\Id_{A[\gamma\circ\ttp][\ttp]}(a[\gamma\circ\ttp][\ttp],\ttq[\ttp])\\\\
+    =\Id_{A[\gamma\circ\ttp]}(a[\gamma\circ\ttp],\ttq)[\ttp]
+    }{\langle\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp,\ttq\rangle :\Delta.A[\gamma].\Id_{A[\gamma][\ttp]}(a[\gamma][\ttp],\ttq) \to\Gamma.A.\Id_{A[\ttp]}(a[\ttp],\ttq)}
+  \end{itemize}
+  我们有如下定义
+\[
+\gamma'\triangleq\langle\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp,\ttq\rangle
+\]
+\end{frame}
+
+\begin{frame}{严格相等}
+  \[
+  J_{A}(a,C,c_{0},a,\refl_{A}(a)) = c_{0}
+  \]
+\end{frame}
+
+\begin{frame}{弱相等}\[
+  \inferrule{\Gamma.A.\Id_{A[\ttp]}(a[\ttp],\ttq)\vdash C \\ \Gamma\vdash c_{0}:C[a,\refl_{A}(a)]}{\Gamma\vdash\JEq_{A}(a,C,c_{0}):\Id_{C[a,\refl_{A}(a)]}(J_{A}(a,C,c_{0},a,\refl_{A}(a)),c_{0})} \]
+  \pause
+  满足等式\[\JEq_{A}(a,C,c_{0})[\gamma] = \JEq_{A[\gamma]}(a[\gamma],C[\gamma'],c_{0}[\gamma])\]
+  \pause
+  ($\gamma$, $\gamma'$ 如前)
+\end{frame}
+
+\begin{frame}{严格相等蕴含弱相等}
+  严格相等意味着\[
+    J_{A}(a,C,c_{0},a,\refl_{A}(a)) = c_{0}
+  \]
+  \pause
+  只要定义
+  \[
+  \JEq_{A}(a,C,c_{0})\triangleq\refl_{C[a,\refl_{A}(a)]}(c_{0})
+  \]
+\end{frame}
+
+\end{document}

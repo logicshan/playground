@@ -1,0 +1,14 @@
+% 替换与移除凭据
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\tl_set:Nn \l_tmpa_tl 
+  { \l_tmpb_tl ~ { ABC } ~ ABCD.ABCD.ABCD  }
+\tl_replace_once:Nnn \l_tmpa_tl { A  } { 1  }
+\tl_replace_all:Nnn  \l_tmpa_tl { BC } { 23 }
+\tl_remove_once:Nn   \l_tmpa_tl { D  }
+\tl_remove_all:Nn    \l_tmpa_tl { 2  }
+\l_tmpa_tl 
+\ExplSyntaxOff
+\end{document}
+% 结果为 ABC 13.A3D.A3D

@@ -1,0 +1,19 @@
+% \cs_new:Npn 的新用法。
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{makeidx}
+\makeindex
+\begin{document}
+\ExplSyntaxOn
+\cs_new:Npn \terms #1(#2)
+  { 
+    \textbf{ #1 }（#2）
+    \index{#1} \index{#2}
+  }
+\cs_meaning:N \terms \par
+\ExplSyntaxOff
+% 使用 LaTeX2e 的命名规则
+% 使用 () 当作参数定界符
+\terms { 示例 } (Demo)
+\printindex
+\end{document}

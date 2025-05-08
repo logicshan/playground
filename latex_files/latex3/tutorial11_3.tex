@@ -1,0 +1,18 @@
+% 使用布尔表达式
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\bool_set:Nn \l_tmpa_bool
+  {
+    \int_compare_p:n { 1 = 1 } &&
+    (
+      \int_compare_p:n { 2 = 3 } ||
+      \int_compare_p:n { 4 <= 4 } ||
+      \str_if_eq_p:nn { abc } { def }
+    ) &&
+    ! \int_compare_p:n { 2 = 4 }
+  } 
+\bool_to_str:N \l_tmpa_bool
+\ExplSyntaxOff
+\end{document}
+% 结果为 true

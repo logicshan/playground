@@ -1,0 +1,23 @@
+% 凭据表测试
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 判定凭据是否仅包含空白（没有 NTF）
+1. \tl_if_blank:nTF { ~ } { A } { B } ~
+% 测试凭据表是否完全为空
+2. \tl_if_empty:NTF \l_tmpa_tl { A } { B } ~
+% 测试两个凭据表是否完全相同（还有 NnTF，nnTF）
+3. \tl_if_eq:NNTF \l_tmpa_tl \l_tmpb_tl { A } { B } ~
+% 测试 #1 是否包含 #2 （还有 NnTF ）
+4. \tl_if_in:nnTF { A{1}BC } { 1 } { A } { B } ~
+% 测试凭据表是否精确地等于 \c_novalue_tl。（没有 NTF）
+% 本函数旨在用于探测可选参数是否缺失。
+5. \exp_args:NV \tl_if_novalue:nTF 
+     \c_novalue_tl { A } { B } ~
+% 检测凭据表是否仅包含单个项目（还有 NTF）
+6. \tl_if_single:nTF { { ABC } } { A } { B } ~
+% 测试凭据表是否仅包含一个凭据（没有 NTF）
+7. \tl_if_single_token:nTF { { ABC } } { A } { B } ~
+\ExplSyntaxOff
+\end{document}
+% 结果为 1.A 2.A 3.A 4.B 5.A 6.A 7.B

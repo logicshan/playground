@@ -1,0 +1,10 @@
+\documentclass{article}
+% 新版本已经将 expl3 包合并到 LaTeX 内核中
+% 所以不需要再单独加载，网上很多教程都是旧版本的内容
+% \usepackage{expl3}
+\begin{document}
+\ExplSyntaxOn % 开启 expl3 模式
+\cs_set:Npn \__my_command:n #1 { Hello, #1! } % 定义一个命令
+\__my_command:n { LaTeX3 } % 使用命令，{ LaTeX3 }为参数
+\ExplSyntaxOff % 关闭 expl3 模式
+\end{document}

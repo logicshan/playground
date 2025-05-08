@@ -1,0 +1,23 @@
+% Overlay specifications \onslide command
+\documentclass{beamer}
+
+% Theme choice:
+\usetheme{Frankfurt}
+
+\begin{document}
+
+ \begin{frame}{Onslide command}
+This is shown on all slides.
+
+\onslide <1-3>
+\begin{itemize}
+    \item This list will only be shown
+    \item on slides 1, 2 and 3.
+\end{itemize}
+
+\onslide<1,4>
+I appear just on slides 1 and 4.
+
+\end{frame}
+
+\end{document}

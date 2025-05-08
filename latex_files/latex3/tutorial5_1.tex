@@ -1,0 +1,19 @@
+\documentclass{article}
+\usepackage{ctex}
+\begin{document}
+\ExplSyntaxOn
+% \prg_do_nothing: 一个不做任何事的可展开函数
+\cs_new:Nn \my_func_a: { \prg_do_nothing: }
+% 有真假分支的条件句：检测控制序列是否已定义
+\cs_if_exist:NTF \my_func_a: 
+  { 控制序列已定义； }
+  { 控制序列未定义； }
+% 特例：以下将测试为假
+\cs_if_exist:NTF \relax { 1 } { 0 } \par
+% 只有假分支的条件句：检测控制序列是否可用于定义
+\cs_if_free:NF \my_func_a: 
+  { 控制序列不可用于自由定义 }
+% 断言：它将返回真（不会输出，但在日志里有痕迹）
+\cs_if_exist_p:N \my_func_a: 
+\ExplSyntaxOff
+\end{document}

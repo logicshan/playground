@@ -1,0 +1,13 @@
+% 复杂中断
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+ABC
+\prg_map_break:Nn \l_tmpa_tl { ... } % 执行中断，再输出
+DEF
+\prg_break_point:Nn \l_tmpa_tl { - } % 中断标记点
+HGI
+\prg_break_point:Nn \l_tmpa_tl { = } % 即使未跳转，也输出 
+JKL
+\ExplSyntaxOff
+\end{document}

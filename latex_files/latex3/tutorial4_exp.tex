@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage{expl3}
+
+\begin{document}
+
+\ExplSyntaxOn
+
+% 定义一些变量和宏用于演示
+\tl_new:N \l_my_tl
+\tl_set:Nn \l_my_tl {Hello~World!}
+
+\cs_new:Nn \my_macro:n {[#1]}
+\cs_new:Nn \my_other_macro:n {(#1)}
+
+% 例子1: n 类型参数 (不展开)
+\cs_new:Nn \demo_n:n {n-type: #1}
+\demo_n:n {\l_my_tl} % 输出: n-type: \l_my_tl
+
+% 例子2: o 类型参数 (一次展开)
+\cs_new:Nn \demo_o:n {o-type: #1}
+\demo_o:o {\l_my_tl} % 输出: o-type: Hello~World!
+
+% 例子3: V 类型参数 (获取变量值)
+\cs_new:Nn \demo_V:n {V-type: #1}
+\demo_V:V \l_my_tl % 输出: V-type: Hello~World!
+
+% 例子4: x 类型参数 (完全展开)
+\cs_new:Nn \demo_x:n {x-type: #1}
+\demo_x:x {\my_macro:n {\my_other_macro:n {text}}} % 输出: x-type: [(text)]
+
+% 例子5: e 类型参数 (受控完全展开)
+\cs_new:Nn \demo_e:n {e-type: #1}
+\demo_e:e {\my_macro:n {\my_other_macro:n {text}}} % 输出: e-type: [(\my_other_macro:n {text})]
+
+% 例子6: f 类型参数 (展开第一个token)
+\cs_new:Nn \demo_f:n {f-type: #1}
+\demo_f:f {\my_macro:n {text}} % 输出: f-type: [text]
+
+% 例子7: 组合使用不同展开级别
+\cs_new:Nn \demo_combine:nn {Arg1: #1 ~ Arg2: #2}
+\demo_combine:no {\l_my_tl} {\l_my_tl} % 输出: Arg1: \l_my_tl Arg2: Hello~World!
+
+\ExplSyntaxOff
+
+\end{document}

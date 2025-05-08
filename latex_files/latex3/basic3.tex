@@ -1,0 +1,42 @@
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 定义整形局部变量
+\int_new:N \l_my_tmp_int 
+% 定义字符串全局变量
+\str_new:N \g_my_tmp_str 
+% 定义的凭据表常量（常量只能在声明时初始化）
+\tl_const:Nn \c_my_tmp_tl { $A=1$ }
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+% 设置整形局部变量
+\int_set:Nn \l_my_tmp_int { 1 }
+% 设置字符串全局变量
+\str_gset:Nn \g_my_tmp_str { ABC }
+% 常量不能修改
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+% 使用整形变量
+\int_use:N \l_my_tmp_int 
+% 使用字符串变量
+\str_use:N \g_my_tmp_str
+% 使用凭据表变量
+\tl_use:N \c_my_tmp_tl
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+% 定义并初始化变量
+\str_new:N \g_my_split_char_str
+\str_gset:Nn \g_my_split_char_str { , }
+% 定义函数里使用变量
+\cs_new:Npn \my_function:n #1 
+  { #1 \str_use:N \g_my_split_char_str #1 }
+% 使用函数
+\my_function:n { ABC }
+% 修改变量的值再使用函数
+\str_gset:Nn \g_my_split_char_str { - }
+\my_function:n { DEF }
+\ExplSyntaxOff
+\end{document}

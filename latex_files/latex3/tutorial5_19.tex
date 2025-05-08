@@ -1,0 +1,27 @@
+% 映射中断函数的实现
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+% 定义中断函数 \my_map_break:(n)
+\cs_new:Npn \my_map_break:
+  { \prg_map_break:Nn \my_map_break: { } }
+\cs_new:Npn \my_map_break:n
+  { \prg_map_break:Nn \my_map_break: }
+% 定义映射函数 \my_map_inline:nn
+\cs_new:Nn \my_map_inline:nn
+  {
+    % 映射内部实现
+    \str_map_inline:nn { #1 } { #2 }
+    % 在映射函数未放置中断点
+    \prg_break_point:Nn \my_map_break: { } 
+  }
+% 用户调用映射函数
+\my_map_inline:nn { ABCD } 
+  { 
+    \str_if_eq:nnTF 
+      { #1 } { C } 
+      { \my_map_break: } % 放置中断函数
+      { #1#1. }
+  } 
+\ExplSyntaxOff
+\end{document}

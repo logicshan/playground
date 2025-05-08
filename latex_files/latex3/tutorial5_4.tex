@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{ctex}
+\begin{document}
+\ExplSyntaxOn
+\bool_set:Nn \l_tmpa_bool 
+  { \int_compare_p:n { 2 = 4 } }
+% \if_bool:N ... \else: ... \fi:
+\if_bool:N \l_tmpa_bool
+  % 真分支
+  布尔值为真 \par
+\else:
+  % 假分支
+  布尔值为假 \par
+\fi:
+% \if_predicate:w <断言> ... \else: ... \fi:
+\if_predicate:w 
+  % 断言
+  \int_compare_p:n { 2 = 4 }
+  % 真分支
+  布尔值为真 \par
+\else:
+  % 假分支
+  布尔值为假 \par
+\fi:
+\ExplSyntaxOff
+\end{document}

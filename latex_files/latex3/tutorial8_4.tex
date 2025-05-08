@@ -1,0 +1,15 @@
+% 复制控制序列
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+\cs_new:Nn \my_func:n { #1.#1.~ }
+\cs_new_eq:NN \my_func_a: \my_func:n
+\cs_set_eq:NN \my_func_b: \l_tmpa_str
+\cs_meaning:N \my_func:n \par
+\cs_meaning:N \my_func_a: \par
+\cs_meaning:N \my_func_b: \par
+\my_func:n { ABC } \par
+\my_func_a: { ABC } \par
+\my_func_b: { ABC } \par
+\ExplSyntaxOff
+\end{document}

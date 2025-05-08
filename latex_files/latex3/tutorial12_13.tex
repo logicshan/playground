@@ -1,0 +1,16 @@
+% 重新扫描凭据
+\documentclass{article}
+\begin{document}
+\ExplSyntaxOn
+{ $X_1 + X_2 + \dots + X_i  + \dots + X_n$ } \par
+% 以 #1 指定的类别码机制重新扫描 #2 凭据表 ，并将结果输出。
+\tl_rescan:nn  
+  { \cctab_select:N \c_document_cctab }
+  { $X_1 + X_2 + \dots + X_i  + \dots + X_n$ } \par
+% 以 #2 指定的类别码机制重新扫描 #3 凭据表，并将结果赋值给 #1 变量。
+\tl_set_rescan:Nnn \l_tmpa_tl  
+  { \cctab_select:N \c_document_cctab }
+  { $X_1 + X_2 + \dots + X_i  + \dots + X_n $ } 
+\l_tmpa_tl \par
+\ExplSyntaxOff
+\end{document}
