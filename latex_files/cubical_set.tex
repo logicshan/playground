@@ -1,0 +1,152 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+%\usepackage{euler, amsfonts, amssymb}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\usepackage{listings}
+\usepackage{unicode-math}
+\usepackage{fontspec}
+%\setmainfont{FreeSerif}
+%\setmonofont{FreeMono}
+%\setmonofont{Latin Modern Math}
+\setmonofont{Unifont}
+%\setmonofont{DejaVu Sans Mono}
+
+\newcommand\bbD{\mathbb{D}}
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\FTy{\mathtt{FTy}}
+\newcommand\comp{\mathtt{comp}}
+\newcommand\fst{\mathtt{fst}}
+\newcommand\snd{\mathtt{snd}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\dM{\mathsf{dM}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\DM{\mathbf{DM}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
+\newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
+\newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
+\newcommand{\ul}{{\scalebox{0.4}[1.0]{\_}}}
+
+\DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
+%\DeclareMathOperator\hom{hom}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{立方集}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile,shrink]{德摩根代数$(X,\top,\bot,\land,\lor,\neg)$}
+\begin{verbatim}
+  refl         : ∀ {x} → x ≈ x
+  sym          : ∀ {x y} → x ≈ y → y ≈ x
+  trans        : ∀ {x y z} → x ≈ y → y ≈ z → x ≈ z
+  ∧-cong       : ∀ {x x′ y y′} → x ≈ x′ → y ≈ y′ → (x ∧ y) ≈ (x′ ∧ y′)
+  ∨-cong       : ∀ {x x′ y y′} → x ≈ x′ → y ≈ y′ → (x ∨ y) ≈ (x′ ∨ y′)
+  ¬-cong       : ∀ {x y} → x ≈ y → (¬ x) ≈ (¬ y)
+  ∧-assoc      : ∀ {x y z} → ((x ∧ y) ∧ z) ≈ (x ∧ (y ∧ z))
+  ∨-assoc      : ∀ {x y z} → ((x ∨ y) ∨ z) ≈ (x ∨ (y ∨ z)) 
+  ∧-comm       : ∀ {x y} → (x ∧ y) ≈ (y ∧ x)
+  ∨-comm       : ∀ {x y} → (x ∨ y) ≈ (y ∨ x)
+  ∧-idem       : ∀ {x} → (x ∧ x) ≈ x
+  ∨-idem       : ∀ {x} → (x ∨ x) ≈ x
+  absorb-∧∨    : ∀ {x y} → (x ∧ (x ∨ y)) ≈ x
+  absorb-∨∧    : ∀ {x y} → (x ∨ (x ∧ y)) ≈ x
+  de-morgan₁   : ∀ {t s} → ¬ (t ∨ s) ≈ (¬ t ∧ ¬ s)
+  de-morgan₂   : ∀ {t s} → ¬ (t ∧ s) ≈ (¬ t ∨ ¬ s)
+  ¬-involution : ∀ {t} → ¬ (¬ t) ≈ t
+  ∨-distrib-∧ˡ : ∀ {t s r} → (t ∨ (s ∧ r)) ≈ ((t ∨ s) ∧ (t ∨ r))
+  ∨-distrib-∧ʳ : ∀ {t s r} → (s ∧ r) ∨ t ≈ (s ∨ t) ∧ (r ∨ t)
+  ∧-distrib-∨ˡ : ∀ {t s r} → t ∧ (s ∨ r) ≈ ((t ∧ s) ∨ (t ∧ r))
+  ∧-distrib-∨ʳ : ∀ {t s r} → (s ∨ r) ∧ t ≈ (s ∧ t) ∨ (r ∧ t)
+  ⊤-∧-identity : ∀ {t} → (t ∧ ⊤) ≈ t
+  ⊥-∨-identity : ∀ {t} → (t ∨ ⊥) ≈ t
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{自由德摩根代数}
+  \begin{verbatim}
+data FreeDeMorgan (X : Set ℓ) : Set ℓ where
+  η     : X → FreeDeMorgan X                               
+  ⊤     : FreeDeMorgan X                                   
+  ⊥     : FreeDeMorgan X                                   
+  _∨_   : FreeDeMorgan X → FreeDeMorgan X → FreeDeMorgan X 
+  _∧_   : FreeDeMorgan X → FreeDeMorgan X → FreeDeMorgan X 
+  ¬_    : FreeDeMorgan X → FreeDeMorgan X                  
+  \end{verbatim}
+在 $\FreeDeMorgan X$ 上定义上一页展示的等价关系$\approx$
+\pause
+\begin{itemize}
+\item $\neg\ul$, $\top$, $\bot$ 也分别可以记为 $1\mathshortminus\ul$, $1$, $0$
+\item $\DM$ 表示德摩根代数组成的范畴
+\item 集合 $I$ 上的自由德摩根代数记为 $\dM(I)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{立方范畴$\square$}
+  \begin{itemize}
+    \item 固定一个无限集合$\bbD$, 我们称它的元素为\emph{名字}, 一般记为$i,j,k,\ldots$
+    \item $\square$的对象是$\bbD$的有限子集, 一般记为$I,J,K,\ldots$
+    \item 态射$\square(I,J)$是所有的函数$J\to\dM(I)$. 这样的函数和德摩根代数同态$\dM(J)\to\dM(I)$之间有一个双射. $\square$中的态射$f\in\square(I,J)$和$g\in\square(J,K)$的复合是$g:K\to\dM(J)$和$f$对应的同态$\dM(J)\to\dM(I)$在$\Set$中的复合
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{立方集}
+  \begin{itemize}
+    \item 我们称立方范畴上的预层为立方集: $\square^{op} \to \Set$
+    \item 从立方集范畴$\Set^{\square^{op}}$出发, 根据前面介绍的“从预层范畴到族范畴”, 我们可以得到一个 CwF, 它允许我们解释立方类型论的所有特性
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{记法}
+  \begin{itemize}
+    \item 对$I\in\square$, $i\notin I$, 我们把 $I\cup \{i\}$ 简记为 $I,i$
+    \item $(i0)$代表态射$I\to I,i$ (它是映射 $I,i\to\dM(I)$), 它把$i$映为$0$, 其余恒等输出
+    \item 类似, $(i1)$代表态射$I\to I,i$, 它把$i$映为$1$, 其余恒等输出
+    \item $s_i:I,i\to I$ 代表包含 $I\subseteq\dM(I,i)$
+  \end{itemize}
+\end{frame}
+\end{document}
