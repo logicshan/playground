@@ -1,0 +1,113 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+%\usepackage{euler, amsfonts, amssymb}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\usepackage{tikz-cd}
+
+\usepackage{listings}
+\usepackage{unicode-math}
+\usepackage{fontspec}
+%\setmainfont{FreeSerif}
+%\setmonofont{FreeMono}
+%\setmonofont{Latin Modern Math}
+%\setmonofont{Unifont}
+%\setmonofont{DejaVu Sans Mono}
+
+\newcommand\bbD{\mathbb{D}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\FTy{\mathtt{FTy}}
+\newcommand\comp{\mathtt{comp}}
+\newcommand\fst{\mathtt{fst}}
+\newcommand\snd{\mathtt{snd}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\dM{\mathsf{dM}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\DM{\mathbf{DM}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
+\newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
+\newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
+\newcommand{\ul}{{\scalebox{0.4}[1.0]{\_}}}
+
+\DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
+\DeclareMathOperator\obj{obj}
+\DeclareMathOperator\y{y}
+%\DeclareMathOperator\hom{hom}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{区间与面格}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{背景}
+\begin{itemize}
+  \item 任何立方集$X$都可以看作任何上下文$\Gamma$中的一个类型. 我们可以取$X'\in\Ty(\Gamma)=\obj(\Set^{(\int\Gamma)^{op}})$ 且 $X'(I,\rho)\triangleq X(I)$
+  \item 我们可以把项$\Gamma\vdash i:\bbI$和$\Gamma\vdash\varphi:\bbF$解释为$\Ter(\Gamma\vdash\bbI)$和$\Ter(\Gamma\vdash\bbF)$的元素
+  \item 上下文扩展 $\Gamma.\bbI$ 就是 CwF 中的上下文扩展操作
+\end{itemize}
+(注: 下文把 $\bbI$ 和 $\bbF$ 解释为立方集, 所以把它们当作类型使用时, 严格来说应该使用$\bbI'$和$\bbF'$. $\Ter(\Gamma\vdash\bbI')$, $\Ter(\Gamma\vdash\bbF')$, $\Gamma.\bbI'$)
+\end{frame}
+
+\begin{frame}[fragile,shrink]{$\bbI$}
+  \begin{itemize}
+    \item 把$\bbI$解释为立方集: $\bbI(I)\triangleq\dM(I)$, 态射映为对应的德摩根代数同态 (回忆立方范畴中态射的定义)
+    \item 对$\bbI$的另一种刻画是单元素集对应的 Yoneda 嵌入 $\y\{i\}=\square(\ul,\{i\})$
+  \end{itemize}
+  对每一个 $I$, 得到一个德摩根代数$\bbI(I)$, 把上面的结构统一记作$0,1,\ul\lor\ul,\ul\land\ul,\neg\ul$, 根据情况确定到底对应哪一个$I$. 有了这些数据, 我们可以定义自然变换 $\lor:\bbI\times\bbI\to\bbI$\[ \lor_{I}(r,s) \triangleq r \lor s \]
+  对$f\in\square(J,I)=I\to\dM(J)$, 记$\bar{f}\triangleq\bbI(f):\dM(I)\to\dM(J)$
+  \[
+  \begin{tikzcd}
+  \bbI(I)\times\bbI(I) \arrow[d,"{\lor_{I}}"'] \arrow[r,"{(\bar{f},\bar{f})}"] & \bbI(J)\times\bbI(J) \arrow[d,"{\lor_{J}}"]\\
+  \bbI(I) \arrow[r,"\bar{f}"'] & \bbI(J)
+  \end{tikzcd}
+  \]
+  由$\bar{f}(r\lor s) = \bar{f}(r)\lor\bar{f}(s)$, 以上图表交换, 我们确实定义了一个自然变换.
+
+\end{frame}
+\end{document}
