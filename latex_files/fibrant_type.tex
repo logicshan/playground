@@ -1,0 +1,138 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\usepackage{tikz-cd}
+
+\usepackage{fontspec}
+
+\newcommand\bbD{\mathbb{D}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\FTy{\mathtt{FTy}}
+\newcommand\comp{\mathtt{comp}}
+\newcommand\fst{\mathtt{fst}}
+\newcommand\snd{\mathtt{snd}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\dM{\mathsf{dM}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\DM{\mathbf{DM}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
+\newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
+\newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
+\newcommand{\ul}{{\scalebox{0.4}[1.0]{\_}}}
+
+\DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
+\DeclareMathOperator\obj{obj}
+\DeclareMathOperator\y{y}
+
+\usepackage{unicode-math}
+%\renewcommand{\square}{□}
+
+\newcommand\cubicalsets{\widehat{□}}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{纤维类型}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{背景}
+我们知道每一个预层范畴都给出一个 CwF. 立方集范畴$\cubicalsets$给出了内蕴类型论(包含通常的类型构造, 包括内蕴相等类型)的一个模型. 但是相等类型在这个 CwF 中的标准解释和把相等类型解释为从区间$\bbI$的映出并不重合. 而且, 立方类型论中的复合操作并不能在标准的 CwF 中得到解释. 为了解决这些问题, 我们从标准的 CwF 出发, 构造一个新的 CwF, 它和原来的 CwF 有相同的上下文和项, 但是只包括具有足够结构来解释复合操作的类型. 我们把这些类型称作是“纤维化的”, 并且在这个新的 CwF 中, 把上下文$\Gamma$下的所有这样的类型记为$\FTy(\Gamma)$.
+\end{frame}
+
+\begin{frame}[shrink]{部分元素}
+%  给定 $I\in\square$, $i \notin I$, $\rho\in\Gamma(I,i)$, $\varphi\in\bbF(I)$. $\Gamma\vdash A$, 那么 $A\in\Set^{(\int\Gamma)^{op}}$. $A(\rho)\triangleq A((I,i),\rho)$ 的\emph{部分元素}是一族元素: 对每一个$f:J\to I,i$, 都有一个$u_f\in A(\rho f)$, 满足 $\bbF(s_i\circ f)(\varphi)=1_{\bbF}$ 且对任意$g : K\to J$, 我们有 $u_{f\circ g} = A(g)(u_f)$. 我们把$\varphi$叫作这个部分元素的\emph{范围}.
+给定 $I \in \square$, $i \notin I$, $\rho \in \Gamma(I, i)$ 以及 $\varphi \in \bbF(I)$，若存在一族元素 $u_f \in A(\rho f)$（其中 $f : J \to I,i$ 满足 $ \bbF(s_i \circ f)(\varphi) = 1_{\bbF} $），且对任意 $ g : K \to J $ 有 $u_{f \circ g} = A(g)(u_f)$，则称该族 $u_f$ 为 $A(\rho)$ 的部分元素，并称 $\varphi$ 为该部分元素的范围.
+
+  分析:
+  \begin{itemize}
+    \item $\Gamma(f) : \Gamma(I,i)\to\Gamma(J)$
+    \item $\rho f\triangleq\Gamma(f)(\rho):\Gamma(J)$
+    \item $u_f\in A(\rho f)\triangleq A(J,\rho f)$
+    \item $s_i:I,i\to I$ 代表包含 $I\subseteq\dM(I,i)$
+    \item $s_i\circ f : J \to I$, $\bbF(s_i\circ f) : \bbF(I) \to \bbF(J)$
+    \item $\Gamma(g):\Gamma(J)\to\Gamma(K)$, $\rho f g \triangleq\Gamma(g)(\rho f):\Gamma(K)$
+    \item $g : (K,\rho f g) \to (J,\rho f)$
+    \item $A(g) : A(J,\rho f) \to A(K,\rho f g)$
+    \item $f\circ g:K\to I,i$
+    \item $u_{f\circ g} \in A(\rho f g) \triangleq A(K,\rho f g)$
+  \end{itemize}
+  (注: 术语\emph{部分元素}有一个更宽泛的定义, 这里仅限于使用其简化形式.)
+\end{frame}
+
+\begin{frame}{复合结构}
+  $A\in\Ty(\Gamma)$ 的一个复合结构是一个操作 $\comp$: 对$I\in\square$, $i\notin I$, $\rho\in\Gamma(I,i)$, $\varphi\in\bbF(I)$, $u$ 是 $A(\rho)$ 的一个范围为$\varphi$的部分元素, 如果$a_0\in A(\rho(i0))$, 那么对任何$f:J\to I$, 如果它满足$\bbF(f)(\varphi)=1_{\bbF}$, 那么$A(f)(a_0)=u_{(i0)\circ f}$, 则我们有
+  \[
+  \comp(I,i,\rho,\varphi,u,a_0) \in A(\rho(i1))
+  \]
+  它是一致的, 说的是对任何$f:J\to I$, $j\notin J$, 我们有
+  \[
+  \comp(I,i,\rho,\varphi,u,a_0)f = \comp(J,j,\rho(f,i=j),\varphi f,u(f,i=j),a_0f)
+  \]
+  并且\[
+  \comp(I,i,\rho,1_{\bbF},u,a_0) = u_{(i1)}
+  \]
+  其中态射 $(f,i=j):J,j\to I,i$ 把 $i$ 映为 $j$, 其余部分作用和 $f$ 相同, $u(f,i=j)$ 是一个部分元素, 定义为 $u(f,i=j)_{g}\triangleq u_{(f\circ s_j\circ g,i=j)}$.
+\end{frame}
+
+\begin{frame}[shrink]{复合结构定义分析}
+  \begin{itemize}
+    \item $(i0),(i1) : I\to I,i$\qquad $f:J \to I$
+    \item $\rho(i0)\triangleq\Gamma(i0)(\rho) : \Gamma(I)$, $a_0\in A(\rho(i0))\triangleq A(I,\rho(i0))$
+    \item $f : (J,\rho(i0)f) \to (I,\rho(i0))$
+    \item $u(f,i=j)$ 是 $A(\rho(f,i=j))$ 的一个范围为 $\varphi f$ 的部分元素
+    \item $A(\rho(f,i=j))\triangleq A((J,j),\rho(f,i=j))$
+    \item $\varphi f\triangleq \bbF(f)(\varphi) : \bbF(J)$
+    \item $g : L\to J,j$
+    \item $s_j:J,j\to J$
+    \item $f\circ s_j\circ g : L \to I$
+    \item $(f\circ s_j\circ g,i=j) : L,j\to I,i$
+  \end{itemize}
+\end{frame}
+
+\end{document}

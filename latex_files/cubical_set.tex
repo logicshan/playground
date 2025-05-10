@@ -22,8 +22,14 @@
 %\setmainfont{FreeSerif}
 %\setmonofont{FreeMono}
 %\setmonofont{Latin Modern Math}
-\setmonofont{Unifont}
+%\setmonofont{Unifont}
 %\setmonofont{DejaVu Sans Mono}
+
+\newfontfamily{\unifont}{Unifont}
+% 设置Unifont为verbatim默认字体
+\makeatletter
+\renewcommand{\verbatim@font}{\unifont\small}  % 替换为实际的Unifont命令
+\makeatother
 
 \newcommand\bbD{\mathbb{D}}
 \newcommand\JEq{\mathtt{JEq}}
