@@ -5,7 +5,6 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
-%\usepackage{euler, amsfonts, amssymb}
 \usepackage[UTF8]{ctex}
 \usetheme{SimplePlus}
 \setbeamertemplate{footline}{}
@@ -18,14 +17,7 @@
 
 \usepackage{tikz-cd}
 
-\usepackage{listings}
-\usepackage{unicode-math}
 \usepackage{fontspec}
-%\setmainfont{FreeSerif}
-%\setmonofont{FreeMono}
-%\setmonofont{Latin Modern Math}
-%\setmonofont{Unifont}
-%\setmonofont{DejaVu Sans Mono}
 
 \newcommand\bbD{\mathbb{D}}
 \newcommand\bbI{\mathbb{I}}
@@ -55,7 +47,9 @@
 \DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
 \DeclareMathOperator\obj{obj}
 \DeclareMathOperator\y{y}
-%\DeclareMathOperator\hom{hom}
+
+\usepackage{unicode-math}
+%\renewcommand{\square}{□}
 
 %----------------------------------------------------------------------------------------
 %    TITLE PAGE
@@ -96,7 +90,7 @@
 
 \begin{frame}[fragile,shrink]{$\bbI$}
   \begin{itemize}
-    \item 把$\bbI$解释为立方集: $\bbI(I)\triangleq\dM(I)$, 态射映为对应的德摩根代数同态 (回忆立方范畴中态射的定义)
+    \item 把$\bbI$解释为立方集: $\bbI(I)\triangleq\dM(I)$, 态射映为对应的德摩根代数同态
     \item 对$\bbI$的另一种刻画是单元素集对应的 Yoneda 嵌入 $\y\{i\}=\square(\ul,\{i\})$
   \end{itemize}
   对每一个 $I$, 得到一个德摩根代数$\bbI(I)$, 把上面的结构统一记作$0,1,\ul\lor\ul,\ul\land\ul,\neg\ul$, 根据情况确定到底对应哪一个$I$. 有了这些数据, 我们可以定义自然变换 $\lor:\bbI\times\bbI\to\bbI$\[ \lor_{I}(r,s) \triangleq r \lor s \]
@@ -108,6 +102,42 @@
   \end{tikzcd}
   \]
   由$\bar{f}(r\lor s) = \bar{f}(r)\lor\bar{f}(s)$, 以上图表交换, 我们确实定义了一个自然变换.
+\end{frame}
 
+\begin{frame}[shrink]{$\bbF$}
+  立方类型论中的$\bbF$是$\{(i=0),(i=1)\mid i\in\bbD\}$上的自由分配格, 并且模去关系$(i=0)\land(i=1)=0_{\bbF}$. 它的元素(也称为面公式)可以记为
+  \[
+  \varphi,\psi ::= 0_{\bbF} \mid 1_{\bbF} \mid i=0 \mid i=1 \mid \varphi\land\psi \mid \varphi\lor\psi \quad(i\in\bbD)
+  \]
+  我们把$\bbF$解释为立方集($I\in\obj\square$, $f\in\square(J,I)=I\to\dM(J)$)
+  \begin{itemize}
+    \item $\bbF(I)$ 是仅涉及$I$中名字的面公式集合
+    \item $\bbF(f):\bbF(I)\to\bbF(J)$, 对于$\bbF(I)$中的面公式, 它把名字 $i\in I$ 替换为 $f(i)\in\dM(J)$, 并进行以下项重写, 这样我们就得到$\bbF(J)$中的面公式
+%\[
+%\begin{aligned}
+%(r \lor s) = 1 \quad & \mapsto \quad (r = 1) \lor (s = 1) \\
+%(r \lor s) = 0 \quad & \mapsto \quad (r = 0) \land (s = 0) \\
+%(r \land s) = 1 \quad & \mapsto \quad (r = 1) \land (s = 1) \\ 
+%(r \land s) = 0 \quad & \mapsto \quad (r = 0) \lor (s = 0) \\
+%(1 - r) = 1 \quad & \mapsto \quad r = 0 \\
+%(1 - r) = 0 \quad & \mapsto \quad r = 1
+%\end{aligned}
+%\]
+\[
+\begin{array}{rclcrcl}
+(r \lor s) = 1 & \mapsto & (r=1) \lor (s=1) & \quad & (r \lor s) = 0 & \mapsto & (r=0) \land (s=0) \\
+(r \land s) = 1 & \mapsto & (r=1) \land (s=1) & \quad & (r \land s) = 0 & \mapsto & (r=0) \lor (s=0) \\
+(1-r) = 1 & \mapsto & r=0 & \quad & (1-r) = 0 & \mapsto & r=1
+\end{array}
+\]
+  \end{itemize}
+  对$\varphi\in\Ter(\Gamma\vdash\bbF)$, 我们定义限制上下文$\Gamma,\varphi$为如下立方集
+  \[
+  (\Gamma,\varphi)(I)\triangleq\{\rho\in\Gamma(I)\mid\varphi(I,\rho)=1_{\bbF}\}
+  \]
+\end{frame}
+
+\begin{frame}[shrink]{解释}
+  我们在立方集范畴 $\widehat{□}\triangleq\Set^{\square^{op}}$ 中解释立方类型论. 我们在前面展示过怎样从预层范畴得到 CwF. 我们定义 $\Ty(\Gamma)\triangleq\obj\Set^{{(\int\Gamma)}^{op}}$, 前面我们说过, 任意立方集都可以看作 $\Gamma$ 中的一个类型, $\bbF$ 也一样, 我们有 $\bbF'\in\obj\Set^{{(\int\Gamma)}^{op}}$. 对$\varphi\in\Ter(\Gamma\vdash\bbF')\triangleq\hom(1,\bbF')$, $\varphi$ 是一个自然变换, 对$(I,\rho)\in\int\Gamma$, $I\in\obj\square$, $\rho\in\Gamma(I)$, $\varphi_{(I,\rho)}:1(I,\rho)\to\bbF'(I,\rho)$, 由$\bbF'$的定义, $\varphi(I,\rho)\triangleq\varphi_{(I,\rho)}(\ast) \in \bbF'(I,\rho)=\bbF(I)$.
 \end{frame}
 \end{document}
