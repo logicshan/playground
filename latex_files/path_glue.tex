@@ -1,0 +1,125 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\usepackage{tikz-cd}
+
+\usepackage{fontspec}
+
+\newcommand\bbD{\mathbb{D}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\FTy{\mathtt{FTy}}
+\newcommand\comp{\mathtt{comp}}
+\newcommand\fst{\mathtt{fst}}
+\newcommand\snd{\mathtt{snd}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\Path{\mathtt{Path}}
+\newcommand\dM{\mathsf{dM}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\DM{\mathbf{DM}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
+\newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
+\newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
+\newcommand{\ul}{{\scalebox{0.4}[1.0]{\_}}}
+
+\DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
+\DeclareMathOperator\obj{obj}
+\DeclareMathOperator\y{y}
+
+\usepackage{unicode-math}
+%\renewcommand{\square}{□}
+
+\newcommand\cubicalsets{\widehat{□}}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{路径类型和粘合}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[shrink]{路径类型}
+给定类型 $\Ty(\Gamma)$, 项 $a,b\in\Ter(\Gamma\vdash A)$, 路径类型$\Path_{A}(a,b)\in\Ty(\Gamma)$ 定义如下: 给定$\rho\in\Gamma(I)$, 令 $\Path_{A}(a,b)(\rho)$ 为由满足以下条件的二元组$(i,w)$生成的等价类
+\begin{itemize}
+  \item $i\notin I$
+  \item $w\in A(\rho s_{i})$
+  \item $w(i0)=a(\rho)$, $w(i1)=b(\rho)$
+\end{itemize}
+其中, 当且仅当$w'=w(i=i')$时, 将$(i,w)$与$(i',w')$视为等价.
+
+对于态射$f:(J,\rho f)\to(I,\rho)$, $\Path_{A}(a,b)$ 的作用定义为 $(i,w)f\triangleq(j,w(f,i=j))$, 其中$j\notin J$.
+\end{frame}
+
+\begin{frame}[shrink]{路径类型定义分析}
+  \begin{itemize}
+    \item $a,b \in \Set^{(\int\Ty)^{op}}$, $\Path_{A}(a,b)\in\Set^{(\int\Gamma)^{op}}$
+    \item $s_{i} : I,i \to I$ \quad $(i0),(i1):I\to I,i$
+    \item $w\in A(I\cup\{i\},\rho s_i)$\quad $w(i0)\in A(I,\rho)$\quad $w(i1)\in A(I,\rho)$\quad $a(\rho)\triangleq a(I,\rho)\triangleq a_{(I,\rho)}(\ast)\in A(I,\rho)$\quad $b(\rho)\triangleq b(I,\rho)\triangleq b_{(I,\rho)}(\ast)\in A(I,\rho)$
+    \item $f:J\to I$\quad $(f,i=j) : J,j\to I,i$
+    \item $w(i=i')$ 就是 $w(id,i=i')$ 对$id:I\to I$
+  \end{itemize}
+
+尽管上述定义适用于任何(不必然是纤维化的)类型, 但为了能确保$\Path_{A}$是纤维化的, 我们要求类型 $A$ 本身是纤维化的. 当我们把范围限制在纤维化类型的 CwF 中时, 这些路径类型就能正确地为弱内蕴相等类型建模. 例如, 给定$A\in\Ty(\Gamma)$ 和 $a\in\Ter(\Gamma\vdash A)$, $\refl_{A}(a)$ 可被定义为
+\[ \refl_{A}(a)(I,\rho)\triangleq (i,a(\rho s_i))\]
+其中 $i\notin I$.
+\end{frame}
+
+\begin{frame}{路径类型定义分析(续)}
+  $\refl_{A}(a)\in\Ter(\Gamma\vdash \Path_{A}(a,a))\triangleq\hom(1,\Path_A(a,a))$, $\refl_A(a)(I,\rho)\triangleq\refl_{A}(a)_{(I,\rho)}(\ast)\triangleq(i,a(\rho s_i))$
+  \begin{itemize}
+    \item $s_i : I,i\to I$\quad $\rho\in\Gamma(I)$\quad $\rho s_i\triangleq \Gamma(s_i)(\rho)\in\Gamma(I,i)$
+    \item $a(\rho s_i)\triangleq a(I\cup\{i\},\rho s_i)\triangleq a_{(I\cup\{i\},\rho s_i)}(\ast)\in A(I\cup\{i\},\rho s_i)$
+    \item $s_i\circ (i0) = id$\quad $s_i\circ (i1) = id$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{定理}
+   纤维化类型构成的 CwF 支持由 $\Path_{A}$​ 给出的弱内蕴相等类型. 具体而言, 给定 $(A,\comp_{A})\in\FTy(\Gamma)$ 和 $a,b\in\Ter(\Gamma\vdash A)$, 我们可以定义一个新的复合结构 $\comp_{\Path_{A}(a,b)}$​ 使得 $(\Path_{A}(a,b),\comp_{\Path_{A}(a,b)})\in\FTy(\Gamma)$. 此外, 该类型支持所有在 CwF 中描述弱内蕴相等类型所需的结构.
+
+   $J$-消除子是使用纤维类型的复合结构来定义的.
+\end{frame}
+\end{document}
