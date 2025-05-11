@@ -105,6 +105,19 @@
   (注: 术语\emph{部分元素}有一个更宽泛的定义, 这里仅限于使用其简化形式.)
 \end{frame}
 
+\begin{frame}{部分元素定义分析(续)}
+  \begin{itemize}
+    \item $f : J \to I,i$
+    \item $s_i: I,i\to I$
+    \item $\bbF$ 是反变函子, $\bbF(s_i\circ f) =\bbF(f)\circ\bbF(s_i): \bbF(I)\to\bbF(J)$
+    \item $\bbF(s_i\circ f)(\varphi) =\bbF(f)(\bbF(s_i)(\varphi))= 1_{\bbF}$
+    \item $g : K \to J$
+    \item $\bbF(s_i\circ f\circ g)(\varphi) = (\bbF(g)\circ\bbF(s_i\circ f))(\varphi) =\bbF(g)(\bbF(s_i\circ f)(\varphi)) =\bbF(g)(1_{\bbF})=1_{\bbF}$
+    \item 回顾前面$\bbF$对态射的作用, $\bbF(g)(1_{\bbF}) = 1_{\bbF}$ (因为$\bbF(g):\bbF(J)\to\bbF(K))$, $g$是$\square$中的一个态射, 对应$\Set$中的一个态射$J\to\dM(K)$, $\bbF(g)$ 的作用就是把 $\bbF(J)$ 中面公式中的名字 $i$ 映为 $g(i)\in\dM(K)$, 经过项重写后变为 $\bbF(K)$ 中的项公式. $1_{\bbF}$ 中不含名字, $\bbF(g)$ 就不会改变它
+    \item $u_{f\circ g}$ 根据定义确实是有意义的
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{复合结构}
   $A\in\Ty(\Gamma)$ 的一个复合结构是一个操作 $\comp$: 对$I\in\square$, $i\notin I$, $\rho\in\Gamma(I,i)$, $\varphi\in\bbF(I)$, $u$ 是 $A(\rho)$ 的一个范围为$\varphi$的部分元素, 如果$a_0\in A(\rho(i0))$, 那么对任何$f:J\to I$, 如果它满足$\bbF(f)(\varphi)=1_{\bbF}$, 那么$A(f)(a_0)=u_{(i0)\circ f}$, 则我们有
   \[
@@ -133,6 +146,19 @@
     \item $f\circ s_j\circ g : L \to I$
     \item $(f\circ s_j\circ g,i=j) : L,j\to I,i$
   \end{itemize}
+\end{frame}
+
+\begin{frame}{纤维类型}
+ 纤维类型 $(A,\comp_{A})\in\FTy(\Gamma)$ 由以下部分构成
+ \begin{itemize}
+  \item $A\in\Ty(\Gamma)$
+  \item $\comp_A$ 是 $A$ 上的一个复合结构
+ \end{itemize}
+\pause
+ 定理: 把从立方集得到的标准 CwF 中的$\Ty$替换为$\FTy$, 我们得到一个新的 CwF, 它支持依赖和, 依赖积, 自然数. 更进一步, 这个新的 CwF 还可以解释立方类型论中的复合操作.
+\pause
+
+ (这个定理的证明依赖于复合结构可以重新索引, 也就是说, 对 $(A,\comp_A)\in\FTy(\Gamma)$, $\gamma:\Delta\to\Gamma$, 我们可以得到 $A[\gamma]$ 上的一个复合结构$\comp_{A}[\gamma]$, 因此$(A[\gamma],\comp_{A}[\gamma])\in\FTy(\Delta)$)
 \end{frame}
 
 \end{document}
