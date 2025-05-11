@@ -1,0 +1,104 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\usepackage{tikz-cd}
+
+\usepackage{fontspec}
+
+\newcommand\calV{\mathcal{V}}
+\newcommand\bbD{\mathbb{D}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\FTy{\mathtt{FTy}}
+\newcommand\comp{\mathtt{comp}}
+\newcommand\fst{\mathtt{fst}}
+\newcommand\snd{\mathtt{snd}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\Path{\mathtt{Path}}
+\newcommand\dM{\mathsf{dM}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\DM{\mathbf{DM}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
+\newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
+\newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
+\newcommand{\ul}{{\scalebox{0.4}[1.0]{\_}}}
+
+\DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
+\DeclareMathOperator\obj{obj}
+\DeclareMathOperator\y{y}
+
+\usepackage{unicode-math}
+%\setmathfont{Latin Modern Math}
+%\setmathfont{XITS Math}[range=cal]
+%\setmathfont{Euler Math}[range=cal]
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\newcommand\cubicalsets{\widehat{□}}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{单值宇宙}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{背景}
+该构造是对Hofmann-Streicher宇宙构造的轻微修改. 此定义依赖于元理论中“小性”概念的存在性(例如格罗滕迪克宇宙). 在此基础上, 我们称类型$A\in\Ty(\Gamma)$是小的, 当且仅当对所有$ρ∈Γ(I)$, 其纤维$A(ρ)$都是小的. 我们分别用$\Ty_{0}(\Gamma)$和$\FTy_{0}(\Gamma)$表示小类型和小纤维化类型的合集. 
+\end{frame}
+
+\begin{frame}{定义}
+  \begin{itemize}
+    \item $\y:\square\to\cubicalsets$
+    \item $\y^{op}:\square^{op}\to\cubicalsets^{op}$
+    \item $\FTy_{0}:\cubicalsets^{op}\to\Set$
+  \end{itemize}
+
+  把宇宙定义为一个立方集: $\calV \triangleq \FTy_{0}\circ\y^{op} : \square^{op} \to \Set$
+\end{frame}
+
+\end{document}
