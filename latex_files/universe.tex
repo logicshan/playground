@@ -91,7 +91,7 @@
 该构造是对Hofmann-Streicher宇宙构造的轻微修改. 此定义依赖于元理论中“小性”概念的存在性(例如格罗滕迪克宇宙). 在此基础上, 我们称类型$A\in\Ty(\Gamma)$是小的, 当且仅当对所有$ρ∈Γ(I)$, 其纤维$A(ρ)$都是小的. 我们分别用$\Ty_{0}(\Gamma)$和$\FTy_{0}(\Gamma)$表示小类型和小纤维化类型的合集. 
 \end{frame}
 
-\begin{frame}{定义}
+\begin{frame}[shrink]{定义}
   \begin{itemize}
     \item $\y:\square\to\cubicalsets$
     \item $\y^{op}:\square^{op}\to\cubicalsets^{op}$
@@ -99,6 +99,41 @@
   \end{itemize}
 
   把宇宙定义为一个立方集: $\calV \triangleq \FTy_{0}\circ\y^{op} : \square^{op} \to \Set$
+
+  前面说过, 任何立方集都可以看作空上下文(因此也是任何上下文)中的一个类型, 所以我们有$\calV'\in\Ty(1)\triangleq\Set^{(\int1)^{op}}$, $\calV'(I,\rho)\triangleq\calV(I)$ ($\rho\in1(I)=\{\ast\}$, $\int1\cong\square$, 所以$\calV'$和$\calV$本质上是一样的, 下面我们不再区分. 由于 $1$ 是终对象, 对任意上下文$\Gamma$, 存在唯一态射 $\gamma:\Gamma\to1$, 这样 $\Gamma\vdash \calV[\gamma]$, 之后也简记为 $\Gamma\vdash\calV$)
+
+  解码函数: $El : \Ter(\Gamma\vdash\calV)\to\FTy_{0}(\Gamma)$\quad $a\in\Ter(\Gamma\vdash\calV)\triangleq\hom(1,\calV)$\quad $a(\rho)\triangleq a(I,\rho)\triangleq a_{(I,\rho)}(\ast)\in\calV(I,\rho)=\calV(I)=\FTy_{0}(\y I)\quad a(\rho)\triangleq(A,\comp_{A})$
+  $\fst(a(\rho)) = A \in \Ty_0(\y I)\triangleq\Set^{(\int\y I)^{op}}$\quad $\snd(a(\rho)) = \comp_{A}$\quad $(I,id_I)\in\int\y I$\\
+  定义 $El_a(I,\rho)\triangleq(El_{a},\comp_{a})$
+  \begin{itemize}
+    \item $El_a\in\Ty_{0}(\Gamma)$\quad $El_a(I,\rho)\triangleq\fst(a(\rho))(I,id_I)$
+    \item $\comp_a$是$El_a$上的一个复合结构\[\comp_a(I,i,\rho',\varphi,u,a_{0})\triangleq\snd(a(\rho'))(I,i,s_i,\varphi,u,a_0)\]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[shrink]{$\snd(a(\rho'))$分析}
+%  $A=\fst(a(\rho))\in\Ty_{0}(\y I)$\quad $\snd(a(\rho))=\comp_A$ 是 $A$ 上的一个复合结构 \\
+$\comp_{a}\triangleq\comp_{El_{a}}$
+  \[\comp_a(I,i,\rho',\varphi,u,a_{0})\in El_{a}(\rho'(i1))\] 中 $I\in\square$, $i\notin I$, $\rho'\in\Gamma(I,i)$, $\varphi\in\bbF(I)$, $u$ 是范围为 $\varphi$的$El_{a}(\rho')$的一个部分元素, $a_0\in El_{a}(\rho'(i0))\triangleq El_{a}(I,\rho'(i0))\triangleq\fst(a(\rho'(i0)))(I,id_I)$.\\
+  %$I\in\square$\quad $i\notin I$\quad $s_i\in(\y I)(I,i)=\hom(I\cup\{i\},I)$\quad $\varphi\in\bbF(I)$\\
+  %$u$是范围为$\varphi$的$A(s_i)$的一个部分元素\quad $a_0\in A(\rho(i0))$
+  %\[ \snd(a(\rho))(I,i,s_i,\varphi,u,a_0) \]
+  由于$\rho'\in\Gamma(I,i)$, 此时$a(\rho')\triangleq a(I\cup\{i\},\rho')\triangleq a_{(I\cup\{i\},\rho')}(\ast)\in\calV(I\cup\{i\},\rho')=\calV(I,i)=\FTy_{0}(\y (I,i))$\\
+  令 $a(\rho')\triangleq(B,\comp_B)$, 那么 $B\in\Ty_{0}(\y(I,i))$\\
+  %$a_0 \in \fst(a(\rho'))(\rho'(i0))$\\
+  $J\in\square$, $j\notin J$, $\sigma\in\y(I,i)(J,j)$, $\varphi\in\bbF(J)$, $u$ 是范围为 $\varphi$ 的$B(\sigma)$ 的部分元素, $a_0\in B(\sigma(j0))$\[ \comp_{B}(J,j,\sigma,\varphi,u,a_0) \in B(\sigma(j1)) \]
+  取$J=I$\quad $j=i$\quad $\sigma=id_{I,i}$
+  \[ \comp_{B}(I,i,id,\varphi,u,a_0) \in B(id(i1)) \]
+  此时 $B(\sigma)=B(id_{I,i})=\fst(a(\rho'))(I\cup\{i\}, id_{I,i})=El_a(I\cup\{i\},\rho')$\\
+  $a_0\in B(id_{I,i}(i0))=B(I,(i0))=\fst(a(\rho'))(I,(i0))$
+\end{frame}
+
+\begin{frame}[shrink]{怎样证明$\fst(a(\rho'(i0)))(I,id_I) = \fst(a(\rho'))(I,(i0))$?}
+  \begin{itemize}
+    \item $a\in\Ter(\Gamma\vdash\calV)$\quad$\gamma:\Delta\to\Gamma$\quad$a[\gamma]\in\Ter(\Delta\vdash\calV)$
+    \item 令$a(\rho'(i0))=(A',\comp_{A'})\in\FTy_{0}(\y I)$
+    \item 则 $El_a(I,\rho'(i0))=\fst(a(\rho'(i0)))(I,id_I)=A'(I,id_{I})$
+  \end{itemize}
 \end{frame}
 
 \end{document}
