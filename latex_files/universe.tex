@@ -48,7 +48,7 @@
 
 \DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
 \DeclareMathOperator\obj{obj}
-\DeclareMathOperator\y{y}
+\DeclareMathOperator\y{\mathbf{y}}
 
 \usepackage{unicode-math}
 %\setmathfont{Latin Modern Math}
@@ -100,21 +100,44 @@
 
   把宇宙定义为一个立方集: $\calV \triangleq \FTy_{0}\circ\y^{op} : \square^{op} \to \Set$
 
-  前面说过, 任何立方集都可以看作空上下文(因此也是任何上下文)中的一个类型, 所以我们有$\calV'\in\Ty(1)\triangleq\Set^{(\int1)^{op}}$, $\calV'(I,\rho)\triangleq\calV(I)$ ($\rho\in1(I)=\{\ast\}$, $\int1\cong\square$, 所以$\calV'$和$\calV$本质上是一样的, 下面我们不再区分. 由于 $1$ 是终对象, 对任意上下文$\Gamma$, 存在唯一态射 $\gamma:\Gamma\to1$, 这样 $\Gamma\vdash \calV[\gamma]$, 之后也简记为 $\Gamma\vdash\calV$)
+  前面说过, 任何立方集都可以看作空上下文(因此也是任何上下文)中的一个类型, 所以我们有$\calV'\in\Ty(1)\triangleq\Set^{(\int1)^{op}}$, $\calV'(I,\rho)\triangleq\calV(I)$ ($\rho\in1(I)=\{\ast\}$, $\int1\cong\square$, 所以$\calV'$和$\calV$本质上是一样的, 下面我们不再区分. 由于 $1$ 是终对象, 对任意上下文$\Gamma$, 存在唯一态射 $\gamma:\Gamma\to1$, 这样 $\Gamma\vdash \calV[\gamma]$, 之后也简记为 $\Gamma\vdash\calV$. 另一种解释: $\Gamma\vdash\calV'$, $\calV'\in\Ty(\Gamma)\triangleq\Set^{(\int\Gamma)^{op}}$, $\calV'(I,\rho)\triangleq\calV(I)$)
+\end{frame}
 
-  解码函数: $El : \Ter(\Gamma\vdash\calV)\to\FTy_{0}(\Gamma)$\quad $a\in\Ter(\Gamma\vdash\calV)\triangleq\hom(1,\calV)$\quad $a(\rho)\triangleq a(I,\rho)\triangleq a_{(I,\rho)}(\ast)\in\calV(I,\rho)=\calV(I)=\FTy_{0}(\y I)\quad a(\rho)\triangleq(A,\comp_{A})$
+\begin{frame}[fragile,shrink]{项 $a ∈ \Ter(Γ ⊢ \calV)$ 等价于说 $a$ 是一个从预层 $Γ$ 到预层 $\calV$ 的自然变换}
+  根据定义 $\Ter(\Gamma\vdash \calV)\triangleq\hom(1,\calV)$, 使用正确的符号 $\Ter(\Gamma\vdash \calV')\triangleq\hom(1,\calV')$, $\calV'\in\Set^{(\int\Gamma)^{op}}$, $\calV'(I,\rho)=\calV(I)$, $a_{I,\rho}:1(I,\rho)\to\calV'(I,\rho)$, $1(I,\rho)=\{\ast\}$, 对 $g:J\to K$
+  \[
+  \begin{tabular}{cc}
+  \begin{tikzcd}
+  1(K,\tau) \arrow[d,"{a_{K,\tau}}"'] \arrow[r] & 1(J,\sigma) \arrow[d,"{a_{J,\sigma}}"]\\
+  \calV'(K,\tau) \arrow[r,"{\calV'(g)}"] & \calV'(J,\sigma)
+  \end{tikzcd}
+&
+  \begin{tikzcd}
+    & \{\ast\} \arrow[dl,"{a_{K,\tau}}"'] \arrow[dr,"{a_{J,\sigma}}"] & \\
+    \calV(K) \arrow[rr,"{\calV(g)}"] & & \calV(J)
+  \end{tikzcd}
+\end{tabular} \]
+  $a_{J,\sigma}(\ast) = (\calV(g)\circ(a_{K,\tau}))(\ast)$\quad$a(J,\sigma)=\calV(g)(a(K,\tau))$\\
+  对应$a\in\hom(\Gamma,\calV)$\quad$a_I:\Gamma(I)\to\calV(I)$\quad$a_I(\rho)\triangleq a(I,\rho)$\\
+  从一个自然变换$a\in\hom(\Gamma,\calV)$, 可以得到一个$a\in\Ter(\Gamma\vdash\calV)$, 定义为$a(I,\rho)\triangleq a_I(\rho)\in\calV(I)$
+\end{frame}
+
+\begin{frame}{解码函数}
+    $El : \Ter(\Gamma\vdash\calV)\to\FTy_{0}(\Gamma)$\quad $a\in\Ter(\Gamma\vdash\calV)\triangleq\hom(1,\calV)$\quad $a(\rho)\triangleq a(I,\rho)\triangleq a_{(I,\rho)}(\ast)\in\calV(I,\rho)=\calV(I)=\FTy_{0}(\y I)\quad a(\rho)\triangleq(A,\comp_{A})$
   $\fst(a(\rho)) = A \in \Ty_0(\y I)\triangleq\Set^{(\int\y I)^{op}}$\quad $\snd(a(\rho)) = \comp_{A}$\quad $(I,id_I)\in\int\y I$\\
   定义 $El_a(I,\rho)\triangleq(El_{a},\comp_{a})$
   \begin{itemize}
     \item $El_a\in\Ty_{0}(\Gamma)$\quad $El_a(I,\rho)\triangleq\fst(a(\rho))(I,id_I)$
     \item $\comp_a$是$El_a$上的一个复合结构\[\comp_a(I,i,\rho',\varphi,u,a_{0})\triangleq\snd(a(\rho'))(I,i,s_i,\varphi,u,a_0)\]
   \end{itemize}
+
 \end{frame}
 
 \begin{frame}[shrink]{$\snd(a(\rho'))$分析}
 %  $A=\fst(a(\rho))\in\Ty_{0}(\y I)$\quad $\snd(a(\rho))=\comp_A$ 是 $A$ 上的一个复合结构 \\
-$\comp_{a}\triangleq\comp_{El_{a}}$
-  \[\comp_a(I,i,\rho',\varphi,u,a_{0})\in El_{a}(\rho'(i1))\] 中 $I\in\square$, $i\notin I$, $\rho'\in\Gamma(I,i)$, $\varphi\in\bbF(I)$, $u$ 是范围为 $\varphi$的$El_{a}(\rho')$的一个部分元素, $a_0\in El_{a}(\rho'(i0))\triangleq El_{a}(I,\rho'(i0))\triangleq\fst(a(\rho'(i0)))(I,id_I)$.\\
+$\comp_{a}\triangleq\comp_{El_{a}}$\qquad
+  $\comp_a(I,i,\rho',\varphi,u,a_{0})\in El_{a}(\rho'(i1))$ \\
+  中 $I\in\square$, $i\notin I$, $\rho'\in\Gamma(I,i)$, $\varphi\in\bbF(I)$, $u$ 是范围为 $\varphi$的$El_{a}(\rho')$的一个部分元素, $a_0\in El_{a}(\rho'(i0))\triangleq El_{a}(I,\rho'(i0))\triangleq\fst(a(\rho'(i0)))(I,id_I)$.\\
   %$I\in\square$\quad $i\notin I$\quad $s_i\in(\y I)(I,i)=\hom(I\cup\{i\},I)$\quad $\varphi\in\bbF(I)$\\
   %$u$是范围为$\varphi$的$A(s_i)$的一个部分元素\quad $a_0\in A(\rho(i0))$
   %\[ \snd(a(\rho))(I,i,s_i,\varphi,u,a_0) \]
@@ -128,12 +151,111 @@ $\comp_{a}\triangleq\comp_{El_{a}}$
   $a_0\in B(id_{I,i}(i0))=B(I,(i0))=\fst(a(\rho'))(I,(i0))$
 \end{frame}
 
-\begin{frame}[shrink]{怎样证明$\fst(a(\rho'(i0)))(I,id_I) = \fst(a(\rho'))(I,(i0))$?}
+\begin{frame}[fragile,shrink]{怎样证明$\fst(a(\rho'(i0)))(I,id_I) = \fst(a(\rho'))(I,(i0))$?}
   \begin{itemize}
     \item $a\in\Ter(\Gamma\vdash\calV)$\quad$\gamma:\Delta\to\Gamma$\quad$a[\gamma]\in\Ter(\Delta\vdash\calV)$
     \item 令$a(\rho'(i0))=(A',\comp_{A'})\in\FTy_{0}(\y I)$
     \item 则 $El_a(I,\rho'(i0))=\fst(a(\rho'(i0)))(I,id_I)=A'(I,id_{I})$
+    \item 由前面的说明, $a\in\hom(\Gamma,\calV)$, 把 $a$ 的自然性应用到 $(i0):I\to I,i$ 上
+    \[
+    \begin{tikzcd}
+      \Gamma(I,i)\arrow[d,"{a_{I,i}}"']\arrow[r,"{\Gamma((i0))}"'] & \Gamma(I) \arrow[d,"{a_I}"] \\
+      \calV(I,i) \arrow[r,"{\calV((i0))}"] & \calV(I)
+    \end{tikzcd}
+    \]
+    $\calV((i0))\circ a_{I,i} = a_I\circ\Gamma((i0))$, 作用于$\rho'\in\Gamma(I,i)$
+    \[ \calV((i0))(a_{I,i}(\rho')) = a_I(\Gamma((i0))(\rho')) = a_I(\rho'(i0)) \]
+    即\[ a(\rho')[(i0)] = a(\rho'(i0)) \]
   \end{itemize}
+\end{frame}
+
+\begin{frame}{续}
+  \begin{itemize}
+    \item 令$a(\rho') = (A'',\comp_{A''}) \in \FTy_{0}(\y(I,i))$, 其中$A''\in\Ty_{0}(\y(I,i))$
+    \item $a(\rho')[(i0)]$ 的类型分量为$A''[(i0)]\in\Ty_{0}(\y I)$
+    \item 根据预层范畴到 CwF 中的定义, $A''[(i0)](J,\sigma)\triangleq A''(J,(i0)\circ\sigma)$, 其中$J\in\square$, $\sigma\in(\y I)(J)$
+    \item $A''[(i0)](I,id_I) = A''(I,(i0))$
+    \item 由 $a(\rho')[(i0)] = a(\rho'(i0))$, 得到 $A''[(i0)] = A'$
+    \item 因此 $A'(I,id_I) = A''(I,(i0))$
+    \item $\fst(a(\rho'(i0)))(I,id_I) = \fst(a(\rho'))(I,(i0))$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[shrink]{编码函数}
+  $\ulcorner\ul\urcorner : \FTy_{0}(\Gamma)\to\Ter(\Gamma\vdash\calV)$
+  \[ \ulcorner(A,\comp_{A})\urcorner(\rho) \triangleq (A,\comp_{A})[\bar{\rho}] \]
+  其中$\bar{\rho}:\y I\to\Gamma$ 由 $\rho\in\Gamma(I)$ 通过 Yoneda 引理得到.
+  \begin{itemize}
+    \item $(A,\comp_{A})\in\FTy_{0}(\Gamma)$
+    \item $\ulcorner(A,\comp_{A})\urcorner \in \Ter(\Gamma\vdash\calV)\triangleq\hom(1,\calV)$
+    \item $\ulcorner(A,\comp_{A})\urcorner(I,\rho) \in \calV(I)=\FTy_{0}(\y I)$
+    \item $(A,\comp_{A})[\bar{\rho}] \in \FTy_{0}(\y I)$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[shrink]{$\ulcorner\ul\urcorner\circ El = id$}
+  \begin{itemize}
+    \item $El: \Ter(\Gamma\vdash\calV) \to \FTy_{0}(\Gamma)$
+    \item $\ulcorner\ul\urcorner : \FTy_{0}(\Gamma) \to \Ter(\Gamma\vdash\calV)$
+    \item $a \in \Ter(\Gamma\vdash\calV)$
+    \item $El(a)\triangleq(El_{a},\comp_{a})$
+    \item $\ulcorner El(a)\urcorner(\rho) = (El(a))[\bar{\rho}]=(El_a,\comp_{a})[\bar{\rho}]=(El_a[\bar{\rho}],\comp_{a}[\bar{\rho}])$
+    \item 对任意$f:J\to I$, $El_a[\bar{\rho}](f) = El_a(\rho f)=\fst(a(\rho f))(id_J) = \fst(a(\rho))(f)$, 所以 $El_a[\bar{\rho}] = \fst(a(\rho))$ (第一个和第二个等号都是定义, 最后一个等号参考前面对解码函数的分析)
+    \item $\comp_A$ 是 $A\in\Ty_{0}(\Gamma)$ 上的一个组合结构, $\comp_A[\bar{\rho}]$ 是 $A[\bar{\rho}]\in\Ty_{0}(\y I)$ 上的一个组合结构
+    \item $\comp_a[\bar{\rho}](J,j,f,\varphi,u,a_0)$中, $J\in\square$, $j\notin J$, $f\in (\y I)(J,j)$, $\varphi\in\bbF(J)$, $u$ 是$A[\bar{\rho}](f)$的一个范围为$\varphi$ 的部分元素, $a_0\in A[\bar{\rho}](f(j0))$
+    \item $A[\bar{\rho}](f)=A(\rho f)$\qquad$A[\bar{\rho}](f(j0))=A[\bar{\rho}](f\circ (j0))=A(\rho(f\circ(j0)))=A((\rho f)(j0))$
+    \item $\rho f\in \Gamma(J,j)$\quad $u$ 是 $A(\rho f)$ 的一个范围为 $\varphi$ 的部分元素, $a_0\in A((\rho f)(j0))$
+  \end{itemize}
+\end{frame}
+\begin{frame}[shrink]{续}
+  \begin{align*}
+  \comp_a[\bar{\rho}](J,j,f,\varphi,u,a_0) &= \comp_a(J,j,\rho f,\varphi,u,a_0) \\
+  &=\snd(a(\rho f))(J,j,id,\varphi,u,a_0) \\
+  &=\snd(a(\rho))(J,j,f,\varphi,u,a_0)
+  \end{align*}
+  所以, $\comp_a[\bar{\rho}] = \snd(a(\rho))$
+  \begin{align*}
+  \ulcorner El(a)\urcorner(\rho) &= (El_a[\bar{\rho}],\comp_{a}[\bar{\rho}]) \\
+  &= (\fst(a(\rho)),\snd(a(\rho)))\\
+  &=a(\rho)
+  \end{align*}
+  所以, $\ulcorner El(a)\urcorner = a$.
+  \[ \ulcorner El(\ul) \urcorner = id \]
+\end{frame}
+
+\begin{frame}[shrink]{$El\circ\ulcorner\ul\urcorner=id$}
+    \begin{itemize}
+    \item $El: \Ter(\Gamma\vdash\calV) \to \FTy_{0}(\Gamma)$
+    \item $\ulcorner\ul\urcorner : \FTy_{0}(\Gamma) \to \Ter(\Gamma\vdash\calV)$
+    \item $(A,\comp_{A})\in\FTy_{0}(\Gamma)$
+    \item 对$\rho\in\Gamma(I)$
+    \begin{align*}
+      El_{\ulcorner(A,\comp_{A})\urcorner}(\rho) &= \fst(\ulcorner(A,\comp_{A})\urcorner(\rho))(id_I)\\
+      &=\fst((A,\comp_{A})[\bar{\rho}])(id_I)\\
+      &=A[\bar{\rho}](id_I)\\
+      &=A(\rho)
+    \end{align*}
+    所以, $El_{\ulcorner(A,\comp_{A})\urcorner} = A$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[shrink]{续}
+  \begin{align*}
+    \comp_{\ulcorner(A,\comp_{A})\urcorner}(I,i,\rho,\varphi,u,a_0) &=\snd(\ulcorner(A,\comp_{A})\urcorner(\rho))(I,i,id,\varphi,u,a_0)\\
+    &=\snd((A,\comp_{A})[\bar{\rho}])(I,i,id,\varphi,u,a_0)\\
+    &=\comp_{A}[\bar{\rho}](I,i,id,\varphi,u,a_0)\\
+    &=\comp_{A}(I,i,\rho,\varphi,u,a_0)
+  \end{align*}
+  所以, $\comp_{\ulcorner(A,\comp_{A})\urcorner} = \comp_{A}$\\
+  $El(\ulcorner(A,\comp_{A})\urcorner) = (El_{\ulcorner(A,\comp_{A})\urcorner},\comp_{\ulcorner(A,\comp_{A})\urcorner})=(A,\comp_{A})$
+  \[ El(\ulcorner\ul\urcorner) = id \]
+\end{frame}
+
+\begin{frame}[shrink]{$(\FTy_{0},\calV,El,\ulcorner\ul\urcorner)$}\begin{itemize}
+  \item $(\FTy_{0},\calV,El,\ulcorner\ul\urcorner)$ 在原始(不必是纤维化的)类型的 CwF 中是一个宇宙
+  \item 为了证明它同样是纤维化类型的 CwF 中的一个宇宙, 我们需要证明 $\calV$ 是纤维化的
+  \item 我们需要使用 glueing 操作来定义宇宙上的一个复合操作
+\end{itemize}
 \end{frame}
 
 \end{document}
