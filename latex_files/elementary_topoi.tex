@@ -1,0 +1,152 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\usepackage{tikz-cd}
+
+\usepackage{fontspec}
+
+\newcommand\calV{\mathcal{V}}
+\newcommand\bfC{\mathbf{C}}
+\newcommand\calE{\mathcal{E}}
+\newcommand\bbD{\mathbb{D}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\FTy{\mathtt{FTy}}
+\newcommand\comp{\mathtt{comp}}
+\newcommand\fst{\mathtt{fst}}
+\newcommand\snd{\mathtt{snd}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\Path{\mathtt{Path}}
+\newcommand\dM{\mathsf{dM}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\DM{\mathbf{DM}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
+\newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
+\newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
+\newcommand{\ul}{{\scalebox{0.4}[1.0]{\_}}}
+
+\DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
+\DeclareMathOperator\obj{obj}
+\DeclareMathOperator\y{\mathbf{y}}
+
+\usepackage{unicode-math}
+%\setmathfont{Latin Modern Math}
+%\setmathfont{XITS Math}[range=cal]
+%\setmathfont{Euler Math}[range=cal]
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\newcommand\cubicalsets{\widehat{□}}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{初等拓扑斯}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{背景}
+拓扑斯是一个其行为类似于集合范畴的范畴. 事实上, 集合范畴是拓扑斯的一个典型例子. 每个拓扑斯都配备有一个称为\emph{子对象分类子}的对象.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{子对象分类子}
+  在任何具有所有有限极限的范畴$\calE$, 子对象分类子是一个对象$\Omega\in\calE$, 它配备有一个单态射$\top : 1 \to \Omega$, 使得对于每个单态射$m:X\rightarrowtail Y$, 存在唯一的态射$\chi_{X} : Y\to\Omega$ 使得下图成为一个拉回正方形:\[
+  \begin{tikzcd}[row sep=large]
+  A \arrow[r,tail,"m"] \arrow[dr,phantom,"\lrcorner",very near start] \arrow[d] & Y \arrow[d,"\chi_{X}"] \\
+  1 \arrow[r,tail,"\top"] & \Omega
+  \end{tikzcd} \]
+  我们称态射$\chi_{X}$分类单态射$m:X\rightarrowtail Y$, 或者简单地说$\chi_{X}$分类子对象$X$. $Y$ 的每个子对象都通过一个态射 $Y \to \Omega$ 被唯一地(在同构意义下)分类.
+\end{frame}
+
+\begin{frame}[shrink]{定义}
+   拓扑斯是一个具有所有有限极限和一个子对象分类子的笛卡尔闭范畴.
+   
+\bigskip
+   注意, 尽管这个定义相当简单和简洁, 但它实际上蕴含了许多其他性质. 例如, 每个拓扑斯都是局部笛卡尔闭的(每个切片范畴都是笛卡尔闭的), 拥有所有有限余极限, 并且允许将外延类型理论解释为一种内部语言. 我们利用的就是拓扑斯的这最后一个性质.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{预层拓扑斯}
+给定任意小范畴$\bfC$, 预层范畴$\widehat{\bfC}$构成一个拓扑斯. 下面我们描述一下子对象分类子$\Omega$的构造. $\Omega(I)$ 被定义为 $I$ 上筛的集合. 也就是说, 是那些在与任意态射的前复合下封闭的, 到 $I$ 的态射的集合. 对于子对象$m:X\rightarrowtail Y$, 其分类映射 $\chi_{X}:Y\to\Omega$由下式给出:
+\[
+(\chi_{X})_{I}(y)\triangleq\{f:J\to I\mid \exists x\in X(J).m_{J}(x)=Y(f)(y)\}
+\]
+
+%\[
+%\begin{tabular}{cc}
+%\begin{align*}
+%  (\chi_{X})_{I} &: Y(I) \to \Omega(I) \\
+%  m_{J} &:X(J)\to Y(J) \\
+%  Y(f) &: Y(I) \to Y(J)
+%\end{align*}
+%&
+%\begin{tikzcd}
+%X(J) \arrow[r] \arrow[d] & X(K) \arrow[d] \\
+%Y(J) \arrow[r] & Y(K)
+%\end{tikzcd}
+%\end{tabular} \]
+
+\begin{columns}[c]
+  \begin{column}{0.4\textwidth}
+\begin{align*}
+  (\chi_{X})_{I} : Y(I) &\to \Omega(I) \\
+  m_{J} :X(J) &\to Y(J) \\
+  Y(f) : Y(I) &\to Y(J) \\
+\end{align*}
+\end{column}
+\begin{column}{0.4\textwidth}
+\begin{tikzcd}
+X(J) \arrow[r,"X(g)"] \arrow[d,"{m_{J}}"'] & X(K) \arrow[d,"m_{K}"] \\
+Y(J) \arrow[r,"Y(g)"] & Y(K)
+\end{tikzcd}
+\end{column}
+\end{columns}
+
+
+下面证明这个集合在前复合下是封闭的: 给定$f:J\to I$且$x\in X(J)$使得$m_{J}(x)=Y(f)(y)$, 以及任意$g: K\to J$, 那么取$x'=X(g)(x)\in X(K)$, 我们有$m_{K}(x')=m_{K}(X(g)(x))=Y(g)(m_{J}(x))=Y(g)(Y(f)(y))=Y(f\circ g)(y)$, 因此$f\circ g$ 同样在这个集合中. 所以, $(\chi_{X})_{I}(y)$确实是一个筛.
+\end{frame}
+
+\end{document}
