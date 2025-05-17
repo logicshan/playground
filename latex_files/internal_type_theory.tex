@@ -16,6 +16,8 @@
 \usepackage{mathpartir}
 
 \usepackage{tikz-cd}
+\usetikzlibrary{arrows.meta}
+%\tikzcdset{arrow style=tikz, diagrams={>=Stealth}}
 
 \usepackage{fontspec}
 
@@ -46,7 +48,7 @@
 \newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
 \newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
 \newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
-\newcommand{\ul}{{\scalebox{0.4}[1.0]{\_}}}
+\newcommand{\ul}{{\scalebox{0.4}[0.4]{\_}}}
 
 \DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
 \DeclareMathOperator\obj{obj}
@@ -199,18 +201,18 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
 \begin{frame}[fragile,shrink]{扩展上下文$\Gamma.(A,a)$}
   \[
   \begin{tikzcd}[row sep=large]
-    \Gamma.(A,a) \arrow[dr,phantom,"\lrcorner",very near start] \arrow[d] \arrow[r,tail,"\bar{a}"] & \Gamma\times A \arrow[d,"a"] \\
+    \Gamma.(A,a) \arrow[dr,phantom,"\lrcorner",very near start] \arrow[d] \arrow[r,tail,"\overline{a}"] & \Gamma\times A \arrow[d,"a"] \\
     1 \arrow[r,"\top"] & \Omega
   \end{tikzcd}
   \]
-  扩展上下文 $Γ.(A, a)$ 简单地由 $a$ 分类的子对象给出, 即 $\bar{a} : Γ.(A, a) \rightarrowtail Γ × A$ 的域.
+  扩展上下文 $Γ.(A, a)$ 简单地由 $a$ 分类的子对象给出, 即 $\overline{a} : Γ.(A, a) \rightarrowtail Γ × A$ 的域.
   \[
   \begin{tikzcd}
-    & \Gamma.(A,a) \arrow[d,tail,"\bar{a}"] \arrow[dl,"\ttp"'] \arrow[dr,"\ttq"] & \\
+    & \Gamma.(A,a) \arrow[d,tail,"\overline{a}"] \arrow[dl,"\ttp"'] \arrow[dr,"\ttq"] & \\
     \Gamma & \Gamma\times A \arrow[l,"\fst"] \arrow[r,"\snd"'] & A
   \end{tikzcd}
   \]
-  $\ttp \triangleq \fst\circ\bar{a} \qquad \ttq \triangleq \snd\circ\bar{a}$
+  $\ttp \triangleq \fst\circ\overline{a} \qquad \ttq \triangleq \snd\circ\overline{a}$
 \end{frame}
 
 \begin{frame}[fragile,shrink]{$\Delta \to \Gamma.(A,a)$}
@@ -227,7 +229,7 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
 \arrow[drr, bend left, "{(\gamma,t)}"]
 \arrow[ddr, bend right]
 \arrow[dr, dotted, "{\langle\gamma,t\rangle}"] & & \\
-& \Gamma.(A,a) \arrow[dr,phantom,"{\lrcorner}",very near start] \arrow[r,tail,"{\bar{a}}"] \arrow[d]
+& \Gamma.(A,a) \arrow[dr,phantom,"{\lrcorner}",very near start] \arrow[r,tail,"{\overline{a}}"] \arrow[d]
 & \Gamma\times A \arrow[d, "a"] \\
 & 1 \arrow[r, "\top"]
 & \Omega
@@ -235,9 +237,9 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
   \end{tabular} \]
   因此我们得到一个唯一的映射 $⟨γ, t⟩ : Δ → Γ.(A, a)$, 满足 $\ttp \circ ⟨γ, t⟩ = γ$ 且 $\ttq[⟨γ, t⟩] = t$.
 
-  $\ttp\circ\langle\gamma,t\rangle = \fst\circ\bar{a}\circ\langle\gamma,t\rangle = \fst\circ(\gamma,t) = \gamma$
+  $\ttp\circ\langle\gamma,t\rangle = \fst\circ\overline{a}\circ\langle\gamma,t\rangle = \fst\circ(\gamma,t) = \gamma$
 
-  $\ttq[\langle\gamma,t\rangle] = \ttq\circ\langle\gamma,t\rangle = \snd\circ\bar{a}\circ\langle\gamma,t\rangle=\snd\circ(\gamma,t)=t$
+  $\ttq[\langle\gamma,t\rangle] = \ttq\circ\langle\gamma,t\rangle = \snd\circ\overline{a}\circ\langle\gamma,t\rangle=\snd\circ(\gamma,t)=t$
 \end{frame}
 
 \begin{frame}[fragile,shrink]{内涵子类型}
@@ -256,33 +258,33 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
   \[
   \begin{tabular}{cc}
   \begin{tikzcd}
-    \cdot \arrow[r,tail,"\bar{\varphi}"] \arrow[d] & \Gamma.(A,a) \arrow[d,"{\varphi}"] \\
+    \cdot \arrow[r,tail,"\overline{\varphi}"] \arrow[d] & \Gamma.(A,a) \arrow[d,"{\varphi}"] \\
     1 \arrow[r] & \Omega
   \end{tikzcd}
   &
   \begin{tikzcd}
-    \Gamma.(A,a) \arrow[r,tail,"\bar{a}"] \arrow[d] & \Gamma\times A \arrow[d,"a"] \\
+    \Gamma.(A,a) \arrow[r,tail,"\overline{a}"] \arrow[d] & \Gamma\times A \arrow[d,"a"] \\
     1 \arrow[r] & \Omega
   \end{tikzcd}
 \end{tabular}
 \]
-更准确地说, 我们有$\varphi:\Gamma.(A,a)\to\Omega$分类单态射$\bar{\varphi}:\cdot\rightarrowtail\Gamma.(A,a)$, $a$ 分类单态射 $\bar{a}:\Gamma.(A,a)\rightarrowtail\Gamma\times A$, 因此$\bar{a}\circ\bar{\varphi}:\cdot\rightarrowtail\Gamma\times A$. 我们取$a'=\chi_{\bar{a}\circ\bar{\varphi}}:\Gamma\times A\to\Omega$.
+更准确地说, 我们有$\varphi:\Gamma.(A,a)\to\Omega$分类单态射$\overline{\varphi}:\cdot\rightarrowtail\Gamma.(A,a)$, $a$ 分类单态射 $\overline{a}:\Gamma.(A,a)\rightarrowtail\Gamma\times A$, 因此$\overline{a}\circ\overline{\varphi}:\cdot\rightarrowtail\Gamma\times A$. 我们取$a'=\chi_{\overline{a}\circ\overline{\varphi}}:\Gamma\times A\to\Omega$.
 \end{frame}
 
 \begin{frame}[fragile,shrink]{内涵子类型引入和消除规则的合理性}
   \begin{center}
   \begin{tikzcd}
-    \Gamma.(A,a')\arrow[drr,phantom,"\lrcorner"{very near start,description}]\arrow[r,tail,"\bar{\varphi}"]\arrow[d] & \Gamma.(A,a)\arrow[r,tail,"\bar{a}"] & \Gamma\times A \arrow[d,"a'"] \\
+    \Gamma.(A,a')\arrow[drr,phantom,"\lrcorner"{very near start,description}]\arrow[r,tail,"\overline{\varphi}"]\arrow[d] & \Gamma.(A,a)\arrow[r,tail,"\overline{a}"] & \Gamma\times A \arrow[d,"a'"] \\
     1 \arrow[rr,"\top"] & & \Omega
   \end{tikzcd}
-  \quad$\stackrel{\bar{a}\text{是单态射}}{\implies}$\quad
+  \quad$\stackrel{\overline{a}\text{是单态射}}{\implies}$\quad
   \begin{tikzcd}
-    \Gamma.(A,a')\arrow[dr,phantom,"\lrcorner" very near start]\arrow[r,tail,"\bar{\varphi}"] \arrow[d] & \Gamma.(A,a) \arrow[d,"a'\circ\bar{a}"] \\
+    \Gamma.(A,a')\arrow[dr,phantom,"\lrcorner" very near start]\arrow[r,tail,"\overline{\varphi}"] \arrow[d] & \Gamma.(A,a) \arrow[d,"a'\circ\overline{a}"] \\
     1 \arrow[r,"\top"] & \Omega
   \end{tikzcd}
   \end{center}
 
-  $a'\circ\bar{a} = \varphi$
+  $a'\circ\overline{a} = \varphi$
 
     \[
   \begin{tabular}[t]{lr}
@@ -296,7 +298,7 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
 \arrow[drr, bend left, "{(id,t)}"]
 \arrow[ddr, bend right]
 \arrow[dr, dotted, "{\langle id,t\rangle}"] & & \\
-& \Gamma.(A,a) \arrow[dr,phantom,"{\lrcorner}",very near start] \arrow[r,tail,"{\bar{a}}"] \arrow[d]
+& \Gamma.(A,a) \arrow[dr,phantom,"{\lrcorner}",very near start] \arrow[r,tail,"{\overline{a}}"] \arrow[d]
 & \Gamma\times A \arrow[d, "a"] \\
 & 1 \arrow[r, "\top"]
 & \Omega
@@ -337,7 +339,47 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
   \end{tikzcd}
   \]
   \[
-  a'\circ(id,t)=a'\circ\bar{a}\circ\langle id,t\rangle=\varphi\circ\langle id,t\rangle=\top\circ1_{\Gamma}
+  a'\circ(id,t)=a'\circ\overline{a}\circ\langle id,t\rangle=\varphi\circ\langle id,t\rangle=\top\circ1_{\Gamma}
   \]
+\end{frame}
+
+\begin{frame}[fragile,shrink]{消除规则的合理性$t\in\Ter(\Gamma\vdash(A,a'))\implies t\in\Ter(\Gamma\vdash(A,a))$}
+    \[
+  \begin{tabular}[t]{lr}
+  \begin{tikzcd}
+    \Gamma \arrow[r,"{(id,t)}"] \arrow[d] & \Gamma\times A \arrow[d,"a'"] \\
+    1 \arrow[r,"\top"] & \Omega
+  \end{tikzcd}
+&
+  \begin{tikzcd}
+\Gamma
+\arrow[drr, bend left, "{(id,t)}"]
+\arrow[ddr, bend right]
+\arrow[dr, dotted, "{\langle id,t\rangle}"] & & \\
+& \Gamma.(A,a') \arrow[dr,phantom,"{\lrcorner}",very near start] \arrow[r,tail,"{\overline{a'}}"] \arrow[d]
+& \Gamma\times A \arrow[d, "a'"] \\
+& 1 \arrow[r, "\top"]
+& \Omega
+\end{tikzcd}
+  \end{tabular} \]
+  $(id,t) = \overline{a'}\circ\langle id,t\rangle = \overline{a}\circ\overline{\varphi}\circ\langle id,t\rangle$
+  \[
+  \begin{tabular}{cc}
+    \begin{tikzcd}
+    \Gamma \arrow[r,"{(id,t)}"] \arrow[d] & \Gamma\times A \arrow[d,"a"] \\
+    1 \arrow[r,"\top"] & \Omega
+  \end{tikzcd}
+  &
+  \begin{tikzcd}
+  \Gamma\arrow[r,"{\langle id,t\rangle}"] & \Gamma.(A,a')\arrow[r,"{\overline{\varphi}}"] & \Gamma.(A,a) \arrow[r] & 1
+  \end{tikzcd}
+\end{tabular}
+  \]
+  $a\circ(id,t)=a\circ\overline{a}\circ\overline{\varphi}\circ\langle id,t\rangle=\top\circ1_{\Gamma.(A,a)}\circ\overline{\varphi}\circ\langle id,t\rangle = \top\circ1_{\Gamma}$
+\end{frame}
+
+\begin{frame}{子单元素集}
+  在先前的定义中取$A=1$, 我们得到, 对于每一个$\varphi:\Omega$, 存在一个类型, 其“居留性”(即该类型是否拥有元素)对应于$\varphi$的可证明性:
+  \[ [\varphi]\triangleq \{\ul:1\mid\varphi\} \]
 \end{frame}
 \end{document}
