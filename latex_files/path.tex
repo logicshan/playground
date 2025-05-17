@@ -103,7 +103,7 @@
     \item $w(i=i')$ 就是 $w(id,i=i')$ 对$id:I\to I$
   \end{itemize}
 
-尽管上述定义适用于任何(不必然是纤维化的)类型, 但为了能确保$\Path_{A}$是纤维化的, 我们要求类型 $A$ 本身是纤维化的. 当我们把范围限制在纤维化类型的 CwF 中时, 这些路径类型就能正确地为弱内蕴相等类型建模. 例如, 给定$A\in\Ty(\Gamma)$ 和 $a\in\Ter(\Gamma\vdash A)$, $\refl_{A}(a)$ 可被定义为
+尽管上述定义适用于任何(不必然是纤维化的)类型, 但为了能确保$\Path_{A}$是纤维化的, 我们要求类型 $A$ 本身是纤维化的. 当我们把范围限制在纤维化类型的 CwF 中时, 这些路径类型就能正确地为弱内涵相等类型建模. 例如, 给定$A\in\Ty(\Gamma)$ 和 $a\in\Ter(\Gamma\vdash A)$, $\refl_{A}(a)$ 可被定义为
 \[ \refl_{A}(a)(I,\rho)\triangleq (i,a(\rho s_i))\]
 其中 $i\notin I$.
 \end{frame}
@@ -118,7 +118,7 @@
 \end{frame}
 
 \begin{frame}{定理}
-   纤维化类型构成的 CwF 支持由 $\Path_{A}$​ 给出的弱内蕴相等类型. 具体而言, 给定 $(A,\comp_{A})\in\FTy(\Gamma)$ 和 $a,b\in\Ter(\Gamma\vdash A)$, 我们可以定义一个新的复合结构 $\comp_{\Path_{A}(a,b)}$​ 使得 $(\Path_{A}(a,b),\comp_{\Path_{A}(a,b)})\in\FTy(\Gamma)$. 此外, 该类型支持所有在 CwF 中描述弱内蕴相等类型所需的结构.
+   纤维化类型构成的 CwF 支持由 $\Path_{A}$​ 给出的弱内涵相等类型. 具体而言, 给定 $(A,\comp_{A})\in\FTy(\Gamma)$ 和 $a,b\in\Ter(\Gamma\vdash A)$, 我们可以定义一个新的复合结构 $\comp_{\Path_{A}(a,b)}$​ 使得 $(\Path_{A}(a,b),\comp_{\Path_{A}(a,b)})\in\FTy(\Gamma)$. 此外, 该类型支持所有在 CwF 中描述弱内涵相等类型所需的结构.
 
    $J$-消除子是使用纤维类型的复合结构来定义的.
 \end{frame}

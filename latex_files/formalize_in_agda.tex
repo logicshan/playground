@@ -1,0 +1,123 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows.meta}
+%\tikzcdset{arrow style=tikz, diagrams={>=Stealth}}
+
+\usepackage{fontspec}
+
+\newcommand\calV{\mathcal{V}}
+\newcommand\bfC{\mathbf{C}}
+\newcommand\calE{\mathcal{E}}
+\newcommand\bbD{\mathbb{D}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\FTy{\mathtt{FTy}}
+\newcommand\comp{\mathtt{comp}}
+\newcommand\fst{\mathtt{fst}}
+\newcommand\snd{\mathtt{snd}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\Path{\mathtt{Path}}
+\newcommand\dM{\mathsf{dM}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\DM{\mathbf{DM}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
+\newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
+\newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
+\newcommand{\ul}{{\scalebox{0.4}[0.4]{\_}}}
+
+\DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
+\DeclareMathOperator\obj{obj}
+\DeclareMathOperator\y{\mathbf{y}}
+
+\usepackage{unicode-math}
+%\setmathfont{Latin Modern Math}
+%\setmathfont{XITS Math}[range=cal]
+%\setmathfont{Euler Math}[range=cal]
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\newcommand\cubicalsets{\widehat{□}}
+
+\usepackage{mathpartir}
+
+\newfontfamily{\codefont}{Unifont}
+% 设置 verbatim 默认字体
+\makeatletter
+\renewcommand{\verbatim@font}{\codefont\small}  % 替换为实际的Unifont命令
+\makeatother
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{使用 Agda 形式化}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{背景}
+  在拓扑斯的内部类型理论中工作, 而不是从外部处理拓扑斯的对象和态射, 这种方法的一个优点是它更适合机器辅助形式化. 要理解为什么, 可以考虑形式化一个从外部构建的模型会涉及什么. 首先, 我们需要定义所有的数学结构(范畴、函子等)并形式化模型构建中使用的所有相关属性. 接下来, 我们必须形式化模型本身, 使用前一步中定义的结构. 通过在内部语言中工作, 我们基本上可以去掉整个第一步. 这是因为, 我们不是在证明助手中形式化拓扑斯的概念及其内部语言, 而是简单地将证明助手当作拓扑斯的内部语言来使用.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{拓扑斯内部语言和 Agda 的区别}
+  \begin{itemize}
+  \item Agda 的相等类型是内涵性的, 而内部类型理论的相等类型是外延性的. 这意味着我们在形式化过程中需要做更多的工作. 例如, 我们可能需要在命题相等的类型之间进行显式强制转换, 而这在内部语言中是隐式的.
+  \item Agda 默认情况下不包含一个与子对象分类子 $Ω$ 对应的非直谓性命题全集.
+  \begin{verbatim}
+
+   {-# OPTIONS --type-in-type #-}
+   record Ω : Set where
+     constructor prop
+     field
+       prf : Set
+       equ : (u v : prf) → u ≡ v
+  \end{verbatim}
+  我们仅将 \verb|type-in-type| 用于 $Ω$ 的定义, 并且该定义被分离到一个单独的模块中, 而 \verb|type-in-type| 选项在该模块之外不被启用, 我们相信这种受限的使用是相容的.
+\end{itemize}
+\end{frame}
+
+\end{document}

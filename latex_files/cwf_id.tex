@@ -62,12 +62,12 @@
 \begin{frame}{背景}
 \begin{itemize}
   \item 族范畴提供了解释依赖类型论中类型和项的基本框架
-  \item 但是解释依赖和, 依赖积, 内蕴相等类型需要更多的结构
+  \item 但是解释依赖和, 依赖积, 内涵相等类型需要更多的结构
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Id}
-  $\Gamma\vdash A$, $\Gamma\vdash a:A$. CwF 支持内蕴相等类型, 如果它支持以下结构
+  $\Gamma\vdash A$, $\Gamma\vdash a:A$. CwF 支持内涵相等类型, 如果它支持以下结构
   \begin{itemize}
     \item 相等类型 \inferrule{\Gamma\vdash b:A}{\Gamma\vdash\Id_{A}(a,b)}
     \item 反身项 \inferrule{ }{\Gamma\vdash\refl_{A}(a):\Id_{A}(a,a)}
