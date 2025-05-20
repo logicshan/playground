@@ -49,10 +49,14 @@
 \newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
 \newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
 \newcommand{\ul}{{\scalebox{0.4}[0.4]{\_}}}
+\newcommand{\ax}[1]{\mathbf{ax_{#1}}}
 
 \DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
 \DeclareMathOperator\obj{obj}
 \DeclareMathOperator\y{\mathbf{y}}
+%\newcommand\cof{\mathtt{cof}}
+\newcommand\Cof{\mathtt{Cof}}
+\DeclareMathOperator\cof{\mathtt{cof}}
 
 \usepackage{unicode-math}
 %\setmathfont{Latin Modern Math}
@@ -120,4 +124,38 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile,shrink]{余纤维化}
+  考虑一类单态射 $m : A\rightarrowtail B$, 其分类态射
+  \[
+  \lambda(y:B)\to\exists(x:A). m\,x = y : B \to \Omega
+  \]
+  可以通过 $\Cof\rightarrowtail\Omega$ 进行分解. 我们称此类单态射为余纤维化.
+  \[
+  \begin{tikzcd}[row sep = tiny]
+  A \arrow[r,tail, "m"] \arrow[dd] & B \arrow[dd] \arrow[dr] & \\
+  & & \Cof \arrow[dl,tail] \\
+  1 \arrow[r,"\top"] & \Omega &
+  \end{tikzcd}
+  \]
+\end{frame}
+
+\begin{frame}[shrink]{$\ax{7}:[\forall(\varphi\:\psi:\Omega).\cof\varphi\Rightarrow(\varphi\Rightarrow\cof\psi)\Rightarrow\cof(\varphi\land\psi)]$}
+  公理 $\ax{7}$ 等价于要求余纤维化在复合运算下封闭.
+
+  \bigskip
+  首先假设$\ax{7}$成立, 并且$f:A\rightarrowtail B$和$g:B\rightarrowtail C$ 是余纤维化. 因此
+  \begin{itemize}
+    \item $\forall(b:B).\cof(\exists(a:A).f\,a=b)$
+    \item $\forall(c:C).\cof(\exists(b:B).g\,b=c)$
+  \end{itemize}
+  都成立, 并且我们希望证明$\forall(c:C).\cof(\exists(a:A).g(f\,a)=c)$. 注意到, 对于 $b:B$ 和 $c:C$
+  \begin{align*}
+    g\,b=c \quad&\stackrel{g\text{是单态射}}{\implies}\quad (\exists(a:A).g(f\,a)=c) = (\exists(a:A).f\,a=b) \\
+    &\stackrel{\phantom{g\text{是单态射}}}{\implies}\quad \cof(\exists(a:A).g(f\,a)=c) = \cof(\exists(a:A).f\,a=b) = \top
+  \end{align*}
+  因此对于$\varphi\triangleq\exists(b:B).g\,b=c$和$\psi\triangleq\exists(a:A).g(f\,a)=c$, 我们有$\cof\varphi$且$\varphi\Rightarrow\psi$. 因此根据 $\ax{7}$, 我们得到$\cof(\varphi\land\psi)$, 它等于 $\cof\psi$ 因为 $\psi\Rightarrow\varphi$. 所以我们确实有 $\forall(c:C).\cof(\exists(a:A).g(f\,a)=c)$.
+\end{frame}
+\begin{frame}[shrink]{$\ax{7}:[\forall(\varphi\:\psi:\Omega).\cof\varphi\Rightarrow(\varphi\Rightarrow\cof\psi)\Rightarrow\cof(\varphi\land\psi)]$}
+1
+\end{frame}
 \end{document}

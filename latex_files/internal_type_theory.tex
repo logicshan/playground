@@ -269,6 +269,9 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
 \end{tabular}
 \]
 更准确地说, 我们有$\varphi:\Gamma.(A,a)\to\Omega$分类单态射$\overline{\varphi}:\cdot\rightarrowtail\Gamma.(A,a)$, $a$ 分类单态射 $\overline{a}:\Gamma.(A,a)\rightarrowtail\Gamma\times A$, 因此$\overline{a}\circ\overline{\varphi}:\cdot\rightarrowtail\Gamma\times A$. 我们取$a'=\chi_{\overline{a}\circ\overline{\varphi}}:\Gamma\times A\to\Omega$.
+\[
+\Gamma\vdash\{x:A\mid\varphi(x)\} \triangleq (A,a')
+\]
 \end{frame}
 
 \begin{frame}[fragile,shrink]{内涵子类型引入和消除规则的合理性}
@@ -378,8 +381,16 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
   $a\circ(id,t)=a\circ\overline{a}\circ\overline{\varphi}\circ\langle id,t\rangle=\top\circ1_{\Gamma.(A,a)}\circ\overline{\varphi}\circ\langle id,t\rangle = \top\circ1_{\Gamma}$
 \end{frame}
 
-\begin{frame}{子单元素集}
+\begin{frame}[fragile,shrink]{子单元素集}
   在先前的定义中取$A=1$, 我们得到, 对于每一个$\varphi:\Omega$, 存在一个类型, 其“居留性”(即该类型是否拥有元素)对应于$\varphi$的可证明性:
   \[ [\varphi]\triangleq \{\ul:1\mid\varphi\} \]
+
+  如果 $φ$ 是一个全局命题(即在空上下文中定义的命题, 或者一个 $1 → Ω$ 的态射)
+  \[
+  \begin{tikzcd}
+    {[\varphi]} \arrow[r,tail] \arrow[d] & 1 \arrow[d,"\varphi"] \\
+    1 \arrow[r,"\top"] & \Omega
+  \end{tikzcd}
+  \]
 \end{frame}
 \end{document}
