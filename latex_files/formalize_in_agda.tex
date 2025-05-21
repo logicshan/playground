@@ -22,6 +22,7 @@
 \usepackage{fontspec}
 
 \newcommand\calV{\mathcal{V}}
+\newcommand\calU{\mathcal{U}}
 \newcommand\bfC{\mathbf{C}}
 \newcommand\calE{\mathcal{E}}
 \newcommand\bbD{\mathbb{D}}
@@ -50,6 +51,7 @@
 \newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
 \newcommand{\ul}{{\scalebox{0.4}[0.4]{\_}}}
 \newcommand{\ax}[1]{\mathbf{ax_{#1}}}
+\newcommand\uc{\mathtt{uc}}
 
 \DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
 \DeclareMathOperator\obj{obj}
@@ -158,4 +160,37 @@
 \begin{frame}[shrink]{$\ax{7}:[\forall(\varphi\:\psi:\Omega).\cof\varphi\Rightarrow(\varphi\Rightarrow\cof\psi)\Rightarrow\cof(\varphi\land\psi)]$}
 1
 \end{frame}
+
+
+\begin{frame}{唯一选择公理}
+  \[
+  \uc : (\varphi : A \to \Omega) \to [\exists!(a:A).\varphi\,a]\to\{a:A\mid\varphi\,a\}
+  \]
+  其中$\exists!(a:A).\varphi\,a\triangleq\exists(a:A).(\varphi\,a\land\forall(a':A).\varphi\,a'\Rightarrow a=a')$.
+\end{frame}
+
+\begin{frame}{同构}
+  给定对象$A,B:\calU$, $A$和$B$之间的一个同构是一个函数$f:A\to B$, 它有一个双边逆. 令$A\cong B$为$A$和$B$之间的同构类型, 定义为
+  \[
+  A\cong B\triangleq \{f:A\to B\mid(\exists g:B\to A)(g\circ f=id)\land(f\circ g=id)\}
+  \]
+  如果存在一个同构$f:A\cong B$, 我们就说$A$和$B$是同构的. 如果两个类型族$A,B:\Gamma\to\calU$的每一个纤维都是同构的, 我们就说它们是同构的, 并且我们不太正规地写成
+  \[
+  A\cong B \triangleq (x:\Gamma)\to A\,x\cong B\,x
+  \]
+  同构的逆是相对于内部类型理论的外延等价而言的, 这与我们稍后将介绍的等价概念形成对比, 后者只具有相对于路径等价的逆. 此外, 这些逆是唯一的, 因此, 使用唯一选择, 我们总是可以构造一个同构的逆. 因此, 给定 $f : A ≅ B$, 我们将 $f⁻¹ : B ≅ A$ 写成 $f$ 的这个逆. 
+\end{frame}
+
+\begin{frame}[shrink]{严格性公理}
+  这条公理关注解决内部语言方法的弱点.
+
+  \bigskip
+
+  任何余纤维-部分类型 $A$, 如果在 $A$ 定义的任何地方都与全类型 $B$ 同构, 则可以扩展为与 $B$ 同构的全类型 $B'$:
+  \begin{align*}
+    \ax{9} :\ &\{\varphi:\Cof\}(A:[\varphi]\to\calU)(B:\calU)(s:(u:[\varphi])\to(A\,u\cong B)) \to \\
+    &(B':\calU)\times\{s':B'\cong B\mid\forall(u:[\varphi]).\ A\,u=B'\land s\,u=s'\}
+  \end{align*}
+\end{frame}
+
 \end{document}
