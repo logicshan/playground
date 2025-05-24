@@ -15,6 +15,11 @@
 
 \usepackage{mathpartir}
 
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage{tabularx}
+
 \usepackage{tikz-cd}
 \usetikzlibrary{arrows.meta}
 %\tikzcdset{arrow style=tikz, diagrams={>=Stealth}}
@@ -30,16 +35,20 @@
 \newcommand\bbF{\mathbb{F}}
 \newcommand\JEq{\mathtt{JEq}}
 \newcommand\FTy{\mathtt{FTy}}
+\newcommand\Fill{\mathtt{Fill}}
 \newcommand\comp{\mathtt{comp}}
 \newcommand\fst{\mathtt{fst}}
 \newcommand\snd{\mathtt{snd}}
 \newcommand\Ty{\mathtt{Ty}}
+\newcommand\ttI{\mathtt{I}}
 \newcommand\Ter{\mathtt{Ter}}
 \newcommand\Path{\mathtt{Path}}
 \newcommand\dM{\mathsf{dM}}
 \newcommand\ttp{\mathtt{p}}
 \newcommand\ttq{\mathtt{q}}
 \newcommand\bfone{\mathbf{1}}
+\newcommand\ttzero{\mathtt{0}}
+\newcommand\ttone{\mathtt{1}}
 \newcommand\Set{\mathbf{Set}}
 \newcommand\DM{\mathbf{DM}}
 \newcommand\Id{\mathtt{Id}}
@@ -59,6 +68,7 @@
 %\newcommand\cof{\mathtt{cof}}
 \newcommand\Cof{\mathtt{Cof}}
 \DeclareMathOperator\cof{\mathtt{cof}}
+\DeclareMathOperator\cofibpart{\square}
 
 \usepackage{unicode-math}
 %\setmathfont{Latin Modern Math}
@@ -142,7 +152,7 @@
 \end{frame}
 
 \begin{frame}[shrink]{$\ax{7}:[\forall(\varphi\:\psi:\Omega).\cof\varphi\Rightarrow(\varphi\Rightarrow\cof\psi)\Rightarrow\cof(\varphi\land\psi)]$}
-  公理 $\ax{7}$ 等价于要求余纤维化在复合运算下封闭.
+  公理 $\ax{7}$ 等价于要求余纤维化在组合运算下封闭.
 
   \bigskip
   首先假设$\ax{7}$成立, 并且$f:A\rightarrowtail B$和$g:B\rightarrowtail C$ 是余纤维化. 因此
@@ -157,16 +167,87 @@
   \end{align*}
   因此对于$\varphi\triangleq\exists(b:B).g\,b=c$和$\psi\triangleq\exists(a:A).g(f\,a)=c$, 我们有$\cof\varphi$且$\varphi\Rightarrow\psi$. 因此根据 $\ax{7}$, 我们得到$\cof(\varphi\land\psi)$, 它等于 $\cof\psi$ 因为 $\psi\Rightarrow\varphi$. 所以我们确实有 $\forall(c:C).\cof(\exists(a:A).g(f\,a)=c)$.
 \end{frame}
-\begin{frame}[shrink]{$\ax{7}:[\forall(\varphi\:\psi:\Omega).\cof\varphi\Rightarrow(\varphi\Rightarrow\cof\psi)\Rightarrow\cof(\varphi\land\psi)]$}
-1
-\end{frame}
-
 
 \begin{frame}{唯一选择公理}
   \[
   \uc : (\varphi : A \to \Omega) \to [\exists!(a:A).\varphi\,a]\to\{a:A\mid\varphi\,a\}
   \]
   其中$\exists!(a:A).\varphi\,a\triangleq\exists(a:A).(\varphi\,a\land\forall(a':A).\varphi\,a'\Rightarrow a=a')$.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{余纤维部分元素 $\cofibpart A$}
+  我们称类型 $\Cof$ 的元素为\emph{余纤维命题}. 给定一个类型 $A:\calU$, 我们将$A$的余纤维部分元素的类型定义为:
+  \[
+  \cofibpart A \triangleq (\varphi : \Cof) \times ([\varphi]\to A)
+  \]
+  这样一个部分元素 $(\varphi,f):\cofibpart A$ 的一个扩张是一个元素 $a:A$ 并满足如下定义
+  \[
+  (\varphi,f) \nearrow a \triangleq \forall(u:[\varphi]).f\,u=a
+  \]
+\end{frame}
+
+\begin{frame}[fragile,shrink]{例}
+  将类型$\ttI$的变量看作空间中的维度名称是有帮助的, 因此在一个上下文 $i_1,\ldots,i_n : \ttI$ 中工作对应于在 $n$ 维空间中工作. 假设我们正在一个包含 $i,j,k : \ttI$ 的上下文中工作, 那么这就对应于在三维空间中工作. 我们将一个元素 $i,j,k:\ttI\vdash a:A$ 看作是空间 $A$ 中的一个立方体
+
+  \begin{tikzpicture}[scale=0.3]
+   \draw[->] (0,0,0) -- (3,0,0) node[right] {$j$};
+   \draw[->] (0,0,0) -- (0,3,0) node[above] {$i$};
+   \draw[->] (0,0,0) -- (0,0,-4.2) node[right] {$k$};
+   %\draw[thick,black]  (4,0,0) -- (4,0,-4) -- (4,4,-4) -- (4,4,0) -- cycle;
+   %\draw[thick,black](0,4,0) -- (0,4,-4) -- (4,4,-4);
+   \node at (1.5,-2,0) {$i,j,k:\mathtt{I}$};
+
+  \end{tikzpicture}
+  \qquad
+  \begin{tikzpicture}[scale=0.3]
+
+   \draw[style=dashed, color=black] (4,0,-4) -- (0,0,-4)-- (0,4,-4);
+   \draw[style=dashed, color=black] (0,0,0) -- (0,0,-4); 
+   %\draw[<->](0,-0.3,0)--(4,-0.3,0);
+   %\draw node[below] at (2,-0.3,0) {c}; 
+
+   \fill[gray!50,opacity=0.6](4,0,0) -- (0,0,0) -- (0,4,0) -- (4,4,0);
+   \fill[gray!50,opacity=0.6](4,0,0) -- (4,0,-4) -- (4,4,-4) -- (4,4,0);
+   \fill[gray!50,opacity=0.6](0,4,0) -- (0,4,-4) -- (4,4,-4) -- (4,4,0);
+
+   \draw[black] (4,0,0) -- (0,0,0) -- (0,4,0) -- (4,4,0);
+   \draw[black]  (4,0,0) -- (4,0,-4) -- (4,4,-4) -- (4,4,0) -- cycle;
+   \draw[black](0,4,0) -- (0,4,-4) -- (4,4,-4);
+
+   \node at (2.2,-2,0) {$a:A$};
+  \end{tikzpicture}
+
+  令 $\varphi\triangleq(i=\ttzero)\lor(j=\ttzero)\lor(j=\ttone\land k=\ttone)$, 那么 $i,j,k:\ttI\vdash\varphi : \Cof$. 我们将 $\varphi$ 看作指定了立方体的某些面和边, 在本例中是底面$(i=\ttzero)$, 左面$(j=\ttzero)$以及右前棱$(j=\ttone\land k=\ttone)$. 那么, 一个余纤维部分元素 $f : [\varphi] \to A$ 可以被看作是一个部分立方体, 仅在由 $\varphi$ 指定的区域上有定义.
+
+\begin{tikzpicture}[scale=0.3]
+\coordinate (A) at (0,4,-4);
+\coordinate (B) at (4,4,-4);
+\coordinate (C) at (4,4,0);
+\coordinate (D) at (0,4,0);
+\coordinate (E) at (0,0,-4);
+\coordinate (F) at (4,0,-4);
+\coordinate (G) at (4,0,0);
+\coordinate (H) at (0,0,0);
+  \draw[black] (E) -- (F) -- (G) -- (H);
+  \draw[black] (H) -- (D) -- (A) -- (E);
+  \draw[black] (B) -- (F);
+
+   %\draw[style=dashed, color=black] (0,0,0) -- (0,0,-4); 
+   %\draw[<->](0,-0.3,0)--(4,-0.3,0);
+   %\draw node[below] at (2,-0.3,0) {c}; 
+
+
+   %\fill[blue!40!white,opacity=0.6](0,0,0) -- (4,0,0) -- (4,0,-4) -- (0,0,-4);
+   \fill[gray!50,opacity=0.6](0,0,0) -- (4,0,0) -- (4,0,-4) -- (0,0,-4);
+   \fill[gray!50,opacity=0.6](0,0,0) -- (0,4,0) -- (0,4,-4) -- (0,0,-4);
+   %\draw[style=dashed, color=black] (A) -- (B) -- (C) -- (D);
+   %\draw[style=dashed, color=black] (C) -- (G);
+
+   \draw[->] (0,0,0) -- (5,0,0) node[right] {$j$};
+   \draw[->] (0,0,0) -- (0,5,0) node[above] {$i$};
+   \draw[->] (0,0,0) -- (0,0,-6.2) node[right] {$k$};
+   \node at (2.2,-2,0) {$f:[\varphi]\to A$};
+   \end{tikzpicture}
 \end{frame}
 
 \begin{frame}{同构}
@@ -178,7 +259,7 @@
   \[
   A\cong B \triangleq (x:\Gamma)\to A\,x\cong B\,x
   \]
-  同构的逆是相对于内部类型理论的外延等价而言的, 这与我们稍后将介绍的等价概念形成对比, 后者只具有相对于路径等价的逆. 此外, 这些逆是唯一的, 因此, 使用唯一选择, 我们总是可以构造一个同构的逆. 因此, 给定 $f : A ≅ B$, 我们将 $f⁻¹ : B ≅ A$ 写成 $f$ 的这个逆. 
+  同构的逆是相对于内部类型理论的外延等价而言的, 这与我们稍后将介绍的等价概念形成对比, 后者只具有相对于路径等价的逆. 此外, 这些逆是唯一的, 因此, 使用唯一选择, 我们总是可以构造一个同构的逆. 因此, 给定 $f : A ≅ B$, 我们将 $f⁻¹ : B ≅ A$ 写成 $f$ 的这个逆.
 \end{frame}
 
 \begin{frame}[shrink]{严格性公理}
@@ -191,6 +272,172 @@
     \ax{9} :\ &\{\varphi:\Cof\}(A:[\varphi]\to\calU)(B:\calU)(s:(u:[\varphi])\to(A\,u\cong B)) \to \\
     &(B':\calU)\times\{s':B'\cong B\mid\forall(u:[\varphi]).\ A\,u=B'\land s\,u=s'\}
   \end{align*}
+\end{frame}
+
+\begin{frame}[fragile]{$\mathtt{I}$}
+\begin{verbatim}
+postulate
+  Int   : Set
+  O     : Int
+  I     : Int
+  O≠I   : O ≡ I → ∅
+  min   : Int → Int → Int
+  max   : Int → Int → Int
+  cntd  : (P : Int → Ω) → ((i : Int) → prf(P i or ¬(P i))) → P O ≡ P I
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{$\cof:\Omega\to\Omega$}
+  \begin{verbatim}
+postulate
+  cof   : Ω → Ω
+  cofO  : (i : Int) → prf (cof (i ≈ O))
+  cofI  : (i : Int) → prf (cof (i ≈ I))
+  cofor : (P Q : Ω) → prf (cof P ⊃ cof Q ⊃ cof(P or Q))
+  cof&  : (P Q : Ω) → prf (cof P ⊃ (P ⊃ cof Q) ⊃ cof(P & Q))
+  cof∀  : (P : Int → Ω) → prf ((All i ∈ Int , cof (P i)) ⊃ cof (All i ∈ Int , P i))
+
+Cof : Set
+Cof = ⟦ P ∈ Ω ∣ cof P ⟧
+
+[_] : Cof → Set
+[ φ ] = prf (fst φ)
+
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{verbatim}
+----------------------------------------------------------------------
+-- Cofibrant-partial function classifier
+----------------------------------------------------------------------
+□ : Set → Set
+□ A = Σ φ ∈ Cof , ([ φ ] → A)
+
+_↗_ : {A : Set} → □ A → A → Ω
+(φ , f) ↗ x = All u ∈ [ φ ] , f u ≈ x
+
+
+----------------------------------------------------------------------
+-- Restricting a context by a cofibrant propositions
+----------------------------------------------------------------------
+res : ∀{a}(Γ : Set a)(Φ : Γ → Cof) → Set a
+res Γ Φ = Σ x ∈ Γ , [ Φ x ]
+
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{组合与填充结构}
+  给定一个区间索引的类型族 $A : \ttI\to\calU$, 我们把依赖函数类型 $\Pi_{\ttI}A\triangleq(i:\ttI)\to A\,i$ 的元素看作是依赖类型的路径. 我们将类型$\cofibpart(\Pi_{\ttI}A)$的元素称为\emph{余纤维-部分路径}. 给定$(\varphi,f) : \cofibpart(\Pi_{\ttI}A)$, 我们可以在区间的某个点$i:\ttI$处对其求值, 以得到一个余纤维部分元素$(\varphi,f)\,@\,i : \cofibpart(A\,i)$:
+  \[
+  (\varphi,f)\,@\,i \triangleq (\varphi,\lambda(u:[\varphi])\to f\,u\,i)
+  \]
+  在$A : \ttI\to\calU$中一个\emph{从$\mathtt{0}$填充}的操作, 会取任意$(\varphi,f):\cofibpart(\Pi_{\ttI}A)$和任意$a_{\mathtt{0}}:A\,\mathtt{0}$ (其中$(\varphi,f)\,@\,\mathtt{0} \nearrow a_{\mathtt{0}}$), 并将 $(\varphi,f)$ 扩展为一个依赖类型的路径 $g:\Pi_{\ttI}A$, 且满足$g\,\mathtt{0} = a_{\mathtt{0}}$.
+
+  由于我们没有假设区间上存在用于反转路径的任何结构, 我们还需要考虑从 $\ttone$ 填充的对称概念. 令
+  \[
+  \{\ttzero,\ttone\}\triangleq\{i:\ttI\mid i=0\lor i=1\}
+  \]
+  存在一个函数
+  \[
+  \overline{\phantom{\ttzero}} : \{ \ttzero, \ttone \} \to \{ \ttzero, \ttone \}
+  \]
+  满足 $\overline{\ttzero} = \ttone$ 和 $\overline{\ttone} = \ttzero$.
+
+  在下文中, 我们将不使用路径反转, 而是用 $e:\{\ttzero,\ttone\}$ 来参数化定义, 并使用$\overline{\phantom{\ttzero}}$ 来交换$\ttzero$和$\ttone$.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{填充结构}
+  给定 $e : \{\ttzero,\ttone\}$, 一个$\ttI$-索引的类型族$A:\ttI\to\calU$的填充结构的类型 $\Fill\,e\,A : \calU$ 定义为:
+  \begin{align*}
+    \Fill\,e\,A\triangleq &(\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}A)(a:\{a':A\,e\mid(\varphi,f)\,@\,e\nearrow a'\})\to \\
+    &\{g:\Pi_{\ttI}A\mid(\varphi,f)\nearrow g\land g\,e=a\}
+  \end{align*}
+  为了直观理解为什么这样的操作被称为填充, 我们考虑下面的例子. 为简单起见, 假设 $A : \ttI \to \calU$ 是一个常量族 $A\triangleq\lambda(\ul:\ttI)\to A'$. 我们将类型 $\ttI$ 的变量看作空间中的维度, 因此, 给定一个在环境上下文 $j,k:\ttI$ 中的元素 $a:A$, 我们将其看作空间 $A$ 中的一个正方形. 我们感兴趣的是将这个二维正方形扩展为一个三维立方体. 让我们假设我们已经知道如何在立方体的某些面和边上扩展 $a$, 例如, 在由 $\varphi \triangleq (j=0) \lor (j=1\land k=1)$ 指定的面/边上. 这意味着我们有一个余纤维部分路径 $f:[\varphi]\to\Pi_{\ttI}A$, 它在它们共同定义的地方与$a$一致, 即$(\varphi,f)\,@\,\ttzero\nearrow a$. 这个数据的一个填充是一个立方体 $g : \Pi_{\ttI}A$, 它与我们开始的面/边一致. 也就是说, 它扩展了 $f$ 并且在立方体的底部与 $a$ 一致: $(\varphi,f)\nearrow g$ 并且 $g\,\ttzero = a$.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{}
+    \begin{tikzpicture}[scale=0.3]
+   \draw[->] (0,0,0) -- (3,0,0) node[right] {$j$};
+   \draw[->] (0,0,0) -- (0,3,0) node[above] {$i$};
+   \draw[->] (0,0,0) -- (0,0,-4.2) node[right] {$k$};
+   %\draw[thick,black]  (4,0,0) -- (4,0,-4) -- (4,4,-4) -- (4,4,0) -- cycle;
+   %\draw[thick,black](0,4,0) -- (0,4,-4) -- (4,4,-4);
+   \node at (1.5,-2,0) {$i,j,k:\mathtt{I}$};
+  \end{tikzpicture}
+  \qquad
+\begin{tikzpicture}[scale=0.3]
+\coordinate (A) at (0,4,-4);
+\coordinate (B) at (4,4,-4);
+\coordinate (C) at (4,4,0);
+\coordinate (D) at (0,4,0);
+\coordinate (E) at (0,0,-4);
+\coordinate (F) at (4,0,-4);
+\coordinate (G) at (4,0,0);
+\coordinate (H) at (0,0,0);
+  %\draw[thick,black] (E) -- (F) -- (G) -- (H) -- cycle;
+  %\draw[thick,black] (A) -- (D) -- (H) -- (E) -- cycle;
+  %\draw[thick,black] (B) -- (F);
+  \draw[style=dashed, color=black] (A) -- (B) -- (C) -- (D) -- cycle;
+  \draw[color=black] (E) -- (F) -- (G) -- (H) -- cycle;
+   \draw[style=dashed, color=black] (C) -- (G);
+   \draw[style=dashed, color=black] (A) -- (E);
+   \draw[style=dashed, color=black] (B) -- (F);
+   \draw[style=dashed, color=black] (D) -- (H);
+   %\draw[style=dashed, color=black] (0,0,0) -- (0,0,-4); 
+   %\draw[<->](0,-0.3,0)--(4,-0.3,0);
+   %\draw node[below] at (2,-0.3,0) {c}; 
+
+
+   %\fill[blue!40!white,opacity=0.6](0,0,0) -- (4,0,0) -- (4,0,-4) -- (0,0,-4);
+   \fill[gray!50,opacity=0.6](E) -- (F) -- (G) -- (H);
+   %\fill[gray!50,opacity=0.6](0,0,0) -- (0,4,0) -- (0,4,-4) -- (0,0,-4);
+
+   \node at (2.2,-2,0) {$a : A$};
+   \end{tikzpicture}
+   \qquad
+   \begin{tikzpicture}[scale=0.3]
+\coordinate (A) at (0,4,-4);
+\coordinate (B) at (4,4,-4);
+\coordinate (C) at (4,4,0);
+\coordinate (D) at (0,4,0);
+\coordinate (E) at (0,0,-4);
+\coordinate (F) at (4,0,-4);
+\coordinate (G) at (4,0,0);
+\coordinate (H) at (0,0,0);
+
+  \draw[style=dashed, color=black] (A) -- (B) -- (C) -- (D);
+  \draw[style=dashed, color=black] (E) -- (F) -- (G) -- (H);
+
+   \draw[style=dashed, color=black] (C) -- (G);
+   \draw[color=black] (A) -- (E);
+   \draw[color=black] (B) -- (F);
+   \draw[color=black] (D) -- (H);
+   \draw[color=black] (D) -- (A);
+   \draw[color=black] (H) -- (E);
+
+   \fill[gray!50,opacity=0.6](A) -- (E) -- (H) -- (D);
+
+   \node at (2.2,-2,0) {$f:[\varphi]\to\Pi_{\ttI}A$};
+   \end{tikzpicture}
+   \qquad
+  \begin{tikzpicture}[scale=0.3]
+
+   \draw[style=dashed, color=black] (4,0,-4) -- (0,0,-4)-- (0,4,-4);
+   \draw[style=dashed, color=black] (0,0,0) -- (0,0,-4); 
+   %\draw[<->](0,-0.3,0)--(4,-0.3,0);
+   %\draw node[below] at (2,-0.3,0) {c}; 
+
+   \fill[gray!50,opacity=0.6](4,0,0) -- (0,0,0) -- (0,4,0) -- (4,4,0);
+   \fill[gray!50,opacity=0.6](4,0,0) -- (4,0,-4) -- (4,4,-4) -- (4,4,0);
+   \fill[gray!50,opacity=0.6](0,4,0) -- (0,4,-4) -- (4,4,-4) -- (4,4,0);
+
+  \draw[black] (4,0,0) -- (0,0,0) -- (0,4,0) -- (4,4,0);
+   \draw[black]  (4,0,0) -- (4,0,-4) -- (4,4,-4) -- (4,4,0) -- cycle;
+   \draw[black](0,4,0) -- (0,4,-4) -- (4,4,-4);
+
+   \node at (2.2,-2,0) {$g:\Pi_{\ttI}A$};
+  \end{tikzpicture}
 \end{frame}
 
 \end{document}

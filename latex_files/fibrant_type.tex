@@ -82,7 +82,7 @@
 \end{frame}
 
 \begin{frame}{背景}
-我们知道每一个预层范畴都给出一个 CwF. 立方集范畴$\cubicalsets$给出了内涵类型论(包含通常的类型构造, 包括内涵相等类型)的一个模型. 但是相等类型在这个 CwF 中的标准解释和把相等类型解释为从区间$\bbI$的映出并不重合. 而且, 立方类型论中的复合操作并不能在标准的 CwF 中得到解释. 为了解决这些问题, 我们从标准的 CwF 出发, 构造一个新的 CwF, 它和原来的 CwF 有相同的上下文和项, 但是只包括具有足够结构来解释复合操作的类型. 我们把这些类型称作是“纤维化的”, 并且在这个新的 CwF 中, 把上下文$\Gamma$下的所有这样的类型记为$\FTy(\Gamma)$.
+我们知道每一个预层范畴都给出一个 CwF. 立方集范畴$\cubicalsets$给出了内涵类型论(包含通常的类型构造, 包括内涵相等类型)的一个模型. 但是相等类型在这个 CwF 中的标准解释和把相等类型解释为从区间$\bbI$的映出并不重合. 而且, 立方类型论中的组合操作并不能在标准的 CwF 中得到解释. 为了解决这些问题, 我们从标准的 CwF 出发, 构造一个新的 CwF, 它和原来的 CwF 有相同的上下文和项, 但是只包括具有足够结构来解释组合操作的类型. 我们把这些类型称作是“纤维化的”, 并且在这个新的 CwF 中, 把上下文$\Gamma$下的所有这样的类型记为$\FTy(\Gamma)$.
 \end{frame}
 
 \begin{frame}[shrink]{部分元素}
@@ -118,8 +118,8 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{复合结构}
-  $A\in\Ty(\Gamma)$ 的一个复合结构是一个操作 $\comp$: 对$I\in\square$, $i\notin I$, $\rho\in\Gamma(I,i)$, $\varphi\in\bbF(I)$, $u$ 是 $A(\rho)$ 的一个范围为$\varphi$的部分元素, 如果$a_0\in A(\rho(i0))$, 那么对任何$f:J\to I$, 如果它满足$\bbF(f)(\varphi)=1_{\bbF}$, 那么$A(f)(a_0)=u_{(i0)\circ f}$, 则我们有
+\begin{frame}{组合结构}
+  $A\in\Ty(\Gamma)$ 的一个组合结构是一个操作 $\comp$: 对$I\in\square$, $i\notin I$, $\rho\in\Gamma(I,i)$, $\varphi\in\bbF(I)$, $u$ 是 $A(\rho)$ 的一个范围为$\varphi$的部分元素, 如果$a_0\in A(\rho(i0))$, 那么对任何$f:J\to I$, 如果它满足$\bbF(f)(\varphi)=1_{\bbF}$, 那么$A(f)(a_0)=u_{(i0)\circ f}$, 则我们有
   \[
   \comp(I,i,\rho,\varphi,u,a_0) \in A(\rho(i1))
   \]
@@ -133,7 +133,7 @@
   其中态射 $(f,i=j):J,j\to I,i$ 把 $i$ 映为 $j$, 其余部分作用和 $f$ 相同, $u(f,i=j)$ 是一个部分元素, 定义为 $u(f,i=j)_{g}\triangleq u_{(f\circ s_j\circ g,i=j)}$.
 \end{frame}
 
-\begin{frame}[shrink]{复合结构定义分析}
+\begin{frame}[shrink]{组合结构定义分析}
   \begin{itemize}
     \item $(i0),(i1) : I\to I,i$\qquad $f:J \to I$
     \item $\rho(i0)\triangleq\Gamma(i0)(\rho) : \Gamma(I)$, $a_0\in A(\rho(i0))\triangleq A(I,\rho(i0))$
@@ -152,13 +152,13 @@
  纤维类型 $(A,\comp_{A})\in\FTy(\Gamma)$ 由以下部分构成
  \begin{itemize}
   \item $A\in\Ty(\Gamma)$
-  \item $\comp_A$ 是 $A$ 上的一个复合结构
+  \item $\comp_A$ 是 $A$ 上的一个组合结构
  \end{itemize}
 \pause
- 定理: 把从立方集得到的标准 CwF 中的$\Ty$替换为$\FTy$, 我们得到一个新的 CwF, 它支持依赖和, 依赖积, 自然数. 更进一步, 这个新的 CwF 还可以解释立方类型论中的复合操作.
+ 定理: 把从立方集得到的标准 CwF 中的$\Ty$替换为$\FTy$, 我们得到一个新的 CwF, 它支持依赖和, 依赖积, 自然数. 更进一步, 这个新的 CwF 还可以解释立方类型论中的组合操作.
 \pause
 
- (这个定理的证明依赖于复合结构可以重新索引, 也就是说, 对 $(A,\comp_A)\in\FTy(\Gamma)$, $\gamma:\Delta\to\Gamma$, 我们可以得到 $A[\gamma]$ 上的一个复合结构$\comp_{A}[\gamma]$, 因此$(A[\gamma],\comp_{A}[\gamma])\in\FTy(\Delta)$)
+ (这个定理的证明依赖于组合结构可以重新索引, 也就是说, 对 $(A,\comp_A)\in\FTy(\Gamma)$, $\gamma:\Delta\to\Gamma$, 我们可以得到 $A[\gamma]$ 上的一个组合结构$\comp_{A}[\gamma]$, 因此$(A[\gamma],\comp_{A}[\gamma])\in\FTy(\Delta)$)
 \end{frame}
 
 \end{document}
