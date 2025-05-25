@@ -36,7 +36,9 @@
 \newcommand\JEq{\mathtt{JEq}}
 \newcommand\FTy{\mathtt{FTy}}
 \newcommand\Fill{\mathtt{Fill}}
+\newcommand\isFib{\mathtt{isFib}}
 \newcommand\comp{\mathtt{comp}}
+\newcommand\Comp{\mathtt{Comp}}
 \newcommand\fst{\mathtt{fst}}
 \newcommand\snd{\mathtt{snd}}
 \newcommand\Ty{\mathtt{Ty}}
@@ -69,6 +71,7 @@
 \newcommand\Cof{\mathtt{Cof}}
 \DeclareMathOperator\cof{\mathtt{cof}}
 \DeclareMathOperator\cofibpart{\square}
+\DeclareMathOperator\Fib{\mathtt{Fib}}
 
 \usepackage{unicode-math}
 %\setmathfont{Latin Modern Math}
@@ -80,6 +83,8 @@
 \newcommand\cubicalsets{\widehat{□}}
 
 \usepackage{mathpartir}
+
+\usepackage{framed}
 
 \newfontfamily{\codefont}{Unifont}
 % 设置 verbatim 默认字体
@@ -440,4 +445,46 @@ res Γ Φ = Σ x ∈ Γ , [ Φ x ]
   \end{tikzpicture}
 \end{frame}
 
+\begin{frame}[fragile,shrink]{CCHM纤维化}
+  一个在类型$\Gamma:\calU$上的\emph{CCHM纤维化}$(A,\alpha)$是一个类型族$A:\Gamma\to\calU$, 它配备了一个纤维化结构$\alpha:\isFib\,A$, 其中$\isFib :\{\Gamma:\calU\}(A:\Gamma\to\calU)\to\calU$定义为
+  \[
+  \isFib\,\{\Gamma\} A \triangleq (e:\{\ttzero,\ttone\})(p:\ttI\to\Gamma)\to\Comp\,e\,(A\circ p)
+  \]
+  这里$\Comp : (e:\{\ttzero,\ttone\})(A:\ttI\to\calU)\to\calU$是$\ttI$-索引族的组合结构的类型
+  \begin{align*}
+    \Comp\,e\,A \triangleq &(\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}A)\to \\
+    &\{a_{0}:A\,e\mid(\varphi,f)\,@\,e\nearrow a_{0}\}\to\{a_{1}:A\,\overline{e}\mid(\varphi,f)\,@\,\overline{e}\nearrow a_{1}\}
+  \end{align*}
+\end{frame}
+
+\begin{frame}[shrink]
+    \begin{center}
+  \includegraphics[scale=0.5]{cchm_fib}
+  \end{center}
+  \begin{center}
+    \includegraphics[scale=0.5]{cchm_fib2}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+  令 $\Fib\Gamma$ 为对象$\Gamma$上的 CCHM 纤维化的类型, 定义为
+  \[
+  \Fib\Gamma\triangleq(A:\Gamma\to\calU)\times\isFib\,A
+  \]
+  CCHM 纤维化在重索引下是封闭的: 给定$\gamma:\Delta\to\Gamma$ 和 $A:\Gamma\to\calU$, 我们得到一个函数$\_[\gamma]:\isFib\,A\to\isFib(A\circ\gamma)$, 定义为$\alpha[\gamma]\,e\,p\triangleq\alpha\,e\,(\gamma\circ p)$.
+\begin{framed}
+  $\alpha:\isFib\,A\triangleq(e:\{\ttzero,\ttone\})(p:\ttI\to\Gamma)\to\Comp\,e\,(A\circ p)$
+  
+  $\alpha[\gamma]:\isFib(A\circ\gamma)\triangleq((e:\{\ttzero,\ttone\})(p:\ttI\to\Delta)\to\Comp\,e\,(A\circ\gamma\circ p)$
+\end{framed}
+因此我们得到一个函数$\_[\_]:(\Delta\to\Gamma)\to\Fib\Gamma\to\Fib\Delta$, 定义为
+\[
+(A,\alpha)[\gamma]\triangleq(A\circ\gamma,\alpha[\gamma])
+\]
+它是函子性的: $(A,\alpha)[id]=(A,\alpha)$ 且 $(A,\alpha)[g\circ f]=(A,\alpha)[g][f]$.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{纤维对象}
+  我们称$A:\calU$是一个纤维对象, 如果我们有一个关于常数族$\lambda(\ul:1)\to A$ 在终对象 $1$ 上的纤维化结构. 注意: 如果$(A,\alpha):\Fib\Gamma$是一个纤维化, 那么对于每个$x:\Gamma$, 类型$A\,x:\calU$是纤维的, 其纤维化结构由通过映射$\lambda(\ul:1)\to x:1\to\Gamma$对$\alpha$进行重索引得到. 然而, 反过来不成立: 拥有一个纤维化结构的族, 即$(x:\Gamma)\to\isFib(\lambda(\ul:1)\to A\,x)$ 的一个元素, 要弱于拥有一个对于 $A:\Gamma\to\calU$的纤维化结构.
+\end{frame}
 \end{document}
