@@ -36,6 +36,7 @@
 \newcommand\JEq{\mathtt{JEq}}
 \newcommand\FTy{\mathtt{FTy}}
 \newcommand\Fill{\mathtt{Fill}}
+\newcommand\ttfill{\mathtt{fill}}
 \newcommand\isFib{\mathtt{isFib}}
 \newcommand\comp{\mathtt{comp}}
 \newcommand\Comp{\mathtt{Comp}}
@@ -311,7 +312,7 @@ Cof = ⟦ P ∈ Ω ∣ cof P ⟧
   \end{verbatim}
 \end{frame}
 
-\begin{frame}[fragile]{}
+\begin{frame}[fragile,shrink]{}
 \begin{verbatim}
 ----------------------------------------------------------------------
 -- Cofibrant-partial function classifier
@@ -322,6 +323,23 @@ Cof = ⟦ P ∈ Ω ∣ cof P ⟧
 _↗_ : {A : Set} → □ A → A → Ω
 (φ , f) ↗ x = All u ∈ [ φ ] , f u ≈ x
 
+----------------------------------------------------------------------
+-- Dependently typed paths
+----------------------------------------------------------------------
+Π : (Int → Set) → Set
+Π A = (i : Int) → A i
+
+Π′ :
+  {A B : Int → Set}
+  → ---------------------------------
+  ((i : Int) → A i → B i) → Π A → Π B
+Π′ F p i = F i (p i)
+
+_∙_ :
+  {A : Int → Set}
+  → -------------------------
+  □(Π A) → (i : Int) → □(A i)
+(φ , f) ∙ i = (φ , λ u → f u i)
 
 ----------------------------------------------------------------------
 -- Restricting a context by a cofibrant propositions
@@ -486,5 +504,118 @@ res Γ Φ = Σ x ∈ Γ , [ Φ x ]
 
 \begin{frame}[fragile,shrink]{纤维对象}
   我们称$A:\calU$是一个纤维对象, 如果我们有一个关于常数族$\lambda(\ul:1)\to A$ 在终对象 $1$ 上的纤维化结构. 注意: 如果$(A,\alpha):\Fib\Gamma$是一个纤维化, 那么对于每个$x:\Gamma$, 类型$A\,x:\calU$是纤维的, 其纤维化结构由通过映射$\lambda(\ul:1)\to x:1\to\Gamma$对$\alpha$进行重索引得到. 然而, 反过来不成立: 拥有一个纤维化结构的族, 即$(x:\Gamma)\to\isFib(\lambda(\ul:1)\to A\,x)$ 的一个元素, 要弱于拥有一个对于 $A:\Gamma\to\calU$的纤维化结构.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{组合结构和填充结构的关系}
+  如果$\alpha:\Fill\,e\,A$, 那么$\lambda\varphi\,f\,a\to\alpha\,\varphi\,f\,a\,\overline{e}:\Comp\,e\,A$, 因此每个填充结构都会产生一个组合结构. 反过来, 一个 CCHM 纤维化的组合结构也会产生填充结构: 给定 $\Gamma:\calU$, $A:\Gamma\to\calU$, $e:\{\ttzero,\ttone\}$, $\alpha:\isFib\,A$ 以及 $p:\ttI\to\Gamma$, 存在一个填充结构 $\ttfill\,e\,\alpha\,p:\Fill\,e\,(A\circ p)$, 它在$\overline{e}$处与$\alpha$一致, 即:
+  \begin{align*}
+    \forall(\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}A)&(a:A\,(p\,e)). \\
+    &(\varphi,f)\,@\,e\nearrow a \Rightarrow \ttfill\,e\,\alpha\,p\,\varphi\,f\,a\,\overline{e} = \alpha\,e\,p\,\varphi\,f\,a
+  \end{align*}
+  此外, $\ttfill$ 在重索引下是稳定的, 即对于所有的 $\gamma:\Delta\to\Gamma$ 和 $p:\ttI\to\Delta$
+  \[
+  \ttfill\,e\,\alpha\,(\gamma\circ p) = \ttfill\,e\,(\varphi[\gamma])\,p
+  \]
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+\begin{verbatim}
+----------------------------------------------------------------------
+-- Path composition structure
+----------------------------------------------------------------------
+Comp : OI → (Int → Set) → Set
+Comp e A = (φ : Cof)(f : [ φ ] → Π A) →
+  ⟦ x₁ ∈ (A ⟨ e ⟩) ∣ (φ , f) ∙ ⟨ e ⟩ ↗ x₁ ⟧ →
+  ⟦ x₀ ∈ (A ⟨ ! e ⟩) ∣ (φ , f) ∙ ⟨ ! e ⟩ ↗ x₀ ⟧
+
+----------------------------------------------------------------------
+-- Fibrations
+----------------------------------------------------------------------
+isFib : ∀{a}{Γ : Set a}(A : Γ → Set) → Set a
+isFib {Γ = Γ} A = (e : OI)(p : Int → Γ) → Comp e (A ∘ p)
+
+Fib : ∀{a}(Γ : Set a) → Set (lsuc lzero ⊔ a)
+Fib {a} Γ = Σ (Γ → Set) isFib
+
+----------------------------------------------------------------------
+-- Fibrations can be reindexed
+----------------------------------------------------------------------
+reindex : ∀{a a'}{Δ : Set a}{Γ : Set a'}(A : Γ → Set)(α : isFib A)(ρ : Δ → Γ) → isFib (A ∘ ρ)
+reindex A α ρ e p = α e (ρ ∘ p)
+
+reindex' : ∀{a a'}{Δ : Set a}{Γ : Set a'}(Aα : Fib Γ)(ρ : Δ → Γ) → Fib Δ
+reindex' (A , α) ρ = (A ∘ ρ , reindex A α ρ)
+
+----------------------------------------------------------------------
+-- Reindexing is functorial
+----------------------------------------------------------------------
+reindexAlongId : ∀{a}{Γ : Set a}{A : Γ → Set}{α : isFib A} → α ≡ reindex A α id 
+reindexAlongId = refl
+
+reindexComp :
+  ∀{a b c}{Γ₁ : Set a}{Γ₂ : Set b}{Γ₃ : Set c}{A : Γ₃ → Set}{α : isFib A}
+  (f : Γ₁ → Γ₂)(g : Γ₂ → Γ₃)
+  → ----------------------
+  reindex A α (g ∘ f) ≡ reindex (A ∘ g) (reindex A α g) f
+reindexComp g f = refl
+
+reindexAlongId' : ∀{a}{Γ : Set a}{A : Fib Γ} → reindex' A id ≡ A
+reindexAlongId' = refl
+
+abstract
+ reindexComp' :
+  ∀{a b c}{Γ₁ : Set a}{Γ₂ : Set b}{Γ₃ : Set c}
+  {A : Fib Γ₃}
+  (f : Γ₁ → Γ₂)(g : Γ₂ → Γ₃)
+  → ----------------------
+  reindex' A (g ∘ f) ≡ reindex' (reindex' A g) f
+ reindexComp' g f = refl
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+\begin{verbatim}
+----------------------------------------------------------------------
+-- Path filling structure
+----------------------------------------------------------------------
+Fill : OI → (Int → Set) → Set
+Fill e A =
+  (φ : Cof)
+  (f : [ φ ] → Π A)
+  (a : A ⟨ e ⟩)
+  (_ : prf ((φ , f) ∙ ⟨ e ⟩ ↗ a))
+  → --------------------------------------
+  ⟦ p ∈ Π A ∣ ((φ , f ) ↗ p) & (p ⟨ e ⟩ ≈ a) ⟧
+
+----------------------------------------------------------------------
+-- Compatible partial functions
+----------------------------------------------------------------------
+_⌣_ : {A : Set} → □ A → □ A → Ω
+(φ , f) ⌣ (ψ , g) = All u ∈ [ φ ] , All v ∈ [ ψ ] , f u ≈ g v
+
+_∪_ :
+  {A : Set}
+  {φ ψ : Cof}
+  (f : [ φ ] → A)
+  (g : [ ψ ] → A)
+  {p : prf((φ , f) ⌣ (ψ , g))}
+  → ---------------------------
+  [ φ ∨ ψ ] → A
+_∪_ {A} {φ} {ψ} f g {p} w = ∥∥-elim h q w where
+
+  h : [ φ ] ⊎ [ ψ ] → A
+  h (inl u) = f u
+  h (inr v) = g v
+
+  q : (z z' : [ φ ] ⊎ [ ψ ]) → h z ≡ h z'
+  q (inl _) (inl _) = cong f (eq (fst φ))
+  q (inl u) (inr v) = p u v
+  q (inr v) (inl u) = symm (p u v)
+  q (inr _) (inr _) = cong g (eq (fst ψ))
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{纤维化的性质}
+  给定一个类型族$A:\Gamma\to\calU$和一个纤维化$(B,\beta):\Fib\Gamma$, 使得$A\cong B$, 那么我们可以构造 $\alpha$ 使得 $(A,\alpha):\Fib\Gamma$.
 \end{frame}
 \end{document}
