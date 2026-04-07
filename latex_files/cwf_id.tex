@@ -14,6 +14,13 @@
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 
 \usepackage{mathpartir}
+\usepackage{amssymb}  % 提供 \rightsquigarrow
+\usepackage{graphicx} % 提供 \reflectbox
+
+% 定义一个新的 \leftsquigarrow 命令
+\newcommand{\leftsquigarrow}{%
+  \mathrel{\reflectbox{$\rightsquigarrow$}}%
+}
 
 \newcommand\JEq{\mathtt{JEq}}
 \newcommand\Ty{\mathtt{Ty}}
@@ -35,7 +42,7 @@
 %    TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title{族范畴中的相等类型}
+\title{族范畴(CwF)中的相等类型}
 %\subtitle{Subtitle}
 
 %\author{Pin-Yen Huang}
@@ -107,7 +114,7 @@
     =\Id_{A[\ttp][\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp]}(a[\ttp][\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp],\ttq[\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp])\\\\
     =\Id_{A[\gamma\circ\ttp\circ\ttp]}(a[\gamma\circ\ttp\circ\ttp],\ttq[\langle\gamma\circ\ttp\circ\ttp,\ttq[\ttp]\rangle)\\\\
     =\Id_{A[\gamma\circ\ttp][\ttp]}(a[\gamma\circ\ttp][\ttp],\ttq[\ttp])\\\\
-    =\Id_{A[\gamma\circ\ttp]}(a[\gamma\circ\ttp],\ttq)[\ttp]
+    =\Id_{A[\gamma\circ\ttp]}(a[\gamma\circ\ttp],\ttq)[\ttp]  \qquad \text{$\leftsquigarrow$此处等式推理针对$q$的类型,说明 $q$ 的合理性}
     }{\langle\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp,\ttq\rangle :\Delta.A[\gamma].\Id_{A[\gamma][\ttp]}(a[\gamma][\ttp],\ttq) \to\Gamma.A.\Id_{A[\ttp]}(a[\ttp],\ttq)}
   \end{itemize}
   (注: 由$\langle\_,\_\rangle$的唯一性, $\langle\gamma\circ\ttp,\ttq\rangle\circ\ttp=\langle\gamma\circ\ttp\circ\ttp,\ttq[\ttp]\rangle$)
@@ -136,6 +143,9 @@
   严格相等意味着\[
     J_{A}(a,C,c_{0},a,\refl_{A}(a)) = c_{0}
   \]
+  \pause
+  此时有\[
+  \inferrule{\Gamma.A.\Id_{A[\ttp]}(a[\ttp],\ttq)\vdash C \\ \Gamma\vdash c_{0}:C[a,\refl_{A}(a)]}{\Gamma\vdash\JEq_{A}(a,C,c_{0}):\Id_{C[a,\refl_{A}(a)]}(J_{A}(a,C,c_{0},a,\refl_{A}(a)),c_{0})=\Id_{C[a,\refl_{A}(a)]}(c_0,c_{0})} \]
   \pause
   只要定义
   \[
