@@ -1,0 +1,104 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{mathpartir}
+
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\C{\mathbf{C}}
+\newcommand\hatC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.4}[1]{\_}}}
+\DeclareMathOperator\obj{obj}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{预层范畴上的 CwF 结构}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{概述}
+  \begin{itemize}
+    \item 任何预层范畴 $\hatC = \Set^{\C^{op}}$ 都可以诱导出一个 CwF 结构
+    \item 对一个范畴 $\C$, 一般用 $I$, $J$, $K$ 表示对象, 用 $f$, $g$, $h$ 表示态射
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[shrink]{预层范畴到 CwF}
+\begin{itemize}
+  \item $\C$ 是一个小范畴, $\hatC=\Set^{\C^{op}}$ 是 $\C$ 上面的函子范畴即预层范畴
+  \item 我们把上下文范畴取为 $\hatC$. 终对象就是把所有对象映为单元素集合的常量预层($\bfone(I)=\{\ast\}$, $\bfone(f) = id_{\{\ast\}}$. 取一个确定的单元素集合就好, 此处我们取$\{\ast\}$)
+  \item 令 $\Delta$, $\Gamma$ 是 $\C$ 上的两个预层, $\gamma:\Delta\to\Gamma$ 是它们之间的一个自然变换, 那么我们有元素范畴之间的一个函子 $\int\gamma:\int\Delta\to\int\Gamma$. $(\int\gamma)(I,\delta) = (I,\gamma_{I}(\delta))$. 自然得到一个函子 $(\int\gamma)^{op}:(\int\Delta)^{op}\to(\int\Gamma)^{op}$. 函子 $\Ty:\hatC^{op}\to\Set$ 可以定义如下: $\Ty(\Gamma) \triangleq \obj(\Set^{(\int\Gamma)^{op}})$, 对 $\gamma:\Delta\to\Gamma$, $\Ty(\gamma):\Ty(\Gamma)\to\Ty(\Delta)$, $\Ty(\gamma)(A) \triangleq A \circ (\int\gamma)^{op}$. 我们也把$\Ty(\gamma)(A)$记为$A[\gamma]$. 那么我们有 $A[\gamma](I,\delta) = A(I,\gamma_I(\delta))$. 对类型 $A\in\Ty(\Gamma)$, 我们有一族集合$\{A(I,\rho) \mid I\in\C, \rho\in\Gamma(I)\}$, 使得对任意 $f : J \to I$, 我们有 $A(f) : A(I,\rho) \to A(J,\Gamma(f)(\rho))$, 满足 $A(id) = id$, $A(g\circ f) = A(f) \circ A(g)$. ($\int\Gamma$ 中的态射 $\bar{f} : (J,\Gamma(f)(\rho)) \to (I, \rho)$)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[shrink]{预层范畴到 CwF(续)}
+\begin{itemize}
+  \item 函子 $\Ter:(\int\Ty)^{op}\to\Set$ 定义如下: $\Ter(\Gamma\vdash A)\triangleq\hom(\bfone,A)$. 令 $a\in\Ter(\Gamma\vdash A)$, 那么 $a$ 是 $\bfone$ 和 $A$ 这两个 $\int\Gamma$ 上的预层之间的自然变换. 对任意$I\in\C$, $\rho\in\Gamma(I)$, 我们有 $a_{(I,\rho)} : \bfone(I,\rho) \to A(I,\rho)$, $a_{(I,\rho)} : \{\ast\} \to A(I,\rho)$, 我们把 $a_{(I,\rho)}(\ast)$ 简写为 $a(I,\rho)$. 这样也可以把 $a$ 看作是一族元素 $\{a(I,\rho)\in A(I,\rho) \mid I\in\C, \rho\in\Gamma(I)\}$, 使得对任意 $f:J\to I$, 我们有 $A(f)(a(I,\rho)) = a(J,\Gamma(f)(\rho))$. 对 $\int\Ty$ 中的一个态射 $\bar{\gamma}:(\Delta,A')\to(\Gamma,A)$, 我们有 $\gamma:\Delta \to \Gamma$ 是 $\hatC$ 中的一个态射, 并且 $A'=\Ty(\gamma)(A)$. $\Ter(\bar{\gamma}) : \Ter(\Gamma,A) \to \Ter(\Delta,A')$, $\Ter(\bar{\gamma})(a)(I,\delta)\triangleq a(I,\gamma_{I}(\delta))\quad\in\quad A(I,\gamma_{I}(\delta))=\Ty(\gamma)(A)(I,\delta)=A'(I,\delta)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[shrink]{预层范畴到 CwF(续)}
+\begin{itemize}
+  \item 给定$\Gamma\in\hatC$和$A\in\Ty(\Gamma)$, 扩展上下文$\Gamma.A\in\hatC$定义如下
+  \[ (\Gamma.A)(I) \triangleq \{ (\rho,a) \mid \rho \in \Gamma(I), a \in A(I,\rho) \} \]
+  对态射 $f : J \to I$, $(\Gamma.A)(f) : (\Gamma.A)(I) \to (\Gamma.A)(J)$, $(\Gamma.A)(f) : \{(\rho,a) \mid \rho \in \Gamma(I), a \in A(I,\rho) \} \to \{(\rho,a) \mid \rho \in \Gamma(J), a \in A(J,\rho) \}$, $(\Gamma.A)(f)(\rho,a)\triangleq (\Gamma(f)(\rho),A(f)(a))$. $\bar{f} : (J,\Gamma(f)(\rho)) \to (I,\rho)$, $A(\bar{f}) : A(I,\rho) \to A(J,\Gamma(f)(\rho))$
+  \item $\ttp : \Gamma.A \to \Gamma$, $\ttp_I : (\Gamma.A)(I) \to \Gamma(I)$, $\ttp_I : \{ (\rho,a) \mid \rho \in \Gamma(I), a \in A(I,\rho) \} \to \Gamma(I)$
+  \[ \ttp_I(\rho,a) \triangleq \rho \]
+  \item $\ttq \in \Ter(\Gamma.A \vdash A[\ttp])$, $\ttq$ 是 $\int\Gamma.A$ 上的两个预层 $\bfone$ 和 $A[\ttp]$ 之间的自然变换. $\ttq_{(I,(\rho,a))} : \bfone(I,(\rho,a)) \to (A[\ttp])(I,(\rho,a))$, $\ttq_{(I,(\rho,a))} : \{\ast\} \to A(I,\ttp_I(\rho,a))$, $\ttq_{(I,(\rho,a))} : \{\ast\} \to A(I,\rho)$, $\ttq(I,(\rho,a)) \triangleq \ttq_{(I,(\rho,a))}(\ast) \in A(I,\rho)$
+  \[ \ttq(I,(\rho,a)) \triangleq a \]
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[shrink]{预层范畴到 CwF(续)}
+\begin{itemize}
+  \item \phantom{ }\inferrule{\gamma:\Delta\to\Gamma \\ \Gamma\vdash A \\ \Delta\vdash a:A[\gamma]}{\langle\gamma,a\rangle:\Delta\to\Gamma.A}
+  \[ \langle\gamma,a\rangle_I(\delta) \triangleq (\gamma_I(\delta),a(I,\delta)) \]
+  \[ (\Gamma.A)(I) \triangleq \{ (\rho,a) \mid \rho \in \Gamma(I), a \in A(I,\rho) \} \]
+  \[ a(I,\delta) \in A[\gamma](I,\delta) = A(I,\gamma_I(\delta)) \]
+  \[ (\gamma_I(\delta),a(I,\delta)) \in (\Gamma.A)(I) \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{额外说明}
+  我们从预层范畴得到的这种形式的 CwF, 可以解释依赖和, 依赖积, 严格内蕴相等类型和宇宙
+\end{frame}
+
+\end{document}
