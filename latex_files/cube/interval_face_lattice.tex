@@ -82,10 +82,12 @@
 \begin{frame}{背景}
 \begin{itemize}
   \item 任何立方集$X$都可以看作任何上下文$\Gamma$中的一个类型. 我们可以取$X'\in\Ty(\Gamma)=\obj(\Set^{(\int\Gamma)^{op}})$ 且 $X'(I,\rho)\triangleq X(I)$
+  \item 我们把 $\bbI$ 和 $\bbF$ 都解释为立方集
   \item 我们可以把项$\Gamma\vdash i:\bbI$和$\Gamma\vdash\varphi:\bbF$解释为$\Ter(\Gamma\vdash\bbI)$和$\Ter(\Gamma\vdash\bbF)$的元素
   \item 上下文扩展 $\Gamma.\bbI$ 就是 CwF 中的上下文扩展操作
 \end{itemize}
-(注: 下文把 $\bbI$ 和 $\bbF$ 解释为立方集, 所以把它们当作类型使用时, 严格来说应该使用$\bbI'$和$\bbF'$. $\Ter(\Gamma\vdash\bbI')$, $\Ter(\Gamma\vdash\bbF')$, $\Gamma.\bbI'$)
+\vspace*{1\baselineskip}
+(注: 既然我们把 $\bbI$ 和 $\bbF$ 解释为立方集, 所以把它们当作类型使用时, 严格来说应该使用$\bbI'$和$\bbF'$. $\Ter(\Gamma\vdash\bbI')$, $\Ter(\Gamma\vdash\bbF')$, $\Gamma.\bbI'$)
 \end{frame}
 
 \begin{frame}[fragile,shrink]{$\bbI$}
@@ -138,7 +140,7 @@
 \end{frame}
 
 \begin{frame}[shrink]{解释}
-  我们在立方集范畴 $\widehat{□}\triangleq\Set^{\square^{op}}$ 中解释立方类型论. 我们在前面展示过怎样从预层范畴得到 CwF. 我们定义 $\Ty(\Gamma)\triangleq\obj\Set^{{(\int\Gamma)}^{op}}$, 前面我们说过, 任意立方集都可以看作 $\Gamma$ 中的一个类型, $\bbF$ 也一样, 我们有 $\bbF'\in\obj\Set^{{(\int\Gamma)}^{op}}$. 对$\varphi\in\Ter(\Gamma\vdash\bbF')\triangleq\hom(1,\bbF')$, $\varphi$ 是一个自然变换, 对$(I,\rho)\in\int\Gamma$, $I\in\obj\square$, $\rho\in\Gamma(I)$, $\varphi_{(I,\rho)}:1(I,\rho)\to\bbF'(I,\rho)$, 由$\bbF'$的定义, $\varphi(I,\rho)\triangleq\varphi_{(I,\rho)}(\ast) \in \bbF'(I,\rho)=\bbF(I)$.
+  我们在立方集范畴 $\widehat{□}\triangleq\Set^{\square^{op}}$ 中解释立方类型论. 我们在前面展示过怎样从预层范畴得到 CwF. 我们定义 $\Ty(\Gamma)\triangleq\obj(\Set^{{(\int\Gamma)}^{op}})$, 前面我们说过, 任意立方集都可以看作 $\Gamma$ 中的一个类型, $\bbF$ 也一样, 我们有 $\bbF'\in\obj(\Set^{{(\int\Gamma)}^{op}})$. 对$\varphi\in\Ter(\Gamma\vdash\bbF')\triangleq\hom(1,\bbF')$, $\varphi$ 是一个自然变换, 对$(I,\rho)\in\int\Gamma$, $I\in\obj\square$, $\rho\in\Gamma(I)$, $\varphi_{(I,\rho)}:1(I,\rho)\to\bbF'(I,\rho)$, 由$\bbF'$的定义, $\varphi(I,\rho)\triangleq\varphi_{(I,\rho)}(\ast) \in \bbF'(I,\rho)=\bbF(I)$.
 \end{frame}
 
 \end{document}

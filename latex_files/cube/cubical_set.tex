@@ -15,6 +15,7 @@
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 
 \usepackage{mathpartir}
+\usepackage{tikz-cd}
 
 \usepackage{listings}
 \usepackage{unicode-math}
@@ -128,15 +129,22 @@ data FreeDeMorgan (X : Set ℓ) : Set ℓ where
 \begin{itemize}
 \item $\neg\ul$, $\top$, $\bot$ 也分别可以记为 $1\mathshortminus\ul$, $1$, $0$
 \item $\DM$ 表示德摩根代数组成的范畴
-\item 集合 $I$ 上的自由德摩根代数记为 $\dM(I)$
+\item 集合 $I$ 上的自由德摩根代数记为 $\dM(I) \triangleq \FreeDeMorgan(I)/\approx$
 \end{itemize}
 \end{frame}
 
-\begin{frame}{立方范畴$\square$}
+\begin{frame}[fragile,shrink]{立方范畴$\square$}
   \begin{itemize}
     \item 固定一个无限集合$\bbD$, 我们称它的元素为\emph{名字}, 一般记为$i,j,k,\ldots$
     \item $\square$的对象是$\bbD$的有限子集, 一般记为$I,J,K,\ldots$
     \item 态射$\square(I,J)$是所有的函数$J\to\dM(I)$. 这样的函数和德摩根代数同态$\dM(J)\to\dM(I)$之间有一个双射. $\square$中的态射$f\in\square(I,J)$和$g\in\square(J,K)$的复合是$g:K\to\dM(J)$和$f$对应的同态$\dM(J)\to\dM(I)$在$\Set$中的复合
+    \[
+  \begin{tikzcd}
+  J \arrow[r,hook] \arrow[dr] & \dM(J) \arrow[d,dashed]\\
+  & \dM(I)
+  \end{tikzcd} \]
+  \item $\square$ 就是 $\DM$ 中自由有限生成的德摩根代数组成的满子范畴的反范畴
+  \item $\square$ 也可以认为是德摩根代数的劳威尔理论(Lawvere theory)
   \end{itemize}
 \end{frame}
 
