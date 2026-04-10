@@ -161,4 +161,59 @@
  (这个定理的证明依赖于组合结构可以重新索引, 也就是说, 对 $(A,\comp_A)\in\FTy(\Gamma)$, $\gamma:\Delta\to\Gamma$, 我们可以得到 $A[\gamma]$ 上的一个组合结构$\comp_{A}[\gamma]$, 因此$(A[\gamma],\comp_{A}[\gamma])\in\FTy(\Delta)$)
 \end{frame}
 
+\begin{frame}[shrink]{$\comp_A[\gamma]$ 定义}
+  \begin{itemize}
+  \item 给定 $I \in \square$, $i \notin I$, $\rho \in \Gamma(I, i)$ 以及 $\varphi \in \bbF(I)$，若存在一族元素 $u_f \in A(\rho f)$（其中 $f : J \to I,i$ 满足 $ \bbF(s_i \circ f)(\varphi) = 1_{\bbF} $），且对任意 $ g : K \to J $ 有 $u_{f \circ g} = A(g)(u_f)$，则称该族 $u_f$ 为 $A(\rho)$ 的部分元素，并称 $\varphi$ 为该部分元素的范围.
+  \item $A\in\Ty(\Gamma)$ 的一个组合结构是一个操作 $\comp_A$: 对$I\in\square$, $i\notin I$, $\rho\in\Gamma(I,i)$, $\varphi\in\bbF(I)$, $u$ 是 $A(\rho)$ 的一个范围为$\varphi$的部分元素, 如果$a_0\in A(\rho(i0))$, 那么对任何$f:J\to I$, 如果它满足$\bbF(f)(\varphi)=1_{\bbF}$, 那么$A(f)(a_0)=u_{(i0)\circ f}$, 则我们有
+  \[
+  \comp_A(I,i,\rho,\varphi,u,a_0) \in A(\rho(i1))
+  \]
+  \item 对 $(A,\comp_A)\in\FTy(\Gamma)$, $\gamma : \Delta \to \Gamma$, $(A,\comp_A)[\gamma]=(A[\gamma],\comp_A[\gamma]) \in \FTy(\Delta)$, $\comp_A[\gamma]$是$A[\gamma]$上的一个组合结构, 定义如下
+  \[
+      \comp_A[\gamma](I,i,\delta,\varphi,u,a_0) \triangleq
+      \comp_A(I,i,\gamma_{I,i}(\delta),\varphi,u,a_0)
+  \]
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile,shrink]{$\comp_A[\gamma]$定义分析}
+\begin{itemize}
+  \item $I\in\square$, $i\notin I$, $\delta\in\Delta(I,i)$, $\gamma_{I,i} : \Delta(I,i) \to \Gamma(I,i)$, $\gamma_{I,i}(\delta) \in \Gamma(I,i)$
+  \item $\varphi\in\bbF(I)$
+  \item $u$ 是 $A[\gamma](\delta)$ 的一个范围为$\varphi$的部分元素. 由定义 $u$ 也是 $A(\gamma_{I,i}(\delta))$ 的一个范围为$\varphi$的部分元素
+  \item $a_0\in A[\gamma](\delta(i0)) = A(\gamma_I(\delta(i0)))$. 根据 $\comp_A$的要求, 我们需要 $a_0 \in A((\gamma_{I,i}(\delta))(i0))$. 这样我们需要证明 $\gamma_I(\delta(i0)) = (\gamma_{I,i}(\delta))(i0)$
+      \[
+    \begin{tikzcd}
+      \Delta(I,i) \arrow[r,"{\Delta(i0)}"] \arrow[d,"{\gamma_{I,i}}"'] & \Delta(I) \arrow[d,"{\gamma_I}"] \\
+      \Gamma(I,i) \arrow[r,"{\Gamma(i0)}"] & \Gamma(I)
+    \end{tikzcd}
+  \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{$\comp_A[\gamma]$定义分析(续)}
+\begin{itemize}
+  \item 对任意 $f:J\to I$, 如果$\bbF(f)(\varphi)=1_{\bbF}$, 那么 $A[\gamma](f)(a_0) = u_{(i0)\circ f}$.
+  
+  $\bar{f} : (J,\Delta(f)(\delta(i0))) \to (I,\delta(i0))$
+
+  $A[\gamma](\bar{f}) : A[\gamma](I,\delta(i0)) \to A[\gamma](J,\Delta(f)(\delta(i0)))$
+
+  $A[\gamma](\bar{f}) : A(I,\gamma_I(\delta(i0))) \to A(J,\gamma_J(\Delta(f)(\delta(i0))))$
+  \item 根据$\comp_A$的要求, 我们要证明 $A(f)(a_0) = u_{(i0)\circ f}$
+  
+  $\bar{f} : (J,\Gamma(f)(\gamma_{I}(\delta(i0)))) \to (I,\gamma_I(\delta(i0)))$
+
+  $A(\bar{f}) : A(I,\gamma_I(\delta(i0))) \to A(J,\Gamma(f)(\gamma_{I}(\delta(i0))))$
+      \[
+    \begin{tikzcd}
+      \Delta(I) \arrow[r,"{\Delta(f)}"] \arrow[d,"{\gamma_{I}}"'] & \Delta(J) \arrow[d,"{\gamma_J}"] \\
+      \Gamma(I) \arrow[r,"{\Gamma(f)}"] & \Gamma(J)
+    \end{tikzcd}
+  \]
+  \item $A[\gamma](f) = (A\circ(\int\gamma)^{op})(f) = A((\int\gamma)^{op}(f)) = A(f)$
+\end{itemize}
+\end{frame}
+
 \end{document}
