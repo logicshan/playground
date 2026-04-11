@@ -15,6 +15,8 @@
 
 \usepackage{mathpartir}
 
+\usepackage{comment}
+
 \usepackage{tikz-cd}
 \usetikzlibrary{arrows.meta}
 %\tikzcdset{arrow style=tikz, diagrams={>=Stealth}}
@@ -309,6 +311,12 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
   \end{tabular} \]
 \end{frame}
 
+\begin{frame}[shrink]{上面 pullback 的证明(Gemini)}
+  \begin{center}
+    \includegraphics{pullback}
+  \end{center}
+\end{frame}
+
 \begin{frame}[fragile,shrink]{$\Gamma\vdash\varphi(t)$的分析}
   $\varphi \in \Ter(\Gamma.(A,a)\vdash\Omega) \implies \varphi \in \Ter(\Gamma.(A,a)\vdash(\Omega,\snd))$
 
@@ -382,16 +390,68 @@ $a\circ(\gamma,id)\circ(id,t\circ\gamma)=a\circ(\gamma,t\circ\gamma)=a\circ(id,t
 \end{frame}
 
 \begin{frame}[fragile,shrink]{子单元素集}
-  在先前的定义中取$A=1$, 我们得到, 对于每一个$\varphi:\Omega$, 存在一个类型, 其“居留性”(即该类型是否拥有元素)对应于$\varphi$的可证明性:
-  \[ [\varphi]\triangleq \{\ul:1\mid\varphi\} \]
+  在先前的定义中取$A=\bfone$, 我们得到, 对于每一个$\varphi:\Omega$, 存在一个类型, 其“居留性”(即该类型是否拥有元素)对应于$\varphi$的可证明性:
+  \[ [\varphi]\triangleq \{\ul:\bfone\mid\varphi\} \]
 
-  如果 $φ$ 是一个全局命题(即在空上下文中定义的命题, 或者一个 $1 → Ω$ 的态射)
+  如果 $φ$ 是一个全局命题(即在空上下文中定义的命题, 或者一个 $\bfone → Ω$ 的态射)
   \[
   \begin{tikzcd}
-    {[\varphi]} \arrow[r,tail] \arrow[d] & 1 \arrow[d,"\varphi"] \\
-    1 \arrow[r,"\top"] & \Omega
+    {[\varphi]} \arrow[r,tail] \arrow[d] & \bfone \arrow[d,"\varphi"] \\
+    \bfone \arrow[r,"\top"] & \Omega
   \end{tikzcd}
   \]
+\end{frame}
+
+\begin{frame}[fragile,shrink]{解释}
+严格按照定义来说, 取 $A=\bfone$ 的同时要给出一个态射 $a : \Gamma \times \bfone \to \Omega$
+\[
+  \begin{tikzcd}
+    \Gamma\times\bfone \arrow[r,"!_{\Gamma\times\bfone}"] & \bfone \arrow[r,"\top"] & \Omega
+  \end{tikzcd}
+\]
+$a \triangleq \top\circ !_{\Gamma\times\bfone}$
+\begin{comment}
+\[
+\begin{tikzcd}
+  \text{Domain}(\overline{a_{top}}) \arrow[r, "!"] \arrow[d, tail, "\overline{a_{top}}"] & 1 \arrow[d, "\top"] \\
+  \Gamma \times 1 \arrow[r, "a_{top}"] & \Omega
+\end{tikzcd}
+\]
+\[
+\begin{tikzcd}
+  \Gamma \times 1 \arrow[r, "!_{\Gamma \times 1}"] \arrow[d, "id_{\Gamma \times 1}"] & 1 \arrow[d, "\top"] \\
+  \Gamma \times 1 \arrow[r, "a_{top}"] & \Omega
+\end{tikzcd}
+\]
+\end{comment}
+\[
+\begin{tikzcd}
+\Gamma.(\bfone,a) \arrow[r,"{\bar{a}}"] \arrow[d] \arrow[dr,phantom,"\lrcorner" very near start] & \Gamma\times\bfone \arrow[d,"a"] \\
+\bfone \arrow[r] & \Omega
+\end{tikzcd}
+\]
+可以证明 $\bar{a} = id_{\Gamma\times\bfone}$
+\[
+  \begin{tikzcd}
+    \cdot \arrow[r,tail,"\overline{\varphi}"] \arrow[d] & \Gamma.(\bfone,a) \cong\Gamma\times\bfone\cong\Gamma \arrow[d,"{\varphi}"] \\
+    \bfone \arrow[r] & \Omega
+  \end{tikzcd}
+\]
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+\[
+\begin{tikzcd}
+\cdot \arrow[r,"{\bar{a}\circ\bar{\varphi}}"] \arrow[d] \arrow[dr,phantom,"\lrcorner" very near start] & \Gamma\times\bfone \arrow[d,"a'"] \\
+\bfone \arrow[r] & \Omega
+\end{tikzcd}
+\]
+\begin{itemize}
+\item $\bar{a}\circ\bar{\varphi} = id_{\Gamma\times\bfone}\circ \bar{\varphi} = \bar{\varphi}$
+\item 所以$a'$是由$\varphi$直接诱导的
+\item $[\varphi] \triangleq (\bfone, a')$
+\item $a' \triangleq \varphi\circ p_1$, 其中 $p_1 : \Gamma\times\bfone \to \Gamma$ 是投影态射
+\end{itemize}
 \end{frame}
 
 \end{document}
