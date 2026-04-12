@@ -568,7 +568,7 @@ g\,b = c &\Rightarrow (\exists(a : A).\ g(f\,a) = c) = (\exists(a : A).\ f\,a = 
 
 则可以扩展为一个与 $B$ 同构的全类型 $B'$：
 \begin{align*}
-\ax{9} : &\{\varphi : \mathsf{Cof}\}(A : [\varphi] \to \mathcal{U})(B : \mathcal{U})(s : (u : [\varphi]) \to (A\,u \cong B)) \to \\
+\ax{9} : &\{\varphi : \mathtt{Cof}\}(A : [\varphi] \to \mathcal{U})(B : \mathcal{U})(s : (u : [\varphi]) \to (A\,u \cong B)) \to \\
 &(B' : \mathcal{U}) \times \{s' : B' \cong B \mid \forall(u : [\varphi]).\ A\,u = B' \land s\,u = s'\}
 \end{align*}
 
@@ -582,12 +582,12 @@ g\,b = c &\Rightarrow (\exists(a : A).\ g(f\,a) = c) = (\exists(a : A).\ f\,a = 
 我们的最后一个公理与其他公理不同，它与其说是关于公理化立方类型论的某些本质方面，不如说是关于解决内部语言方法的一个弱点。这最后一个公理 $\ax{9}$ 指出，任何上纤维化偏类型 $A$，如果在 $A$ 有定义的任何地方都与全类型 $B$ 同构，则可以扩展为一个与 $B$ 同构的全类型 $B'$。该公理的精确定义在图 5.3 中给出，同构的定义如下：
 
 \begin{definition}[同构]
-给定对象 $A, B : \mathcal{U}$，$A$ 和 $B$ 之间的\textbf{同构}是一个具有双边逆的函数 $f : A \to B$。令 $A \cong B$ 为 $A$ 和 $B$ 之间同构的类型，定义为：
+给定对象 $A, B : \mathcal{U}$，$A$ 和 $B$ 之间的同构是一个具有双边逆的函数 $f : A \to B$。令 $A \cong B$ 为 $A$ 和 $B$ 之间同构的类型，定义为：
 \[
 A \cong B \triangleq \{f : A \to B \mid (\exists g : B \to A)\, (g \circ f = id) \land (f \circ g = id)\}
 \]
 
-我们说 $A$ 和 $B$ \textbf{同构}，如果存在同构 $f : A \cong B$。我们说两个族 $A, B : \Gamma \to \mathcal{U}$ \textbf{同构}，如果它们的每个纤维都同构，并且我们滥用记号写作：
+我们说 $A$ 和 $B$ 同构，如果存在同构 $f : A \cong B$。我们说两个族 $A, B : \Gamma \to \mathcal{U}$ 同构，如果它们的每个纤维都同构，并且我们滥用记号写作：
 \[
 A \cong B \triangleq (x : \Gamma) \to A\,x \cong B\,x
 \]
@@ -600,4 +600,85 @@ A \cong B \triangleq (x : \Gamma) \to A\,x \cong B\,x
 先验地，没有公理 $\ax{9}$，在内部类型论中没有办法执行这样的构造。事实上，从范畴论的角度来看，这样的构造似乎相当奇怪，因为我们通常只在``同构意义下''工作。然而，这个公理后面将需要用于验证类型论中必须成立的某些定义性相等。在这个意义上，对公理 $\ax{9}$ 的需求让人想起在范畴模型中将类型论中的替换解释为拉回时出现的一些问题。
 
 公理 $\ax{9}$ 将用于恢复 Cohen 等人 [18] 使用的严格形式的粘合。它在预层模型中的有效性依赖于外部元理论中的一个构造，该构造无法在内部复制；详见定理 5.6.3。
+
+\section{路径类型}
+
+给定 $A : \mathcal{U}$，我们称类型 $\mathtt{I} \to A$ 的元素为 $A$ 中的路径。与 $A$ 关联的路径类型是 $\_\sim\_ : A \to A \to \mathcal{U}$，其中
+\begin{equation}
+a_0 \sim a_1 \triangleq \{p : \mathtt{I} \to A \mid p\,0 = a_0 \land p\,1 = a_1\}
+\end{equation}
+
+这些类型能否用于建模马丁-洛夫相等类型的规则？我们当然可以解释相等引入规则（自反性），因为由常数函数给出的退化路径
+\begin{equation}
+\mathtt{k}\,a\,i \triangleq a
+\end{equation}
+满足 $\mathtt{k} : \{A : \mathcal{U}\}(a : A) \to a \sim a$。然而，我们需要进一步的假设来解释相等消去规则，也称为路径归纳，在第 2.1.2 节中描述。Coquand 给出了相等消去的另一种（命题等价的）表述，用替换函数 $a_0 \sim a_1 \to P\,a_0 \to P\,a_1$ 和单例类型 $(a_1 : A) \times (a_0 \sim a_1)$ 的可缩性来表述；见 [11,图2]。连接代数结构给出后者，因为使用 $\ax{3}$ 和 $\ax{4}$ 我们有
+\begin{align}
+&\mathtt{ctr} : \{A : \mathcal{U}\}\{a_0\,a_1 : A\}(p : a_0 \sim a_1) \to (a_0, \mathtt{k}\,a_0) \sim (a_1, p) \\
+&\mathtt{ctr}\,p\,i \triangleq (p\,i, \lambda j \to p(i \sqcap j))
+\end{align}
+
+然而，为了得到适当行为的替换函数，我们必须考虑赋予某些额外结构的类型族；并且该结构必须通过类型形成运算（积、函数、相等类型等）提升。这就是下一节定义所实现的内容。
+
+\begin{figure}[htbp]
+\centering
+
+区间 $\mathtt{I} : \mathcal{U}$ 是连通的
+\[
+\ax{1} : [\forall(\varphi : \mathtt{I} \to \Omega).\ (\forall(i : \mathtt{I}).\ \varphi\,i \lor \neg\varphi\,i) \Rightarrow (\forall(i : \mathtt{I}).\ \varphi\,i) \lor (\forall(i : \mathtt{I}).\ \neg\varphi\,i)]
+\]
+
+具有不同的端点 $0, 1 : \mathtt{I}$
+\[
+\ax{2} : [\neg(0 = 1)]
+\]
+
+以及连接代数结构 $\_\sqcap\_, \_\sqcup\_ : \mathtt{I} \to \mathtt{I} \to \mathtt{I}$
+\[
+\ax{3} : [\forall(x : \mathtt{I}).\ 0 \sqcap x = 0 = x \sqcap 0 \land 1 \sqcap x = x = x \sqcap 1]
+\]
+\[
+\ax{4} : [\forall(x : \mathtt{I}).\ 0 \sqcup x = x = x \sqcup 0 \land 1 \sqcup x = 1 = x \sqcup 1]
+\]
+
+\vspace{1em}
+
+上纤维化命题 $\mathtt{Cof} = \{\varphi : \Omega \mid \mathtt{cof}\,\varphi\}$（其中 $\mathtt{cof} : \Omega \to \Omega$）
+
+包含端点等式
+\[
+\ax{5} : [\forall(i : \mathtt{I}).\ \mathtt{cof}(i = 0) \land \mathtt{cof}(i = 1)]
+\]
+
+在二元析取下封闭
+\[
+\ax{6} : [\forall(\varphi\,\psi : \Omega).\ \mathtt{cof}\,\varphi \Rightarrow \mathtt{cof}\,\psi \Rightarrow \mathtt{cof}(\varphi \lor \psi)]
+\]
+
+依赖合取
+\[
+\ax{7} : [\forall(\varphi\,\psi : \Omega).\ \mathtt{cof}\,\varphi \Rightarrow (\varphi \Rightarrow \mathtt{cof}\,\psi) \Rightarrow \mathtt{cof}(\varphi \land \psi)]
+\]
+
+在 $\mathtt{I}$ 上的全称量词
+\[
+\ax{8} : [\forall(\varphi : \mathtt{I} \to \Omega).\ (\forall(i : \mathtt{I}).\ \mathtt{cof}(\varphi\,i)) \Rightarrow \mathtt{cof}(\forall(i : \mathtt{I}).\ \varphi\,i)]
+\]
+
+\vspace{1em}
+
+严格性公理：任何上纤维化偏类型 $A$
+
+如果在 $A$ 有定义的任何地方都与全类型 $B$ 同构
+
+则可以扩展为一个与 $B$ 同构的全类型 $B'$：
+\begin{align*}
+\ax{9} : &\{\varphi : \mathtt{Cof}\}(A : [\varphi] \to \mathcal{U})(B : \mathcal{U})(s : (u : [\varphi]) \to (A\,u \cong B)) \to \\
+&(B' : \mathcal{U}) \times \{s' : B' \cong B \mid \forall(u : [\varphi]).\ A\,u = B' \land s\,u = s'\}
+\end{align*}
+
+\caption{所有公理}
+\label{fig:all-axioms}
+
+\end{figure}
 \end{document}
