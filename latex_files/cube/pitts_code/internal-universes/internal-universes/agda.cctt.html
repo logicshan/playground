@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >agda.cctt</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K </a
+      ><a name="25" class="Symbol"
+      >#-}</a
+      ><a name="28"
+      >
+
+</a
+      ><a name="30" class="Keyword"
+      >module</a
+      ><a name="36"
+      > </a
+      ><a name="37" href="agda.cctt.html#1" class="Module"
+      >agda.cctt</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >where</a
+      ><a name="52"
+      >
+
+</a
+      ><a name="54" class="Keyword"
+      >open</a
+      ><a name="58"
+      > </a
+      ><a name="59" class="Keyword"
+      >import</a
+      ><a name="65"
+      > </a
+      ><a name="66" href="agda.fibration.html#1" class="Module"
+      >agda.fibration</a
+      ><a name="80"
+      >
+</a
+      ><a name="81" class="Keyword"
+      >open</a
+      ><a name="85"
+      > </a
+      ><a name="86" class="Keyword"
+      >import</a
+      ><a name="92"
+      > </a
+      ><a name="93" href="agda.prelude.html#1" class="Module"
+      >agda.prelude</a
+      ><a name="105"
+      >
+</a
+      ><a name="106" class="Keyword"
+      >open</a
+      ><a name="110"
+      > </a
+      ><a name="111" class="Keyword"
+      >import</a
+      ><a name="117"
+      > </a
+      ><a name="118" href="agda.postulates.html#1" class="Module"
+      >agda.postulates</a
+      ><a name="133"
+      >
+</a
+      ><a name="134" class="Keyword"
+      >open</a
+      ><a name="138"
+      > </a
+      ><a name="139" class="Keyword"
+      >import</a
+      ><a name="145"
+      > </a
+      ><a name="146" href="agda.exp-path.html#1" class="Module"
+      >agda.exp-path</a
+      ><a name="159"
+      >
+
+</a
+      ><a name="161" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="231"
+      >
+</a
+      ><a name="232" class="Comment"
+      >-- The composition structure from &quot;Cartesian Cubical Type Theory&quot;</a
+      ><a name="297"
+      >
+</a
+      ><a name="298" class="Comment"
+      >-- by Angiuli et al</a
+      ><a name="317"
+      >
+</a
+      ><a name="318" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="388"
+      >
+</a
+      ><a name="389" href="agda.cctt.html#389" class="Function"
+      >CCTT</a
+      ><a name="393"
+      > </a
+      ><a name="394" class="Symbol"
+      >:</a
+      ><a name="395"
+      >
+    </a
+      ><a name="400" class="Symbol"
+      >{</a
+      ><a name="401" href="agda.cctt.html#401" class="Bound"
+      >l</a
+      ><a name="402"
+      > </a
+      ><a name="403" class="Symbol"
+      >:</a
+      ><a name="404"
+      > </a
+      ><a name="405" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="410" class="Symbol"
+      >}</a
+      ><a name="411"
+      >
+    </a
+      ><a name="416" class="Symbol"
+      >(</a
+      ><a name="417" href="agda.cctt.html#417" class="Bound"
+      >P</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >:</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="422"
+      > </a
+      ><a name="423" class="Symbol"
+      >(</a
+      ><a name="424" class="PrimitiveType"
+      >Set</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="agda.cctt.html#401" class="Bound"
+      >l</a
+      ><a name="429" class="Symbol"
+      >))</a
+      ><a name="431"
+      >
+    </a
+      ><a name="436" class="Symbol"
+      >&#8594;</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="Comment"
+      >-------------</a
+      ><a name="451"
+      >
+    </a
+      ><a name="456" class="PrimitiveType"
+      >Set</a
+      ><a name="459"
+      > </a
+      ><a name="460" class="Symbol"
+      >(</a
+      ><a name="461" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="463"
+      > </a
+      ><a name="464" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="agda.cctt.html#401" class="Bound"
+      >l</a
+      ><a name="467" class="Symbol"
+      >)</a
+      ><a name="468"
+      >
+</a
+      ><a name="469" href="agda.cctt.html#389" class="Function"
+      >CCTT</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="agda.cctt.html#474" class="Bound"
+      >P</a
+      ><a name="475"
+      > </a
+      ><a name="476" class="Symbol"
+      >=</a
+      ><a name="477"
+      >
+   </a
+      ><a name="481" class="Symbol"
+      >(</a
+      ><a name="482" href="agda.cctt.html#482" class="Bound"
+      >&#966;</a
+      ><a name="483"
+      > </a
+      ><a name="484" class="Symbol"
+      >:</a
+      ><a name="485"
+      > </a
+      ><a name="486" class="PrimitiveType"
+      >Set</a
+      ><a name="489" class="Symbol"
+      >)</a
+      ><a name="490"
+      >
+   </a
+      ><a name="494" class="Symbol"
+      >(</a
+      ><a name="495" href="agda.cctt.html#495" class="Bound"
+      >_</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >:</a
+      ><a name="498"
+      > </a
+      ><a name="499" href="agda.postulates.html#517" class="Postulate"
+      >cof</a
+      ><a name="502"
+      > </a
+      ><a name="503" href="agda.cctt.html#482" class="Bound"
+      >&#966;</a
+      ><a name="504" class="Symbol"
+      >)</a
+      ><a name="505"
+      >
+   </a
+      ><a name="509" class="Symbol"
+      >(</a
+      ><a name="510" href="agda.cctt.html#510" class="Bound"
+      >p</a
+      ><a name="511"
+      > </a
+      ><a name="512" class="Symbol"
+      >:</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Symbol"
+      >(</a
+      ><a name="515" href="agda.cctt.html#515" class="Bound"
+      >i</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Symbol"
+      >:</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="520" class="Symbol"
+      >)</a
+      ><a name="521"
+      > </a
+      ><a name="522" class="Symbol"
+      >&#8594;</a
+      ><a name="523"
+      > </a
+      ><a name="524" href="agda.cctt.html#482" class="Bound"
+      >&#966;</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >&#8594;</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="agda.cctt.html#474" class="Bound"
+      >P</a
+      ><a name="529"
+      > </a
+      ><a name="530" href="agda.cctt.html#515" class="Bound"
+      >i</a
+      ><a name="531" class="Symbol"
+      >)</a
+      ><a name="532"
+      >
+   </a
+      ><a name="536" class="Symbol"
+      >(</a
+      ><a name="537" href="agda.cctt.html#537" class="Bound"
+      >i</a
+      ><a name="538"
+      > </a
+      ><a name="539" class="Symbol"
+      >:</a
+      ><a name="540"
+      > </a
+      ><a name="541" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="542" class="Symbol"
+      >)</a
+      ><a name="543"
+      >
+   </a
+      ><a name="547" class="Symbol"
+      >(</a
+      ><a name="548" href="agda.cctt.html#548" class="Bound"
+      >a</a
+      ><a name="549"
+      > </a
+      ><a name="550" class="Symbol"
+      >:</a
+      ><a name="551"
+      > </a
+      ><a name="552" href="agda.cctt.html#474" class="Bound"
+      >P</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="agda.cctt.html#537" class="Bound"
+      >i</a
+      ><a name="555" class="Symbol"
+      >)</a
+      ><a name="556"
+      >
+   </a
+      ><a name="560" class="Symbol"
+      >(</a
+      ><a name="561" href="agda.cctt.html#561" class="Bound"
+      >_</a
+      ><a name="562"
+      > </a
+      ><a name="563" class="Symbol"
+      >:</a
+      ><a name="564"
+      > </a
+      ><a name="565" href="agda.cctt.html#510" class="Bound"
+      >p</a
+      ><a name="566"
+      > </a
+      ><a name="567" href="agda.cctt.html#537" class="Bound"
+      >i</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="agda.fibration.html#293" class="Function Operator"
+      >&#8599;</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="agda.cctt.html#548" class="Bound"
+      >a</a
+      ><a name="572" class="Symbol"
+      >)</a
+      ><a name="573"
+      >
+   </a
+      ><a name="577" class="Symbol"
+      >&#8594;</a
+      ><a name="578"
+      > </a
+      ><a name="579" class="Comment"
+      >-----------------------------------------</a
+      ><a name="620"
+      >
+   </a
+      ><a name="624" href="agda.prelude.html#3654" class="Record"
+      >&#931;</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="agda.cctt.html#626" class="Bound"
+      >f</a
+      ><a name="627"
+      > </a
+      ><a name="628" href="agda.prelude.html#3654" class="Record"
+      >&#8758;</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >(</a
+      ><a name="631" href="agda.prelude.html#2509" class="Function"
+      >&#928;</a
+      ><a name="632"
+      > </a
+      ><a name="633" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="agda.cctt.html#474" class="Bound"
+      >P</a
+      ><a name="636" class="Symbol"
+      >)</a
+      ><a name="637"
+      > </a
+      ><a name="638" href="agda.prelude.html#3654" class="Record"
+      >,</a
+      ><a name="639"
+      > </a
+      ><a name="640" class="Symbol"
+      >(</a
+      ><a name="641" href="agda.cctt.html#626" class="Bound"
+      >f</a
+      ><a name="642"
+      > </a
+      ><a name="643" href="agda.cctt.html#537" class="Bound"
+      >i</a
+      ><a name="644"
+      > </a
+      ><a name="645" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="646"
+      > </a
+      ><a name="647" href="agda.cctt.html#548" class="Bound"
+      >a</a
+      ><a name="648" class="Symbol"
+      >)</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="agda.prelude.html#4446" class="Function Operator"
+      >&#215;</a
+      ><a name="651"
+      > </a
+      ><a name="652" class="Symbol"
+      >&#8704;</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="agda.cctt.html#654" class="Bound"
+      >j</a
+      ><a name="655"
+      > </a
+      ><a name="656" class="Symbol"
+      >&#8594;</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="agda.cctt.html#510" class="Bound"
+      >p</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="agda.cctt.html#654" class="Bound"
+      >j</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="agda.fibration.html#293" class="Function Operator"
+      >&#8599;</a
+      ><a name="663"
+      > </a
+      ><a name="664" href="agda.cctt.html#626" class="Bound"
+      >f</a
+      ><a name="665"
+      > </a
+      ><a name="666" href="agda.cctt.html#654" class="Bound"
+      >j</a
+      ><a name="667"
+      > 
+
+</a
+      ></pre
+    ></body
+  ></html
+>

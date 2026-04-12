@@ -1,0 +1,2783 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >agda-flat.tiny</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Comment"
+      >{- Use with Andrea Vezzosi's agda-flat -}</a
+      ><a name="42"
+      >
+</a
+      ><a name="43" class="Symbol"
+      >{-#</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >OPTIONS</a
+      ><a name="54"
+      > --no-pattern-matching --rewriting </a
+      ><a name="89" class="Symbol"
+      >#-}</a
+      ><a name="92"
+      >
+
+</a
+      ><a name="94" class="Comment"
+      >-- Some standard Agda definitions</a
+      ><a name="127"
+      >
+</a
+      ><a name="128" class="Keyword"
+      >open</a
+      ><a name="132"
+      > </a
+      ><a name="133" class="Keyword"
+      >import</a
+      ><a name="139"
+      > </a
+      ><a name="140" href="agda.prelude.html#1" class="Module"
+      >agda.prelude</a
+      ><a name="152"
+      >
+</a
+      ><a name="153" class="Comment"
+      >-- Some standard Agda-flat definitions</a
+      ><a name="191"
+      >
+</a
+      ><a name="192" class="Keyword"
+      >open</a
+      ><a name="196"
+      > </a
+      ><a name="197" class="Keyword"
+      >import</a
+      ><a name="203"
+      > </a
+      ><a name="204" href="agda-flat.prelude.html#1" class="Module"
+      >agda-flat.prelude</a
+      ><a name="221"
+      >
+</a
+      ><a name="222" class="Comment"
+      >-- Definition 2.2</a
+      ><a name="239"
+      >
+</a
+      ><a name="240" class="Keyword"
+      >open</a
+      ><a name="244"
+      > </a
+      ><a name="245" class="Keyword"
+      >import</a
+      ><a name="251"
+      > </a
+      ><a name="252" href="agda.fibration.html#1" class="Module"
+      >agda.fibration</a
+      ><a name="266"
+      >
+
+
+</a
+      ><a name="269" class="Keyword"
+      >module</a
+      ><a name="275"
+      > </a
+      ><a name="276" href="agda-flat.tiny.html#1" class="Module"
+      >agda-flat.tiny</a
+      ><a name="290"
+      >
+  </a
+      ><a name="293" class="Comment"
+      >-- the path functor is a parameter</a
+      ><a name="327"
+      >
+  </a
+      ><a name="330" class="Symbol"
+      >(</a
+      ><a name="331" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="332"
+      > </a
+      ><a name="333" class="Symbol"
+      >:{</a
+      ><a name="335"
+      >&#9837;</a
+      ><a name="336" class="Symbol"
+      >}</a
+      ><a name="337"
+      >
+    </a
+      ><a name="342" class="Symbol"
+      >{</a
+      ><a name="343" href="agda-flat.tiny.html#343" class="Bound"
+      >l</a
+      ><a name="344"
+      > </a
+      ><a name="345" class="Symbol"
+      >:</a
+      ><a name="346"
+      > </a
+      ><a name="347" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="352" class="Symbol"
+      >}</a
+      ><a name="353"
+      >
+    </a
+      ><a name="358" class="Symbol"
+      >(</a
+      ><a name="359" href="agda-flat.tiny.html#359" class="Bound"
+      >&#915;</a
+      ><a name="360"
+      > </a
+      ><a name="361" class="Symbol"
+      >:</a
+      ><a name="362"
+      > </a
+      ><a name="363" class="PrimitiveType"
+      >Set</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="agda-flat.tiny.html#343" class="Bound"
+      >l</a
+      ><a name="368" class="Symbol"
+      >)</a
+      ><a name="369"
+      >
+    </a
+      ><a name="374" class="Symbol"
+      >&#8594;</a
+      ><a name="375"
+      > </a
+      ><a name="376" class="Comment"
+      >---------</a
+      ><a name="385"
+      >
+    </a
+      ><a name="390" class="PrimitiveType"
+      >Set</a
+      ><a name="393"
+      > </a
+      ><a name="394" href="agda-flat.tiny.html#343" class="Bound"
+      >l</a
+      ><a name="395" class="Symbol"
+      >)</a
+      ><a name="396"
+      >
+  </a
+      ><a name="399" class="Symbol"
+      >(</a
+      ><a name="400" href="agda-flat.tiny.html#400" class="Bound"
+      >&#8472;`</a
+      ><a name="402"
+      > </a
+      ><a name="403" class="Symbol"
+      >:{</a
+      ><a name="405"
+      >&#9837;</a
+      ><a name="406" class="Symbol"
+      >}</a
+      ><a name="407"
+      >
+    </a
+      ><a name="412" class="Symbol"
+      >{</a
+      ><a name="413" href="agda-flat.tiny.html#413" class="Bound"
+      >l</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="agda-flat.tiny.html#415" class="Bound"
+      >m</a
+      ><a name="416"
+      > </a
+      ><a name="417" class="Symbol"
+      >:</a
+      ><a name="418"
+      > </a
+      ><a name="419" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="424" class="Symbol"
+      >}</a
+      ><a name="425"
+      >
+    </a
+      ><a name="430" class="Symbol"
+      >{</a
+      ><a name="431" href="agda-flat.tiny.html#431" class="Bound"
+      >&#915;</a
+      ><a name="432"
+      > </a
+      ><a name="433" class="Symbol"
+      >:</a
+      ><a name="434"
+      > </a
+      ><a name="435" class="PrimitiveType"
+      >Set</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="agda-flat.tiny.html#413" class="Bound"
+      >l</a
+      ><a name="440" class="Symbol"
+      >}</a
+      ><a name="441"
+      >
+    </a
+      ><a name="446" class="Symbol"
+      >{</a
+      ><a name="447" href="agda-flat.tiny.html#447" class="Bound"
+      >&#916;</a
+      ><a name="448"
+      > </a
+      ><a name="449" class="Symbol"
+      >:</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="PrimitiveType"
+      >Set</a
+      ><a name="454"
+      > </a
+      ><a name="455" href="agda-flat.tiny.html#415" class="Bound"
+      >m</a
+      ><a name="456" class="Symbol"
+      >}</a
+      ><a name="457"
+      >
+    </a
+      ><a name="462" class="Symbol"
+      >(</a
+      ><a name="463" href="agda-flat.tiny.html#463" class="Bound"
+      >&#947;</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >:</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="agda-flat.tiny.html#447" class="Bound"
+      >&#916;</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Symbol"
+      >&#8594;</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="agda-flat.tiny.html#431" class="Bound"
+      >&#915;</a
+      ><a name="472" class="Symbol"
+      >)</a
+      ><a name="473"
+      >
+    </a
+      ><a name="478" class="Symbol"
+      >&#8594;</a
+      ><a name="479"
+      > </a
+      ><a name="480" class="Comment"
+      >-----------</a
+      ><a name="491"
+      >
+    </a
+      ><a name="496" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="agda-flat.tiny.html#447" class="Bound"
+      >&#916;</a
+      ><a name="499"
+      > </a
+      ><a name="500" class="Symbol"
+      >&#8594;</a
+      ><a name="501"
+      > </a
+      ><a name="502" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="503"
+      > </a
+      ><a name="504" href="agda-flat.tiny.html#431" class="Bound"
+      >&#915;</a
+      ><a name="505" class="Symbol"
+      >)</a
+      ><a name="506"
+      >
+  </a
+      ><a name="509" class="Symbol"
+      >(</a
+      ><a name="510" href="agda-flat.tiny.html#510" class="Bound"
+      >&#8472;`comp</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Symbol"
+      >:{</a
+      ><a name="519"
+      >&#9837;</a
+      ><a name="520" class="Symbol"
+      >}</a
+      ><a name="521"
+      >
+    </a
+      ><a name="526" class="Symbol"
+      >{</a
+      ><a name="527" href="agda-flat.tiny.html#527" class="Bound"
+      >l</a
+      ><a name="528"
+      > </a
+      ><a name="529" href="agda-flat.tiny.html#529" class="Bound"
+      >m</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="agda-flat.tiny.html#531" class="Bound"
+      >n</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >:</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="540" class="Symbol"
+      >}</a
+      ><a name="541"
+      >
+    </a
+      ><a name="546" class="Symbol"
+      >{</a
+      ><a name="547" href="agda-flat.tiny.html#547" class="Bound"
+      >&#915;</a
+      ><a name="548"
+      > </a
+      ><a name="549" class="Symbol"
+      >:</a
+      ><a name="550"
+      > </a
+      ><a name="551" class="PrimitiveType"
+      >Set</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="agda-flat.tiny.html#527" class="Bound"
+      >l</a
+      ><a name="556" class="Symbol"
+      >}</a
+      ><a name="557"
+      >
+    </a
+      ><a name="562" class="Symbol"
+      >{</a
+      ><a name="563" href="agda-flat.tiny.html#563" class="Bound"
+      >&#916;</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >:</a
+      ><a name="566"
+      > </a
+      ><a name="567" class="PrimitiveType"
+      >Set</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="agda-flat.tiny.html#529" class="Bound"
+      >m</a
+      ><a name="572" class="Symbol"
+      >}</a
+      ><a name="573"
+      >
+    </a
+      ><a name="578" class="Symbol"
+      >{</a
+      ><a name="579" href="agda-flat.tiny.html#579" class="Bound"
+      >&#920;</a
+      ><a name="580"
+      > </a
+      ><a name="581" class="Symbol"
+      >:</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="PrimitiveType"
+      >Set</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="agda-flat.tiny.html#531" class="Bound"
+      >n</a
+      ><a name="588" class="Symbol"
+      >}</a
+      ><a name="589"
+      >
+    </a
+      ><a name="594" class="Symbol"
+      >(</a
+      ><a name="595" href="agda-flat.tiny.html#595" class="Bound"
+      >&#947;</a
+      ><a name="596"
+      > </a
+      ><a name="597" class="Symbol"
+      >:</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="agda-flat.tiny.html#563" class="Bound"
+      >&#916;</a
+      ><a name="600"
+      > </a
+      ><a name="601" class="Symbol"
+      >&#8594;</a
+      ><a name="602"
+      > </a
+      ><a name="603" href="agda-flat.tiny.html#547" class="Bound"
+      >&#915;</a
+      ><a name="604" class="Symbol"
+      >)</a
+      ><a name="605"
+      >
+    </a
+      ><a name="610" class="Symbol"
+      >(</a
+      ><a name="611" href="agda-flat.tiny.html#611" class="Bound"
+      >&#963;</a
+      ><a name="612"
+      > </a
+      ><a name="613" class="Symbol"
+      >:</a
+      ><a name="614"
+      > </a
+      ><a name="615" href="agda-flat.tiny.html#579" class="Bound"
+      >&#920;</a
+      ><a name="616"
+      > </a
+      ><a name="617" class="Symbol"
+      >&#8594;</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="agda-flat.tiny.html#563" class="Bound"
+      >&#916;</a
+      ><a name="620" class="Symbol"
+      >)</a
+      ><a name="621"
+      >
+    </a
+      ><a name="626" class="Symbol"
+      >(</a
+      ><a name="627" href="agda-flat.tiny.html#627" class="Bound"
+      >p</a
+      ><a name="628"
+      > </a
+      ><a name="629" class="Symbol"
+      >:</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="632"
+      > </a
+      ><a name="633" href="agda-flat.tiny.html#579" class="Bound"
+      >&#920;</a
+      ><a name="634" class="Symbol"
+      >)</a
+      ><a name="635"
+      >
+    </a
+      ><a name="640" class="Symbol"
+      >&#8594;</a
+      ><a name="641"
+      > </a
+      ><a name="642" class="Comment"
+      >-----------</a
+      ><a name="653"
+      >
+    </a
+      ><a name="658" href="agda-flat.tiny.html#400" class="Bound"
+      >&#8472;`</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="agda-flat.tiny.html#595" class="Bound"
+      >&#947;</a
+      ><a name="662"
+      > </a
+      ><a name="663" class="Symbol"
+      >(</a
+      ><a name="664" href="agda-flat.tiny.html#400" class="Bound"
+      >&#8472;`</a
+      ><a name="666"
+      > </a
+      ><a name="667" href="agda-flat.tiny.html#611" class="Bound"
+      >&#963;</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="agda-flat.tiny.html#627" class="Bound"
+      >p</a
+      ><a name="670" class="Symbol"
+      >)</a
+      ><a name="671"
+      > </a
+      ><a name="672" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="agda-flat.tiny.html#400" class="Bound"
+      >&#8472;`</a
+      ><a name="676"
+      > </a
+      ><a name="677" class="Symbol"
+      >(</a
+      ><a name="678" href="agda-flat.tiny.html#595" class="Bound"
+      >&#947;</a
+      ><a name="679"
+      > </a
+      ><a name="680" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="681"
+      > </a
+      ><a name="682" href="agda-flat.tiny.html#611" class="Bound"
+      >&#963;</a
+      ><a name="683" class="Symbol"
+      >)</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="agda-flat.tiny.html#627" class="Bound"
+      >p</a
+      ><a name="686" class="Symbol"
+      >)</a
+      ><a name="687"
+      >
+  </a
+      ><a name="690" class="Keyword"
+      >where</a
+      ><a name="695"
+      >
+
+</a
+      ><a name="697" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="767"
+      >
+</a
+      ><a name="768" class="Comment"
+      >-- Instantiating this module with a path object functor, &#8472;, asserts</a
+      ><a name="835"
+      >
+</a
+      ><a name="836" class="Comment"
+      >-- that &#8472; has a right adjoint, &#8730;. For &#8472; = &#120128; &#8594; (_) this follows from</a
+      ><a name="903"
+      >
+</a
+      ><a name="904" class="Comment"
+      >-- the fact that the interval is tiny.</a
+      ><a name="942"
+      >
+</a
+      ><a name="943" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="1013"
+      >
+</a
+      ><a name="1014" class="Keyword"
+      >postulate</a
+      ><a name="1023"
+      >
+  </a
+      ><a name="1026" class="Comment"
+      >-- the value of the right adjoint on objects</a
+      ><a name="1070"
+      >
+  </a
+      ><a name="1073" href="agda-flat.tiny.html#1073" class="Postulate"
+      >&#8730;</a
+      ><a name="1074"
+      >  </a
+      ><a name="1076" class="Symbol"
+      >:</a
+      ><a name="1077"
+      >
+    </a
+      ><a name="1082" class="Symbol"
+      >{</a
+      ><a name="1083" href="agda-flat.tiny.html#1083" class="Bound"
+      >l</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" class="Symbol"
+      >:{</a
+      ><a name="1087"
+      >&#9837;</a
+      ><a name="1088" class="Symbol"
+      >}</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1095" class="Symbol"
+      >}</a
+      ><a name="1096"
+      >
+    </a
+      ><a name="1101" class="Symbol"
+      >(</a
+      ><a name="1102" href="agda-flat.tiny.html#1102" class="Bound"
+      >A</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" class="Symbol"
+      >:{</a
+      ><a name="1106"
+      >&#9837;</a
+      ><a name="1107" class="Symbol"
+      >}</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" class="PrimitiveType"
+      >Set</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="agda-flat.tiny.html#1083" class="Bound"
+      >l</a
+      ><a name="1114" class="Symbol"
+      >)</a
+      ><a name="1115"
+      >
+    </a
+      ><a name="1120" class="Symbol"
+      >&#8594;</a
+      ><a name="1121"
+      > </a
+      ><a name="1122" class="Comment"
+      >------------</a
+      ><a name="1134"
+      >
+    </a
+      ><a name="1139" class="PrimitiveType"
+      >Set</a
+      ><a name="1142"
+      > </a
+      ><a name="1143" href="agda-flat.tiny.html#1083" class="Bound"
+      >l</a
+      ><a name="1144"
+      >
+  </a
+      ><a name="1147" class="Comment"
+      >-- right transposition across the adjunction </a
+      ><a name="1192"
+      >
+  </a
+      ><a name="1195" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="1196"
+      >  </a
+      ><a name="1198" class="Symbol"
+      >:</a
+      ><a name="1199"
+      >
+    </a
+      ><a name="1204" class="Symbol"
+      >{</a
+      ><a name="1205" href="agda-flat.tiny.html#1205" class="Bound"
+      >l</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="agda-flat.tiny.html#1207" class="Bound"
+      >l'</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" class="Symbol"
+      >:{</a
+      ><a name="1212"
+      >&#9837;</a
+      ><a name="1213" class="Symbol"
+      >}</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1220" class="Symbol"
+      >}</a
+      ><a name="1221"
+      >
+    </a
+      ><a name="1226" class="Symbol"
+      >{</a
+      ><a name="1227" href="agda-flat.tiny.html#1227" class="Bound"
+      >A</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" class="Symbol"
+      >:{</a
+      ><a name="1231"
+      >&#9837;</a
+      ><a name="1232" class="Symbol"
+      >}</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" class="PrimitiveType"
+      >Set</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" href="agda-flat.tiny.html#1205" class="Bound"
+      >l</a
+      ><a name="1239" class="Symbol"
+      >}</a
+      ><a name="1240"
+      >
+    </a
+      ><a name="1245" class="Symbol"
+      >{</a
+      ><a name="1246" href="agda-flat.tiny.html#1246" class="Bound"
+      >B</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" class="Symbol"
+      >:{</a
+      ><a name="1250"
+      >&#9837;</a
+      ><a name="1251" class="Symbol"
+      >}</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" class="PrimitiveType"
+      >Set</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="agda-flat.tiny.html#1207" class="Bound"
+      >l'</a
+      ><a name="1259" class="Symbol"
+      >}</a
+      ><a name="1260"
+      >
+    </a
+      ><a name="1265" class="Symbol"
+      >(</a
+      ><a name="1266" href="agda-flat.tiny.html#1266" class="Bound"
+      >f</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" class="Symbol"
+      >:{</a
+      ><a name="1270"
+      >&#9837;</a
+      ><a name="1271" class="Symbol"
+      >}</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" href="agda-flat.tiny.html#1227" class="Bound"
+      >A</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >&#8594;</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" href="agda-flat.tiny.html#1246" class="Bound"
+      >B</a
+      ><a name="1280" class="Symbol"
+      >)</a
+      ><a name="1281"
+      >
+    </a
+      ><a name="1286" class="Symbol"
+      >&#8594;</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" class="Comment"
+      >---------------</a
+      ><a name="1303"
+      >
+    </a
+      ><a name="1308" href="agda-flat.tiny.html#1227" class="Bound"
+      >A</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" class="Symbol"
+      >&#8594;</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" href="agda-flat.tiny.html#1073" class="Postulate"
+      >&#8730;</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="agda-flat.tiny.html#1246" class="Bound"
+      >B</a
+      ><a name="1315"
+      >
+  </a
+      ><a name="1318" class="Comment"
+      >-- left transposition across the adjunction</a
+      ><a name="1361"
+      >
+  </a
+      ><a name="1364" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="1365"
+      >  </a
+      ><a name="1367" class="Symbol"
+      >:</a
+      ><a name="1368"
+      >
+    </a
+      ><a name="1373" class="Symbol"
+      >{</a
+      ><a name="1374" href="agda-flat.tiny.html#1374" class="Bound"
+      >l</a
+      ><a name="1375"
+      > </a
+      ><a name="1376" href="agda-flat.tiny.html#1376" class="Bound"
+      >l'</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" class="Symbol"
+      >:{</a
+      ><a name="1381"
+      >&#9837;</a
+      ><a name="1382" class="Symbol"
+      >}</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1389" class="Symbol"
+      >}</a
+      ><a name="1390"
+      >
+    </a
+      ><a name="1395" class="Symbol"
+      >{</a
+      ><a name="1396" href="agda-flat.tiny.html#1396" class="Bound"
+      >A</a
+      ><a name="1397"
+      > </a
+      ><a name="1398" class="Symbol"
+      >:{</a
+      ><a name="1400"
+      >&#9837;</a
+      ><a name="1401" class="Symbol"
+      >}</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" class="PrimitiveType"
+      >Set</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="agda-flat.tiny.html#1374" class="Bound"
+      >l</a
+      ><a name="1408" class="Symbol"
+      >}</a
+      ><a name="1409"
+      >
+    </a
+      ><a name="1414" class="Symbol"
+      >{</a
+      ><a name="1415" href="agda-flat.tiny.html#1415" class="Bound"
+      >B</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" class="Symbol"
+      >:{</a
+      ><a name="1419"
+      >&#9837;</a
+      ><a name="1420" class="Symbol"
+      >}</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" class="PrimitiveType"
+      >Set</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" href="agda-flat.tiny.html#1376" class="Bound"
+      >l'</a
+      ><a name="1428" class="Symbol"
+      >}</a
+      ><a name="1429"
+      >
+    </a
+      ><a name="1434" class="Symbol"
+      >(</a
+      ><a name="1435" href="agda-flat.tiny.html#1435" class="Bound"
+      >g</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" class="Symbol"
+      >:{</a
+      ><a name="1439"
+      >&#9837;</a
+      ><a name="1440" class="Symbol"
+      >}</a
+      ><a name="1441"
+      > </a
+      ><a name="1442" href="agda-flat.tiny.html#1396" class="Bound"
+      >A</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" class="Symbol"
+      >&#8594;</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" href="agda-flat.tiny.html#1073" class="Postulate"
+      >&#8730;</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" href="agda-flat.tiny.html#1415" class="Bound"
+      >B</a
+      ><a name="1449" class="Symbol"
+      >)</a
+      ><a name="1450"
+      >
+    </a
+      ><a name="1455" class="Symbol"
+      >&#8594;</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" class="Comment"
+      >--------------</a
+      ><a name="1471"
+      >
+    </a
+      ><a name="1476" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="agda-flat.tiny.html#1396" class="Bound"
+      >A</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" class="Symbol"
+      >&#8594;</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" href="agda-flat.tiny.html#1415" class="Bound"
+      >B</a
+      ><a name="1483"
+      >
+  </a
+      ><a name="1486" class="Comment"
+      >-- right and left transposition are mutually inverse</a
+      ><a name="1538"
+      >
+  </a
+      ><a name="1541" href="agda-flat.tiny.html#1541" class="Postulate"
+      >LR</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" class="Symbol"
+      >:</a
+      ><a name="1545"
+      >
+    </a
+      ><a name="1550" class="Symbol"
+      >{</a
+      ><a name="1551" href="agda-flat.tiny.html#1551" class="Bound"
+      >l</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" href="agda-flat.tiny.html#1553" class="Bound"
+      >l'</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >:{</a
+      ><a name="1558"
+      >&#9837;</a
+      ><a name="1559" class="Symbol"
+      >}</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1566" class="Symbol"
+      >}</a
+      ><a name="1567"
+      >
+    </a
+      ><a name="1572" class="Symbol"
+      >{</a
+      ><a name="1573" href="agda-flat.tiny.html#1573" class="Bound"
+      >A</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" class="Symbol"
+      >:{</a
+      ><a name="1577"
+      >&#9837;</a
+      ><a name="1578" class="Symbol"
+      >}</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" class="PrimitiveType"
+      >Set</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" href="agda-flat.tiny.html#1551" class="Bound"
+      >l</a
+      ><a name="1585" class="Symbol"
+      >}</a
+      ><a name="1586"
+      >
+    </a
+      ><a name="1591" class="Symbol"
+      >{</a
+      ><a name="1592" href="agda-flat.tiny.html#1592" class="Bound"
+      >B</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" class="Symbol"
+      >:{</a
+      ><a name="1596"
+      >&#9837;</a
+      ><a name="1597" class="Symbol"
+      >}</a
+      ><a name="1598"
+      > </a
+      ><a name="1599" class="PrimitiveType"
+      >Set</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" href="agda-flat.tiny.html#1553" class="Bound"
+      >l'</a
+      ><a name="1605" class="Symbol"
+      >}</a
+      ><a name="1606"
+      >
+    </a
+      ><a name="1611" class="Symbol"
+      >{</a
+      ><a name="1612" href="agda-flat.tiny.html#1612" class="Bound"
+      >f</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" class="Symbol"
+      >:{</a
+      ><a name="1616"
+      >&#9837;</a
+      ><a name="1617" class="Symbol"
+      >}</a
+      ><a name="1618"
+      > </a
+      ><a name="1619" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" href="agda-flat.tiny.html#1573" class="Bound"
+      >A</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" class="Symbol"
+      >&#8594;</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="agda-flat.tiny.html#1592" class="Bound"
+      >B</a
+      ><a name="1626" class="Symbol"
+      >}</a
+      ><a name="1627"
+      >
+    </a
+      ><a name="1632" class="Symbol"
+      >&#8594;</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" class="Comment"
+      >---------------</a
+      ><a name="1649"
+      >
+    </a
+      ><a name="1654" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" class="Symbol"
+      >(</a
+      ><a name="1657" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" href="agda-flat.tiny.html#1612" class="Bound"
+      >f</a
+      ><a name="1660" class="Symbol"
+      >)</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1663"
+      > </a
+      ><a name="1664" href="agda-flat.tiny.html#1612" class="Bound"
+      >f</a
+      ><a name="1665"
+      >
+  </a
+      ><a name="1668" href="agda-flat.tiny.html#1668" class="Postulate"
+      >RL</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" class="Symbol"
+      >:</a
+      ><a name="1672"
+      >
+    </a
+      ><a name="1677" class="Symbol"
+      >{</a
+      ><a name="1678" href="agda-flat.tiny.html#1678" class="Bound"
+      >l</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" href="agda-flat.tiny.html#1680" class="Bound"
+      >l'</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" class="Symbol"
+      >:{</a
+      ><a name="1685"
+      >&#9837;</a
+      ><a name="1686" class="Symbol"
+      >}</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1693" class="Symbol"
+      >}</a
+      ><a name="1694"
+      >
+    </a
+      ><a name="1699" class="Symbol"
+      >{</a
+      ><a name="1700" href="agda-flat.tiny.html#1700" class="Bound"
+      >A</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" class="Symbol"
+      >:{</a
+      ><a name="1704"
+      >&#9837;</a
+      ><a name="1705" class="Symbol"
+      >}</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" class="PrimitiveType"
+      >Set</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" href="agda-flat.tiny.html#1678" class="Bound"
+      >l</a
+      ><a name="1712" class="Symbol"
+      >}</a
+      ><a name="1713"
+      >
+    </a
+      ><a name="1718" class="Symbol"
+      >{</a
+      ><a name="1719" href="agda-flat.tiny.html#1719" class="Bound"
+      >B</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" class="Symbol"
+      >:{</a
+      ><a name="1723"
+      >&#9837;</a
+      ><a name="1724" class="Symbol"
+      >}</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" class="PrimitiveType"
+      >Set</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="agda-flat.tiny.html#1680" class="Bound"
+      >l'</a
+      ><a name="1732" class="Symbol"
+      >}</a
+      ><a name="1733"
+      >
+    </a
+      ><a name="1738" class="Symbol"
+      >{</a
+      ><a name="1739" href="agda-flat.tiny.html#1739" class="Bound"
+      >g</a
+      ><a name="1740"
+      > </a
+      ><a name="1741" class="Symbol"
+      >:{</a
+      ><a name="1743"
+      >&#9837;</a
+      ><a name="1744" class="Symbol"
+      >}</a
+      ><a name="1745"
+      > </a
+      ><a name="1746" href="agda-flat.tiny.html#1700" class="Bound"
+      >A</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" class="Symbol"
+      >&#8594;</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="agda-flat.tiny.html#1073" class="Postulate"
+      >&#8730;</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" href="agda-flat.tiny.html#1719" class="Bound"
+      >B</a
+      ><a name="1753" class="Symbol"
+      >}</a
+      ><a name="1754"
+      >
+    </a
+      ><a name="1759" class="Symbol"
+      >&#8594;</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" class="Comment"
+      >---------------</a
+      ><a name="1776"
+      >
+    </a
+      ><a name="1781" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" class="Symbol"
+      >(</a
+      ><a name="1784" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" href="agda-flat.tiny.html#1739" class="Bound"
+      >g</a
+      ><a name="1787" class="Symbol"
+      >)</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" href="agda-flat.tiny.html#1739" class="Bound"
+      >g</a
+      ><a name="1792"
+      >
+  </a
+      ><a name="1795" class="Comment"
+      >-- one-sided naturality of right transposition</a
+      ><a name="1841"
+      >
+  </a
+      ><a name="1844" href="agda-flat.tiny.html#1844" class="Postulate"
+      >R&#8472;</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" class="Symbol"
+      >:</a
+      ><a name="1848"
+      >
+    </a
+      ><a name="1853" class="Symbol"
+      >{</a
+      ><a name="1854" href="agda-flat.tiny.html#1854" class="Bound"
+      >l</a
+      ><a name="1855"
+      > </a
+      ><a name="1856" href="agda-flat.tiny.html#1856" class="Bound"
+      >l'</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" href="agda-flat.tiny.html#1859" class="Bound"
+      >l''</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" class="Symbol"
+      >:{</a
+      ><a name="1865"
+      >&#9837;</a
+      ><a name="1866" class="Symbol"
+      >}</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1873" class="Symbol"
+      >}</a
+      ><a name="1874"
+      >
+    </a
+      ><a name="1879" class="Symbol"
+      >{</a
+      ><a name="1880" href="agda-flat.tiny.html#1880" class="Bound"
+      >A</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" class="Symbol"
+      >:{</a
+      ><a name="1884"
+      >&#9837;</a
+      ><a name="1885" class="Symbol"
+      >}</a
+      ><a name="1886"
+      > </a
+      ><a name="1887" class="PrimitiveType"
+      >Set</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" href="agda-flat.tiny.html#1854" class="Bound"
+      >l</a
+      ><a name="1892" class="Symbol"
+      >}</a
+      ><a name="1893"
+      >
+    </a
+      ><a name="1898" class="Symbol"
+      >{</a
+      ><a name="1899" href="agda-flat.tiny.html#1899" class="Bound"
+      >B</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" class="Symbol"
+      >:{</a
+      ><a name="1903"
+      >&#9837;</a
+      ><a name="1904" class="Symbol"
+      >}</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" class="PrimitiveType"
+      >Set</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" href="agda-flat.tiny.html#1856" class="Bound"
+      >l'</a
+      ><a name="1912" class="Symbol"
+      >}</a
+      ><a name="1913"
+      >
+    </a
+      ><a name="1918" class="Symbol"
+      >{</a
+      ><a name="1919" href="agda-flat.tiny.html#1919" class="Bound"
+      >C</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >:{</a
+      ><a name="1923"
+      >&#9837;</a
+      ><a name="1924" class="Symbol"
+      >}</a
+      ><a name="1925"
+      > </a
+      ><a name="1926" class="PrimitiveType"
+      >Set</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" href="agda-flat.tiny.html#1859" class="Bound"
+      >l''</a
+      ><a name="1933" class="Symbol"
+      >}</a
+      ><a name="1934"
+      >
+    </a
+      ><a name="1939" class="Symbol"
+      >(</a
+      ><a name="1940" href="agda-flat.tiny.html#1940" class="Bound"
+      >g</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" class="Symbol"
+      >:{</a
+      ><a name="1944"
+      >&#9837;</a
+      ><a name="1945" class="Symbol"
+      >}</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="agda-flat.tiny.html#1880" class="Bound"
+      >A</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" class="Symbol"
+      >&#8594;</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="agda-flat.tiny.html#1899" class="Bound"
+      >B</a
+      ><a name="1952" class="Symbol"
+      >)</a
+      ><a name="1953"
+      >
+    </a
+      ><a name="1958" class="Symbol"
+      >(</a
+      ><a name="1959" href="agda-flat.tiny.html#1959" class="Bound"
+      >f</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" class="Symbol"
+      >:{</a
+      ><a name="1963"
+      >&#9837;</a
+      ><a name="1964" class="Symbol"
+      >}</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" href="agda-flat.tiny.html#1899" class="Bound"
+      >B</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" class="Symbol"
+      >&#8594;</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" href="agda-flat.tiny.html#1919" class="Bound"
+      >C</a
+      ><a name="1973" class="Symbol"
+      >)</a
+      ><a name="1974"
+      >
+    </a
+      ><a name="1979" class="Symbol"
+      >&#8594;</a
+      ><a name="1980"
+      > </a
+      ><a name="1981" class="Comment"
+      >--------------------</a
+      ><a name="2001"
+      >
+    </a
+      ><a name="2006" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" class="Symbol"
+      >(</a
+      ><a name="2009" href="agda-flat.tiny.html#1959" class="Bound"
+      >f</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="2012"
+      > </a
+      ><a name="2013" href="agda-flat.tiny.html#400" class="Bound"
+      >&#8472;`</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" href="agda-flat.tiny.html#1940" class="Bound"
+      >g</a
+      ><a name="2017" class="Symbol"
+      >)</a
+      ><a name="2018"
+      > </a
+      ><a name="2019" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" href="agda-flat.tiny.html#1959" class="Bound"
+      >f</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="2026"
+      > </a
+      ><a name="2027" href="agda-flat.tiny.html#1940" class="Bound"
+      >g</a
+      ><a name="2028"
+      >
+
+</a
+      ><a name="2030" class="Symbol"
+      >{-#</a
+      ><a name="2033"
+      > </a
+      ><a name="2034" class="Keyword"
+      >REWRITE</a
+      ><a name="2041"
+      > </a
+      ><a name="2042" href="agda-flat.tiny.html#1541" class="Postulate"
+      >LR</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" href="agda-flat.tiny.html#1668" class="Postulate"
+      >RL</a
+      ><a name="2047"
+      > </a
+      ><a name="2048" class="Symbol"
+      >#-}</a
+      ><a name="2051"
+      >
+</a
+      ><a name="2052" class="Comment"
+      >{- 
+The use of these REWRITES is not necessary, but it does simplify
+proofs of equality in the paper by making some of the steps
+computational. The proof of L&#8472; below is an example.
+-}</a
+      ><a name="2235"
+      >
+
+</a
+      ><a name="2237" class="Comment"
+      >-- One-sided naturality of left transposition is derivable</a
+      ><a name="2295"
+      >
+</a
+      ><a name="2296" href="agda-flat.tiny.html#2296" class="Function"
+      >L&#8472;</a
+      ><a name="2298"
+      > </a
+      ><a name="2299" class="Symbol"
+      >:</a
+      ><a name="2300"
+      >
+  </a
+      ><a name="2303" class="Symbol"
+      >{</a
+      ><a name="2304" href="agda-flat.tiny.html#2304" class="Bound"
+      >l</a
+      ><a name="2305"
+      > </a
+      ><a name="2306" href="agda-flat.tiny.html#2306" class="Bound"
+      >l'</a
+      ><a name="2308"
+      > </a
+      ><a name="2309" href="agda-flat.tiny.html#2309" class="Bound"
+      >l''</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" class="Symbol"
+      >:{</a
+      ><a name="2315"
+      >&#9837;</a
+      ><a name="2316" class="Symbol"
+      >}</a
+      ><a name="2317"
+      > </a
+      ><a name="2318" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2323" class="Symbol"
+      >}</a
+      ><a name="2324"
+      >
+  </a
+      ><a name="2327" class="Symbol"
+      >{</a
+      ><a name="2328" href="agda-flat.tiny.html#2328" class="Bound"
+      >A</a
+      ><a name="2329"
+      > </a
+      ><a name="2330" class="Symbol"
+      >:{</a
+      ><a name="2332"
+      >&#9837;</a
+      ><a name="2333" class="Symbol"
+      >}</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" class="PrimitiveType"
+      >Set</a
+      ><a name="2338"
+      > </a
+      ><a name="2339" href="agda-flat.tiny.html#2304" class="Bound"
+      >l</a
+      ><a name="2340" class="Symbol"
+      >}</a
+      ><a name="2341"
+      >
+  </a
+      ><a name="2344" class="Symbol"
+      >{</a
+      ><a name="2345" href="agda-flat.tiny.html#2345" class="Bound"
+      >B</a
+      ><a name="2346"
+      > </a
+      ><a name="2347" class="Symbol"
+      >:{</a
+      ><a name="2349"
+      >&#9837;</a
+      ><a name="2350" class="Symbol"
+      >}</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" class="PrimitiveType"
+      >Set</a
+      ><a name="2355"
+      > </a
+      ><a name="2356" href="agda-flat.tiny.html#2306" class="Bound"
+      >l'</a
+      ><a name="2358" class="Symbol"
+      >}</a
+      ><a name="2359"
+      >
+  </a
+      ><a name="2362" class="Symbol"
+      >{</a
+      ><a name="2363" href="agda-flat.tiny.html#2363" class="Bound"
+      >C</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" class="Symbol"
+      >:{</a
+      ><a name="2367"
+      >&#9837;</a
+      ><a name="2368" class="Symbol"
+      >}</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" class="PrimitiveType"
+      >Set</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" href="agda-flat.tiny.html#2309" class="Bound"
+      >l''</a
+      ><a name="2377" class="Symbol"
+      >}</a
+      ><a name="2378"
+      >
+  </a
+      ><a name="2381" class="Symbol"
+      >(</a
+      ><a name="2382" href="agda-flat.tiny.html#2382" class="Bound"
+      >f</a
+      ><a name="2383"
+      > </a
+      ><a name="2384" class="Symbol"
+      >:{</a
+      ><a name="2386"
+      >&#9837;</a
+      ><a name="2387" class="Symbol"
+      >}</a
+      ><a name="2388"
+      > </a
+      ><a name="2389" href="agda-flat.tiny.html#2345" class="Bound"
+      >B</a
+      ><a name="2390"
+      > </a
+      ><a name="2391" class="Symbol"
+      >&#8594;</a
+      ><a name="2392"
+      > </a
+      ><a name="2393" href="agda-flat.tiny.html#1073" class="Postulate"
+      >&#8730;</a
+      ><a name="2394"
+      > </a
+      ><a name="2395" href="agda-flat.tiny.html#2363" class="Bound"
+      >C</a
+      ><a name="2396" class="Symbol"
+      >)</a
+      ><a name="2397"
+      >
+  </a
+      ><a name="2400" class="Symbol"
+      >(</a
+      ><a name="2401" href="agda-flat.tiny.html#2401" class="Bound"
+      >g</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" class="Symbol"
+      >:{</a
+      ><a name="2405"
+      >&#9837;</a
+      ><a name="2406" class="Symbol"
+      >}</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" href="agda-flat.tiny.html#2328" class="Bound"
+      >A</a
+      ><a name="2409"
+      > </a
+      ><a name="2410" class="Symbol"
+      >&#8594;</a
+      ><a name="2411"
+      > </a
+      ><a name="2412" href="agda-flat.tiny.html#2345" class="Bound"
+      >B</a
+      ><a name="2413" class="Symbol"
+      >)</a
+      ><a name="2414"
+      >
+  </a
+      ><a name="2417" class="Symbol"
+      >&#8594;</a
+      ><a name="2418"
+      > </a
+      ><a name="2419" class="Comment"
+      >--------------------</a
+      ><a name="2439"
+      >
+  </a
+      ><a name="2442" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="2443"
+      > </a
+      ><a name="2444" href="agda-flat.tiny.html#2382" class="Bound"
+      >f</a
+      ><a name="2445"
+      > </a
+      ><a name="2446" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="2447"
+      > </a
+      ><a name="2448" href="agda-flat.tiny.html#400" class="Bound"
+      >&#8472;`</a
+      ><a name="2450"
+      > </a
+      ><a name="2451" href="agda-flat.tiny.html#2401" class="Bound"
+      >g</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" class="Symbol"
+      >(</a
+      ><a name="2458" href="agda-flat.tiny.html#2382" class="Bound"
+      >f</a
+      ><a name="2459"
+      > </a
+      ><a name="2460" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" href="agda-flat.tiny.html#2401" class="Bound"
+      >g</a
+      ><a name="2463" class="Symbol"
+      >)</a
+      ><a name="2464"
+      >
+</a
+      ><a name="2465" href="agda-flat.tiny.html#2296" class="Function"
+      >L&#8472;</a
+      ><a name="2467"
+      > </a
+      ><a name="2468" href="agda-flat.tiny.html#2468" class="Bound"
+      >f</a
+      ><a name="2469"
+      > </a
+      ><a name="2470" href="agda-flat.tiny.html#2470" class="Bound"
+      >g</a
+      ><a name="2471"
+      > </a
+      ><a name="2472" class="Symbol"
+      >=</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" href="agda-flat.prelude.html#330" class="Function"
+      >cong&#9837;</a
+      ><a name="2479"
+      > </a
+      ><a name="2480" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="2481"
+      > </a
+      ><a name="2482" class="Symbol"
+      >(</a
+      ><a name="2483" href="agda-flat.tiny.html#1844" class="Postulate"
+      >R&#8472;</a
+      ><a name="2485"
+      > </a
+      ><a name="2486" href="agda-flat.tiny.html#2470" class="Bound"
+      >g</a
+      ><a name="2487"
+      > </a
+      ><a name="2488" class="Symbol"
+      >(</a
+      ><a name="2489" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="2490"
+      > </a
+      ><a name="2491" href="agda-flat.tiny.html#2468" class="Bound"
+      >f</a
+      ><a name="2492" class="Symbol"
+      >))</a
+      ><a name="2494"
+      >
+</a
+      ><a name="2495" class="Comment"
+      >{- 
+Here is the proof without declaring LR and RL to be REWRITES:
+     proof
+       (L f &#8728; &#8472;` g)
+     &#8801;[ symm LR  ]
+       L (R (L f &#8728; &#8472;` g))
+     &#8801;[ cong&#9837; L (R&#8472; g (L f)) ]
+       L (R (L f) &#8728; g)
+     &#8801;[ cong&#9837; (&#955; h &#8594; L (h &#8728; g)) RL ]
+       L (f &#8728; g)
+     qed
+-}</a
+      ><a name="2756"
+      >
+  
+</a
+      ><a name="2760" class="Comment"
+      >-- Functoriality of &#8730;</a
+      ><a name="2781"
+      >
+</a
+      ><a name="2782" href="agda-flat.tiny.html#2782" class="Function"
+      >&#8730;`</a
+      ><a name="2784"
+      > </a
+      ><a name="2785" class="Symbol"
+      >:</a
+      ><a name="2786"
+      >
+  </a
+      ><a name="2789" class="Symbol"
+      >{</a
+      ><a name="2790" href="agda-flat.tiny.html#2790" class="Bound"
+      >l</a
+      ><a name="2791"
+      > </a
+      ><a name="2792" href="agda-flat.tiny.html#2792" class="Bound"
+      >l'</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" class="Symbol"
+      >:{</a
+      ><a name="2797"
+      >&#9837;</a
+      ><a name="2798" class="Symbol"
+      >}</a
+      ><a name="2799"
+      > </a
+      ><a name="2800" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2805" class="Symbol"
+      >}</a
+      ><a name="2806"
+      >
+  </a
+      ><a name="2809" class="Symbol"
+      >{</a
+      ><a name="2810" href="agda-flat.tiny.html#2810" class="Bound"
+      >A</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" class="Symbol"
+      >:{</a
+      ><a name="2814"
+      >&#9837;</a
+      ><a name="2815" class="Symbol"
+      >}</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" class="PrimitiveType"
+      >Set</a
+      ><a name="2820"
+      > </a
+      ><a name="2821" href="agda-flat.tiny.html#2790" class="Bound"
+      >l</a
+      ><a name="2822" class="Symbol"
+      >}</a
+      ><a name="2823"
+      >
+  </a
+      ><a name="2826" class="Symbol"
+      >{</a
+      ><a name="2827" href="agda-flat.tiny.html#2827" class="Bound"
+      >B</a
+      ><a name="2828"
+      > </a
+      ><a name="2829" class="Symbol"
+      >:{</a
+      ><a name="2831"
+      >&#9837;</a
+      ><a name="2832" class="Symbol"
+      >}</a
+      ><a name="2833"
+      > </a
+      ><a name="2834" class="PrimitiveType"
+      >Set</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" href="agda-flat.tiny.html#2792" class="Bound"
+      >l'</a
+      ><a name="2840" class="Symbol"
+      >}</a
+      ><a name="2841"
+      >
+  </a
+      ><a name="2844" class="Symbol"
+      >(</a
+      ><a name="2845" href="agda-flat.tiny.html#2845" class="Bound"
+      >f</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" class="Symbol"
+      >:{</a
+      ><a name="2849"
+      >&#9837;</a
+      ><a name="2850" class="Symbol"
+      >}</a
+      ><a name="2851"
+      > </a
+      ><a name="2852" href="agda-flat.tiny.html#2810" class="Bound"
+      >A</a
+      ><a name="2853"
+      > </a
+      ><a name="2854" class="Symbol"
+      >&#8594;</a
+      ><a name="2855"
+      > </a
+      ><a name="2856" href="agda-flat.tiny.html#2827" class="Bound"
+      >B</a
+      ><a name="2857" class="Symbol"
+      >)</a
+      ><a name="2858"
+      >
+  </a
+      ><a name="2861" class="Symbol"
+      >&#8594;</a
+      ><a name="2862"
+      > </a
+      ><a name="2863" class="Comment"
+      >---------------</a
+      ><a name="2878"
+      >
+  </a
+      ><a name="2881" href="agda-flat.tiny.html#1073" class="Postulate"
+      >&#8730;</a
+      ><a name="2882"
+      > </a
+      ><a name="2883" href="agda-flat.tiny.html#2810" class="Bound"
+      >A</a
+      ><a name="2884"
+      > </a
+      ><a name="2885" class="Symbol"
+      >&#8594;</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" href="agda-flat.tiny.html#1073" class="Postulate"
+      >&#8730;</a
+      ><a name="2888"
+      > </a
+      ><a name="2889" href="agda-flat.tiny.html#2827" class="Bound"
+      >B</a
+      ><a name="2890"
+      >
+</a
+      ><a name="2891" href="agda-flat.tiny.html#2782" class="Function"
+      >&#8730;`</a
+      ><a name="2893"
+      > </a
+      ><a name="2894" href="agda-flat.tiny.html#2894" class="Bound"
+      >f</a
+      ><a name="2895"
+      > </a
+      ><a name="2896" class="Symbol"
+      >=</a
+      ><a name="2897"
+      > </a
+      ><a name="2898" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="2899"
+      > </a
+      ><a name="2900" class="Symbol"
+      >(</a
+      ><a name="2901" href="agda-flat.tiny.html#2894" class="Bound"
+      >f</a
+      ><a name="2902"
+      > </a
+      ><a name="2903" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="2904"
+      > </a
+      ><a name="2905" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="2906"
+      > </a
+      ><a name="2907" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="2909" class="Symbol"
+      >)</a
+      ><a name="2910"
+      >
+
+</a
+      ><a name="2912" class="Comment"
+      >-- The other naturality property of right transposition</a
+      ><a name="2967"
+      >
+</a
+      ><a name="2968" href="agda-flat.tiny.html#2968" class="Function"
+      >&#8730;R</a
+      ><a name="2970"
+      > </a
+      ><a name="2971" class="Symbol"
+      >:</a
+      ><a name="2972"
+      >
+  </a
+      ><a name="2975" class="Symbol"
+      >{</a
+      ><a name="2976" href="agda-flat.tiny.html#2976" class="Bound"
+      >l</a
+      ><a name="2977"
+      > </a
+      ><a name="2978" href="agda-flat.tiny.html#2978" class="Bound"
+      >l'</a
+      ><a name="2980"
+      > </a
+      ><a name="2981" href="agda-flat.tiny.html#2981" class="Bound"
+      >l''</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" class="Symbol"
+      >:{</a
+      ><a name="2987"
+      >&#9837;</a
+      ><a name="2988" class="Symbol"
+      >}</a
+      ><a name="2989"
+      > </a
+      ><a name="2990" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2995" class="Symbol"
+      >}</a
+      ><a name="2996"
+      >
+  </a
+      ><a name="2999" class="Symbol"
+      >{</a
+      ><a name="3000" href="agda-flat.tiny.html#3000" class="Bound"
+      >A</a
+      ><a name="3001"
+      > </a
+      ><a name="3002" class="Symbol"
+      >:{</a
+      ><a name="3004"
+      >&#9837;</a
+      ><a name="3005" class="Symbol"
+      >}</a
+      ><a name="3006"
+      > </a
+      ><a name="3007" class="PrimitiveType"
+      >Set</a
+      ><a name="3010"
+      > </a
+      ><a name="3011" href="agda-flat.tiny.html#2976" class="Bound"
+      >l</a
+      ><a name="3012" class="Symbol"
+      >}</a
+      ><a name="3013"
+      >
+  </a
+      ><a name="3016" class="Symbol"
+      >{</a
+      ><a name="3017" href="agda-flat.tiny.html#3017" class="Bound"
+      >B</a
+      ><a name="3018"
+      > </a
+      ><a name="3019" class="Symbol"
+      >:{</a
+      ><a name="3021"
+      >&#9837;</a
+      ><a name="3022" class="Symbol"
+      >}</a
+      ><a name="3023"
+      > </a
+      ><a name="3024" class="PrimitiveType"
+      >Set</a
+      ><a name="3027"
+      > </a
+      ><a name="3028" href="agda-flat.tiny.html#2978" class="Bound"
+      >l'</a
+      ><a name="3030" class="Symbol"
+      >}</a
+      ><a name="3031"
+      >
+  </a
+      ><a name="3034" class="Symbol"
+      >{</a
+      ><a name="3035" href="agda-flat.tiny.html#3035" class="Bound"
+      >C</a
+      ><a name="3036"
+      > </a
+      ><a name="3037" class="Symbol"
+      >:{</a
+      ><a name="3039"
+      >&#9837;</a
+      ><a name="3040" class="Symbol"
+      >}</a
+      ><a name="3041"
+      > </a
+      ><a name="3042" class="PrimitiveType"
+      >Set</a
+      ><a name="3045"
+      > </a
+      ><a name="3046" href="agda-flat.tiny.html#2981" class="Bound"
+      >l''</a
+      ><a name="3049" class="Symbol"
+      >}</a
+      ><a name="3050"
+      >
+  </a
+      ><a name="3053" class="Symbol"
+      >(</a
+      ><a name="3054" href="agda-flat.tiny.html#3054" class="Bound"
+      >g</a
+      ><a name="3055"
+      > </a
+      ><a name="3056" class="Symbol"
+      >:{</a
+      ><a name="3058"
+      >&#9837;</a
+      ><a name="3059" class="Symbol"
+      >}</a
+      ><a name="3060"
+      > </a
+      ><a name="3061" href="agda-flat.tiny.html#3017" class="Bound"
+      >B</a
+      ><a name="3062"
+      > </a
+      ><a name="3063" class="Symbol"
+      >&#8594;</a
+      ><a name="3064"
+      > </a
+      ><a name="3065" href="agda-flat.tiny.html#3035" class="Bound"
+      >C</a
+      ><a name="3066" class="Symbol"
+      >)</a
+      ><a name="3067"
+      >
+  </a
+      ><a name="3070" class="Symbol"
+      >(</a
+      ><a name="3071" href="agda-flat.tiny.html#3071" class="Bound"
+      >f</a
+      ><a name="3072"
+      > </a
+      ><a name="3073" class="Symbol"
+      >:{</a
+      ><a name="3075"
+      >&#9837;</a
+      ><a name="3076" class="Symbol"
+      >}</a
+      ><a name="3077"
+      > </a
+      ><a name="3078" href="agda-flat.tiny.html#331" class="Bound"
+      >&#8472;</a
+      ><a name="3079"
+      > </a
+      ><a name="3080" href="agda-flat.tiny.html#3000" class="Bound"
+      >A</a
+      ><a name="3081"
+      > </a
+      ><a name="3082" class="Symbol"
+      >&#8594;</a
+      ><a name="3083"
+      > </a
+      ><a name="3084" href="agda-flat.tiny.html#3017" class="Bound"
+      >B</a
+      ><a name="3085" class="Symbol"
+      >)</a
+      ><a name="3086"
+      >
+  </a
+      ><a name="3089" class="Symbol"
+      >&#8594;</a
+      ><a name="3090"
+      > </a
+      ><a name="3091" class="Comment"
+      >--------------------</a
+      ><a name="3111"
+      >
+  </a
+      ><a name="3114" href="agda-flat.tiny.html#2782" class="Function"
+      >&#8730;`</a
+      ><a name="3116"
+      > </a
+      ><a name="3117" href="agda-flat.tiny.html#3054" class="Bound"
+      >g</a
+      ><a name="3118"
+      > </a
+      ><a name="3119" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3120"
+      > </a
+      ><a name="3121" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3122"
+      > </a
+      ><a name="3123" href="agda-flat.tiny.html#3071" class="Bound"
+      >f</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3128"
+      > </a
+      ><a name="3129" class="Symbol"
+      >(</a
+      ><a name="3130" href="agda-flat.tiny.html#3054" class="Bound"
+      >g</a
+      ><a name="3131"
+      > </a
+      ><a name="3132" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3133"
+      > </a
+      ><a name="3134" href="agda-flat.tiny.html#3071" class="Bound"
+      >f</a
+      ><a name="3135" class="Symbol"
+      >)</a
+      ><a name="3136"
+      >
+</a
+      ><a name="3137" href="agda-flat.tiny.html#2968" class="Function"
+      >&#8730;R</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" href="agda-flat.tiny.html#3140" class="Bound"
+      >g</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" href="agda-flat.tiny.html#3142" class="Bound"
+      >f</a
+      ><a name="3143"
+      > </a
+      ><a name="3144" class="Symbol"
+      >=</a
+      ><a name="3145"
+      >
+  </a
+      ><a name="3148" href="agda.prelude.html#1633" class="Function Operator"
+      >proof</a
+      ><a name="3153"
+      >
+    </a
+      ><a name="3158" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3159"
+      > </a
+      ><a name="3160" class="Symbol"
+      >(</a
+      ><a name="3161" href="agda-flat.tiny.html#3140" class="Bound"
+      >g</a
+      ><a name="3162"
+      > </a
+      ><a name="3163" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3164"
+      > </a
+      ><a name="3165" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="3166"
+      > </a
+      ><a name="3167" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="3169" class="Symbol"
+      >)</a
+      ><a name="3170"
+      > </a
+      ><a name="3171" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3172"
+      > </a
+      ><a name="3173" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3174"
+      > </a
+      ><a name="3175" href="agda-flat.tiny.html#3142" class="Bound"
+      >f</a
+      ><a name="3176"
+      >
+  </a
+      ><a name="3179" href="agda.prelude.html#1751" class="Function Operator"
+      >&#8801;[</a
+      ><a name="3181"
+      > </a
+      ><a name="3182" href="agda.prelude.html#688" class="Function"
+      >symm</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" class="Symbol"
+      >(</a
+      ><a name="3188" href="agda-flat.tiny.html#1844" class="Postulate"
+      >R&#8472;</a
+      ><a name="3190"
+      > </a
+      ><a name="3191" class="Symbol"
+      >(</a
+      ><a name="3192" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3193"
+      > </a
+      ><a name="3194" href="agda-flat.tiny.html#3142" class="Bound"
+      >f</a
+      ><a name="3195" class="Symbol"
+      >)</a
+      ><a name="3196"
+      > </a
+      ><a name="3197" class="Symbol"
+      >(</a
+      ><a name="3198" href="agda-flat.tiny.html#3140" class="Bound"
+      >g</a
+      ><a name="3199"
+      > </a
+      ><a name="3200" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3201"
+      > </a
+      ><a name="3202" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="3203"
+      > </a
+      ><a name="3204" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="3206" class="Symbol"
+      >))</a
+      ><a name="3208"
+      > </a
+      ><a name="3209" href="agda.prelude.html#1751" class="Function Operator"
+      >]</a
+      ><a name="3210"
+      >
+    </a
+      ><a name="3215" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3216"
+      > </a
+      ><a name="3217" class="Symbol"
+      >(</a
+      ><a name="3218" href="agda-flat.tiny.html#3140" class="Bound"
+      >g</a
+      ><a name="3219"
+      > </a
+      ><a name="3220" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3221"
+      > </a
+      ><a name="3222" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="3223"
+      > </a
+      ><a name="3224" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="3226"
+      > </a
+      ><a name="3227" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3228"
+      > </a
+      ><a name="3229" href="agda-flat.tiny.html#400" class="Bound"
+      >&#8472;`</a
+      ><a name="3231" class="Symbol"
+      >(</a
+      ><a name="3232" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3233"
+      > </a
+      ><a name="3234" href="agda-flat.tiny.html#3142" class="Bound"
+      >f</a
+      ><a name="3235" class="Symbol"
+      >))</a
+      ><a name="3237"
+      >
+  </a
+      ><a name="3240" href="agda.prelude.html#1751" class="Function Operator"
+      >&#8801;[</a
+      ><a name="3242"
+      > </a
+      ><a name="3243" href="agda-flat.prelude.html#330" class="Function"
+      >cong&#9837;</a
+      ><a name="3248"
+      > </a
+      ><a name="3249" class="Symbol"
+      >(&#955;</a
+      ><a name="3251"
+      > </a
+      ><a name="3252" href="agda-flat.tiny.html#3252" class="Bound"
+      >h</a
+      ><a name="3253"
+      > </a
+      ><a name="3254" class="Symbol"
+      >&#8594;</a
+      ><a name="3255"
+      > </a
+      ><a name="3256" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3257"
+      > </a
+      ><a name="3258" class="Symbol"
+      >(</a
+      ><a name="3259" href="agda-flat.tiny.html#3140" class="Bound"
+      >g</a
+      ><a name="3260"
+      > </a
+      ><a name="3261" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3262"
+      > </a
+      ><a name="3263" href="agda-flat.tiny.html#3252" class="Bound"
+      >h</a
+      ><a name="3264" class="Symbol"
+      >))</a
+      ><a name="3266"
+      > </a
+      ><a name="3267" class="Symbol"
+      >(</a
+      ><a name="3268" href="agda-flat.tiny.html#2296" class="Function"
+      >L&#8472;</a
+      ><a name="3270"
+      > </a
+      ><a name="3271" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="3273"
+      > </a
+      ><a name="3274" class="Symbol"
+      >(</a
+      ><a name="3275" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3276"
+      > </a
+      ><a name="3277" href="agda-flat.tiny.html#3142" class="Bound"
+      >f</a
+      ><a name="3278" class="Symbol"
+      >))</a
+      ><a name="3280"
+      > </a
+      ><a name="3281" href="agda.prelude.html#1751" class="Function Operator"
+      >]</a
+      ><a name="3282"
+      >
+    </a
+      ><a name="3287" href="agda-flat.tiny.html#1195" class="Postulate"
+      >R</a
+      ><a name="3288"
+      > </a
+      ><a name="3289" class="Symbol"
+      >(</a
+      ><a name="3290" href="agda-flat.tiny.html#3140" class="Bound"
+      >g</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3293"
+      > </a
+      ><a name="3294" href="agda-flat.tiny.html#3142" class="Bound"
+      >f</a
+      ><a name="3295" class="Symbol"
+      >)</a
+      ><a name="3296"
+      >
+  </a
+      ><a name="3299" href="agda.prelude.html#1892" class="Function Operator"
+      >qed</a
+      ><a name="3302"
+      >
+
+</a
+      ><a name="3304" class="Comment"
+      >-- The other naturality property of left transposition</a
+      ><a name="3358"
+      >
+</a
+      ><a name="3359" href="agda-flat.tiny.html#3359" class="Function"
+      >L&#8730;</a
+      ><a name="3361"
+      > </a
+      ><a name="3362" class="Symbol"
+      >:</a
+      ><a name="3363"
+      >
+  </a
+      ><a name="3366" class="Symbol"
+      >{</a
+      ><a name="3367" href="agda-flat.tiny.html#3367" class="Bound"
+      >l</a
+      ><a name="3368"
+      > </a
+      ><a name="3369" href="agda-flat.tiny.html#3369" class="Bound"
+      >l'</a
+      ><a name="3371"
+      > </a
+      ><a name="3372" href="agda-flat.tiny.html#3372" class="Bound"
+      >l''</a
+      ><a name="3375"
+      > </a
+      ><a name="3376" class="Symbol"
+      >:{</a
+      ><a name="3378"
+      >&#9837;</a
+      ><a name="3379" class="Symbol"
+      >}</a
+      ><a name="3380"
+      > </a
+      ><a name="3381" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3386" class="Symbol"
+      >}</a
+      ><a name="3387"
+      >
+  </a
+      ><a name="3390" class="Symbol"
+      >{</a
+      ><a name="3391" href="agda-flat.tiny.html#3391" class="Bound"
+      >A</a
+      ><a name="3392"
+      > </a
+      ><a name="3393" class="Symbol"
+      >:{</a
+      ><a name="3395"
+      >&#9837;</a
+      ><a name="3396" class="Symbol"
+      >}</a
+      ><a name="3397"
+      > </a
+      ><a name="3398" class="PrimitiveType"
+      >Set</a
+      ><a name="3401"
+      > </a
+      ><a name="3402" href="agda-flat.tiny.html#3367" class="Bound"
+      >l</a
+      ><a name="3403" class="Symbol"
+      >}</a
+      ><a name="3404"
+      >
+  </a
+      ><a name="3407" class="Symbol"
+      >{</a
+      ><a name="3408" href="agda-flat.tiny.html#3408" class="Bound"
+      >B</a
+      ><a name="3409"
+      > </a
+      ><a name="3410" class="Symbol"
+      >:{</a
+      ><a name="3412"
+      >&#9837;</a
+      ><a name="3413" class="Symbol"
+      >}</a
+      ><a name="3414"
+      > </a
+      ><a name="3415" class="PrimitiveType"
+      >Set</a
+      ><a name="3418"
+      > </a
+      ><a name="3419" href="agda-flat.tiny.html#3369" class="Bound"
+      >l'</a
+      ><a name="3421" class="Symbol"
+      >}</a
+      ><a name="3422"
+      >
+  </a
+      ><a name="3425" class="Symbol"
+      >{</a
+      ><a name="3426" href="agda-flat.tiny.html#3426" class="Bound"
+      >C</a
+      ><a name="3427"
+      > </a
+      ><a name="3428" class="Symbol"
+      >:{</a
+      ><a name="3430"
+      >&#9837;</a
+      ><a name="3431" class="Symbol"
+      >}</a
+      ><a name="3432"
+      > </a
+      ><a name="3433" class="PrimitiveType"
+      >Set</a
+      ><a name="3436"
+      > </a
+      ><a name="3437" href="agda-flat.tiny.html#3372" class="Bound"
+      >l''</a
+      ><a name="3440" class="Symbol"
+      >}</a
+      ><a name="3441"
+      >
+  </a
+      ><a name="3444" class="Symbol"
+      >(</a
+      ><a name="3445" href="agda-flat.tiny.html#3445" class="Bound"
+      >g</a
+      ><a name="3446"
+      > </a
+      ><a name="3447" class="Symbol"
+      >:{</a
+      ><a name="3449"
+      >&#9837;</a
+      ><a name="3450" class="Symbol"
+      >}</a
+      ><a name="3451"
+      > </a
+      ><a name="3452" href="agda-flat.tiny.html#3408" class="Bound"
+      >B</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" class="Symbol"
+      >&#8594;</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" href="agda-flat.tiny.html#3426" class="Bound"
+      >C</a
+      ><a name="3457" class="Symbol"
+      >)</a
+      ><a name="3458"
+      >
+  </a
+      ><a name="3461" class="Symbol"
+      >(</a
+      ><a name="3462" href="agda-flat.tiny.html#3462" class="Bound"
+      >f</a
+      ><a name="3463"
+      > </a
+      ><a name="3464" class="Symbol"
+      >:{</a
+      ><a name="3466"
+      >&#9837;</a
+      ><a name="3467" class="Symbol"
+      >}</a
+      ><a name="3468"
+      > </a
+      ><a name="3469" href="agda-flat.tiny.html#3391" class="Bound"
+      >A</a
+      ><a name="3470"
+      > </a
+      ><a name="3471" class="Symbol"
+      >&#8594;</a
+      ><a name="3472"
+      > </a
+      ><a name="3473" href="agda-flat.tiny.html#1073" class="Postulate"
+      >&#8730;</a
+      ><a name="3474"
+      > </a
+      ><a name="3475" href="agda-flat.tiny.html#3408" class="Bound"
+      >B</a
+      ><a name="3476" class="Symbol"
+      >)</a
+      ><a name="3477"
+      >
+  </a
+      ><a name="3480" class="Symbol"
+      >&#8594;</a
+      ><a name="3481"
+      > </a
+      ><a name="3482" class="Comment"
+      >---------------------</a
+      ><a name="3503"
+      >
+  </a
+      ><a name="3506" href="agda-flat.tiny.html#3445" class="Bound"
+      >g</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" href="agda-flat.tiny.html#3462" class="Bound"
+      >f</a
+      ><a name="3513"
+      >  </a
+      ><a name="3515" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3516"
+      > </a
+      ><a name="3517" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="3518"
+      > </a
+      ><a name="3519" class="Symbol"
+      >(</a
+      ><a name="3520" href="agda-flat.tiny.html#2782" class="Function"
+      >&#8730;`</a
+      ><a name="3522"
+      > </a
+      ><a name="3523" href="agda-flat.tiny.html#3445" class="Bound"
+      >g</a
+      ><a name="3524"
+      > </a
+      ><a name="3525" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="3526"
+      > </a
+      ><a name="3527" href="agda-flat.tiny.html#3462" class="Bound"
+      >f</a
+      ><a name="3528" class="Symbol"
+      >)</a
+      ><a name="3529"
+      >
+</a
+      ><a name="3530" href="agda-flat.tiny.html#3359" class="Function"
+      >L&#8730;</a
+      ><a name="3532"
+      > </a
+      ><a name="3533" href="agda-flat.tiny.html#3533" class="Bound"
+      >g</a
+      ><a name="3534"
+      > </a
+      ><a name="3535" href="agda-flat.tiny.html#3535" class="Bound"
+      >f</a
+      ><a name="3536"
+      > </a
+      ><a name="3537" class="Symbol"
+      >=</a
+      ><a name="3538"
+      > </a
+      ><a name="3539" href="agda-flat.prelude.html#330" class="Function"
+      >cong&#9837;</a
+      ><a name="3544"
+      > </a
+      ><a name="3545" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="3546"
+      > </a
+      ><a name="3547" class="Symbol"
+      >(</a
+      ><a name="3548" href="agda.prelude.html#688" class="Function"
+      >symm</a
+      ><a name="3552"
+      > </a
+      ><a name="3553" class="Symbol"
+      >(</a
+      ><a name="3554" href="agda-flat.tiny.html#2968" class="Function"
+      >&#8730;R</a
+      ><a name="3556"
+      > </a
+      ><a name="3557" href="agda-flat.tiny.html#3533" class="Bound"
+      >g</a
+      ><a name="3558"
+      > </a
+      ><a name="3559" class="Symbol"
+      >(</a
+      ><a name="3560" href="agda-flat.tiny.html#1364" class="Postulate"
+      >L</a
+      ><a name="3561"
+      > </a
+      ><a name="3562" href="agda-flat.tiny.html#3535" class="Bound"
+      >f</a
+      ><a name="3563" class="Symbol"
+      >)))</a
+      ><a name="3566"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

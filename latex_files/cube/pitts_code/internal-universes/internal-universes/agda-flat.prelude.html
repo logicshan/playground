@@ -1,0 +1,482 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >agda-flat.prelude</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Comment"
+      >{- Use with Andrea Vezzosi's agda-flat -}</a
+      ><a name="42"
+      >
+</a
+      ><a name="43" class="Symbol"
+      >{-#</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >OPTIONS</a
+      ><a name="54"
+      > --without-K </a
+      ><a name="67" class="Symbol"
+      >#-}</a
+      ><a name="70"
+      >
+
+</a
+      ><a name="72" class="Keyword"
+      >module</a
+      ><a name="78"
+      > </a
+      ><a name="79" href="agda-flat.prelude.html#1" class="Module"
+      >agda-flat.prelude</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >where</a
+      ><a name="102"
+      >
+
+</a
+      ><a name="104" class="Keyword"
+      >open</a
+      ><a name="108"
+      > </a
+      ><a name="109" class="Keyword"
+      >import</a
+      ><a name="115"
+      > </a
+      ><a name="116" href="agda.prelude.html#1" class="Module"
+      >agda.prelude</a
+      ><a name="128"
+      >
+
+</a
+      ><a name="130" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="200"
+      >
+</a
+      ><a name="201" class="Comment"
+      >-- Congruence property for functions of a crisp variable</a
+      ><a name="257"
+      >
+</a
+      ><a name="258" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="328"
+      >
+
+</a
+      ><a name="330" href="agda-flat.prelude.html#330" class="Function"
+      >cong&#9837;</a
+      ><a name="335"
+      > </a
+      ><a name="336" class="Symbol"
+      >:</a
+      ><a name="337"
+      >
+  </a
+      ><a name="340" class="Symbol"
+      >{</a
+      ><a name="341" href="agda-flat.prelude.html#341" class="Bound"
+      >l</a
+      ><a name="342"
+      > </a
+      ><a name="343" class="Symbol"
+      >:{</a
+      ><a name="345"
+      >&#9837;</a
+      ><a name="346" class="Symbol"
+      >}</a
+      ><a name="347"
+      > </a
+      ><a name="348" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="353" class="Symbol"
+      >}</a
+      ><a name="354"
+      >
+  </a
+      ><a name="357" class="Symbol"
+      >{</a
+      ><a name="358" href="agda-flat.prelude.html#358" class="Bound"
+      >A</a
+      ><a name="359"
+      > </a
+      ><a name="360" class="Symbol"
+      >:{</a
+      ><a name="362"
+      >&#9837;</a
+      ><a name="363" class="Symbol"
+      >}</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="PrimitiveType"
+      >Set</a
+      ><a name="368"
+      > </a
+      ><a name="369" href="agda-flat.prelude.html#341" class="Bound"
+      >l</a
+      ><a name="370" class="Symbol"
+      >}</a
+      ><a name="371"
+      >
+  </a
+      ><a name="374" class="Symbol"
+      >{</a
+      ><a name="375" href="agda-flat.prelude.html#375" class="Bound"
+      >l'</a
+      ><a name="377"
+      > </a
+      ><a name="378" class="Symbol"
+      >:</a
+      ><a name="379"
+      > </a
+      ><a name="380" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="385" class="Symbol"
+      >}</a
+      ><a name="386"
+      >
+  </a
+      ><a name="389" class="Symbol"
+      >{</a
+      ><a name="390" href="agda-flat.prelude.html#390" class="Bound"
+      >B</a
+      ><a name="391"
+      > </a
+      ><a name="392" class="Symbol"
+      >:</a
+      ><a name="393"
+      > </a
+      ><a name="394" class="PrimitiveType"
+      >Set</a
+      ><a name="397"
+      > </a
+      ><a name="398" href="agda-flat.prelude.html#375" class="Bound"
+      >l'</a
+      ><a name="400" class="Symbol"
+      >}</a
+      ><a name="401"
+      >
+  </a
+      ><a name="404" class="Symbol"
+      >(</a
+      ><a name="405" href="agda-flat.prelude.html#405" class="Bound"
+      >f</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Symbol"
+      >:</a
+      ><a name="408"
+      > </a
+      ><a name="409" class="Symbol"
+      >(</a
+      ><a name="410" href="agda-flat.prelude.html#410" class="Bound"
+      >x</a
+      ><a name="411"
+      > </a
+      ><a name="412" class="Symbol"
+      >:{</a
+      ><a name="414"
+      >&#9837;</a
+      ><a name="415" class="Symbol"
+      >}</a
+      ><a name="416"
+      > </a
+      ><a name="417" href="agda-flat.prelude.html#358" class="Bound"
+      >A</a
+      ><a name="418" class="Symbol"
+      >)</a
+      ><a name="419"
+      > </a
+      ><a name="420" class="Symbol"
+      >&#8594;</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="agda-flat.prelude.html#390" class="Bound"
+      >B</a
+      ><a name="423" class="Symbol"
+      >){</a
+      ><a name="425" href="agda-flat.prelude.html#425" class="Bound"
+      >x</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="agda-flat.prelude.html#427" class="Bound"
+      >y</a
+      ><a name="428"
+      > </a
+      ><a name="429" class="Symbol"
+      >:{</a
+      ><a name="431"
+      >&#9837;</a
+      ><a name="432" class="Symbol"
+      >}</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="agda-flat.prelude.html#358" class="Bound"
+      >A</a
+      ><a name="435" class="Symbol"
+      >}</a
+      ><a name="436"
+      >
+  </a
+      ><a name="439" class="Symbol"
+      >&#8594;</a
+      ><a name="440"
+      > </a
+      ><a name="441" class="Comment"
+      >------------------------------</a
+      ><a name="471"
+      >
+  </a
+      ><a name="474" class="Symbol"
+      >(</a
+      ><a name="475" href="agda-flat.prelude.html#475" class="Bound"
+      >_</a
+      ><a name="476"
+      > </a
+      ><a name="477" class="Symbol"
+      >:{</a
+      ><a name="479"
+      >&#9837;</a
+      ><a name="480" class="Symbol"
+      >}</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="agda-flat.prelude.html#425" class="Bound"
+      >x</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="485"
+      > </a
+      ><a name="486" href="agda-flat.prelude.html#427" class="Bound"
+      >y</a
+      ><a name="487" class="Symbol"
+      >)</a
+      ><a name="488"
+      > </a
+      ><a name="489" class="Symbol"
+      >&#8594;</a
+      ><a name="490"
+      > </a
+      ><a name="491" href="agda-flat.prelude.html#405" class="Bound"
+      >f</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="agda-flat.prelude.html#425" class="Bound"
+      >x</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="496"
+      > </a
+      ><a name="497" href="agda-flat.prelude.html#405" class="Bound"
+      >f</a
+      ><a name="498"
+      > </a
+      ><a name="499" href="agda-flat.prelude.html#427" class="Bound"
+      >y</a
+      ><a name="500"
+      >
+</a
+      ><a name="501" href="agda-flat.prelude.html#330" class="Function"
+      >cong&#9837;</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Symbol"
+      >_</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Symbol"
+      >=</a
+      ><a name="515"
+      > </a
+      ><a name="516" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="520"
+      >
+
+</a
+      ><a name="522" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="592"
+      >
+</a
+      ><a name="593" class="Comment"
+      >-- Example that's in the paper</a
+      ><a name="623"
+      >
+</a
+      ><a name="624" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="694"
+      >
+</a
+      ><a name="695" class="Keyword"
+      >private</a
+      ><a name="702"
+      > 
+  </a
+      ><a name="706" href="agda-flat.prelude.html#706" class="Function"
+      >right</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >:</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >(</a
+      ><a name="715" href="agda-flat.prelude.html#715" class="Bound"
+      >A</a
+      ><a name="716"
+      > </a
+      ><a name="717" class="Symbol"
+      >:{</a
+      ><a name="719"
+      >&#9837;</a
+      ><a name="720" class="Symbol"
+      >}</a
+      ><a name="721"
+      > </a
+      ><a name="722" class="PrimitiveType"
+      >Set</a
+      ><a name="725" class="Symbol"
+      >)</a
+      ><a name="726"
+      > </a
+      ><a name="727" class="Symbol"
+      >(</a
+      ><a name="728" href="agda-flat.prelude.html#728" class="Bound"
+      >B</a
+      ><a name="729"
+      > </a
+      ><a name="730" class="Symbol"
+      >:</a
+      ><a name="731"
+      > </a
+      ><a name="732" class="PrimitiveType"
+      >Set</a
+      ><a name="735" class="Symbol"
+      >)</a
+      ><a name="736"
+      > </a
+      ><a name="737" class="Symbol"
+      >(</a
+      ><a name="738" href="agda-flat.prelude.html#738" class="Bound"
+      >f</a
+      ><a name="739"
+      > </a
+      ><a name="740" class="Symbol"
+      >:</a
+      ><a name="741"
+      > </a
+      ><a name="742" class="Symbol"
+      >(</a
+      ><a name="743" href="agda-flat.prelude.html#743" class="Bound"
+      >_</a
+      ><a name="744"
+      > </a
+      ><a name="745" class="Symbol"
+      >:{</a
+      ><a name="747"
+      >&#9837;</a
+      ><a name="748" class="Symbol"
+      >}</a
+      ><a name="749"
+      > </a
+      ><a name="750" href="agda-flat.prelude.html#715" class="Bound"
+      >A</a
+      ><a name="751" class="Symbol"
+      >)</a
+      ><a name="752"
+      > </a
+      ><a name="753" class="Symbol"
+      >&#8594;</a
+      ><a name="754"
+      > </a
+      ><a name="755" href="agda-flat.prelude.html#728" class="Bound"
+      >B</a
+      ><a name="756" class="Symbol"
+      >)</a
+      ><a name="757"
+      > </a
+      ><a name="758" class="Symbol"
+      >(</a
+      ><a name="759" href="agda-flat.prelude.html#759" class="Bound"
+      >x</a
+      ><a name="760"
+      > </a
+      ><a name="761" class="Symbol"
+      >:{</a
+      ><a name="763"
+      >&#9837;</a
+      ><a name="764" class="Symbol"
+      >}</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="agda-flat.prelude.html#715" class="Bound"
+      >A</a
+      ><a name="767" class="Symbol"
+      >)</a
+      ><a name="768"
+      > </a
+      ><a name="769" class="Symbol"
+      >&#8594;</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="agda-flat.prelude.html#728" class="Bound"
+      >B</a
+      ><a name="772"
+      >
+  </a
+      ><a name="775" href="agda-flat.prelude.html#706" class="Function"
+      >right</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="agda-flat.prelude.html#781" class="Bound"
+      >A</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="agda-flat.prelude.html#783" class="Bound"
+      >B</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="agda-flat.prelude.html#785" class="Bound"
+      >f</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="agda-flat.prelude.html#787" class="Bound"
+      >x</a
+      ><a name="788"
+      > </a
+      ><a name="789" class="Symbol"
+      >=</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="agda-flat.prelude.html#785" class="Bound"
+      >f</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="agda-flat.prelude.html#787" class="Bound"
+      >x</a
+      ><a name="794"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

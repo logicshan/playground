@@ -1,0 +1,5 @@
+git clone https://github.com/agda/agda
+cd agda
+git checkout flat
+cabal update
+cabal install --program-suffix=-flat

@@ -1,0 +1,597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >agda.exp-path</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K </a
+      ><a name="25" class="Symbol"
+      >#-}</a
+      ><a name="28"
+      >
+
+</a
+      ><a name="30" class="Keyword"
+      >module</a
+      ><a name="36"
+      > </a
+      ><a name="37" href="agda.exp-path.html#1" class="Module"
+      >agda.exp-path</a
+      ><a name="50"
+      > </a
+      ><a name="51" class="Keyword"
+      >where</a
+      ><a name="56"
+      >
+
+</a
+      ><a name="58" class="Keyword"
+      >open</a
+      ><a name="62"
+      > </a
+      ><a name="63" class="Keyword"
+      >import</a
+      ><a name="69"
+      > </a
+      ><a name="70" href="agda.prelude.html#1" class="Module"
+      >agda.prelude</a
+      ><a name="82"
+      >
+</a
+      ><a name="83" class="Keyword"
+      >open</a
+      ><a name="87"
+      > </a
+      ><a name="88" class="Keyword"
+      >import</a
+      ><a name="94"
+      > </a
+      ><a name="95" href="agda.postulates.html#1" class="Module"
+      >agda.postulates</a
+      ><a name="110"
+      >
+
+</a
+      ><a name="112" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="182"
+      >
+</a
+      ><a name="183" class="Comment"
+      >-- The path functor given by exponentiating by &#120128;</a
+      ><a name="231"
+      >
+</a
+      ><a name="232" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="302"
+      >
+</a
+      ><a name="303" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Symbol"
+      >:</a
+      ><a name="306"
+      >
+  </a
+      ><a name="309" class="Symbol"
+      >{</a
+      ><a name="310" href="agda.exp-path.html#310" class="Bound"
+      >l</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="Symbol"
+      >:</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="319" class="Symbol"
+      >}</a
+      ><a name="320"
+      >
+  </a
+      ><a name="323" class="Symbol"
+      >(</a
+      ><a name="324" href="agda.exp-path.html#324" class="Bound"
+      >&#915;</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Symbol"
+      >:</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="PrimitiveType"
+      >Set</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="agda.exp-path.html#310" class="Bound"
+      >l</a
+      ><a name="333" class="Symbol"
+      >)</a
+      ><a name="334"
+      >
+  </a
+      ><a name="337" class="Symbol"
+      >&#8594;</a
+      ><a name="338"
+      > </a
+      ><a name="339" class="Comment"
+      >---------</a
+      ><a name="348"
+      >
+  </a
+      ><a name="351" class="PrimitiveType"
+      >Set</a
+      ><a name="354"
+      > </a
+      ><a name="355" href="agda.exp-path.html#310" class="Bound"
+      >l</a
+      ><a name="356"
+      >
+</a
+      ><a name="357" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="358"
+      > </a
+      ><a name="359" href="agda.exp-path.html#359" class="Bound"
+      >&#915;</a
+      ><a name="360"
+      > </a
+      ><a name="361" class="Symbol"
+      >=</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >&#8594;</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="agda.exp-path.html#359" class="Bound"
+      >&#915;</a
+      ><a name="368"
+      >
+
+</a
+      ><a name="370" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="372"
+      > </a
+      ><a name="373" class="Symbol"
+      >:</a
+      ><a name="374"
+      >
+  </a
+      ><a name="377" class="Symbol"
+      >{</a
+      ><a name="378" href="agda.exp-path.html#378" class="Bound"
+      >l</a
+      ><a name="379"
+      > </a
+      ><a name="380" href="agda.exp-path.html#380" class="Bound"
+      >m</a
+      ><a name="381"
+      > </a
+      ><a name="382" class="Symbol"
+      >:</a
+      ><a name="383"
+      > </a
+      ><a name="384" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="389" class="Symbol"
+      >}</a
+      ><a name="390"
+      >
+  </a
+      ><a name="393" class="Symbol"
+      >{</a
+      ><a name="394" href="agda.exp-path.html#394" class="Bound"
+      >&#915;</a
+      ><a name="395"
+      > </a
+      ><a name="396" class="Symbol"
+      >:</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="PrimitiveType"
+      >Set</a
+      ><a name="401"
+      > </a
+      ><a name="402" href="agda.exp-path.html#378" class="Bound"
+      >l</a
+      ><a name="403" class="Symbol"
+      >}</a
+      ><a name="404"
+      >
+  </a
+      ><a name="407" class="Symbol"
+      >{</a
+      ><a name="408" href="agda.exp-path.html#408" class="Bound"
+      >&#916;</a
+      ><a name="409"
+      > </a
+      ><a name="410" class="Symbol"
+      >:</a
+      ><a name="411"
+      > </a
+      ><a name="412" class="PrimitiveType"
+      >Set</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="agda.exp-path.html#380" class="Bound"
+      >m</a
+      ><a name="417" class="Symbol"
+      >}</a
+      ><a name="418"
+      >
+  </a
+      ><a name="421" class="Symbol"
+      >(</a
+      ><a name="422" href="agda.exp-path.html#422" class="Bound"
+      >&#947;</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >:</a
+      ><a name="425"
+      > </a
+      ><a name="426" href="agda.exp-path.html#408" class="Bound"
+      >&#916;</a
+      ><a name="427"
+      > </a
+      ><a name="428" class="Symbol"
+      >&#8594;</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="agda.exp-path.html#394" class="Bound"
+      >&#915;</a
+      ><a name="431" class="Symbol"
+      >)</a
+      ><a name="432"
+      >
+  </a
+      ><a name="435" class="Symbol"
+      >&#8594;</a
+      ><a name="436"
+      > </a
+      ><a name="437" class="Comment"
+      >-----------</a
+      ><a name="448"
+      >
+  </a
+      ><a name="451" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="agda.exp-path.html#408" class="Bound"
+      >&#916;</a
+      ><a name="454"
+      > </a
+      ><a name="455" class="Symbol"
+      >&#8594;</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="agda.exp-path.html#394" class="Bound"
+      >&#915;</a
+      ><a name="460"
+      >
+</a
+      ><a name="461" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="463"
+      > </a
+      ><a name="464" href="agda.exp-path.html#464" class="Bound"
+      >&#947;</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="agda.exp-path.html#466" class="Bound"
+      >p</a
+      ><a name="467"
+      > </a
+      ><a name="468" href="agda.exp-path.html#468" class="Bound"
+      >i</a
+      ><a name="469"
+      > </a
+      ><a name="470" class="Symbol"
+      >=</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="agda.exp-path.html#464" class="Bound"
+      >&#947;</a
+      ><a name="473"
+      > </a
+      ><a name="474" class="Symbol"
+      >(</a
+      ><a name="475" href="agda.exp-path.html#466" class="Bound"
+      >p</a
+      ><a name="476"
+      > </a
+      ><a name="477" href="agda.exp-path.html#468" class="Bound"
+      >i</a
+      ><a name="478" class="Symbol"
+      >)</a
+      ><a name="479"
+      >
+
+</a
+      ><a name="481" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >:</a
+      ><a name="489"
+      >
+  </a
+      ><a name="492" class="Symbol"
+      >{</a
+      ><a name="493" href="agda.exp-path.html#493" class="Bound"
+      >l</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="agda.exp-path.html#495" class="Bound"
+      >m</a
+      ><a name="496"
+      > </a
+      ><a name="497" href="agda.exp-path.html#497" class="Bound"
+      >n</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >:</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="506" class="Symbol"
+      >}</a
+      ><a name="507"
+      >
+  </a
+      ><a name="510" class="Symbol"
+      >{</a
+      ><a name="511" href="agda.exp-path.html#511" class="Bound"
+      >&#915;</a
+      ><a name="512"
+      > </a
+      ><a name="513" class="Symbol"
+      >:</a
+      ><a name="514"
+      > </a
+      ><a name="515" class="PrimitiveType"
+      >Set</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="agda.exp-path.html#493" class="Bound"
+      >l</a
+      ><a name="520" class="Symbol"
+      >}</a
+      ><a name="521"
+      >
+  </a
+      ><a name="524" class="Symbol"
+      >{</a
+      ><a name="525" href="agda.exp-path.html#525" class="Bound"
+      >&#916;</a
+      ><a name="526"
+      > </a
+      ><a name="527" class="Symbol"
+      >:</a
+      ><a name="528"
+      > </a
+      ><a name="529" class="PrimitiveType"
+      >Set</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="agda.exp-path.html#495" class="Bound"
+      >m</a
+      ><a name="534" class="Symbol"
+      >}</a
+      ><a name="535"
+      >
+  </a
+      ><a name="538" class="Symbol"
+      >{</a
+      ><a name="539" href="agda.exp-path.html#539" class="Bound"
+      >&#920;</a
+      ><a name="540"
+      > </a
+      ><a name="541" class="Symbol"
+      >:</a
+      ><a name="542"
+      > </a
+      ><a name="543" class="PrimitiveType"
+      >Set</a
+      ><a name="546"
+      > </a
+      ><a name="547" href="agda.exp-path.html#497" class="Bound"
+      >n</a
+      ><a name="548" class="Symbol"
+      >}</a
+      ><a name="549"
+      >
+  </a
+      ><a name="552" class="Symbol"
+      >(</a
+      ><a name="553" href="agda.exp-path.html#553" class="Bound"
+      >&#947;</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Symbol"
+      >:</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="agda.exp-path.html#525" class="Bound"
+      >&#916;</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >&#8594;</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="agda.exp-path.html#511" class="Bound"
+      >&#915;</a
+      ><a name="562" class="Symbol"
+      >)</a
+      ><a name="563"
+      >
+  </a
+      ><a name="566" class="Symbol"
+      >(</a
+      ><a name="567" href="agda.exp-path.html#567" class="Bound"
+      >&#963;</a
+      ><a name="568"
+      > </a
+      ><a name="569" class="Symbol"
+      >:</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="agda.exp-path.html#539" class="Bound"
+      >&#920;</a
+      ><a name="572"
+      > </a
+      ><a name="573" class="Symbol"
+      >&#8594;</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="agda.exp-path.html#525" class="Bound"
+      >&#916;</a
+      ><a name="576" class="Symbol"
+      >)</a
+      ><a name="577"
+      >
+  </a
+      ><a name="580" class="Symbol"
+      >(</a
+      ><a name="581" href="agda.exp-path.html#581" class="Bound"
+      >p</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="Symbol"
+      >:</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="agda.exp-path.html#539" class="Bound"
+      >&#920;</a
+      ><a name="588" class="Symbol"
+      >)</a
+      ><a name="589"
+      >
+  </a
+      ><a name="592" class="Symbol"
+      >&#8594;</a
+      ><a name="593"
+      > </a
+      ><a name="594" class="Comment"
+      >-----------</a
+      ><a name="605"
+      >
+  </a
+      ><a name="608" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="610"
+      > </a
+      ><a name="611" href="agda.exp-path.html#553" class="Bound"
+      >&#947;</a
+      ><a name="612"
+      > </a
+      ><a name="613" class="Symbol"
+      >(</a
+      ><a name="614" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="616"
+      > </a
+      ><a name="617" href="agda.exp-path.html#567" class="Bound"
+      >&#963;</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="agda.exp-path.html#581" class="Bound"
+      >p</a
+      ><a name="620" class="Symbol"
+      >)</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >(</a
+      ><a name="628" href="agda.exp-path.html#553" class="Bound"
+      >&#947;</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="agda.exp-path.html#567" class="Bound"
+      >&#963;</a
+      ><a name="633" class="Symbol"
+      >)</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="agda.exp-path.html#581" class="Bound"
+      >p</a
+      ><a name="636"
+      >
+</a
+      ><a name="637" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="643"
+      > </a
+      ><a name="644" class="Symbol"
+      >_</a
+      ><a name="645"
+      > </a
+      ><a name="646" class="Symbol"
+      >_</a
+      ><a name="647"
+      > </a
+      ><a name="648" class="Symbol"
+      >_</a
+      ><a name="649"
+      > </a
+      ><a name="650" class="Symbol"
+      >=</a
+      ><a name="651"
+      > </a
+      ><a name="652" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="656"
+      >
+
+</a
+      ></pre
+    ></body
+  ></html
+>

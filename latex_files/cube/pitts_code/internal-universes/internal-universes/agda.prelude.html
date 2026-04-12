@@ -1,0 +1,4417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >agda.prelude</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >module</a
+      ><a name="48"
+      > </a
+      ><a name="49" href="agda.prelude.html#1" class="Module"
+      >agda.prelude</a
+      ><a name="61"
+      > </a
+      ><a name="62" class="Keyword"
+      >where</a
+      ><a name="67"
+      >
+
+</a
+      ><a name="69" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="139"
+      >
+</a
+      ><a name="140" class="Comment"
+      >-- Universe levels</a
+      ><a name="158"
+      >
+</a
+      ><a name="159" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="229"
+      >
+</a
+      ><a name="230" class="Keyword"
+      >open</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Keyword"
+      >import</a
+      ><a name="241"
+      > </a
+      ><a name="242" href="Agda.Primitive.html#1" class="Module"
+      >Agda.Primitive</a
+      ><a name="256"
+      > </a
+      ><a name="257" class="Keyword"
+      >public</a
+      ><a name="263"
+      >
+
+</a
+      ><a name="265" href="agda.prelude.html#265" class="Function"
+      >&#8467;&#8320;</a
+      ><a name="267"
+      > </a
+      ><a name="268" class="Symbol"
+      >=</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="Agda.Primitive.html#609" class="Primitive"
+      >lzero</a
+      ><a name="275"
+      >
+</a
+      ><a name="276" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="278"
+      > </a
+      ><a name="279" class="Symbol"
+      >=</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="285"
+      > </a
+      ><a name="286" href="agda.prelude.html#265" class="Function"
+      >&#8467;&#8320;</a
+      ><a name="288"
+      >
+</a
+      ><a name="289" href="agda.prelude.html#289" class="Function"
+      >&#8467;&#8322;</a
+      ><a name="291"
+      > </a
+      ><a name="292" class="Symbol"
+      >=</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="298"
+      > </a
+      ><a name="299" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="301"
+      >
+</a
+      ><a name="302" href="agda.prelude.html#302" class="Function"
+      >&#8467;&#8323;</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Symbol"
+      >=</a
+      ><a name="306"
+      > </a
+      ><a name="307" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="agda.prelude.html#289" class="Function"
+      >&#8467;&#8322;</a
+      ><a name="314"
+      >
+
+</a
+      ><a name="316" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="386"
+      >
+</a
+      ><a name="387" class="Comment"
+      >-- Equality</a
+      ><a name="398"
+      >
+</a
+      ><a name="399" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="469"
+      >
+</a
+      ><a name="470" class="Keyword"
+      >open</a
+      ><a name="474"
+      > </a
+      ><a name="475" class="Keyword"
+      >import</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="Agda.Builtin.Equality.html#1" class="Module"
+      >Agda.Builtin.Equality</a
+      ><a name="503"
+      > </a
+      ><a name="504" class="Keyword"
+      >public</a
+      ><a name="510"
+      >
+
+</a
+      ><a name="512" href="agda.prelude.html#512" class="Function"
+      >J</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Symbol"
+      >:</a
+      ><a name="515"
+      >
+  </a
+      ><a name="518" class="Symbol"
+      >{</a
+      ><a name="519" href="agda.prelude.html#519" class="Bound"
+      >l</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="agda.prelude.html#521" class="Bound"
+      >l'</a
+      ><a name="523"
+      > </a
+      ><a name="524" class="Symbol"
+      >:</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="531" class="Symbol"
+      >}</a
+      ><a name="532"
+      >
+  </a
+      ><a name="535" class="Symbol"
+      >{</a
+      ><a name="536" href="agda.prelude.html#536" class="Bound"
+      >A</a
+      ><a name="537"
+      > </a
+      ><a name="538" class="Symbol"
+      >:</a
+      ><a name="539"
+      > </a
+      ><a name="540" class="PrimitiveType"
+      >Set</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="agda.prelude.html#519" class="Bound"
+      >l</a
+      ><a name="545" class="Symbol"
+      >}</a
+      ><a name="546"
+      >
+  </a
+      ><a name="549" class="Symbol"
+      >{</a
+      ><a name="550" href="agda.prelude.html#550" class="Bound"
+      >a</a
+      ><a name="551"
+      > </a
+      ><a name="552" class="Symbol"
+      >:</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="agda.prelude.html#536" class="Bound"
+      >A</a
+      ><a name="555" class="Symbol"
+      >}</a
+      ><a name="556"
+      >
+  </a
+      ><a name="559" class="Symbol"
+      >(</a
+      ><a name="560" href="agda.prelude.html#560" class="Bound"
+      >C</a
+      ><a name="561"
+      > </a
+      ><a name="562" class="Symbol"
+      >:</a
+      ><a name="563"
+      > </a
+      ><a name="564" class="Symbol"
+      >(</a
+      ><a name="565" href="agda.prelude.html#565" class="Bound"
+      >x</a
+      ><a name="566"
+      > </a
+      ><a name="567" class="Symbol"
+      >:</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="agda.prelude.html#536" class="Bound"
+      >A</a
+      ><a name="570" class="Symbol"
+      >)</a
+      ><a name="571"
+      > </a
+      ><a name="572" class="Symbol"
+      >&#8594;</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="agda.prelude.html#550" class="Bound"
+      >a</a
+      ><a name="575"
+      > </a
+      ><a name="576" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="agda.prelude.html#565" class="Bound"
+      >x</a
+      ><a name="579"
+      > </a
+      ><a name="580" class="Symbol"
+      >&#8594;</a
+      ><a name="581"
+      > </a
+      ><a name="582" class="PrimitiveType"
+      >Set</a
+      ><a name="585"
+      > </a
+      ><a name="586" href="agda.prelude.html#521" class="Bound"
+      >l'</a
+      ><a name="588" class="Symbol"
+      >)</a
+      ><a name="589"
+      >
+  </a
+      ><a name="592" class="Symbol"
+      >(</a
+      ><a name="593" href="agda.prelude.html#593" class="Bound"
+      >c</a
+      ><a name="594"
+      > </a
+      ><a name="595" class="Symbol"
+      >:</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="agda.prelude.html#560" class="Bound"
+      >C</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="agda.prelude.html#550" class="Bound"
+      >a</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="605" class="Symbol"
+      >)</a
+      ><a name="606"
+      >
+  </a
+      ><a name="609" class="Symbol"
+      >{</a
+      ><a name="610" href="agda.prelude.html#610" class="Bound"
+      >b</a
+      ><a name="611"
+      > </a
+      ><a name="612" class="Symbol"
+      >:</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="agda.prelude.html#536" class="Bound"
+      >A</a
+      ><a name="615" class="Symbol"
+      >}</a
+      ><a name="616"
+      >
+  </a
+      ><a name="619" class="Symbol"
+      >(</a
+      ><a name="620" href="agda.prelude.html#620" class="Bound"
+      >p</a
+      ><a name="621"
+      > </a
+      ><a name="622" class="Symbol"
+      >:</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="agda.prelude.html#550" class="Bound"
+      >a</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="627"
+      > </a
+      ><a name="628" href="agda.prelude.html#610" class="Bound"
+      >b</a
+      ><a name="629" class="Symbol"
+      >)</a
+      ><a name="630"
+      >
+  </a
+      ><a name="633" class="Symbol"
+      >&#8594;</a
+      ><a name="634"
+      > </a
+      ><a name="635" class="Comment"
+      >----------------------------</a
+      ><a name="663"
+      >
+  </a
+      ><a name="666" href="agda.prelude.html#560" class="Bound"
+      >C</a
+      ><a name="667"
+      > </a
+      ><a name="668" href="agda.prelude.html#610" class="Bound"
+      >b</a
+      ><a name="669"
+      > </a
+      ><a name="670" href="agda.prelude.html#620" class="Bound"
+      >p</a
+      ><a name="671"
+      >
+</a
+      ><a name="672" href="agda.prelude.html#512" class="Function"
+      >J</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >_</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="agda.prelude.html#676" class="Bound"
+      >c</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="682"
+      > </a
+      ><a name="683" class="Symbol"
+      >=</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="agda.prelude.html#676" class="Bound"
+      >c</a
+      ><a name="686"
+      >
+
+</a
+      ><a name="688" href="agda.prelude.html#688" class="Function"
+      >symm</a
+      ><a name="692"
+      > </a
+      ><a name="693" class="Symbol"
+      >:</a
+      ><a name="694"
+      >
+  </a
+      ><a name="697" class="Symbol"
+      >{</a
+      ><a name="698" href="agda.prelude.html#698" class="Bound"
+      >l</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >:</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="707" class="Symbol"
+      >}</a
+      ><a name="708"
+      >
+  </a
+      ><a name="711" class="Symbol"
+      >{</a
+      ><a name="712" href="agda.prelude.html#712" class="Bound"
+      >A</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >:</a
+      ><a name="715"
+      > </a
+      ><a name="716" class="PrimitiveType"
+      >Set</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="agda.prelude.html#698" class="Bound"
+      >l</a
+      ><a name="721" class="Symbol"
+      >}</a
+      ><a name="722"
+      >
+  </a
+      ><a name="725" class="Symbol"
+      >{</a
+      ><a name="726" href="agda.prelude.html#726" class="Bound"
+      >x</a
+      ><a name="727"
+      > </a
+      ><a name="728" href="agda.prelude.html#728" class="Bound"
+      >y</a
+      ><a name="729"
+      > </a
+      ><a name="730" class="Symbol"
+      >:</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="agda.prelude.html#712" class="Bound"
+      >A</a
+      ><a name="733" class="Symbol"
+      >}</a
+      ><a name="734"
+      >
+  </a
+      ><a name="737" class="Symbol"
+      >(</a
+      ><a name="738" href="agda.prelude.html#738" class="Bound"
+      >p</a
+      ><a name="739"
+      > </a
+      ><a name="740" class="Symbol"
+      >:</a
+      ><a name="741"
+      > </a
+      ><a name="742" href="agda.prelude.html#726" class="Bound"
+      >x</a
+      ><a name="743"
+      > </a
+      ><a name="744" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="745"
+      > </a
+      ><a name="746" href="agda.prelude.html#728" class="Bound"
+      >y</a
+      ><a name="747" class="Symbol"
+      >)</a
+      ><a name="748"
+      >
+  </a
+      ><a name="751" class="Symbol"
+      >&#8594;</a
+      ><a name="752"
+      > </a
+      ><a name="753" class="Comment"
+      >---------</a
+      ><a name="762"
+      >
+  </a
+      ><a name="765" href="agda.prelude.html#728" class="Bound"
+      >y</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="agda.prelude.html#726" class="Bound"
+      >x</a
+      ><a name="770"
+      >
+</a
+      ><a name="771" href="agda.prelude.html#688" class="Function"
+      >symm</a
+      ><a name="775"
+      > </a
+      ><a name="776" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="780"
+      > </a
+      ><a name="781" class="Symbol"
+      >=</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="787"
+      >
+
+</a
+      ><a name="789" class="Keyword"
+      >infixr</a
+      ><a name="795"
+      > </a
+      ><a name="796" class="Number"
+      >10</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="agda.prelude.html#803" class="Function Operator"
+      >_&#183;_</a
+      ><a name="802"
+      >
+</a
+      ><a name="803" href="agda.prelude.html#803" class="Function Operator"
+      >_&#183;_</a
+      ><a name="806"
+      > </a
+      ><a name="807" class="Symbol"
+      >:</a
+      ><a name="808"
+      >
+  </a
+      ><a name="811" class="Symbol"
+      >{</a
+      ><a name="812" href="agda.prelude.html#812" class="Bound"
+      >l</a
+      ><a name="813"
+      > </a
+      ><a name="814" class="Symbol"
+      >:</a
+      ><a name="815"
+      > </a
+      ><a name="816" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="821" class="Symbol"
+      >}</a
+      ><a name="822"
+      >
+  </a
+      ><a name="825" class="Symbol"
+      >{</a
+      ><a name="826" href="agda.prelude.html#826" class="Bound"
+      >A</a
+      ><a name="827"
+      > </a
+      ><a name="828" class="Symbol"
+      >:</a
+      ><a name="829"
+      > </a
+      ><a name="830" class="PrimitiveType"
+      >Set</a
+      ><a name="833"
+      > </a
+      ><a name="834" href="agda.prelude.html#812" class="Bound"
+      >l</a
+      ><a name="835" class="Symbol"
+      >}</a
+      ><a name="836"
+      >
+  </a
+      ><a name="839" class="Symbol"
+      >{</a
+      ><a name="840" href="agda.prelude.html#840" class="Bound"
+      >x</a
+      ><a name="841"
+      > </a
+      ><a name="842" href="agda.prelude.html#842" class="Bound"
+      >y</a
+      ><a name="843"
+      > </a
+      ><a name="844" href="agda.prelude.html#844" class="Bound"
+      >z</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >:</a
+      ><a name="847"
+      > </a
+      ><a name="848" href="agda.prelude.html#826" class="Bound"
+      >A</a
+      ><a name="849" class="Symbol"
+      >}</a
+      ><a name="850"
+      >
+  </a
+      ><a name="853" class="Symbol"
+      >(</a
+      ><a name="854" href="agda.prelude.html#854" class="Bound"
+      >p</a
+      ><a name="855"
+      > </a
+      ><a name="856" class="Symbol"
+      >:</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="agda.prelude.html#840" class="Bound"
+      >x</a
+      ><a name="859"
+      > </a
+      ><a name="860" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="agda.prelude.html#842" class="Bound"
+      >y</a
+      ><a name="863" class="Symbol"
+      >)</a
+      ><a name="864"
+      >
+  </a
+      ><a name="867" class="Symbol"
+      >(</a
+      ><a name="868" href="agda.prelude.html#868" class="Bound"
+      >q</a
+      ><a name="869"
+      > </a
+      ><a name="870" class="Symbol"
+      >:</a
+      ><a name="871"
+      > </a
+      ><a name="872" href="agda.prelude.html#842" class="Bound"
+      >y</a
+      ><a name="873"
+      > </a
+      ><a name="874" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="875"
+      > </a
+      ><a name="876" href="agda.prelude.html#844" class="Bound"
+      >z</a
+      ><a name="877" class="Symbol"
+      >)</a
+      ><a name="878"
+      >
+  </a
+      ><a name="881" class="Symbol"
+      >&#8594;</a
+      ><a name="882"
+      > </a
+      ><a name="883" class="Comment"
+      >---------</a
+      ><a name="892"
+      >
+  </a
+      ><a name="895" href="agda.prelude.html#840" class="Bound"
+      >x</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="agda.prelude.html#844" class="Bound"
+      >z</a
+      ><a name="900"
+      >
+</a
+      ><a name="901" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="agda.prelude.html#803" class="Function Operator"
+      >&#183;</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="agda.prelude.html#908" class="Bound"
+      >q</a
+      ><a name="909"
+      > </a
+      ><a name="910" class="Symbol"
+      >=</a
+      ><a name="911"
+      > </a
+      ><a name="912" href="agda.prelude.html#908" class="Bound"
+      >q</a
+      ><a name="913"
+      >
+
+</a
+      ><a name="915" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="919"
+      > </a
+      ><a name="920" class="Symbol"
+      >:</a
+      ><a name="921"
+      >
+  </a
+      ><a name="924" class="Symbol"
+      >{</a
+      ><a name="925" href="agda.prelude.html#925" class="Bound"
+      >l</a
+      ><a name="926"
+      > </a
+      ><a name="927" href="agda.prelude.html#927" class="Bound"
+      >l'</a
+      ><a name="929"
+      > </a
+      ><a name="930" class="Symbol"
+      >:</a
+      ><a name="931"
+      > </a
+      ><a name="932" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="937" class="Symbol"
+      >}</a
+      ><a name="938"
+      >
+  </a
+      ><a name="941" class="Symbol"
+      >{</a
+      ><a name="942" href="agda.prelude.html#942" class="Bound"
+      >A</a
+      ><a name="943"
+      > </a
+      ><a name="944" class="Symbol"
+      >:</a
+      ><a name="945"
+      > </a
+      ><a name="946" class="PrimitiveType"
+      >Set</a
+      ><a name="949"
+      > </a
+      ><a name="950" href="agda.prelude.html#925" class="Bound"
+      >l</a
+      ><a name="951" class="Symbol"
+      >}</a
+      ><a name="952"
+      >
+  </a
+      ><a name="955" class="Symbol"
+      >{</a
+      ><a name="956" href="agda.prelude.html#956" class="Bound"
+      >B</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >:</a
+      ><a name="959"
+      > </a
+      ><a name="960" class="PrimitiveType"
+      >Set</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="agda.prelude.html#927" class="Bound"
+      >l'</a
+      ><a name="966" class="Symbol"
+      >}</a
+      ><a name="967"
+      >
+  </a
+      ><a name="970" class="Symbol"
+      >(</a
+      ><a name="971" href="agda.prelude.html#971" class="Bound"
+      >f</a
+      ><a name="972"
+      > </a
+      ><a name="973" class="Symbol"
+      >:</a
+      ><a name="974"
+      > </a
+      ><a name="975" href="agda.prelude.html#942" class="Bound"
+      >A</a
+      ><a name="976"
+      > </a
+      ><a name="977" class="Symbol"
+      >&#8594;</a
+      ><a name="978"
+      > </a
+      ><a name="979" href="agda.prelude.html#956" class="Bound"
+      >B</a
+      ><a name="980" class="Symbol"
+      >)</a
+      ><a name="981"
+      >
+  </a
+      ><a name="984" class="Symbol"
+      >{</a
+      ><a name="985" href="agda.prelude.html#985" class="Bound"
+      >x</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="agda.prelude.html#987" class="Bound"
+      >y</a
+      ><a name="988"
+      > </a
+      ><a name="989" class="Symbol"
+      >:</a
+      ><a name="990"
+      > </a
+      ><a name="991" href="agda.prelude.html#942" class="Bound"
+      >A</a
+      ><a name="992" class="Symbol"
+      >}</a
+      ><a name="993"
+      >
+  </a
+      ><a name="996" class="Symbol"
+      >(</a
+      ><a name="997" href="agda.prelude.html#997" class="Bound"
+      >p</a
+      ><a name="998"
+      > </a
+      ><a name="999" class="Symbol"
+      >:</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="agda.prelude.html#985" class="Bound"
+      >x</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" href="agda.prelude.html#987" class="Bound"
+      >y</a
+      ><a name="1006" class="Symbol"
+      >)</a
+      ><a name="1007"
+      >
+  </a
+      ><a name="1010" class="Symbol"
+      >&#8594;</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" class="Comment"
+      >-----------</a
+      ><a name="1023"
+      >
+  </a
+      ><a name="1026" href="agda.prelude.html#971" class="Bound"
+      >f</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" href="agda.prelude.html#985" class="Bound"
+      >x</a
+      ><a name="1029"
+      > </a
+      ><a name="1030" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" href="agda.prelude.html#971" class="Bound"
+      >f</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" href="agda.prelude.html#987" class="Bound"
+      >y</a
+      ><a name="1035"
+      >
+</a
+      ><a name="1036" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" class="Symbol"
+      >_</a
+      ><a name="1042"
+      > </a
+      ><a name="1043" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" class="Symbol"
+      >=</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1054"
+      >
+
+</a
+      ><a name="1056" href="agda.prelude.html#1056" class="Function"
+      >subst</a
+      ><a name="1061"
+      > </a
+      ><a name="1062" class="Symbol"
+      >:</a
+      ><a name="1063"
+      >
+  </a
+      ><a name="1066" class="Symbol"
+      >{</a
+      ><a name="1067" href="agda.prelude.html#1067" class="Bound"
+      >l</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="agda.prelude.html#1069" class="Bound"
+      >l'</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" class="Symbol"
+      >:</a
+      ><a name="1073"
+      > </a
+      ><a name="1074" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1079" class="Symbol"
+      >}</a
+      ><a name="1080"
+      >
+  </a
+      ><a name="1083" class="Symbol"
+      >{</a
+      ><a name="1084" href="agda.prelude.html#1084" class="Bound"
+      >A</a
+      ><a name="1085"
+      >  </a
+      ><a name="1087" class="Symbol"
+      >:</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="PrimitiveType"
+      >Set</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="agda.prelude.html#1067" class="Bound"
+      >l</a
+      ><a name="1094" class="Symbol"
+      >}</a
+      ><a name="1095"
+      >
+  </a
+      ><a name="1098" class="Symbol"
+      >(</a
+      ><a name="1099" href="agda.prelude.html#1099" class="Bound"
+      >B</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" class="Symbol"
+      >:</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="agda.prelude.html#1084" class="Bound"
+      >A</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" class="Symbol"
+      >&#8594;</a
+      ><a name="1106"
+      > </a
+      ><a name="1107" class="PrimitiveType"
+      >Set</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="agda.prelude.html#1069" class="Bound"
+      >l'</a
+      ><a name="1113" class="Symbol"
+      >)</a
+      ><a name="1114"
+      >
+  </a
+      ><a name="1117" class="Symbol"
+      >{</a
+      ><a name="1118" href="agda.prelude.html#1118" class="Bound"
+      >x</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" href="agda.prelude.html#1120" class="Bound"
+      >y</a
+      ><a name="1121"
+      > </a
+      ><a name="1122" class="Symbol"
+      >:</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" href="agda.prelude.html#1084" class="Bound"
+      >A</a
+      ><a name="1125" class="Symbol"
+      >}</a
+      ><a name="1126"
+      >
+  </a
+      ><a name="1129" class="Symbol"
+      >(</a
+      ><a name="1130" href="agda.prelude.html#1130" class="Bound"
+      >p</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" class="Symbol"
+      >:</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" href="agda.prelude.html#1118" class="Bound"
+      >x</a
+      ><a name="1135"
+      > </a
+      ><a name="1136" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="agda.prelude.html#1120" class="Bound"
+      >y</a
+      ><a name="1139" class="Symbol"
+      >)</a
+      ><a name="1140"
+      >
+  </a
+      ><a name="1143" class="Symbol"
+      >&#8594;</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" class="Comment"
+      >--------------</a
+      ><a name="1159"
+      >
+  </a
+      ><a name="1162" href="agda.prelude.html#1099" class="Bound"
+      >B</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="agda.prelude.html#1118" class="Bound"
+      >x</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" class="Symbol"
+      >&#8594;</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" href="agda.prelude.html#1099" class="Bound"
+      >B</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" href="agda.prelude.html#1120" class="Bound"
+      >y</a
+      ><a name="1171"
+      >
+</a
+      ><a name="1172" href="agda.prelude.html#1056" class="Function"
+      >subst</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="agda.prelude.html#1178" class="Bound"
+      >B</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" href="agda.prelude.html#1185" class="Bound"
+      >b</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" class="Symbol"
+      >=</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="agda.prelude.html#1185" class="Bound"
+      >b</a
+      ><a name="1190"
+      >
+
+</a
+      ><a name="1192" href="agda.prelude.html#1192" class="Function"
+      >subst-cong-assoc</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" class="Symbol"
+      >:</a
+      ><a name="1210"
+      >
+  </a
+      ><a name="1213" class="Symbol"
+      >{</a
+      ><a name="1214" href="agda.prelude.html#1214" class="Bound"
+      >l</a
+      ><a name="1215"
+      > </a
+      ><a name="1216" href="agda.prelude.html#1216" class="Bound"
+      >l'</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="agda.prelude.html#1219" class="Bound"
+      >l''</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" class="Symbol"
+      >:</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1230" class="Symbol"
+      >}</a
+      ><a name="1231"
+      >
+  </a
+      ><a name="1234" class="Symbol"
+      >{</a
+      ><a name="1235" href="agda.prelude.html#1235" class="Bound"
+      >A</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" class="Symbol"
+      >:</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" class="PrimitiveType"
+      >Set</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="agda.prelude.html#1214" class="Bound"
+      >l</a
+      ><a name="1244" class="Symbol"
+      >}</a
+      ><a name="1245"
+      >
+  </a
+      ><a name="1248" class="Symbol"
+      >{</a
+      ><a name="1249" href="agda.prelude.html#1249" class="Bound"
+      >B</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" class="Symbol"
+      >:</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" class="PrimitiveType"
+      >Set</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="agda.prelude.html#1216" class="Bound"
+      >l'</a
+      ><a name="1259" class="Symbol"
+      >}</a
+      ><a name="1260"
+      >
+  </a
+      ><a name="1263" class="Symbol"
+      >(</a
+      ><a name="1264" href="agda.prelude.html#1264" class="Bound"
+      >C</a
+      ><a name="1265"
+      > </a
+      ><a name="1266" class="Symbol"
+      >:</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" href="agda.prelude.html#1249" class="Bound"
+      >B</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" class="Symbol"
+      >&#8594;</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" class="PrimitiveType"
+      >Set</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="agda.prelude.html#1219" class="Bound"
+      >l''</a
+      ><a name="1279" class="Symbol"
+      >)</a
+      ><a name="1280"
+      >
+  </a
+      ><a name="1283" class="Symbol"
+      >(</a
+      ><a name="1284" href="agda.prelude.html#1284" class="Bound"
+      >f</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" class="Symbol"
+      >:</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" href="agda.prelude.html#1235" class="Bound"
+      >A</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" class="Symbol"
+      >&#8594;</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="agda.prelude.html#1249" class="Bound"
+      >B</a
+      ><a name="1293" class="Symbol"
+      >)</a
+      ><a name="1294"
+      >
+  </a
+      ><a name="1297" class="Symbol"
+      >{</a
+      ><a name="1298" href="agda.prelude.html#1298" class="Bound"
+      >x</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="agda.prelude.html#1300" class="Bound"
+      >y</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" class="Symbol"
+      >:</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="agda.prelude.html#1235" class="Bound"
+      >A</a
+      ><a name="1305" class="Symbol"
+      >}</a
+      ><a name="1306"
+      >
+  </a
+      ><a name="1309" class="Symbol"
+      >(</a
+      ><a name="1310" href="agda.prelude.html#1310" class="Bound"
+      >p</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" class="Symbol"
+      >:</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="agda.prelude.html#1298" class="Bound"
+      >x</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="agda.prelude.html#1300" class="Bound"
+      >y</a
+      ><a name="1319" class="Symbol"
+      >)</a
+      ><a name="1320"
+      > 
+  </a
+      ><a name="1324" class="Symbol"
+      >&#8594;</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Comment"
+      >------------------------------------------</a
+      ><a name="1368"
+      >
+  </a
+      ><a name="1371" href="agda.prelude.html#1056" class="Function"
+      >subst</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" class="Symbol"
+      >(&#955;</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="agda.prelude.html#1380" class="Bound"
+      >x</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" class="Symbol"
+      >&#8594;</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" href="agda.prelude.html#1264" class="Bound"
+      >C</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" class="Symbol"
+      >(</a
+      ><a name="1387" href="agda.prelude.html#1284" class="Bound"
+      >f</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" href="agda.prelude.html#1380" class="Bound"
+      >x</a
+      ><a name="1390" class="Symbol"
+      >))</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="agda.prelude.html#1310" class="Bound"
+      >p</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="agda.prelude.html#1056" class="Function"
+      >subst</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" href="agda.prelude.html#1264" class="Bound"
+      >C</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" class="Symbol"
+      >(</a
+      ><a name="1406" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="1410"
+      > </a
+      ><a name="1411" href="agda.prelude.html#1284" class="Bound"
+      >f</a
+      ><a name="1412"
+      > </a
+      ><a name="1413" href="agda.prelude.html#1310" class="Bound"
+      >p</a
+      ><a name="1414" class="Symbol"
+      >)</a
+      ><a name="1415"
+      >
+</a
+      ><a name="1416" href="agda.prelude.html#1192" class="Function"
+      >subst-cong-assoc</a
+      ><a name="1432"
+      > </a
+      ><a name="1433" class="Symbol"
+      >_</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" class="Symbol"
+      >_</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1441"
+      > </a
+      ><a name="1442" class="Symbol"
+      >=</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1448"
+      >
+
+</a
+      ><a name="1450" href="agda.prelude.html#1450" class="Function"
+      >congd</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" class="Symbol"
+      >:</a
+      ><a name="1457"
+      >
+  </a
+      ><a name="1460" class="Symbol"
+      >{</a
+      ><a name="1461" href="agda.prelude.html#1461" class="Bound"
+      >l</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" href="agda.prelude.html#1463" class="Bound"
+      >l'</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" class="Symbol"
+      >:</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1473" class="Symbol"
+      >}</a
+      ><a name="1474"
+      >
+  </a
+      ><a name="1477" class="Symbol"
+      >{</a
+      ><a name="1478" href="agda.prelude.html#1478" class="Bound"
+      >A</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" class="Symbol"
+      >:</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" class="PrimitiveType"
+      >Set</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" href="agda.prelude.html#1461" class="Bound"
+      >l</a
+      ><a name="1487" class="Symbol"
+      >}</a
+      ><a name="1488"
+      >
+  </a
+      ><a name="1491" class="Symbol"
+      >{</a
+      ><a name="1492" href="agda.prelude.html#1492" class="Bound"
+      >B</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" class="Symbol"
+      >:</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" href="agda.prelude.html#1478" class="Bound"
+      >A</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" class="Symbol"
+      >&#8594;</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" class="PrimitiveType"
+      >Set</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="agda.prelude.html#1463" class="Bound"
+      >l'</a
+      ><a name="1506" class="Symbol"
+      >}</a
+      ><a name="1507"
+      >
+  </a
+      ><a name="1510" class="Symbol"
+      >(</a
+      ><a name="1511" href="agda.prelude.html#1511" class="Bound"
+      >f</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" class="Symbol"
+      >:</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" class="Symbol"
+      >(</a
+      ><a name="1516" href="agda.prelude.html#1516" class="Bound"
+      >x</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >:</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="agda.prelude.html#1478" class="Bound"
+      >A</a
+      ><a name="1521" class="Symbol"
+      >)</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" class="Symbol"
+      >&#8594;</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" href="agda.prelude.html#1492" class="Bound"
+      >B</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="agda.prelude.html#1516" class="Bound"
+      >x</a
+      ><a name="1528" class="Symbol"
+      >)</a
+      ><a name="1529"
+      >
+  </a
+      ><a name="1532" class="Symbol"
+      >{</a
+      ><a name="1533" href="agda.prelude.html#1533" class="Bound"
+      >x</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="agda.prelude.html#1535" class="Bound"
+      >y</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Symbol"
+      >:</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="agda.prelude.html#1478" class="Bound"
+      >A</a
+      ><a name="1540" class="Symbol"
+      >}</a
+      ><a name="1541"
+      >
+  </a
+      ><a name="1544" class="Symbol"
+      >(</a
+      ><a name="1545" href="agda.prelude.html#1545" class="Bound"
+      >p</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" class="Symbol"
+      >:</a
+      ><a name="1548"
+      > </a
+      ><a name="1549" href="agda.prelude.html#1533" class="Bound"
+      >x</a
+      ><a name="1550"
+      > </a
+      ><a name="1551" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" href="agda.prelude.html#1535" class="Bound"
+      >y</a
+      ><a name="1554" class="Symbol"
+      >)</a
+      ><a name="1555"
+      >
+  </a
+      ><a name="1558" class="Symbol"
+      >&#8594;</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" class="Comment"
+      >-----------</a
+      ><a name="1571"
+      >
+  </a
+      ><a name="1574" href="agda.prelude.html#1056" class="Function"
+      >subst</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" href="agda.prelude.html#1492" class="Bound"
+      >B</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" href="agda.prelude.html#1545" class="Bound"
+      >p</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" class="Symbol"
+      >(</a
+      ><a name="1585" href="agda.prelude.html#1511" class="Bound"
+      >f</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" href="agda.prelude.html#1533" class="Bound"
+      >x</a
+      ><a name="1588" class="Symbol"
+      >)</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" href="agda.prelude.html#1511" class="Bound"
+      >f</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="agda.prelude.html#1535" class="Bound"
+      >y</a
+      ><a name="1595"
+      >
+</a
+      ><a name="1596" href="agda.prelude.html#1450" class="Function"
+      >congd</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" class="Symbol"
+      >_</a
+      ><a name="1603"
+      > </a
+      ><a name="1604" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" class="Symbol"
+      >=</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1615"
+      >
+
+</a
+      ><a name="1617" class="Keyword"
+      >infix</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" class="Number"
+      >1</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="agda.prelude.html#1633" class="Function Operator"
+      >proof_</a
+      ><a name="1631"
+      > 
+</a
+      ><a name="1633" href="agda.prelude.html#1633" class="Function Operator"
+      >proof_</a
+      ><a name="1639"
+      > </a
+      ><a name="1640" class="Symbol"
+      >:</a
+      ><a name="1641"
+      >
+  </a
+      ><a name="1644" class="Symbol"
+      >{</a
+      ><a name="1645" href="agda.prelude.html#1645" class="Bound"
+      >l</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" class="Symbol"
+      >:</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1654" class="Symbol"
+      >}</a
+      ><a name="1655"
+      >
+  </a
+      ><a name="1658" class="Symbol"
+      >{</a
+      ><a name="1659" href="agda.prelude.html#1659" class="Bound"
+      >A</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" class="Symbol"
+      >:</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" class="PrimitiveType"
+      >Set</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" href="agda.prelude.html#1645" class="Bound"
+      >l</a
+      ><a name="1668" class="Symbol"
+      >}</a
+      ><a name="1669"
+      >
+  </a
+      ><a name="1672" class="Symbol"
+      >{</a
+      ><a name="1673" href="agda.prelude.html#1673" class="Bound"
+      >x</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" href="agda.prelude.html#1675" class="Bound"
+      >y</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" class="Symbol"
+      >:</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" href="agda.prelude.html#1659" class="Bound"
+      >A</a
+      ><a name="1680" class="Symbol"
+      >}</a
+      ><a name="1681"
+      >
+  </a
+      ><a name="1684" class="Symbol"
+      >&#8594;</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" class="Comment"
+      >-------------</a
+      ><a name="1699"
+      >
+  </a
+      ><a name="1702" href="agda.prelude.html#1673" class="Bound"
+      >x</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" href="agda.prelude.html#1675" class="Bound"
+      >y</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" class="Symbol"
+      >&#8594;</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="agda.prelude.html#1673" class="Bound"
+      >x</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="agda.prelude.html#1675" class="Bound"
+      >y</a
+      ><a name="1715"
+      >
+</a
+      ><a name="1716" href="agda.prelude.html#1633" class="Function Operator"
+      >proof</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" class="Symbol"
+      >=</a
+      ><a name="1728"
+      > </a
+      ><a name="1729" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1733"
+      >
+
+</a
+      ><a name="1735" class="Keyword"
+      >infixr</a
+      ><a name="1741"
+      > </a
+      ><a name="1742" class="Number"
+      >2</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="agda.prelude.html#1751" class="Function Operator"
+      >_&#8801;[_]_</a
+      ><a name="1750"
+      >
+</a
+      ><a name="1751" href="agda.prelude.html#1751" class="Function Operator"
+      >_&#8801;[_]_</a
+      ><a name="1757"
+      > </a
+      ><a name="1758" class="Symbol"
+      >:</a
+      ><a name="1759"
+      >
+  </a
+      ><a name="1762" class="Symbol"
+      >{</a
+      ><a name="1763" href="agda.prelude.html#1763" class="Bound"
+      >l</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >:</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1772" class="Symbol"
+      >}</a
+      ><a name="1773"
+      >
+  </a
+      ><a name="1776" class="Symbol"
+      >{</a
+      ><a name="1777" href="agda.prelude.html#1777" class="Bound"
+      >A</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" class="Symbol"
+      >:</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" class="PrimitiveType"
+      >Set</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" href="agda.prelude.html#1763" class="Bound"
+      >l</a
+      ><a name="1786" class="Symbol"
+      >}</a
+      ><a name="1787"
+      >
+  </a
+      ><a name="1790" class="Symbol"
+      >(</a
+      ><a name="1791" href="agda.prelude.html#1791" class="Bound"
+      >x</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" class="Symbol"
+      >:</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="agda.prelude.html#1777" class="Bound"
+      >A</a
+      ><a name="1796" class="Symbol"
+      >)</a
+      ><a name="1797"
+      >
+  </a
+      ><a name="1800" class="Symbol"
+      >{</a
+      ><a name="1801" href="agda.prelude.html#1801" class="Bound"
+      >y</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" href="agda.prelude.html#1803" class="Bound"
+      >z</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" class="Symbol"
+      >:</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" href="agda.prelude.html#1777" class="Bound"
+      >A</a
+      ><a name="1808" class="Symbol"
+      >}</a
+      ><a name="1809"
+      >
+  </a
+      ><a name="1812" class="Symbol"
+      >&#8594;</a
+      ><a name="1813"
+      > </a
+      ><a name="1814" class="Comment"
+      >-------------------</a
+      ><a name="1833"
+      >
+  </a
+      ><a name="1836" href="agda.prelude.html#1791" class="Bound"
+      >x</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1839"
+      > </a
+      ><a name="1840" href="agda.prelude.html#1801" class="Bound"
+      >y</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" class="Symbol"
+      >&#8594;</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="agda.prelude.html#1801" class="Bound"
+      >y</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1847"
+      > </a
+      ><a name="1848" href="agda.prelude.html#1803" class="Bound"
+      >z</a
+      ><a name="1849"
+      > </a
+      ><a name="1850" class="Symbol"
+      >&#8594;</a
+      ><a name="1851"
+      > </a
+      ><a name="1852" href="agda.prelude.html#1791" class="Bound"
+      >x</a
+      ><a name="1853"
+      > </a
+      ><a name="1854" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1855"
+      > </a
+      ><a name="1856" href="agda.prelude.html#1803" class="Bound"
+      >z</a
+      ><a name="1857"
+      >
+</a
+      ><a name="1858" href="agda.prelude.html#1858" class="Bound"
+      >x</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" href="agda.prelude.html#1751" class="Function Operator"
+      >&#8801;[</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" href="agda.prelude.html#1751" class="Function Operator"
+      >]</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" href="agda.prelude.html#1870" class="Bound"
+      >p</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" class="Symbol"
+      >=</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" href="agda.prelude.html#1870" class="Bound"
+      >p</a
+      ><a name="1875"
+      >
+
+</a
+      ><a name="1877" class="Keyword"
+      >infix</a
+      ><a name="1882"
+      >  </a
+      ><a name="1884" class="Number"
+      >3</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="agda.prelude.html#1892" class="Function Operator"
+      >_qed</a
+      ><a name="1890"
+      > 
+</a
+      ><a name="1892" href="agda.prelude.html#1892" class="Function Operator"
+      >_qed</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" class="Symbol"
+      >:</a
+      ><a name="1898"
+      >
+  </a
+      ><a name="1901" class="Symbol"
+      >{</a
+      ><a name="1902" href="agda.prelude.html#1902" class="Bound"
+      >l</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" class="Symbol"
+      >:</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="1911" class="Symbol"
+      >}</a
+      ><a name="1912"
+      >
+  </a
+      ><a name="1915" class="Symbol"
+      >{</a
+      ><a name="1916" href="agda.prelude.html#1916" class="Bound"
+      >A</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Symbol"
+      >:</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" class="PrimitiveType"
+      >Set</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" href="agda.prelude.html#1902" class="Bound"
+      >l</a
+      ><a name="1925" class="Symbol"
+      >}</a
+      ><a name="1926"
+      >
+  </a
+      ><a name="1929" class="Symbol"
+      >(</a
+      ><a name="1930" href="agda.prelude.html#1930" class="Bound"
+      >x</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" class="Symbol"
+      >:</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" href="agda.prelude.html#1916" class="Bound"
+      >A</a
+      ><a name="1935" class="Symbol"
+      >)</a
+      ><a name="1936"
+      >
+  </a
+      ><a name="1939" class="Symbol"
+      >&#8594;</a
+      ><a name="1940"
+      > </a
+      ><a name="1941" class="Comment"
+      >---------</a
+      ><a name="1950"
+      >
+  </a
+      ><a name="1953" href="agda.prelude.html#1930" class="Bound"
+      >x</a
+      ><a name="1954"
+      > </a
+      ><a name="1955" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1956"
+      > </a
+      ><a name="1957" href="agda.prelude.html#1930" class="Bound"
+      >x</a
+      ><a name="1958"
+      >
+</a
+      ><a name="1959" class="Symbol"
+      >_</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="agda.prelude.html#1892" class="Function Operator"
+      >qed</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" class="Symbol"
+      >=</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1971"
+      >
+
+</a
+      ><a name="1973" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="2043"
+      >
+</a
+      ><a name="2044" class="Comment"
+      >-- Rewriting</a
+      ><a name="2056"
+      >
+</a
+      ><a name="2057" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="2127"
+      >
+</a
+      ><a name="2128" class="Symbol"
+      >{-#</a
+      ><a name="2131"
+      > </a
+      ><a name="2132" class="Keyword"
+      >BUILTIN</a
+      ><a name="2139"
+      > </a
+      ><a name="2140" class="Keyword"
+      >REWRITE</a
+      ><a name="2147"
+      > </a
+      ><a name="2148" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >_&#8801;_</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" class="Symbol"
+      >#-}</a
+      ><a name="2155"
+      >
+
+</a
+      ><a name="2157" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="2227"
+      >
+</a
+      ><a name="2228" class="Comment"
+      >-- Unit type</a
+      ><a name="2240"
+      >
+</a
+      ><a name="2241" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="2311"
+      >
+</a
+      ><a name="2312" class="Keyword"
+      >open</a
+      ><a name="2316"
+      > </a
+      ><a name="2317" class="Keyword"
+      >import</a
+      ><a name="2323"
+      > </a
+      ><a name="2324" href="Agda.Builtin.Unit.html#1" class="Module"
+      >Agda.Builtin.Unit</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" class="Keyword"
+      >public</a
+      ><a name="2348"
+      >
+    
+</a
+      ><a name="2354" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="2424"
+      >
+</a
+      ><a name="2425" class="Comment"
+      >-- Functions</a
+      ><a name="2437"
+      >
+</a
+      ><a name="2438" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="2508"
+      >
+</a
+      ><a name="2509" href="agda.prelude.html#2509" class="Function"
+      >&#928;</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" class="Symbol"
+      >:</a
+      ><a name="2512"
+      >
+  </a
+      ><a name="2515" class="Symbol"
+      >{</a
+      ><a name="2516" href="agda.prelude.html#2516" class="Bound"
+      >l</a
+      ><a name="2517"
+      > </a
+      ><a name="2518" href="agda.prelude.html#2518" class="Bound"
+      >l'</a
+      ><a name="2520"
+      > </a
+      ><a name="2521" class="Symbol"
+      >:</a
+      ><a name="2522"
+      > </a
+      ><a name="2523" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2528" class="Symbol"
+      >}</a
+      ><a name="2529"
+      >
+  </a
+      ><a name="2532" class="Symbol"
+      >(</a
+      ><a name="2533" href="agda.prelude.html#2533" class="Bound"
+      >A</a
+      ><a name="2534"
+      > </a
+      ><a name="2535" class="Symbol"
+      >:</a
+      ><a name="2536"
+      > </a
+      ><a name="2537" class="PrimitiveType"
+      >Set</a
+      ><a name="2540"
+      > </a
+      ><a name="2541" href="agda.prelude.html#2516" class="Bound"
+      >l</a
+      ><a name="2542" class="Symbol"
+      >)</a
+      ><a name="2543"
+      >
+  </a
+      ><a name="2546" class="Symbol"
+      >(</a
+      ><a name="2547" href="agda.prelude.html#2547" class="Bound"
+      >B</a
+      ><a name="2548"
+      > </a
+      ><a name="2549" class="Symbol"
+      >:</a
+      ><a name="2550"
+      > </a
+      ><a name="2551" href="agda.prelude.html#2533" class="Bound"
+      >A</a
+      ><a name="2552"
+      > </a
+      ><a name="2553" class="Symbol"
+      >&#8594;</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" class="PrimitiveType"
+      >Set</a
+      ><a name="2558"
+      > </a
+      ><a name="2559" href="agda.prelude.html#2518" class="Bound"
+      >l'</a
+      ><a name="2561" class="Symbol"
+      >)</a
+      ><a name="2562"
+      >
+  </a
+      ><a name="2565" class="Symbol"
+      >&#8594;</a
+      ><a name="2566"
+      > </a
+      ><a name="2567" class="Comment"
+      >--------------</a
+      ><a name="2581"
+      >
+  </a
+      ><a name="2584" class="PrimitiveType"
+      >Set</a
+      ><a name="2587"
+      > </a
+      ><a name="2588" class="Symbol"
+      >(</a
+      ><a name="2589" href="agda.prelude.html#2516" class="Bound"
+      >l</a
+      ><a name="2590"
+      > </a
+      ><a name="2591" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="2592"
+      > </a
+      ><a name="2593" href="agda.prelude.html#2518" class="Bound"
+      >l'</a
+      ><a name="2595" class="Symbol"
+      >)</a
+      ><a name="2596"
+      >
+</a
+      ><a name="2597" href="agda.prelude.html#2509" class="Function"
+      >&#928;</a
+      ><a name="2598"
+      > </a
+      ><a name="2599" href="agda.prelude.html#2599" class="Bound"
+      >A</a
+      ><a name="2600"
+      > </a
+      ><a name="2601" href="agda.prelude.html#2601" class="Bound"
+      >B</a
+      ><a name="2602"
+      > </a
+      ><a name="2603" class="Symbol"
+      >=</a
+      ><a name="2604"
+      > </a
+      ><a name="2605" class="Symbol"
+      >(</a
+      ><a name="2606" href="agda.prelude.html#2606" class="Bound"
+      >x</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" class="Symbol"
+      >:</a
+      ><a name="2609"
+      > </a
+      ><a name="2610" href="agda.prelude.html#2599" class="Bound"
+      >A</a
+      ><a name="2611" class="Symbol"
+      >)</a
+      ><a name="2612"
+      > </a
+      ><a name="2613" class="Symbol"
+      >&#8594;</a
+      ><a name="2614"
+      > </a
+      ><a name="2615" href="agda.prelude.html#2601" class="Bound"
+      >B</a
+      ><a name="2616"
+      > </a
+      ><a name="2617" href="agda.prelude.html#2606" class="Bound"
+      >x</a
+      ><a name="2618"
+      >
+
+</a
+      ><a name="2620" href="agda.prelude.html#2620" class="Function"
+      >apply</a
+      ><a name="2625"
+      > </a
+      ><a name="2626" class="Symbol"
+      >:</a
+      ><a name="2627"
+      >
+  </a
+      ><a name="2630" class="Symbol"
+      >{</a
+      ><a name="2631" href="agda.prelude.html#2631" class="Bound"
+      >l</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" href="agda.prelude.html#2633" class="Bound"
+      >l'</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" class="Symbol"
+      >:</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2643" class="Symbol"
+      >}</a
+      ><a name="2644"
+      >
+  </a
+      ><a name="2647" class="Symbol"
+      >{</a
+      ><a name="2648" href="agda.prelude.html#2648" class="Bound"
+      >A</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" class="Symbol"
+      >:</a
+      ><a name="2651"
+      > </a
+      ><a name="2652" class="PrimitiveType"
+      >Set</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" href="agda.prelude.html#2631" class="Bound"
+      >l</a
+      ><a name="2657" class="Symbol"
+      >}</a
+      ><a name="2658"
+      >
+  </a
+      ><a name="2661" class="Symbol"
+      >{</a
+      ><a name="2662" href="agda.prelude.html#2662" class="Bound"
+      >B</a
+      ><a name="2663"
+      > </a
+      ><a name="2664" class="Symbol"
+      >:</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="agda.prelude.html#2648" class="Bound"
+      >A</a
+      ><a name="2667"
+      > </a
+      ><a name="2668" class="Symbol"
+      >&#8594;</a
+      ><a name="2669"
+      > </a
+      ><a name="2670" class="PrimitiveType"
+      >Set</a
+      ><a name="2673"
+      > </a
+      ><a name="2674" href="agda.prelude.html#2633" class="Bound"
+      >l'</a
+      ><a name="2676" class="Symbol"
+      >}</a
+      ><a name="2677"
+      >
+  </a
+      ><a name="2680" class="Symbol"
+      >(</a
+      ><a name="2681" href="agda.prelude.html#2681" class="Bound"
+      >x</a
+      ><a name="2682"
+      > </a
+      ><a name="2683" class="Symbol"
+      >:</a
+      ><a name="2684"
+      > </a
+      ><a name="2685" href="agda.prelude.html#2648" class="Bound"
+      >A</a
+      ><a name="2686" class="Symbol"
+      >)</a
+      ><a name="2687"
+      >
+  </a
+      ><a name="2690" class="Symbol"
+      >&#8594;</a
+      ><a name="2691"
+      > </a
+      ><a name="2692" class="Comment"
+      >-------------</a
+      ><a name="2705"
+      >
+  </a
+      ><a name="2708" href="agda.prelude.html#2509" class="Function"
+      >&#928;</a
+      ><a name="2709"
+      > </a
+      ><a name="2710" href="agda.prelude.html#2648" class="Bound"
+      >A</a
+      ><a name="2711"
+      > </a
+      ><a name="2712" href="agda.prelude.html#2662" class="Bound"
+      >B</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" class="Symbol"
+      >&#8594;</a
+      ><a name="2715"
+      > </a
+      ><a name="2716" href="agda.prelude.html#2662" class="Bound"
+      >B</a
+      ><a name="2717"
+      > </a
+      ><a name="2718" href="agda.prelude.html#2681" class="Bound"
+      >x</a
+      ><a name="2719"
+      >
+</a
+      ><a name="2720" href="agda.prelude.html#2620" class="Function"
+      >apply</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" href="agda.prelude.html#2726" class="Bound"
+      >x</a
+      ><a name="2727"
+      > </a
+      ><a name="2728" href="agda.prelude.html#2728" class="Bound"
+      >f</a
+      ><a name="2729"
+      >  </a
+      ><a name="2731" class="Symbol"
+      >=</a
+      ><a name="2732"
+      > </a
+      ><a name="2733" href="agda.prelude.html#2728" class="Bound"
+      >f</a
+      ><a name="2734"
+      > </a
+      ><a name="2735" href="agda.prelude.html#2726" class="Bound"
+      >x</a
+      ><a name="2736"
+      > 
+
+</a
+      ><a name="2739" class="Keyword"
+      >infixr</a
+      ><a name="2745"
+      > </a
+      ><a name="2746" class="Number"
+      >5</a
+      ><a name="2747"
+      > </a
+      ><a name="2748" href="agda.prelude.html#2752" class="Function Operator"
+      >_&#8728;_</a
+      ><a name="2751"
+      >
+</a
+      ><a name="2752" href="agda.prelude.html#2752" class="Function Operator"
+      >_&#8728;_</a
+      ><a name="2755"
+      > </a
+      ><a name="2756" class="Symbol"
+      >:</a
+      ><a name="2757"
+      >
+  </a
+      ><a name="2760" class="Symbol"
+      >{</a
+      ><a name="2761" href="agda.prelude.html#2761" class="Bound"
+      >l</a
+      ><a name="2762"
+      > </a
+      ><a name="2763" href="agda.prelude.html#2763" class="Bound"
+      >m</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" href="agda.prelude.html#2765" class="Bound"
+      >n</a
+      ><a name="2766"
+      > </a
+      ><a name="2767" class="Symbol"
+      >:</a
+      ><a name="2768"
+      > </a
+      ><a name="2769" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2774" class="Symbol"
+      >}</a
+      ><a name="2775"
+      >
+  </a
+      ><a name="2778" class="Symbol"
+      >{</a
+      ><a name="2779" href="agda.prelude.html#2779" class="Bound"
+      >A</a
+      ><a name="2780"
+      > </a
+      ><a name="2781" class="Symbol"
+      >:</a
+      ><a name="2782"
+      > </a
+      ><a name="2783" class="PrimitiveType"
+      >Set</a
+      ><a name="2786"
+      > </a
+      ><a name="2787" href="agda.prelude.html#2761" class="Bound"
+      >l</a
+      ><a name="2788" class="Symbol"
+      >}</a
+      ><a name="2789"
+      >
+  </a
+      ><a name="2792" class="Symbol"
+      >{</a
+      ><a name="2793" href="agda.prelude.html#2793" class="Bound"
+      >B</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" class="Symbol"
+      >:</a
+      ><a name="2796"
+      > </a
+      ><a name="2797" href="agda.prelude.html#2779" class="Bound"
+      >A</a
+      ><a name="2798"
+      > </a
+      ><a name="2799" class="Symbol"
+      >&#8594;</a
+      ><a name="2800"
+      > </a
+      ><a name="2801" class="PrimitiveType"
+      >Set</a
+      ><a name="2804"
+      > </a
+      ><a name="2805" href="agda.prelude.html#2763" class="Bound"
+      >m</a
+      ><a name="2806" class="Symbol"
+      >}</a
+      ><a name="2807"
+      >
+  </a
+      ><a name="2810" class="Symbol"
+      >{</a
+      ><a name="2811" href="agda.prelude.html#2811" class="Bound"
+      >C</a
+      ><a name="2812"
+      > </a
+      ><a name="2813" class="Symbol"
+      >:</a
+      ><a name="2814"
+      > </a
+      ><a name="2815" class="Symbol"
+      >(</a
+      ><a name="2816" href="agda.prelude.html#2816" class="Bound"
+      >x</a
+      ><a name="2817"
+      > </a
+      ><a name="2818" class="Symbol"
+      >:</a
+      ><a name="2819"
+      > </a
+      ><a name="2820" href="agda.prelude.html#2779" class="Bound"
+      >A</a
+      ><a name="2821" class="Symbol"
+      >)</a
+      ><a name="2822"
+      > </a
+      ><a name="2823" class="Symbol"
+      >&#8594;</a
+      ><a name="2824"
+      > </a
+      ><a name="2825" href="agda.prelude.html#2793" class="Bound"
+      >B</a
+      ><a name="2826"
+      > </a
+      ><a name="2827" href="agda.prelude.html#2816" class="Bound"
+      >x</a
+      ><a name="2828"
+      > </a
+      ><a name="2829" class="Symbol"
+      >&#8594;</a
+      ><a name="2830"
+      > </a
+      ><a name="2831" class="PrimitiveType"
+      >Set</a
+      ><a name="2834"
+      > </a
+      ><a name="2835" href="agda.prelude.html#2765" class="Bound"
+      >n</a
+      ><a name="2836" class="Symbol"
+      >}</a
+      ><a name="2837"
+      >
+  </a
+      ><a name="2840" class="Symbol"
+      >(</a
+      ><a name="2841" href="agda.prelude.html#2841" class="Bound"
+      >g</a
+      ><a name="2842"
+      > </a
+      ><a name="2843" class="Symbol"
+      >:</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" class="Symbol"
+      >{</a
+      ><a name="2846" href="agda.prelude.html#2846" class="Bound"
+      >x</a
+      ><a name="2847"
+      > </a
+      ><a name="2848" class="Symbol"
+      >:</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="agda.prelude.html#2779" class="Bound"
+      >A</a
+      ><a name="2851" class="Symbol"
+      >}(</a
+      ><a name="2853" href="agda.prelude.html#2853" class="Bound"
+      >y</a
+      ><a name="2854"
+      > </a
+      ><a name="2855" class="Symbol"
+      >:</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" href="agda.prelude.html#2793" class="Bound"
+      >B</a
+      ><a name="2858"
+      > </a
+      ><a name="2859" href="agda.prelude.html#2846" class="Bound"
+      >x</a
+      ><a name="2860" class="Symbol"
+      >)</a
+      ><a name="2861"
+      > </a
+      ><a name="2862" class="Symbol"
+      >&#8594;</a
+      ><a name="2863"
+      > </a
+      ><a name="2864" href="agda.prelude.html#2811" class="Bound"
+      >C</a
+      ><a name="2865"
+      > </a
+      ><a name="2866" href="agda.prelude.html#2846" class="Bound"
+      >x</a
+      ><a name="2867"
+      > </a
+      ><a name="2868" href="agda.prelude.html#2853" class="Bound"
+      >y</a
+      ><a name="2869" class="Symbol"
+      >)</a
+      ><a name="2870"
+      >
+  </a
+      ><a name="2873" class="Symbol"
+      >(</a
+      ><a name="2874" href="agda.prelude.html#2874" class="Bound"
+      >f</a
+      ><a name="2875"
+      > </a
+      ><a name="2876" class="Symbol"
+      >:</a
+      ><a name="2877"
+      > </a
+      ><a name="2878" class="Symbol"
+      >(</a
+      ><a name="2879" href="agda.prelude.html#2879" class="Bound"
+      >x</a
+      ><a name="2880"
+      > </a
+      ><a name="2881" class="Symbol"
+      >:</a
+      ><a name="2882"
+      > </a
+      ><a name="2883" href="agda.prelude.html#2779" class="Bound"
+      >A</a
+      ><a name="2884" class="Symbol"
+      >)</a
+      ><a name="2885"
+      > </a
+      ><a name="2886" class="Symbol"
+      >&#8594;</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" href="agda.prelude.html#2793" class="Bound"
+      >B</a
+      ><a name="2889"
+      > </a
+      ><a name="2890" href="agda.prelude.html#2879" class="Bound"
+      >x</a
+      ><a name="2891" class="Symbol"
+      >)</a
+      ><a name="2892"
+      >
+  </a
+      ><a name="2895" class="Symbol"
+      >(</a
+      ><a name="2896" href="agda.prelude.html#2896" class="Bound"
+      >x</a
+      ><a name="2897"
+      > </a
+      ><a name="2898" class="Symbol"
+      >:</a
+      ><a name="2899"
+      > </a
+      ><a name="2900" href="agda.prelude.html#2779" class="Bound"
+      >A</a
+      ><a name="2901" class="Symbol"
+      >)</a
+      ><a name="2902"
+      >
+  </a
+      ><a name="2905" class="Symbol"
+      >&#8594;</a
+      ><a name="2906"
+      > </a
+      ><a name="2907" class="Comment"
+      >----------------------------</a
+      ><a name="2935"
+      >
+  </a
+      ><a name="2938" href="agda.prelude.html#2811" class="Bound"
+      >C</a
+      ><a name="2939"
+      > </a
+      ><a name="2940" href="agda.prelude.html#2896" class="Bound"
+      >x</a
+      ><a name="2941"
+      > </a
+      ><a name="2942" class="Symbol"
+      >(</a
+      ><a name="2943" href="agda.prelude.html#2874" class="Bound"
+      >f</a
+      ><a name="2944"
+      > </a
+      ><a name="2945" href="agda.prelude.html#2896" class="Bound"
+      >x</a
+      ><a name="2946" class="Symbol"
+      >)</a
+      ><a name="2947"
+      >
+</a
+      ><a name="2948" class="Symbol"
+      >(</a
+      ><a name="2949" href="agda.prelude.html#2949" class="Bound"
+      >g</a
+      ><a name="2950"
+      > </a
+      ><a name="2951" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="2952"
+      > </a
+      ><a name="2953" href="agda.prelude.html#2953" class="Bound"
+      >f</a
+      ><a name="2954" class="Symbol"
+      >)</a
+      ><a name="2955"
+      > </a
+      ><a name="2956" href="agda.prelude.html#2956" class="Bound"
+      >x</a
+      ><a name="2957"
+      > </a
+      ><a name="2958" class="Symbol"
+      >=</a
+      ><a name="2959"
+      > </a
+      ><a name="2960" href="agda.prelude.html#2949" class="Bound"
+      >g</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" class="Symbol"
+      >(</a
+      ><a name="2963" href="agda.prelude.html#2953" class="Bound"
+      >f</a
+      ><a name="2964"
+      > </a
+      ><a name="2965" href="agda.prelude.html#2956" class="Bound"
+      >x</a
+      ><a name="2966" class="Symbol"
+      >)</a
+      ><a name="2967"
+      >
+
+</a
+      ><a name="2969" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" class="Symbol"
+      >:</a
+      ><a name="2973"
+      >
+ </a
+      ><a name="2975" class="Symbol"
+      >{</a
+      ><a name="2976" href="agda.prelude.html#2976" class="Bound"
+      >l</a
+      ><a name="2977"
+      > </a
+      ><a name="2978" class="Symbol"
+      >:</a
+      ><a name="2979"
+      > </a
+      ><a name="2980" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2985" class="Symbol"
+      >}</a
+      ><a name="2986"
+      >
+ </a
+      ><a name="2988" class="Symbol"
+      >{</a
+      ><a name="2989" href="agda.prelude.html#2989" class="Bound"
+      >A</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" class="Symbol"
+      >:</a
+      ><a name="2992"
+      > </a
+      ><a name="2993" class="PrimitiveType"
+      >Set</a
+      ><a name="2996"
+      > </a
+      ><a name="2997" href="agda.prelude.html#2976" class="Bound"
+      >l</a
+      ><a name="2998" class="Symbol"
+      >}</a
+      ><a name="2999"
+      >
+ </a
+      ><a name="3001" class="Symbol"
+      >&#8594;</a
+      ><a name="3002"
+      > </a
+      ><a name="3003" class="Comment"
+      >---------</a
+      ><a name="3012"
+      >
+ </a
+      ><a name="3014" href="agda.prelude.html#2989" class="Bound"
+      >A</a
+      ><a name="3015"
+      > </a
+      ><a name="3016" class="Symbol"
+      >&#8594;</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" href="agda.prelude.html#2989" class="Bound"
+      >A</a
+      ><a name="3019"
+      >
+</a
+      ><a name="3020" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="3022"
+      > </a
+      ><a name="3023" href="agda.prelude.html#3023" class="Bound"
+      >x</a
+      ><a name="3024"
+      > </a
+      ><a name="3025" class="Symbol"
+      >=</a
+      ><a name="3026"
+      > </a
+      ><a name="3027" href="agda.prelude.html#3023" class="Bound"
+      >x</a
+      ><a name="3028"
+      >
+
+</a
+      ><a name="3030" href="agda.prelude.html#3030" class="Function"
+      >congid</a
+      ><a name="3036"
+      > </a
+      ><a name="3037" class="Symbol"
+      >:</a
+      ><a name="3038"
+      >
+  </a
+      ><a name="3041" class="Symbol"
+      >{</a
+      ><a name="3042" href="agda.prelude.html#3042" class="Bound"
+      >l</a
+      ><a name="3043"
+      > </a
+      ><a name="3044" class="Symbol"
+      >:</a
+      ><a name="3045"
+      > </a
+      ><a name="3046" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3051" class="Symbol"
+      >}</a
+      ><a name="3052"
+      >
+  </a
+      ><a name="3055" class="Symbol"
+      >{</a
+      ><a name="3056" href="agda.prelude.html#3056" class="Bound"
+      >A</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" class="Symbol"
+      >:</a
+      ><a name="3059"
+      > </a
+      ><a name="3060" class="PrimitiveType"
+      >Set</a
+      ><a name="3063"
+      > </a
+      ><a name="3064" href="agda.prelude.html#3042" class="Bound"
+      >l</a
+      ><a name="3065" class="Symbol"
+      >}</a
+      ><a name="3066"
+      >
+  </a
+      ><a name="3069" class="Symbol"
+      >{</a
+      ><a name="3070" href="agda.prelude.html#3070" class="Bound"
+      >x</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="agda.prelude.html#3072" class="Bound"
+      >y</a
+      ><a name="3073"
+      > </a
+      ><a name="3074" class="Symbol"
+      >:</a
+      ><a name="3075"
+      > </a
+      ><a name="3076" href="agda.prelude.html#3056" class="Bound"
+      >A</a
+      ><a name="3077" class="Symbol"
+      >}</a
+      ><a name="3078"
+      >
+  </a
+      ><a name="3081" class="Symbol"
+      >(</a
+      ><a name="3082" href="agda.prelude.html#3082" class="Bound"
+      >p</a
+      ><a name="3083"
+      > </a
+      ><a name="3084" class="Symbol"
+      >:</a
+      ><a name="3085"
+      > </a
+      ><a name="3086" href="agda.prelude.html#3070" class="Bound"
+      >x</a
+      ><a name="3087"
+      > </a
+      ><a name="3088" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3089"
+      > </a
+      ><a name="3090" href="agda.prelude.html#3072" class="Bound"
+      >y</a
+      ><a name="3091" class="Symbol"
+      >)</a
+      ><a name="3092"
+      >
+  </a
+      ><a name="3095" class="Symbol"
+      >&#8594;</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" class="Comment"
+      >---------------</a
+      ><a name="3112"
+      >
+  </a
+      ><a name="3115" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="3119"
+      > </a
+      ><a name="3120" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="3122"
+      > </a
+      ><a name="3123" href="agda.prelude.html#3082" class="Bound"
+      >p</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" href="agda.prelude.html#3082" class="Bound"
+      >p</a
+      ><a name="3128"
+      >
+</a
+      ><a name="3129" href="agda.prelude.html#3030" class="Function"
+      >congid</a
+      ><a name="3135"
+      > </a
+      ><a name="3136" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="3140"
+      > </a
+      ><a name="3141" class="Symbol"
+      >=</a
+      ><a name="3142"
+      > </a
+      ><a name="3143" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="3147"
+      >
+
+</a
+      ><a name="3149" href="agda.prelude.html#3149" class="Function"
+      >K</a
+      ><a name="3150"
+      > </a
+      ><a name="3151" class="Symbol"
+      >:</a
+      ><a name="3152"
+      >
+  </a
+      ><a name="3155" class="Symbol"
+      >{</a
+      ><a name="3156" href="agda.prelude.html#3156" class="Bound"
+      >l</a
+      ><a name="3157"
+      > </a
+      ><a name="3158" href="agda.prelude.html#3158" class="Bound"
+      >m</a
+      ><a name="3159"
+      > </a
+      ><a name="3160" class="Symbol"
+      >:</a
+      ><a name="3161"
+      > </a
+      ><a name="3162" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3167" class="Symbol"
+      >}</a
+      ><a name="3168"
+      >
+  </a
+      ><a name="3171" class="Symbol"
+      >{</a
+      ><a name="3172" href="agda.prelude.html#3172" class="Bound"
+      >A</a
+      ><a name="3173"
+      > </a
+      ><a name="3174" class="Symbol"
+      >:</a
+      ><a name="3175"
+      > </a
+      ><a name="3176" class="PrimitiveType"
+      >Set</a
+      ><a name="3179"
+      > </a
+      ><a name="3180" href="agda.prelude.html#3156" class="Bound"
+      >l</a
+      ><a name="3181" class="Symbol"
+      >}</a
+      ><a name="3182"
+      >
+  </a
+      ><a name="3185" class="Symbol"
+      >{</a
+      ><a name="3186" href="agda.prelude.html#3186" class="Bound"
+      >B</a
+      ><a name="3187"
+      > </a
+      ><a name="3188" class="Symbol"
+      >:</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" class="PrimitiveType"
+      >Set</a
+      ><a name="3193"
+      > </a
+      ><a name="3194" href="agda.prelude.html#3158" class="Bound"
+      >m</a
+      ><a name="3195" class="Symbol"
+      >}</a
+      ><a name="3196"
+      >
+  </a
+      ><a name="3199" class="Symbol"
+      >&#8594;</a
+      ><a name="3200"
+      > </a
+      ><a name="3201" class="Comment"
+      >-----------</a
+      ><a name="3212"
+      >
+  </a
+      ><a name="3215" href="agda.prelude.html#3186" class="Bound"
+      >B</a
+      ><a name="3216"
+      > </a
+      ><a name="3217" class="Symbol"
+      >&#8594;</a
+      ><a name="3218"
+      > </a
+      ><a name="3219" class="Symbol"
+      >(</a
+      ><a name="3220" href="agda.prelude.html#3172" class="Bound"
+      >A</a
+      ><a name="3221"
+      > </a
+      ><a name="3222" class="Symbol"
+      >&#8594;</a
+      ><a name="3223"
+      > </a
+      ><a name="3224" href="agda.prelude.html#3186" class="Bound"
+      >B</a
+      ><a name="3225" class="Symbol"
+      >)</a
+      ><a name="3226"
+      >
+</a
+      ><a name="3227" href="agda.prelude.html#3149" class="Function"
+      >K</a
+      ><a name="3228"
+      > </a
+      ><a name="3229" href="agda.prelude.html#3229" class="Bound"
+      >y</a
+      ><a name="3230"
+      > </a
+      ><a name="3231" class="Symbol"
+      >_</a
+      ><a name="3232"
+      > </a
+      ><a name="3233" class="Symbol"
+      >=</a
+      ><a name="3234"
+      > </a
+      ><a name="3235" href="agda.prelude.html#3229" class="Bound"
+      >y</a
+      ><a name="3236"
+      >
+
+</a
+      ><a name="3238" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="3308"
+      >
+</a
+      ><a name="3309" class="Comment"
+      >-- Empty type</a
+      ><a name="3322"
+      >
+</a
+      ><a name="3323" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="3393"
+      >
+</a
+      ><a name="3394" class="Keyword"
+      >data</a
+      ><a name="3398"
+      > </a
+      ><a name="3399" href="agda.prelude.html#3399" class="Datatype"
+      >&#8869;</a
+      ><a name="3400"
+      > </a
+      ><a name="3401" class="Symbol"
+      >:</a
+      ><a name="3402"
+      > </a
+      ><a name="3403" class="PrimitiveType"
+      >Set</a
+      ><a name="3406"
+      > </a
+      ><a name="3407" class="Keyword"
+      >where</a
+      ><a name="3412"
+      >
+
+</a
+      ><a name="3414" href="agda.prelude.html#3414" class="Function"
+      >&#8869;elim</a
+      ><a name="3419"
+      > </a
+      ><a name="3420" class="Symbol"
+      >:</a
+      ><a name="3421"
+      > </a
+      ><a name="3422" class="Symbol"
+      >{</a
+      ><a name="3423" href="agda.prelude.html#3423" class="Bound"
+      >l</a
+      ><a name="3424"
+      > </a
+      ><a name="3425" class="Symbol"
+      >:</a
+      ><a name="3426"
+      > </a
+      ><a name="3427" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3432" class="Symbol"
+      >}{</a
+      ><a name="3434" href="agda.prelude.html#3434" class="Bound"
+      >A</a
+      ><a name="3435"
+      > </a
+      ><a name="3436" class="Symbol"
+      >:</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" class="PrimitiveType"
+      >Set</a
+      ><a name="3441"
+      > </a
+      ><a name="3442" href="agda.prelude.html#3423" class="Bound"
+      >l</a
+      ><a name="3443" class="Symbol"
+      >}</a
+      ><a name="3444"
+      > </a
+      ><a name="3445" class="Symbol"
+      >&#8594;</a
+      ><a name="3446"
+      > </a
+      ><a name="3447" href="agda.prelude.html#3399" class="Datatype"
+      >&#8869;</a
+      ><a name="3448"
+      > </a
+      ><a name="3449" class="Symbol"
+      >&#8594;</a
+      ><a name="3450"
+      > </a
+      ><a name="3451" href="agda.prelude.html#3434" class="Bound"
+      >A</a
+      ><a name="3452"
+      >
+</a
+      ><a name="3453" href="agda.prelude.html#3414" class="Function"
+      >&#8869;elim</a
+      ><a name="3458"
+      > </a
+      ><a name="3459" class="Symbol"
+      >()</a
+      ><a name="3461"
+      >
+
+</a
+      ><a name="3463" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="3533"
+      >
+</a
+      ><a name="3534" class="Comment"
+      >-- Product type</a
+      ><a name="3549"
+      >
+</a
+      ><a name="3550" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="3620"
+      >
+</a
+      ><a name="3621" class="Keyword"
+      >infix</a
+      ><a name="3626"
+      >  </a
+      ><a name="3628" class="Number"
+      >1</a
+      ><a name="3629"
+      > </a
+      ><a name="3630" href="agda.prelude.html#3654" class="Record"
+      >&#931;</a
+      ><a name="3631"
+      >
+</a
+      ><a name="3632" class="Keyword"
+      >infixr</a
+      ><a name="3638"
+      > </a
+      ><a name="3639" class="Number"
+      >3</a
+      ><a name="3640"
+      > </a
+      ><a name="3641" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >_,_</a
+      ><a name="3644"
+      >
+</a
+      ><a name="3645" class="Keyword"
+      >record</a
+      ><a name="3651"
+      >
+  </a
+      ><a name="3654" href="agda.prelude.html#3654" class="Record"
+      >&#931;</a
+      ><a name="3655"
+      >
+    </a
+      ><a name="3660" class="Symbol"
+      >{</a
+      ><a name="3661" href="agda.prelude.html#3661" class="Bound"
+      >&#8467;</a
+      ><a name="3662"
+      > </a
+      ><a name="3663" href="agda.prelude.html#3663" class="Bound"
+      >m</a
+      ><a name="3664"
+      > </a
+      ><a name="3665" class="Symbol"
+      >:</a
+      ><a name="3666"
+      > </a
+      ><a name="3667" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3672" class="Symbol"
+      >}</a
+      ><a name="3673"
+      >
+    </a
+      ><a name="3678" class="Symbol"
+      >(</a
+      ><a name="3679" href="agda.prelude.html#3679" class="Bound"
+      >A</a
+      ><a name="3680"
+      > </a
+      ><a name="3681" class="Symbol"
+      >:</a
+      ><a name="3682"
+      > </a
+      ><a name="3683" class="PrimitiveType"
+      >Set</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" href="agda.prelude.html#3661" class="Bound"
+      >&#8467;</a
+      ><a name="3688" class="Symbol"
+      >)</a
+      ><a name="3689"
+      >
+    </a
+      ><a name="3694" class="Symbol"
+      >(</a
+      ><a name="3695" href="agda.prelude.html#3695" class="Bound"
+      >B</a
+      ><a name="3696"
+      > </a
+      ><a name="3697" class="Symbol"
+      >:</a
+      ><a name="3698"
+      > </a
+      ><a name="3699" href="agda.prelude.html#3679" class="Bound"
+      >A</a
+      ><a name="3700"
+      > </a
+      ><a name="3701" class="Symbol"
+      >&#8594;</a
+      ><a name="3702"
+      > </a
+      ><a name="3703" class="PrimitiveType"
+      >Set</a
+      ><a name="3706"
+      > </a
+      ><a name="3707" href="agda.prelude.html#3663" class="Bound"
+      >m</a
+      ><a name="3708" class="Symbol"
+      >)</a
+      ><a name="3709"
+      >
+    </a
+      ><a name="3714" class="Symbol"
+      >:</a
+      ><a name="3715"
+      > </a
+      ><a name="3716" class="Comment"
+      >-------------</a
+      ><a name="3729"
+      >
+    </a
+      ><a name="3734" class="PrimitiveType"
+      >Set</a
+      ><a name="3737" class="Symbol"
+      >(</a
+      ><a name="3738" href="agda.prelude.html#3661" class="Bound"
+      >&#8467;</a
+      ><a name="3739"
+      > </a
+      ><a name="3740" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3741"
+      > </a
+      ><a name="3742" href="agda.prelude.html#3663" class="Bound"
+      >m</a
+      ><a name="3743" class="Symbol"
+      >)</a
+      ><a name="3744"
+      >
+  </a
+      ><a name="3747" class="Keyword"
+      >where</a
+      ><a name="3752"
+      >
+  </a
+      ><a name="3755" class="Keyword"
+      >constructor</a
+      ><a name="3766"
+      > </a
+      ><a name="3767" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >_,_</a
+      ><a name="3770"
+      >
+  </a
+      ><a name="3773" class="Keyword"
+      >field</a
+      ><a name="3778"
+      >
+    </a
+      ><a name="3783" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="3786"
+      > </a
+      ><a name="3787" class="Symbol"
+      >:</a
+      ><a name="3788"
+      > </a
+      ><a name="3789" href="agda.prelude.html#3679" class="Bound"
+      >A</a
+      ><a name="3790"
+      >
+    </a
+      ><a name="3795" href="agda.prelude.html#3795" class="Field"
+      >snd</a
+      ><a name="3798"
+      > </a
+      ><a name="3799" class="Symbol"
+      >:</a
+      ><a name="3800"
+      > </a
+      ><a name="3801" href="agda.prelude.html#3695" class="Bound"
+      >B</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="3806"
+      >
+
+</a
+      ><a name="3808" class="Keyword"
+      >open</a
+      ><a name="3812"
+      > </a
+      ><a name="3813" href="agda.prelude.html#3654" class="Module"
+      >&#931;</a
+      ><a name="3814"
+      > </a
+      ><a name="3815" class="Keyword"
+      >public</a
+      ><a name="3821"
+      >
+
+</a
+      ><a name="3823" class="Keyword"
+      >syntax</a
+      ><a name="3829"
+      > </a
+      ><a name="3830" href="agda.prelude.html#3654" class="Record"
+      >&#931;</a
+      ><a name="3831"
+      > A </a
+      ><a name="3834" class="Symbol"
+      >(&#955;</a
+      ><a name="3836"
+      > x </a
+      ><a name="3839" class="Symbol"
+      >&#8594;</a
+      ><a name="3840"
+      > B</a
+      ><a name="3842" class="Symbol"
+      >)</a
+      ><a name="3843"
+      > </a
+      ><a name="3844" class="Symbol"
+      >=</a
+      ><a name="3845"
+      > &#931; x &#8758; A , B
+
+</a
+      ><a name="3859" href="agda.prelude.html#3859" class="Function"
+      >&#931;ext</a
+      ><a name="3863"
+      > </a
+      ><a name="3864" class="Symbol"
+      >:</a
+      ><a name="3865"
+      >
+  </a
+      ><a name="3868" class="Symbol"
+      >{</a
+      ><a name="3869" href="agda.prelude.html#3869" class="Bound"
+      >l</a
+      ><a name="3870"
+      > </a
+      ><a name="3871" href="agda.prelude.html#3871" class="Bound"
+      >l'</a
+      ><a name="3873"
+      > </a
+      ><a name="3874" class="Symbol"
+      >:</a
+      ><a name="3875"
+      > </a
+      ><a name="3876" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3881" class="Symbol"
+      >}</a
+      ><a name="3882"
+      >
+  </a
+      ><a name="3885" class="Symbol"
+      >{</a
+      ><a name="3886" href="agda.prelude.html#3886" class="Bound"
+      >A</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" class="Symbol"
+      >:</a
+      ><a name="3889"
+      > </a
+      ><a name="3890" class="PrimitiveType"
+      >Set</a
+      ><a name="3893"
+      > </a
+      ><a name="3894" href="agda.prelude.html#3869" class="Bound"
+      >l</a
+      ><a name="3895" class="Symbol"
+      >}</a
+      ><a name="3896"
+      >
+  </a
+      ><a name="3899" class="Symbol"
+      >{</a
+      ><a name="3900" href="agda.prelude.html#3900" class="Bound"
+      >B</a
+      ><a name="3901"
+      > </a
+      ><a name="3902" class="Symbol"
+      >:</a
+      ><a name="3903"
+      > </a
+      ><a name="3904" href="agda.prelude.html#3886" class="Bound"
+      >A</a
+      ><a name="3905"
+      > </a
+      ><a name="3906" class="Symbol"
+      >&#8594;</a
+      ><a name="3907"
+      > </a
+      ><a name="3908" class="PrimitiveType"
+      >Set</a
+      ><a name="3911"
+      > </a
+      ><a name="3912" href="agda.prelude.html#3871" class="Bound"
+      >l'</a
+      ><a name="3914" class="Symbol"
+      >}</a
+      ><a name="3915"
+      >
+  </a
+      ><a name="3918" class="Symbol"
+      >{</a
+      ><a name="3919" href="agda.prelude.html#3919" class="Bound"
+      >x</a
+      ><a name="3920"
+      > </a
+      ><a name="3921" href="agda.prelude.html#3921" class="Bound"
+      >x'</a
+      ><a name="3923"
+      > </a
+      ><a name="3924" class="Symbol"
+      >:</a
+      ><a name="3925"
+      > </a
+      ><a name="3926" href="agda.prelude.html#3886" class="Bound"
+      >A</a
+      ><a name="3927" class="Symbol"
+      >}</a
+      ><a name="3928"
+      >
+  </a
+      ><a name="3931" class="Symbol"
+      >{</a
+      ><a name="3932" href="agda.prelude.html#3932" class="Bound"
+      >y</a
+      ><a name="3933"
+      > </a
+      ><a name="3934" class="Symbol"
+      >:</a
+      ><a name="3935"
+      > </a
+      ><a name="3936" href="agda.prelude.html#3900" class="Bound"
+      >B</a
+      ><a name="3937"
+      > </a
+      ><a name="3938" href="agda.prelude.html#3919" class="Bound"
+      >x</a
+      ><a name="3939" class="Symbol"
+      >}</a
+      ><a name="3940"
+      >
+  </a
+      ><a name="3943" class="Symbol"
+      >{</a
+      ><a name="3944" href="agda.prelude.html#3944" class="Bound"
+      >y'</a
+      ><a name="3946"
+      > </a
+      ><a name="3947" class="Symbol"
+      >:</a
+      ><a name="3948"
+      > </a
+      ><a name="3949" href="agda.prelude.html#3900" class="Bound"
+      >B</a
+      ><a name="3950"
+      > </a
+      ><a name="3951" href="agda.prelude.html#3921" class="Bound"
+      >x'</a
+      ><a name="3953" class="Symbol"
+      >}</a
+      ><a name="3954"
+      >
+  </a
+      ><a name="3957" class="Symbol"
+      >(</a
+      ><a name="3958" href="agda.prelude.html#3958" class="Bound"
+      >p</a
+      ><a name="3959"
+      > </a
+      ><a name="3960" class="Symbol"
+      >:</a
+      ><a name="3961"
+      > </a
+      ><a name="3962" href="agda.prelude.html#3919" class="Bound"
+      >x</a
+      ><a name="3963"
+      > </a
+      ><a name="3964" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3965"
+      > </a
+      ><a name="3966" href="agda.prelude.html#3921" class="Bound"
+      >x'</a
+      ><a name="3968" class="Symbol"
+      >)</a
+      ><a name="3969"
+      >
+  </a
+      ><a name="3972" class="Symbol"
+      >(</a
+      ><a name="3973" href="agda.prelude.html#3973" class="Bound"
+      >q</a
+      ><a name="3974"
+      > </a
+      ><a name="3975" class="Symbol"
+      >:</a
+      ><a name="3976"
+      > </a
+      ><a name="3977" href="agda.prelude.html#1056" class="Function"
+      >subst</a
+      ><a name="3982"
+      > </a
+      ><a name="3983" href="agda.prelude.html#3900" class="Bound"
+      >B</a
+      ><a name="3984"
+      > </a
+      ><a name="3985" href="agda.prelude.html#3958" class="Bound"
+      >p</a
+      ><a name="3986"
+      > </a
+      ><a name="3987" href="agda.prelude.html#3932" class="Bound"
+      >y</a
+      ><a name="3988"
+      > </a
+      ><a name="3989" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3990"
+      > </a
+      ><a name="3991" href="agda.prelude.html#3944" class="Bound"
+      >y'</a
+      ><a name="3993" class="Symbol"
+      >)</a
+      ><a name="3994"
+      >
+  </a
+      ><a name="3997" class="Symbol"
+      >&#8594;</a
+      ><a name="3998"
+      > </a
+      ><a name="3999" class="Comment"
+      >--------------------</a
+      ><a name="4019"
+      >
+  </a
+      ><a name="4022" class="Symbol"
+      >(</a
+      ><a name="4023" href="agda.prelude.html#3919" class="Bound"
+      >x</a
+      ><a name="4024"
+      > </a
+      ><a name="4025" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4026"
+      > </a
+      ><a name="4027" href="agda.prelude.html#3932" class="Bound"
+      >y</a
+      ><a name="4028" class="Symbol"
+      >)</a
+      ><a name="4029"
+      > </a
+      ><a name="4030" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="4031"
+      > </a
+      ><a name="4032" class="Symbol"
+      >(</a
+      ><a name="4033" href="agda.prelude.html#3921" class="Bound"
+      >x'</a
+      ><a name="4035"
+      > </a
+      ><a name="4036" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4037"
+      > </a
+      ><a name="4038" href="agda.prelude.html#3944" class="Bound"
+      >y'</a
+      ><a name="4040" class="Symbol"
+      >)</a
+      ><a name="4041"
+      >
+</a
+      ><a name="4042" href="agda.prelude.html#3859" class="Function"
+      >&#931;ext</a
+      ><a name="4046"
+      > </a
+      ><a name="4047" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="4051"
+      > </a
+      ><a name="4052" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="4056"
+      > </a
+      ><a name="4057" class="Symbol"
+      >=</a
+      ><a name="4058"
+      > </a
+      ><a name="4059" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="4063"
+      >
+
+</a
+      ><a name="4065" class="Keyword"
+      >infix</a
+      ><a name="4070"
+      > </a
+      ><a name="4071" class="Number"
+      >6</a
+      ><a name="4072"
+      > </a
+      ><a name="4073" href="agda.prelude.html#4079" class="Function Operator"
+      >&#10216;_,_&#10217;</a
+      ><a name="4078"
+      >
+</a
+      ><a name="4079" href="agda.prelude.html#4079" class="Function Operator"
+      >&#10216;_,_&#10217;</a
+      ><a name="4084"
+      > </a
+      ><a name="4085" class="Symbol"
+      >:</a
+      ><a name="4086"
+      >
+   </a
+      ><a name="4090" class="Symbol"
+      >{</a
+      ><a name="4091" href="agda.prelude.html#4091" class="Bound"
+      >l</a
+      ><a name="4092"
+      > </a
+      ><a name="4093" href="agda.prelude.html#4093" class="Bound"
+      >l'</a
+      ><a name="4095"
+      > </a
+      ><a name="4096" href="agda.prelude.html#4096" class="Bound"
+      >l''</a
+      ><a name="4099"
+      > </a
+      ><a name="4100" class="Symbol"
+      >:</a
+      ><a name="4101"
+      > </a
+      ><a name="4102" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="4107" class="Symbol"
+      >}</a
+      ><a name="4108"
+      >
+   </a
+      ><a name="4112" class="Symbol"
+      >{</a
+      ><a name="4113" href="agda.prelude.html#4113" class="Bound"
+      >A</a
+      ><a name="4114"
+      > </a
+      ><a name="4115" class="Symbol"
+      >:</a
+      ><a name="4116"
+      > </a
+      ><a name="4117" class="PrimitiveType"
+      >Set</a
+      ><a name="4120"
+      > </a
+      ><a name="4121" href="agda.prelude.html#4091" class="Bound"
+      >l</a
+      ><a name="4122" class="Symbol"
+      >}</a
+      ><a name="4123"
+      >
+   </a
+      ><a name="4127" class="Symbol"
+      >{</a
+      ><a name="4128" href="agda.prelude.html#4128" class="Bound"
+      >B</a
+      ><a name="4129"
+      > </a
+      ><a name="4130" class="Symbol"
+      >:</a
+      ><a name="4131"
+      > </a
+      ><a name="4132" class="PrimitiveType"
+      >Set</a
+      ><a name="4135"
+      > </a
+      ><a name="4136" href="agda.prelude.html#4093" class="Bound"
+      >l'</a
+      ><a name="4138" class="Symbol"
+      >}</a
+      ><a name="4139"
+      >
+   </a
+      ><a name="4143" class="Symbol"
+      >{</a
+      ><a name="4144" href="agda.prelude.html#4144" class="Bound"
+      >C</a
+      ><a name="4145"
+      > </a
+      ><a name="4146" class="Symbol"
+      >:</a
+      ><a name="4147"
+      > </a
+      ><a name="4148" href="agda.prelude.html#4128" class="Bound"
+      >B</a
+      ><a name="4149"
+      > </a
+      ><a name="4150" class="Symbol"
+      >&#8594;</a
+      ><a name="4151"
+      > </a
+      ><a name="4152" class="PrimitiveType"
+      >Set</a
+      ><a name="4155"
+      > </a
+      ><a name="4156" href="agda.prelude.html#4096" class="Bound"
+      >l''</a
+      ><a name="4159" class="Symbol"
+      >}</a
+      ><a name="4160"
+      >
+   </a
+      ><a name="4164" class="Symbol"
+      >(</a
+      ><a name="4165" href="agda.prelude.html#4165" class="Bound"
+      >f</a
+      ><a name="4166"
+      > </a
+      ><a name="4167" class="Symbol"
+      >:</a
+      ><a name="4168"
+      > </a
+      ><a name="4169" href="agda.prelude.html#4113" class="Bound"
+      >A</a
+      ><a name="4170"
+      > </a
+      ><a name="4171" class="Symbol"
+      >&#8594;</a
+      ><a name="4172"
+      > </a
+      ><a name="4173" href="agda.prelude.html#4128" class="Bound"
+      >B</a
+      ><a name="4174" class="Symbol"
+      >)</a
+      ><a name="4175"
+      >
+   </a
+      ><a name="4179" class="Symbol"
+      >(</a
+      ><a name="4180" href="agda.prelude.html#4180" class="Bound"
+      >g</a
+      ><a name="4181"
+      > </a
+      ><a name="4182" class="Symbol"
+      >:</a
+      ><a name="4183"
+      > </a
+      ><a name="4184" class="Symbol"
+      >(</a
+      ><a name="4185" href="agda.prelude.html#4185" class="Bound"
+      >x</a
+      ><a name="4186"
+      > </a
+      ><a name="4187" class="Symbol"
+      >:</a
+      ><a name="4188"
+      > </a
+      ><a name="4189" href="agda.prelude.html#4113" class="Bound"
+      >A</a
+      ><a name="4190" class="Symbol"
+      >)</a
+      ><a name="4191"
+      > </a
+      ><a name="4192" class="Symbol"
+      >&#8594;</a
+      ><a name="4193"
+      > </a
+      ><a name="4194" href="agda.prelude.html#4144" class="Bound"
+      >C</a
+      ><a name="4195"
+      > </a
+      ><a name="4196" class="Symbol"
+      >(</a
+      ><a name="4197" href="agda.prelude.html#4165" class="Bound"
+      >f</a
+      ><a name="4198"
+      > </a
+      ><a name="4199" href="agda.prelude.html#4185" class="Bound"
+      >x</a
+      ><a name="4200" class="Symbol"
+      >))</a
+      ><a name="4202"
+      >
+   </a
+      ><a name="4206" class="Symbol"
+      >&#8594;</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" class="Comment"
+      >---------------------</a
+      ><a name="4229"
+      >
+   </a
+      ><a name="4233" href="agda.prelude.html#4113" class="Bound"
+      >A</a
+      ><a name="4234"
+      > </a
+      ><a name="4235" class="Symbol"
+      >&#8594;</a
+      ><a name="4236"
+      > </a
+      ><a name="4237" href="agda.prelude.html#3654" class="Record"
+      >&#931;</a
+      ><a name="4238"
+      > </a
+      ><a name="4239" href="agda.prelude.html#4128" class="Bound"
+      >B</a
+      ><a name="4240"
+      > </a
+      ><a name="4241" href="agda.prelude.html#4144" class="Bound"
+      >C</a
+      ><a name="4242"
+      >
+</a
+      ><a name="4243" href="agda.prelude.html#4079" class="Function Operator"
+      >&#10216;</a
+      ><a name="4244"
+      > </a
+      ><a name="4245" href="agda.prelude.html#4245" class="Bound"
+      >f</a
+      ><a name="4246"
+      > </a
+      ><a name="4247" href="agda.prelude.html#4079" class="Function Operator"
+      >,</a
+      ><a name="4248"
+      > </a
+      ><a name="4249" href="agda.prelude.html#4249" class="Bound"
+      >g</a
+      ><a name="4250"
+      > </a
+      ><a name="4251" href="agda.prelude.html#4079" class="Function Operator"
+      >&#10217;</a
+      ><a name="4252"
+      > </a
+      ><a name="4253" href="agda.prelude.html#4253" class="Bound"
+      >x</a
+      ><a name="4254"
+      > </a
+      ><a name="4255" class="Symbol"
+      >=</a
+      ><a name="4256"
+      > </a
+      ><a name="4257" class="Symbol"
+      >(</a
+      ><a name="4258" href="agda.prelude.html#4245" class="Bound"
+      >f</a
+      ><a name="4259"
+      > </a
+      ><a name="4260" href="agda.prelude.html#4253" class="Bound"
+      >x</a
+      ><a name="4261"
+      > </a
+      ><a name="4262" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4263"
+      > </a
+      ><a name="4264" href="agda.prelude.html#4249" class="Bound"
+      >g</a
+      ><a name="4265"
+      > </a
+      ><a name="4266" href="agda.prelude.html#4253" class="Bound"
+      >x</a
+      ><a name="4267" class="Symbol"
+      >)</a
+      ><a name="4268"
+      >
+
+</a
+      ><a name="4270" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="4340"
+      >
+</a
+      ><a name="4341" class="Comment"
+      >-- Cartesian product</a
+      ><a name="4361"
+      >
+</a
+      ><a name="4362" class="Comment"
+      >----------------------------------------------------------------------</a
+      ><a name="4432"
+      >
+</a
+      ><a name="4433" class="Keyword"
+      >infixr</a
+      ><a name="4439"
+      > </a
+      ><a name="4440" class="Number"
+      >3</a
+      ><a name="4441"
+      > </a
+      ><a name="4442" href="agda.prelude.html#4446" class="Function Operator"
+      >_&#215;_</a
+      ><a name="4445"
+      >
+</a
+      ><a name="4446" href="agda.prelude.html#4446" class="Function Operator"
+      >_&#215;_</a
+      ><a name="4449"
+      > </a
+      ><a name="4450" class="Symbol"
+      >:</a
+      ><a name="4451"
+      > </a
+      ><a name="4452" class="Symbol"
+      >{</a
+      ><a name="4453" href="agda.prelude.html#4453" class="Bound"
+      >&#8467;</a
+      ><a name="4454"
+      > </a
+      ><a name="4455" href="agda.prelude.html#4455" class="Bound"
+      >m</a
+      ><a name="4456"
+      > </a
+      ><a name="4457" class="Symbol"
+      >:</a
+      ><a name="4458"
+      > </a
+      ><a name="4459" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="4464" class="Symbol"
+      >}</a
+      ><a name="4465"
+      > </a
+      ><a name="4466" class="Symbol"
+      >&#8594;</a
+      ><a name="4467"
+      > </a
+      ><a name="4468" class="PrimitiveType"
+      >Set</a
+      ><a name="4471"
+      > </a
+      ><a name="4472" href="agda.prelude.html#4453" class="Bound"
+      >&#8467;</a
+      ><a name="4473"
+      > </a
+      ><a name="4474" class="Symbol"
+      >&#8594;</a
+      ><a name="4475"
+      > </a
+      ><a name="4476" class="PrimitiveType"
+      >Set</a
+      ><a name="4479"
+      > </a
+      ><a name="4480" href="agda.prelude.html#4455" class="Bound"
+      >m</a
+      ><a name="4481"
+      > </a
+      ><a name="4482" class="Symbol"
+      >&#8594;</a
+      ><a name="4483"
+      > </a
+      ><a name="4484" class="PrimitiveType"
+      >Set</a
+      ><a name="4487"
+      > </a
+      ><a name="4488" class="Symbol"
+      >(</a
+      ><a name="4489" href="agda.prelude.html#4453" class="Bound"
+      >&#8467;</a
+      ><a name="4490"
+      > </a
+      ><a name="4491" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="4492"
+      > </a
+      ><a name="4493" href="agda.prelude.html#4455" class="Bound"
+      >m</a
+      ><a name="4494" class="Symbol"
+      >)</a
+      ><a name="4495"
+      >
+</a
+      ><a name="4496" href="agda.prelude.html#4496" class="Bound"
+      >A</a
+      ><a name="4497"
+      > </a
+      ><a name="4498" href="agda.prelude.html#4446" class="Function Operator"
+      >&#215;</a
+      ><a name="4499"
+      > </a
+      ><a name="4500" href="agda.prelude.html#4500" class="Bound"
+      >B</a
+      ><a name="4501"
+      > </a
+      ><a name="4502" class="Symbol"
+      >=</a
+      ><a name="4503"
+      > </a
+      ><a name="4504" href="agda.prelude.html#3654" class="Record"
+      >&#931;</a
+      ><a name="4505"
+      > </a
+      ><a name="4506" href="agda.prelude.html#4496" class="Bound"
+      >A</a
+      ><a name="4507"
+      > </a
+      ><a name="4508" class="Symbol"
+      >(&#955;</a
+      ><a name="4510"
+      > </a
+      ><a name="4511" href="agda.prelude.html#4511" class="Bound"
+      >_</a
+      ><a name="4512"
+      > </a
+      ><a name="4513" class="Symbol"
+      >&#8594;</a
+      ><a name="4514"
+      > </a
+      ><a name="4515" href="agda.prelude.html#4500" class="Bound"
+      >B</a
+      ><a name="4516" class="Symbol"
+      >)</a
+      ><a name="4517"
+      >
+
+</a
+      ><a name="4519" href="agda.prelude.html#4519" class="Function"
+      >&#215;ext</a
+      ><a name="4523"
+      > </a
+      ><a name="4524" class="Symbol"
+      >:</a
+      ><a name="4525"
+      >
+  </a
+      ><a name="4528" class="Symbol"
+      >{</a
+      ><a name="4529" href="agda.prelude.html#4529" class="Bound"
+      >&#8467;</a
+      ><a name="4530"
+      > </a
+      ><a name="4531" href="agda.prelude.html#4531" class="Bound"
+      >m</a
+      ><a name="4532"
+      > </a
+      ><a name="4533" class="Symbol"
+      >:</a
+      ><a name="4534"
+      > </a
+      ><a name="4535" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="4540" class="Symbol"
+      >}</a
+      ><a name="4541"
+      >
+  </a
+      ><a name="4544" class="Symbol"
+      >{</a
+      ><a name="4545" href="agda.prelude.html#4545" class="Bound"
+      >A</a
+      ><a name="4546"
+      > </a
+      ><a name="4547" class="Symbol"
+      >:</a
+      ><a name="4548"
+      > </a
+      ><a name="4549" class="PrimitiveType"
+      >Set</a
+      ><a name="4552"
+      > </a
+      ><a name="4553" href="agda.prelude.html#4529" class="Bound"
+      >&#8467;</a
+      ><a name="4554" class="Symbol"
+      >}</a
+      ><a name="4555"
+      >
+  </a
+      ><a name="4558" class="Symbol"
+      >{</a
+      ><a name="4559" href="agda.prelude.html#4559" class="Bound"
+      >B</a
+      ><a name="4560"
+      > </a
+      ><a name="4561" class="Symbol"
+      >:</a
+      ><a name="4562"
+      > </a
+      ><a name="4563" class="PrimitiveType"
+      >Set</a
+      ><a name="4566"
+      > </a
+      ><a name="4567" href="agda.prelude.html#4531" class="Bound"
+      >m</a
+      ><a name="4568" class="Symbol"
+      >}</a
+      ><a name="4569"
+      >
+  </a
+      ><a name="4572" class="Symbol"
+      >{</a
+      ><a name="4573" href="agda.prelude.html#4573" class="Bound"
+      >x</a
+      ><a name="4574"
+      > </a
+      ><a name="4575" href="agda.prelude.html#4575" class="Bound"
+      >x'</a
+      ><a name="4577"
+      > </a
+      ><a name="4578" class="Symbol"
+      >:</a
+      ><a name="4579"
+      > </a
+      ><a name="4580" href="agda.prelude.html#4545" class="Bound"
+      >A</a
+      ><a name="4581" class="Symbol"
+      >}</a
+      ><a name="4582"
+      >
+  </a
+      ><a name="4585" class="Symbol"
+      >{</a
+      ><a name="4586" href="agda.prelude.html#4586" class="Bound"
+      >y</a
+      ><a name="4587"
+      > </a
+      ><a name="4588" href="agda.prelude.html#4588" class="Bound"
+      >y'</a
+      ><a name="4590"
+      > </a
+      ><a name="4591" class="Symbol"
+      >:</a
+      ><a name="4592"
+      > </a
+      ><a name="4593" href="agda.prelude.html#4559" class="Bound"
+      >B</a
+      ><a name="4594" class="Symbol"
+      >}</a
+      ><a name="4595"
+      >
+  </a
+      ><a name="4598" class="Symbol"
+      >(</a
+      ><a name="4599" href="agda.prelude.html#4599" class="Bound"
+      >p</a
+      ><a name="4600"
+      > </a
+      ><a name="4601" class="Symbol"
+      >:</a
+      ><a name="4602"
+      > </a
+      ><a name="4603" href="agda.prelude.html#4573" class="Bound"
+      >x</a
+      ><a name="4604"
+      > </a
+      ><a name="4605" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="4606"
+      > </a
+      ><a name="4607" href="agda.prelude.html#4575" class="Bound"
+      >x'</a
+      ><a name="4609" class="Symbol"
+      >)</a
+      ><a name="4610"
+      >
+  </a
+      ><a name="4613" class="Symbol"
+      >(</a
+      ><a name="4614" href="agda.prelude.html#4614" class="Bound"
+      >q</a
+      ><a name="4615"
+      > </a
+      ><a name="4616" class="Symbol"
+      >:</a
+      ><a name="4617"
+      > </a
+      ><a name="4618" href="agda.prelude.html#4586" class="Bound"
+      >y</a
+      ><a name="4619"
+      > </a
+      ><a name="4620" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="4621"
+      > </a
+      ><a name="4622" href="agda.prelude.html#4588" class="Bound"
+      >y'</a
+      ><a name="4624" class="Symbol"
+      >)</a
+      ><a name="4625"
+      >
+  </a
+      ><a name="4628" class="Symbol"
+      >&#8594;</a
+      ><a name="4629"
+      > </a
+      ><a name="4630" class="Comment"
+      >-----------------</a
+      ><a name="4647"
+      >
+  </a
+      ><a name="4650" class="Symbol"
+      >(</a
+      ><a name="4651" href="agda.prelude.html#4573" class="Bound"
+      >x</a
+      ><a name="4652"
+      > </a
+      ><a name="4653" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4654"
+      > </a
+      ><a name="4655" href="agda.prelude.html#4586" class="Bound"
+      >y</a
+      ><a name="4656" class="Symbol"
+      >)</a
+      ><a name="4657"
+      > </a
+      ><a name="4658" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="4659"
+      > </a
+      ><a name="4660" class="Symbol"
+      >(</a
+      ><a name="4661" href="agda.prelude.html#4575" class="Bound"
+      >x'</a
+      ><a name="4663"
+      > </a
+      ><a name="4664" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4665"
+      > </a
+      ><a name="4666" href="agda.prelude.html#4588" class="Bound"
+      >y'</a
+      ><a name="4668" class="Symbol"
+      >)</a
+      ><a name="4669"
+      >
+</a
+      ><a name="4670" href="agda.prelude.html#4519" class="Function"
+      >&#215;ext</a
+      ><a name="4674"
+      > </a
+      ><a name="4675" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="4679"
+      > </a
+      ><a name="4680" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="4684"
+      > </a
+      ><a name="4685" class="Symbol"
+      >=</a
+      ><a name="4686"
+      > </a
+      ><a name="4687" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="4691"
+      >
+
+</a
+      ></pre
+    ></body
+  ></html
+>

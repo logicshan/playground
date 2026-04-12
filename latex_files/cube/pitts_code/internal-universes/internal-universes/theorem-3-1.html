@@ -1,0 +1,2232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >theorem-3-1</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Comment"
+      >{- 
+Agda proof of Theorem 3.1 from Dan Licata, Ian Orton, Andrew M. Pitts
+and Bas Spitters, &quot;Internal Universes in Models of Homotopy Type Theory&quot;
+-}</a
+      ><a name="150"
+      >
+
+</a
+      ><a name="152" class="Symbol"
+      >{-#</a
+      ><a name="155"
+      > </a
+      ><a name="156" class="Keyword"
+      >OPTIONS</a
+      ><a name="163"
+      > --no-pattern-matching </a
+      ><a name="186" class="Symbol"
+      >#-}</a
+      ><a name="189"
+      >
+
+</a
+      ><a name="191" class="Keyword"
+      >module</a
+      ><a name="197"
+      > </a
+      ><a name="198" href="theorem-3-1.html#1" class="Module"
+      >theorem-3-1</a
+      ><a name="209"
+      > </a
+      ><a name="210" class="Keyword"
+      >where</a
+      ><a name="215"
+      >
+
+</a
+      ><a name="217" class="Comment"
+      >-- Some standard Agda definitions</a
+      ><a name="250"
+      >
+</a
+      ><a name="251" class="Keyword"
+      >open</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Keyword"
+      >import</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="agda.prelude.html#1" class="Module"
+      >agda.prelude</a
+      ><a name="275"
+      >
+</a
+      ><a name="276" class="Comment"
+      >-- The axioms from Section 2</a
+      ><a name="304"
+      >
+</a
+      ><a name="305" class="Keyword"
+      >open</a
+      ><a name="309"
+      > </a
+      ><a name="310" class="Keyword"
+      >import</a
+      ><a name="316"
+      > </a
+      ><a name="317" href="agda.postulates.html#1" class="Module"
+      >agda.postulates</a
+      ><a name="332"
+      >
+</a
+      ><a name="333" class="Comment"
+      >-- Definition 2.2</a
+      ><a name="350"
+      >
+</a
+      ><a name="351" class="Keyword"
+      >open</a
+      ><a name="355"
+      > </a
+      ><a name="356" class="Keyword"
+      >import</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="agda.fibration.html#1" class="Module"
+      >agda.fibration</a
+      ><a name="377"
+      >
+</a
+      ><a name="378" class="Comment"
+      >-- Theorem 3.1 concerns the path functor given by exponenting by &#120128;</a
+      ><a name="444"
+      >
+</a
+      ><a name="445" class="Keyword"
+      >open</a
+      ><a name="449"
+      > </a
+      ><a name="450" class="Keyword"
+      >import</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="agda.exp-path.html#1" class="Module"
+      >agda.exp-path</a
+      ><a name="470"
+      >
+
+
+</a
+      ><a name="473" class="Comment"
+      >{- 
+We first show that if there is a universe that is weakly generic for
+fibrations (for a given composition structure C), then families of
+types that are fiberwise fibrant are fibrations.
+-}</a
+      ><a name="664"
+      > 
+</a
+      ><a name="666" class="Keyword"
+      >record</a
+      ><a name="672"
+      > </a
+      ><a name="673" href="theorem-3-1.html#673" class="Record"
+      >IntUniv</a
+      ><a name="680"
+      > </a
+      ><a name="681" class="Symbol"
+      >(</a
+      ><a name="682" href="theorem-3-1.html#682" class="Bound"
+      >C</a
+      ><a name="683"
+      > </a
+      ><a name="684" class="Symbol"
+      >:</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="687"
+      > </a
+      ><a name="688" class="PrimitiveType"
+      >Set</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >&#8594;</a
+      ><a name="693"
+      > </a
+      ><a name="694" class="PrimitiveType"
+      >Set&#8321;</a
+      ><a name="698" class="Symbol"
+      >)</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >:</a
+      ><a name="701"
+      > </a
+      ><a name="702" class="PrimitiveType"
+      >Set&#8323;</a
+      ><a name="706"
+      >
+  </a
+      ><a name="709" class="Keyword"
+      >where</a
+      ><a name="714"
+      >
+  </a
+      ><a name="717" class="Keyword"
+      >open</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="agda.fibration.html#2035" class="Module"
+      >Fib&#8320;</a
+      ><a name="726"
+      > </a
+      ><a name="727" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="738"
+      > </a
+      ><a name="739" href="theorem-3-1.html#682" class="Bound"
+      >C</a
+      ><a name="740"
+      >
+  </a
+      ><a name="743" class="Keyword"
+      >field</a
+      ><a name="748"
+      >
+    </a
+      ><a name="753" href="theorem-3-1.html#753" class="Field"
+      >U</a
+      ><a name="754"
+      >       </a
+      ><a name="761" class="Symbol"
+      >:</a
+      ><a name="762"
+      > </a
+      ><a name="763" class="PrimitiveType"
+      >Set&#8322;</a
+      ><a name="767"
+      >
+    </a
+      ><a name="772" href="theorem-3-1.html#772" class="Field"
+      >El</a
+      ><a name="774"
+      >      </a
+      ><a name="780" class="Symbol"
+      >:</a
+      ><a name="781"
+      > </a
+      ><a name="782" href="agda.fibration.html#2751" class="Function"
+      >Fib&#8320;</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="theorem-3-1.html#753" class="Field"
+      >U</a
+      ><a name="788"
+      >
+    </a
+      ><a name="793" href="theorem-3-1.html#793" class="Field"
+      >code</a
+      ><a name="797"
+      >    </a
+      ><a name="801" class="Symbol"
+      >:</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >{</a
+      ><a name="804" href="theorem-3-1.html#804" class="Bound"
+      >&#915;</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >:</a
+      ><a name="807"
+      > </a
+      ><a name="808" class="PrimitiveType"
+      >Set</a
+      ><a name="811" class="Symbol"
+      >}(</a
+      ><a name="813" href="theorem-3-1.html#813" class="Bound"
+      >&#934;</a
+      ><a name="814"
+      > </a
+      ><a name="815" class="Symbol"
+      >:</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="agda.fibration.html#2751" class="Function"
+      >Fib&#8320;</a
+      ><a name="821"
+      > </a
+      ><a name="822" href="theorem-3-1.html#804" class="Bound"
+      >&#915;</a
+      ><a name="823" class="Symbol"
+      >)</a
+      ><a name="824"
+      > </a
+      ><a name="825" class="Symbol"
+      >&#8594;</a
+      ><a name="826"
+      > </a
+      ><a name="827" href="theorem-3-1.html#804" class="Bound"
+      >&#915;</a
+      ><a name="828"
+      > </a
+      ><a name="829" class="Symbol"
+      >&#8594;</a
+      ><a name="830"
+      > </a
+      ><a name="831" href="theorem-3-1.html#753" class="Field"
+      >U</a
+      ><a name="832"
+      >
+    </a
+      ><a name="837" href="theorem-3-1.html#837" class="Field"
+      >Elcode</a
+      ><a name="843"
+      >  </a
+      ><a name="845" class="Symbol"
+      >:</a
+      ><a name="846"
+      > </a
+      ><a name="847" class="Symbol"
+      >{</a
+      ><a name="848" href="theorem-3-1.html#848" class="Bound"
+      >&#915;</a
+      ><a name="849"
+      > </a
+      ><a name="850" class="Symbol"
+      >:</a
+      ><a name="851"
+      > </a
+      ><a name="852" class="PrimitiveType"
+      >Set</a
+      ><a name="855" class="Symbol"
+      >}(</a
+      ><a name="857" href="theorem-3-1.html#857" class="Bound"
+      >&#934;</a
+      ><a name="858"
+      > </a
+      ><a name="859" class="Symbol"
+      >:</a
+      ><a name="860"
+      > </a
+      ><a name="861" href="agda.fibration.html#2751" class="Function"
+      >Fib&#8320;</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="theorem-3-1.html#848" class="Bound"
+      >&#915;</a
+      ><a name="867" class="Symbol"
+      >)</a
+      ><a name="868"
+      > </a
+      ><a name="869" class="Symbol"
+      >&#8594;</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="theorem-3-1.html#772" class="Field"
+      >El</a
+      ><a name="873"
+      > </a
+      ><a name="874" href="agda.fibration.html#2915" class="Function Operator"
+      >[</a
+      ><a name="875"
+      > </a
+      ><a name="876" href="theorem-3-1.html#793" class="Field"
+      >code</a
+      ><a name="880"
+      > </a
+      ><a name="881" href="theorem-3-1.html#857" class="Bound"
+      >&#934;</a
+      ><a name="882"
+      > </a
+      ><a name="883" href="agda.fibration.html#2915" class="Function Operator"
+      >]</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="theorem-3-1.html#857" class="Bound"
+      >&#934;</a
+      ><a name="888"
+      >
+
+  </a
+      ><a name="892" href="theorem-3-1.html#892" class="Function"
+      >fiberwise-fibrant-is-fibrant</a
+      ><a name="920"
+      > </a
+      ><a name="921" class="Symbol"
+      >:</a
+      ><a name="922"
+      >
+    </a
+      ><a name="927" class="Symbol"
+      >(</a
+      ><a name="928" href="theorem-3-1.html#928" class="Bound"
+      >P</a
+      ><a name="929"
+      > </a
+      ><a name="930" class="Symbol"
+      >:</a
+      ><a name="931"
+      > </a
+      ><a name="932" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="933"
+      > </a
+      ><a name="934" class="PrimitiveType"
+      >Set</a
+      ><a name="937" class="Symbol"
+      >)</a
+      ><a name="938"
+      >
+    </a
+      ><a name="943" class="Symbol"
+      >(</a
+      ><a name="944" href="theorem-3-1.html#944" class="Bound"
+      >&#960;</a
+      ><a name="945"
+      > </a
+      ><a name="946" class="Symbol"
+      >:</a
+      ><a name="947"
+      > </a
+      ><a name="948" class="Symbol"
+      >(</a
+      ><a name="949" href="theorem-3-1.html#949" class="Bound"
+      >i</a
+      ><a name="950"
+      > </a
+      ><a name="951" class="Symbol"
+      >:</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="954" class="Symbol"
+      >)</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Symbol"
+      >&#8594;</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="agda.fibration.html#2599" class="Function"
+      >isFib</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="Agda.Builtin.Unit.html#69" class="Record"
+      >&#8868;</a
+      ><a name="965"
+      > </a
+      ><a name="966" class="Symbol"
+      >(&#955;</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="theorem-3-1.html#969" class="Bound"
+      >_</a
+      ><a name="970"
+      > </a
+      ><a name="971" class="Symbol"
+      >&#8594;</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="theorem-3-1.html#928" class="Bound"
+      >P</a
+      ><a name="974"
+      > </a
+      ><a name="975" href="theorem-3-1.html#949" class="Bound"
+      >i</a
+      ><a name="976" class="Symbol"
+      >))</a
+      ><a name="978"
+      >
+    </a
+      ><a name="983" class="Symbol"
+      >&#8594;</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Comment"
+      >---------------------------------</a
+      ><a name="1018"
+      >
+    </a
+      ><a name="1023" href="agda.fibration.html#2599" class="Function"
+      >isFib</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" href="theorem-3-1.html#928" class="Bound"
+      >P</a
+      ><a name="1032"
+      >
+  </a
+      ><a name="1035" href="theorem-3-1.html#892" class="Function"
+      >fiberwise-fibrant-is-fibrant</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" href="theorem-3-1.html#1064" class="Bound"
+      >P</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="theorem-3-1.html#1066" class="Bound"
+      >&#960;</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" class="Symbol"
+      >=</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" href="agda.prelude.html#1056" class="Function"
+      >subst</a
+      ><a name="1075"
+      > </a
+      ><a name="1076" class="Symbol"
+      >(</a
+      ><a name="1077" href="agda.fibration.html#2599" class="Function"
+      >isFib</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="1084" class="Symbol"
+      >)</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="theorem-3-1.html#1180" class="Function"
+      >u</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" class="Symbol"
+      >(</a
+      ><a name="1089" href="agda.prelude.html#3795" class="Field"
+      >snd</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="theorem-3-1.html#1110" class="Function"
+      >&#934;</a
+      ><a name="1094" class="Symbol"
+      >)</a
+      ><a name="1095"
+      >
+    </a
+      ><a name="1100" class="Keyword"
+      >where</a
+      ><a name="1105"
+      >
+    </a
+      ><a name="1110" href="theorem-3-1.html#1110" class="Function"
+      >&#934;</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" class="Symbol"
+      >:</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" href="agda.fibration.html#2751" class="Function"
+      >Fib&#8320;</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="1120"
+      >
+    </a
+      ><a name="1125" href="theorem-3-1.html#1110" class="Function"
+      >&#934;</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" class="Symbol"
+      >=</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" class="Symbol"
+      >(</a
+      ><a name="1130" href="theorem-3-1.html#772" class="Field"
+      >El</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="agda.fibration.html#2915" class="Function Operator"
+      >[</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" class="Symbol"
+      >(&#955;</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="theorem-3-1.html#1138" class="Bound"
+      >i</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" class="Symbol"
+      >&#8594;</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="theorem-3-1.html#793" class="Field"
+      >code</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" class="Symbol"
+      >((&#955;</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" href="theorem-3-1.html#1151" class="Bound"
+      >_</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" class="Symbol"
+      >&#8594;</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" href="theorem-3-1.html#1064" class="Bound"
+      >P</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="theorem-3-1.html#1138" class="Bound"
+      >i</a
+      ><a name="1158" class="Symbol"
+      >)</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1161"
+      >  </a
+      ><a name="1163" href="theorem-3-1.html#1066" class="Bound"
+      >&#960;</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="theorem-3-1.html#1138" class="Bound"
+      >i</a
+      ><a name="1166" class="Symbol"
+      >)</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" href="Agda.Builtin.Unit.html#106" class="InductiveConstructor"
+      >tt</a
+      ><a name="1170" class="Symbol"
+      >)</a
+      ><a name="1171"
+      > </a
+      ><a name="1172" href="agda.fibration.html#2915" class="Function Operator"
+      >]</a
+      ><a name="1173" class="Symbol"
+      >)</a
+      ><a name="1174"
+      >
+
+    </a
+      ><a name="1180" href="theorem-3-1.html#1180" class="Function"
+      >u</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" class="Symbol"
+      >:</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" href="theorem-3-1.html#1110" class="Function"
+      >&#934;</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="theorem-3-1.html#1064" class="Bound"
+      >P</a
+      ><a name="1193"
+      >
+    </a
+      ><a name="1198" href="theorem-3-1.html#1180" class="Function"
+      >u</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" class="Symbol"
+      >=</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="agda.postulates.html#127" class="Postulate"
+      >funext</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" class="Symbol"
+      >(&#955;</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="theorem-3-1.html#1212" class="Bound"
+      >i</a
+      ><a name="1213"
+      > </a
+      ><a name="1214" class="Symbol"
+      >&#8594;</a
+      ><a name="1215"
+      > </a
+      ><a name="1216" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" class="Symbol"
+      >(&#955;</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" href="theorem-3-1.html#1224" class="Bound"
+      >x</a
+      ><a name="1225"
+      > </a
+      ><a name="1226" class="Symbol"
+      >&#8594;</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="theorem-3-1.html#1224" class="Bound"
+      >x</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" href="Agda.Builtin.Unit.html#106" class="InductiveConstructor"
+      >tt</a
+      ><a name="1236" class="Symbol"
+      >)</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" class="Symbol"
+      >(</a
+      ><a name="1239" href="theorem-3-1.html#837" class="Field"
+      >Elcode</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" class="Symbol"
+      >((&#955;</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" href="theorem-3-1.html#1250" class="Bound"
+      >_</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" class="Symbol"
+      >&#8594;</a
+      ><a name="1253"
+      > </a
+      ><a name="1254" href="theorem-3-1.html#1064" class="Bound"
+      >P</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" href="theorem-3-1.html#1212" class="Bound"
+      >i</a
+      ><a name="1257" class="Symbol"
+      >)</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="theorem-3-1.html#1066" class="Bound"
+      >&#960;</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="theorem-3-1.html#1212" class="Bound"
+      >i</a
+      ><a name="1264" class="Symbol"
+      >)))</a
+      ><a name="1267"
+      >
+
+</a
+      ><a name="1269" class="Comment"
+      >{-
+ Next we show that if the composition structure has some reasonable
+properties, there can be no such internal weakly generic universe.
+-}</a
+      ><a name="1409"
+      >
+</a
+      ><a name="1410" href="theorem-3-1.html#1410" class="Function"
+      >NoIntUniv</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" class="Symbol"
+      >:</a
+      ><a name="1421"
+      >
+  </a
+      ><a name="1424" class="Symbol"
+      >(</a
+      ><a name="1425" href="theorem-3-1.html#1425" class="Bound"
+      >C</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" class="Symbol"
+      >:</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" class="PrimitiveType"
+      >Set</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" class="Symbol"
+      >&#8594;</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" class="PrimitiveType"
+      >Set&#8321;</a
+      ><a name="1441" class="Symbol"
+      >)</a
+      ><a name="1442"
+      >
+  </a
+      ><a name="1445" class="Comment"
+      >-- if C has a transport function </a
+      ><a name="1478"
+      >
+  </a
+      ><a name="1481" class="Symbol"
+      >(</a
+      ><a name="1482" href="theorem-3-1.html#1482" class="Bound"
+      >coe</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" class="Symbol"
+      >:</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" class="Symbol"
+      >(</a
+      ><a name="1489" href="theorem-3-1.html#1489" class="Bound"
+      >P</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" class="Symbol"
+      >:</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="PrimitiveType"
+      >Set</a
+      ><a name="1498" class="Symbol"
+      >)</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" class="Symbol"
+      >&#8594;</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" href="theorem-3-1.html#1425" class="Bound"
+      >C</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="theorem-3-1.html#1489" class="Bound"
+      >P</a
+      ><a name="1505"
+      > </a
+      ><a name="1506" class="Symbol"
+      >&#8594;</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" href="theorem-3-1.html#1489" class="Bound"
+      >P</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" class="Symbol"
+      >&#8594;</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" href="theorem-3-1.html#1489" class="Bound"
+      >P</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="agda.postulates.html#467" class="Postulate"
+      >I</a
+      ><a name="1517" class="Symbol"
+      >)</a
+      ><a name="1518"
+      >
+  </a
+      ><a name="1521" class="Comment"
+      >-- and each constant path of types with value O &#8801; i</a
+      ><a name="1572"
+      >
+  </a
+      ><a name="1575" class="Comment"
+      >-- has a composition structure</a
+      ><a name="1605"
+      >
+  </a
+      ><a name="1608" class="Symbol"
+      >(</a
+      ><a name="1609" href="theorem-3-1.html#1609" class="Bound"
+      >O&#8801;</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" class="Symbol"
+      >:</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" class="Symbol"
+      >(</a
+      ><a name="1615" href="theorem-3-1.html#1615" class="Bound"
+      >i</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" class="Symbol"
+      >:</a
+      ><a name="1618"
+      > </a
+      ><a name="1619" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="1620" class="Symbol"
+      >)</a
+      ><a name="1621"
+      > </a
+      ><a name="1622" class="Symbol"
+      >&#8594;</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" href="theorem-3-1.html#1425" class="Bound"
+      >C</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" class="Symbol"
+      >(&#955;</a
+      ><a name="1628"
+      > </a
+      ><a name="1629" href="theorem-3-1.html#1629" class="Bound"
+      >_</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" class="Symbol"
+      >&#8594;</a
+      ><a name="1632"
+      > </a
+      ><a name="1633" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" href="theorem-3-1.html#1615" class="Bound"
+      >i</a
+      ><a name="1638" class="Symbol"
+      >))</a
+      ><a name="1640"
+      >
+  </a
+      ><a name="1643" class="Comment"
+      >-- then there is no internal universe </a
+      ><a name="1681"
+      >
+  </a
+      ><a name="1684" class="Symbol"
+      >&#8594;</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" class="Comment"
+      >-----------------------------------</a
+      ><a name="1721"
+      >
+  </a
+      ><a name="1724" href="theorem-3-1.html#673" class="Record"
+      >IntUniv</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" href="theorem-3-1.html#1425" class="Bound"
+      >C</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" class="Symbol"
+      >&#8594;</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" href="agda.prelude.html#3399" class="Datatype"
+      >&#8869;</a
+      ><a name="1737"
+      >
+</a
+      ><a name="1738" href="theorem-3-1.html#1410" class="Function"
+      >NoIntUniv</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" href="theorem-3-1.html#1748" class="Bound"
+      >C</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="theorem-3-1.html#1750" class="Bound"
+      >coe</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" href="theorem-3-1.html#1754" class="Bound"
+      >O&#8801;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="theorem-3-1.html#1757" class="Bound"
+      >iu</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" class="Symbol"
+      >=</a
+      ><a name="1761"
+      > </a
+      ><a name="1762" href="agda.postulates.html#477" class="Postulate"
+      >O&#8800;I</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" class="Symbol"
+      >(</a
+      ><a name="1767" href="theorem-3-1.html#1750" class="Bound"
+      >coe</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" href="theorem-3-1.html#1791" class="Function"
+      >P</a
+      ><a name="1772"
+      > </a
+      ><a name="1773" href="theorem-3-1.html#1818" class="Function"
+      >c</a
+      ><a name="1774"
+      > </a
+      ><a name="1775" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1779" class="Symbol"
+      >)</a
+      ><a name="1780"
+      >
+  </a
+      ><a name="1783" class="Keyword"
+      >where</a
+      ><a name="1788"
+      >
+  </a
+      ><a name="1791" href="theorem-3-1.html#1791" class="Function"
+      >P</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" class="Symbol"
+      >:</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" class="PrimitiveType"
+      >Set</a
+      ><a name="1800"
+      >
+  </a
+      ><a name="1803" href="theorem-3-1.html#1791" class="Function"
+      >P</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" href="theorem-3-1.html#1805" class="Bound"
+      >i</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" class="Symbol"
+      >=</a
+      ><a name="1808"
+      > </a
+      ><a name="1809" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="1810"
+      > </a
+      ><a name="1811" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" href="theorem-3-1.html#1805" class="Bound"
+      >i</a
+      ><a name="1814"
+      >
+
+  </a
+      ><a name="1818" href="theorem-3-1.html#1818" class="Function"
+      >c</a
+      ><a name="1819"
+      > </a
+      ><a name="1820" class="Symbol"
+      >:</a
+      ><a name="1821"
+      > </a
+      ><a name="1822" href="theorem-3-1.html#1748" class="Bound"
+      >C</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="theorem-3-1.html#1791" class="Function"
+      >P</a
+      ><a name="1825"
+      >
+  </a
+      ><a name="1828" href="theorem-3-1.html#1818" class="Function"
+      >c</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" class="Symbol"
+      >=</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" href="theorem-3-1.html#892" class="Function"
+      >IntUniv.fiberwise-fibrant-is-fibrant</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" href="theorem-3-1.html#1757" class="Bound"
+      >iu</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" href="theorem-3-1.html#1791" class="Function"
+      >P</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" class="Symbol"
+      >(&#955;</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="theorem-3-1.html#1877" class="Bound"
+      >i</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" href="theorem-3-1.html#1879" class="Bound"
+      >_</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" class="Symbol"
+      >&#8594;</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="theorem-3-1.html#1754" class="Bound"
+      >O&#8801;</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="theorem-3-1.html#1877" class="Bound"
+      >i</a
+      ><a name="1887" class="Symbol"
+      >)</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" href="agda.prelude.html#2969" class="Function"
+      >id</a
+      ><a name="1891"
+      >
+
+</a
+      ><a name="1893" class="Comment"
+      >{- 
+CCHM composition has those properties, so there
+is no weakly generic universe for CCHM fibrations.
+-}</a
+      ><a name="1998"
+      >
+</a
+      ><a name="1999" class="Keyword"
+      >module</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" href="theorem-3-1.html#2006" class="Module"
+      >NoIntCCHMUniv</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" class="Keyword"
+      >where</a
+      ><a name="2025"
+      >
+  </a
+      ><a name="2028" class="Keyword"
+      >open</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" class="Keyword"
+      >import</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" href="agda.cchm.html#1" class="Module"
+      >agda.cchm</a
+      ><a name="2049"
+      >
+
+  </a
+      ><a name="2053" href="theorem-3-1.html#2053" class="Function"
+      >coe</a
+      ><a name="2056"
+      > </a
+      ><a name="2057" class="Symbol"
+      >:</a
+      ><a name="2058"
+      >
+    </a
+      ><a name="2063" class="Symbol"
+      >{</a
+      ><a name="2064" href="theorem-3-1.html#2064" class="Bound"
+      >l</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" class="Symbol"
+      >:</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2073" class="Symbol"
+      >}</a
+      ><a name="2074"
+      >
+    </a
+      ><a name="2079" class="Symbol"
+      >(</a
+      ><a name="2080" href="theorem-3-1.html#2080" class="Bound"
+      >P</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" class="Symbol"
+      >:</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" class="Symbol"
+      >(</a
+      ><a name="2087" class="PrimitiveType"
+      >Set</a
+      ><a name="2090"
+      > </a
+      ><a name="2091" href="theorem-3-1.html#2064" class="Bound"
+      >l</a
+      ><a name="2092" class="Symbol"
+      >))</a
+      ><a name="2094"
+      >
+    </a
+      ><a name="2099" class="Symbol"
+      >(</a
+      ><a name="2100" href="theorem-3-1.html#2100" class="Bound"
+      >c</a
+      ><a name="2101"
+      > </a
+      ><a name="2102" class="Symbol"
+      >:</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="agda.cchm.html#361" class="Function"
+      >CCHM</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="theorem-3-1.html#2080" class="Bound"
+      >P</a
+      ><a name="2110" class="Symbol"
+      >)</a
+      ><a name="2111"
+      >
+    </a
+      ><a name="2116" class="Symbol"
+      >&#8594;</a
+      ><a name="2117"
+      > </a
+      ><a name="2118" class="Comment"
+      >-------------</a
+      ><a name="2131"
+      >
+    </a
+      ><a name="2136" href="theorem-3-1.html#2080" class="Bound"
+      >P</a
+      ><a name="2137"
+      > </a
+      ><a name="2138" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="2139"
+      > </a
+      ><a name="2140" class="Symbol"
+      >&#8594;</a
+      ><a name="2141"
+      > </a
+      ><a name="2142" href="theorem-3-1.html#2080" class="Bound"
+      >P</a
+      ><a name="2143"
+      > </a
+      ><a name="2144" href="agda.postulates.html#467" class="Postulate"
+      >I</a
+      ><a name="2145"
+      >
+  </a
+      ><a name="2148" href="theorem-3-1.html#2053" class="Function"
+      >coe</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" href="theorem-3-1.html#2152" class="Bound"
+      >P</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" href="theorem-3-1.html#2154" class="Bound"
+      >c</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="theorem-3-1.html#2156" class="Bound"
+      >x</a
+      ><a name="2157"
+      > </a
+      ><a name="2158" class="Symbol"
+      >=</a
+      ><a name="2159"
+      >
+    </a
+      ><a name="2164" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" class="Symbol"
+      >(</a
+      ><a name="2169" href="theorem-3-1.html#2154" class="Bound"
+      >c</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" href="agda.prelude.html#3399" class="Datatype"
+      >&#8869;</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" href="agda.postulates.html#536" class="Postulate"
+      >cof&#8869;</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" class="Symbol"
+      >(&#955;</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="theorem-3-1.html#2181" class="Bound"
+      >_</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" class="Symbol"
+      >())</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" class="Symbol"
+      >(</a
+      ><a name="2188" href="theorem-3-1.html#2156" class="Bound"
+      >x</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" class="Symbol"
+      >&#955;</a
+      ><a name="2193"
+      > </a
+      ><a name="2194" class="Symbol"
+      >()))</a
+      ><a name="2198"
+      > 
+    
+  </a
+      ><a name="2207" href="theorem-3-1.html#2207" class="Function"
+      >O&#8801;</a
+      ><a name="2209"
+      > </a
+      ><a name="2210" class="Symbol"
+      >:</a
+      ><a name="2211"
+      >
+    </a
+      ><a name="2216" class="Symbol"
+      >(</a
+      ><a name="2217" href="theorem-3-1.html#2217" class="Bound"
+      >i</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" class="Symbol"
+      >:</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="2222" class="Symbol"
+      >)</a
+      ><a name="2223"
+      >
+    </a
+      ><a name="2228" class="Symbol"
+      >&#8594;</a
+      ><a name="2229"
+      > </a
+      ><a name="2230" class="Comment"
+      >-----------------</a
+      ><a name="2247"
+      >
+    </a
+      ><a name="2252" href="agda.cchm.html#361" class="Function"
+      >CCHM</a
+      ><a name="2256"
+      > </a
+      ><a name="2257" class="Symbol"
+      >(&#955;</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" href="theorem-3-1.html#2260" class="Bound"
+      >_</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" class="Symbol"
+      >&#8594;</a
+      ><a name="2263"
+      > </a
+      ><a name="2264" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" href="theorem-3-1.html#2217" class="Bound"
+      >i</a
+      ><a name="2269" class="Symbol"
+      >)</a
+      ><a name="2270"
+      >
+  </a
+      ><a name="2273" href="theorem-3-1.html#2207" class="Function"
+      >O&#8801;</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="theorem-3-1.html#2276" class="Bound"
+      >i</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" class="Symbol"
+      >_</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" class="Symbol"
+      >_</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >_</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" href="theorem-3-1.html#2284" class="Bound"
+      >a&#8320;+</a
+      ><a name="2287"
+      > </a
+      ><a name="2288" class="Symbol"
+      >=</a
+      ><a name="2289"
+      > </a
+      ><a name="2290" class="Symbol"
+      >(</a
+      ><a name="2291" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" href="theorem-3-1.html#2284" class="Bound"
+      >a&#8320;+</a
+      ><a name="2298"
+      > </a
+      ><a name="2299" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2300"
+      > </a
+      ><a name="2301" class="Symbol"
+      >&#955;</a
+      ><a name="2302"
+      > </a
+      ><a name="2303" href="theorem-3-1.html#2303" class="Bound"
+      >_</a
+      ><a name="2304"
+      > </a
+      ><a name="2305" class="Symbol"
+      >&#8594;</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" href="agda.postulates.html#326" class="Postulate"
+      >uip</a
+      ><a name="2310" class="Symbol"
+      >)</a
+      ><a name="2311"
+      > 
+     
+  </a
+      ><a name="2321" href="theorem-3-1.html#2321" class="Function"
+      >NoIntCCHMUniv</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" class="Symbol"
+      >:</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" href="theorem-3-1.html#673" class="Record"
+      >IntUniv</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" href="agda.cchm.html#361" class="Function"
+      >CCHM</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" class="Symbol"
+      >&#8594;</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" href="agda.prelude.html#3399" class="Datatype"
+      >&#8869;</a
+      ><a name="2353"
+      >
+  </a
+      ><a name="2356" href="theorem-3-1.html#2321" class="Function"
+      >NoIntCCHMUniv</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" href="theorem-3-1.html#2370" class="Bound"
+      >iu</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" class="Symbol"
+      >=</a
+      ><a name="2374"
+      > </a
+      ><a name="2375" href="theorem-3-1.html#1410" class="Function"
+      >NoIntUniv</a
+      ><a name="2384"
+      > </a
+      ><a name="2385" href="agda.cchm.html#361" class="Function"
+      >CCHM</a
+      ><a name="2389"
+      > </a
+      ><a name="2390" href="theorem-3-1.html#2053" class="Function"
+      >coe</a
+      ><a name="2393"
+      > </a
+      ><a name="2394" href="theorem-3-1.html#2207" class="Function"
+      >O&#8801;</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" href="theorem-3-1.html#2370" class="Bound"
+      >iu</a
+      ><a name="2399"
+      >
+
+</a
+      ><a name="2401" class="Comment"
+      >{- 
+Compostion from &quot;Cartesian Cubical Type Theory&quot; by Angiuli et al also
+has those properties, so there is no weakly generic universe for this
+kind of fibration either.
+-}</a
+      ><a name="2573"
+      >
+</a
+      ><a name="2574" class="Keyword"
+      >module</a
+      ><a name="2580"
+      > </a
+      ><a name="2581" href="theorem-3-1.html#2581" class="Module"
+      >NoIntCCTTUniv</a
+      ><a name="2594"
+      > </a
+      ><a name="2595" class="Keyword"
+      >where</a
+      ><a name="2600"
+      >
+  </a
+      ><a name="2603" class="Keyword"
+      >open</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" class="Keyword"
+      >import</a
+      ><a name="2614"
+      > </a
+      ><a name="2615" href="agda.cctt.html#1" class="Module"
+      >agda.cctt</a
+      ><a name="2624"
+      >
+
+  </a
+      ><a name="2628" href="theorem-3-1.html#2628" class="Function"
+      >coe</a
+      ><a name="2631"
+      > </a
+      ><a name="2632" class="Symbol"
+      >:</a
+      ><a name="2633"
+      >
+    </a
+      ><a name="2638" class="Symbol"
+      >{</a
+      ><a name="2639" href="theorem-3-1.html#2639" class="Bound"
+      >l</a
+      ><a name="2640"
+      > </a
+      ><a name="2641" class="Symbol"
+      >:</a
+      ><a name="2642"
+      > </a
+      ><a name="2643" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="2648" class="Symbol"
+      >}</a
+      ><a name="2649"
+      >
+    </a
+      ><a name="2654" class="Symbol"
+      >(</a
+      ><a name="2655" href="theorem-3-1.html#2655" class="Bound"
+      >P</a
+      ><a name="2656"
+      > </a
+      ><a name="2657" class="Symbol"
+      >:</a
+      ><a name="2658"
+      > </a
+      ><a name="2659" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" class="Symbol"
+      >(</a
+      ><a name="2662" class="PrimitiveType"
+      >Set</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="theorem-3-1.html#2639" class="Bound"
+      >l</a
+      ><a name="2667" class="Symbol"
+      >))</a
+      ><a name="2669"
+      >
+    </a
+      ><a name="2674" class="Symbol"
+      >(</a
+      ><a name="2675" href="theorem-3-1.html#2675" class="Bound"
+      >c</a
+      ><a name="2676"
+      > </a
+      ><a name="2677" class="Symbol"
+      >:</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" href="agda.cctt.html#389" class="Function"
+      >CCTT</a
+      ><a name="2683"
+      > </a
+      ><a name="2684" href="theorem-3-1.html#2655" class="Bound"
+      >P</a
+      ><a name="2685" class="Symbol"
+      >)</a
+      ><a name="2686"
+      >
+    </a
+      ><a name="2691" class="Symbol"
+      >&#8594;</a
+      ><a name="2692"
+      > </a
+      ><a name="2693" class="Comment"
+      >-------------</a
+      ><a name="2706"
+      >
+    </a
+      ><a name="2711" href="theorem-3-1.html#2655" class="Bound"
+      >P</a
+      ><a name="2712"
+      > </a
+      ><a name="2713" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="2714"
+      > </a
+      ><a name="2715" class="Symbol"
+      >&#8594;</a
+      ><a name="2716"
+      > </a
+      ><a name="2717" href="theorem-3-1.html#2655" class="Bound"
+      >P</a
+      ><a name="2718"
+      > </a
+      ><a name="2719" href="agda.postulates.html#467" class="Postulate"
+      >I</a
+      ><a name="2720"
+      >
+  </a
+      ><a name="2723" href="theorem-3-1.html#2628" class="Function"
+      >coe</a
+      ><a name="2726"
+      > </a
+      ><a name="2727" href="theorem-3-1.html#2727" class="Bound"
+      >P</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="theorem-3-1.html#2729" class="Bound"
+      >c</a
+      ><a name="2730"
+      > </a
+      ><a name="2731" href="theorem-3-1.html#2731" class="Bound"
+      >x</a
+      ><a name="2732"
+      > </a
+      ><a name="2733" class="Symbol"
+      >=</a
+      ><a name="2734"
+      > </a
+      ><a name="2735" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="2738"
+      > </a
+      ><a name="2739" class="Symbol"
+      >(</a
+      ><a name="2740" href="theorem-3-1.html#2729" class="Bound"
+      >c</a
+      ><a name="2741"
+      > </a
+      ><a name="2742" href="agda.prelude.html#3399" class="Datatype"
+      >&#8869;</a
+      ><a name="2743"
+      > </a
+      ><a name="2744" href="agda.postulates.html#536" class="Postulate"
+      >cof&#8869;</a
+      ><a name="2748"
+      > </a
+      ><a name="2749" class="Symbol"
+      >(&#955;</a
+      ><a name="2751"
+      > </a
+      ><a name="2752" href="theorem-3-1.html#2752" class="Bound"
+      >_</a
+      ><a name="2753"
+      > </a
+      ><a name="2754" class="Symbol"
+      >())</a
+      ><a name="2757"
+      > </a
+      ><a name="2758" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="2759"
+      > </a
+      ><a name="2760" href="theorem-3-1.html#2731" class="Bound"
+      >x</a
+      ><a name="2761"
+      > </a
+      ><a name="2762" class="Symbol"
+      >(&#955;</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" class="Symbol"
+      >()))</a
+      ><a name="2769"
+      > </a
+      ><a name="2770" href="agda.postulates.html#467" class="Postulate"
+      >I</a
+      ><a name="2771"
+      >
+   
+  </a
+      ><a name="2778" href="theorem-3-1.html#2778" class="Function"
+      >O&#8801;</a
+      ><a name="2780"
+      > </a
+      ><a name="2781" class="Symbol"
+      >:</a
+      ><a name="2782"
+      >
+    </a
+      ><a name="2787" class="Symbol"
+      >(</a
+      ><a name="2788" href="theorem-3-1.html#2788" class="Bound"
+      >i</a
+      ><a name="2789"
+      > </a
+      ><a name="2790" class="Symbol"
+      >:</a
+      ><a name="2791"
+      > </a
+      ><a name="2792" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="2793" class="Symbol"
+      >)</a
+      ><a name="2794"
+      >
+    </a
+      ><a name="2799" class="Symbol"
+      >&#8594;</a
+      ><a name="2800"
+      > </a
+      ><a name="2801" class="Comment"
+      >-----------------</a
+      ><a name="2818"
+      >
+    </a
+      ><a name="2823" href="agda.cctt.html#389" class="Function"
+      >CCTT</a
+      ><a name="2827"
+      > </a
+      ><a name="2828" class="Symbol"
+      >(&#955;</a
+      ><a name="2830"
+      > </a
+      ><a name="2831" href="theorem-3-1.html#2831" class="Bound"
+      >_</a
+      ><a name="2832"
+      > </a
+      ><a name="2833" class="Symbol"
+      >&#8594;</a
+      ><a name="2834"
+      > </a
+      ><a name="2835" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="2836"
+      > </a
+      ><a name="2837" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="2838"
+      > </a
+      ><a name="2839" href="theorem-3-1.html#2788" class="Bound"
+      >i</a
+      ><a name="2840" class="Symbol"
+      >)</a
+      ><a name="2841"
+      >
+  </a
+      ><a name="2844" href="theorem-3-1.html#2778" class="Function"
+      >O&#8801;</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" href="theorem-3-1.html#2847" class="Bound"
+      >r</a
+      ><a name="2848"
+      > </a
+      ><a name="2849" href="theorem-3-1.html#2849" class="Bound"
+      >&#966;</a
+      ><a name="2850"
+      > </a
+      ><a name="2851" href="theorem-3-1.html#2851" class="Bound"
+      >cof&#966;</a
+      ><a name="2855"
+      > </a
+      ><a name="2856" href="theorem-3-1.html#2856" class="Bound"
+      >t</a
+      ><a name="2857"
+      > </a
+      ><a name="2858" href="theorem-3-1.html#2858" class="Bound"
+      >r'</a
+      ><a name="2860"
+      > </a
+      ><a name="2861" href="theorem-3-1.html#2861" class="Bound"
+      >b</a
+      ><a name="2862"
+      > </a
+      ><a name="2863" href="theorem-3-1.html#2863" class="Bound"
+      >text</a
+      ><a name="2867"
+      > </a
+      ><a name="2868" class="Symbol"
+      >=</a
+      ><a name="2869"
+      >
+    </a
+      ><a name="2874" class="Comment"
+      >-- use J explicitly to avoid pattern-matching</a
+      ><a name="2919"
+      >
+    </a
+      ><a name="2924" href="agda.prelude.html#512" class="Function"
+      >J</a
+      ><a name="2925"
+      > </a
+      ><a name="2926" class="Symbol"
+      >(&#955;</a
+      ><a name="2928"
+      > </a
+      ><a name="2929" href="theorem-3-1.html#2929" class="Bound"
+      >r&#8321;</a
+      ><a name="2931"
+      > </a
+      ><a name="2932" href="theorem-3-1.html#2932" class="Bound"
+      >b&#8321;</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" class="Symbol"
+      >&#8594;</a
+      ><a name="2936"
+      >  
+        </a
+      ><a name="2947" class="Symbol"
+      >(</a
+      ><a name="2948" href="theorem-3-1.html#2948" class="Bound"
+      >t&#8321;</a
+      ><a name="2950"
+      > </a
+      ><a name="2951" class="Symbol"
+      >:</a
+      ><a name="2952"
+      > </a
+      ><a name="2953" class="Symbol"
+      >(</a
+      ><a name="2954" href="theorem-3-1.html#2954" class="Bound"
+      >i</a
+      ><a name="2955"
+      > </a
+      ><a name="2956" class="Symbol"
+      >:</a
+      ><a name="2957"
+      > </a
+      ><a name="2958" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="2959" class="Symbol"
+      >)</a
+      ><a name="2960"
+      > </a
+      ><a name="2961" class="Symbol"
+      >&#8594;</a
+      ><a name="2962"
+      > </a
+      ><a name="2963" href="theorem-3-1.html#2849" class="Bound"
+      >&#966;</a
+      ><a name="2964"
+      > </a
+      ><a name="2965" class="Symbol"
+      >&#8594;</a
+      ><a name="2966"
+      > </a
+      ><a name="2967" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="2968"
+      > </a
+      ><a name="2969" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="2970"
+      > </a
+      ><a name="2971" href="theorem-3-1.html#2929" class="Bound"
+      >r&#8321;</a
+      ><a name="2973" class="Symbol"
+      >)</a
+      ><a name="2974"
+      > </a
+      ><a name="2975" class="Symbol"
+      >&#8594;</a
+      ><a name="2976"
+      >
+        </a
+      ><a name="2985" href="agda.prelude.html#3654" class="Record"
+      >&#931;</a
+      ><a name="2986"
+      > </a
+      ><a name="2987" class="Symbol"
+      >((</a
+      ><a name="2989" href="theorem-3-1.html#2989" class="Bound"
+      >x</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" class="Symbol"
+      >:</a
+      ><a name="2992"
+      > </a
+      ><a name="2993" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="2994" class="Symbol"
+      >)</a
+      ><a name="2995"
+      > </a
+      ><a name="2996" class="Symbol"
+      >&#8594;</a
+      ><a name="2997"
+      > </a
+      ><a name="2998" href="agda.postulates.html#457" class="Postulate"
+      >O</a
+      ><a name="2999"
+      > </a
+      ><a name="3000" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3001"
+      > </a
+      ><a name="3002" href="theorem-3-1.html#2929" class="Bound"
+      >r&#8321;</a
+      ><a name="3004" class="Symbol"
+      >)</a
+      ><a name="3005"
+      >
+        </a
+      ><a name="3014" class="Symbol"
+      >(&#955;</a
+      ><a name="3016"
+      > </a
+      ><a name="3017" href="theorem-3-1.html#3017" class="Bound"
+      >f</a
+      ><a name="3018"
+      > </a
+      ><a name="3019" class="Symbol"
+      >&#8594;</a
+      ><a name="3020"
+      > </a
+      ><a name="3021" href="agda.prelude.html#3654" class="Record"
+      >&#931;</a
+      ><a name="3022"
+      > </a
+      ><a name="3023" class="Symbol"
+      >(</a
+      ><a name="3024" href="theorem-3-1.html#3017" class="Bound"
+      >f</a
+      ><a name="3025"
+      > </a
+      ><a name="3026" href="theorem-3-1.html#2858" class="Bound"
+      >r'</a
+      ><a name="3028"
+      > </a
+      ><a name="3029" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3030"
+      > </a
+      ><a name="3031" href="theorem-3-1.html#2932" class="Bound"
+      >b&#8321;</a
+      ><a name="3033" class="Symbol"
+      >)</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" class="Symbol"
+      >(&#955;</a
+      ><a name="3037"
+      > </a
+      ><a name="3038" href="theorem-3-1.html#3038" class="Bound"
+      >_</a
+      ><a name="3039"
+      > </a
+      ><a name="3040" class="Symbol"
+      >&#8594;</a
+      ><a name="3041"
+      > </a
+      ><a name="3042" class="Symbol"
+      >(</a
+      ><a name="3043" href="theorem-3-1.html#3043" class="Bound"
+      >j</a
+      ><a name="3044"
+      > </a
+      ><a name="3045" class="Symbol"
+      >:</a
+      ><a name="3046"
+      > </a
+      ><a name="3047" href="agda.postulates.html#445" class="Postulate"
+      >&#120128;</a
+      ><a name="3048" class="Symbol"
+      >)</a
+      ><a name="3049"
+      > </a
+      ><a name="3050" class="Symbol"
+      >(</a
+      ><a name="3051" href="theorem-3-1.html#3051" class="Bound"
+      >u</a
+      ><a name="3052"
+      > </a
+      ><a name="3053" class="Symbol"
+      >:</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" href="theorem-3-1.html#2849" class="Bound"
+      >&#966;</a
+      ><a name="3056" class="Symbol"
+      >)</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" class="Symbol"
+      >&#8594;</a
+      ><a name="3059"
+      > </a
+      ><a name="3060" href="theorem-3-1.html#2948" class="Bound"
+      >t&#8321;</a
+      ><a name="3062"
+      > </a
+      ><a name="3063" href="theorem-3-1.html#3043" class="Bound"
+      >j</a
+      ><a name="3064"
+      > </a
+      ><a name="3065" href="theorem-3-1.html#3051" class="Bound"
+      >u</a
+      ><a name="3066"
+      > </a
+      ><a name="3067" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3068"
+      > </a
+      ><a name="3069" href="theorem-3-1.html#3017" class="Bound"
+      >f</a
+      ><a name="3070"
+      > </a
+      ><a name="3071" href="theorem-3-1.html#3043" class="Bound"
+      >j</a
+      ><a name="3072" class="Symbol"
+      >)))</a
+      ><a name="3075"
+      >
+      </a
+      ><a name="3082" class="Symbol"
+      >(&#955;</a
+      ><a name="3084"
+      > </a
+      ><a name="3085" href="theorem-3-1.html#3085" class="Bound"
+      >t</a
+      ><a name="3086"
+      > </a
+      ><a name="3087" class="Symbol"
+      >&#8594;</a
+      ><a name="3088"
+      > </a
+      ><a name="3089" class="Symbol"
+      >((&#955;</a
+      ><a name="3092"
+      > </a
+      ><a name="3093" href="theorem-3-1.html#3093" class="Bound"
+      >_</a
+      ><a name="3094"
+      > </a
+      ><a name="3095" class="Symbol"
+      >&#8594;</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="3101" class="Symbol"
+      >))</a
+      ><a name="3103"
+      > </a
+      ><a name="3104" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3105"
+      > </a
+      ><a name="3106" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="3110"
+      > </a
+      ><a name="3111" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3112"
+      > </a
+      ><a name="3113" class="Symbol"
+      >(&#955;</a
+      ><a name="3115"
+      > </a
+      ><a name="3116" href="theorem-3-1.html#3116" class="Bound"
+      >_</a
+      ><a name="3117"
+      > </a
+      ><a name="3118" href="theorem-3-1.html#3118" class="Bound"
+      >_</a
+      ><a name="3119"
+      > </a
+      ><a name="3120" class="Symbol"
+      >&#8594;</a
+      ><a name="3121"
+      > </a
+      ><a name="3122" href="agda.postulates.html#326" class="Postulate"
+      >uip</a
+      ><a name="3125" class="Symbol"
+      >))</a
+      ><a name="3127"
+      > </a
+      ><a name="3128" href="theorem-3-1.html#2861" class="Bound"
+      >b</a
+      ><a name="3129"
+      > </a
+      ><a name="3130" href="theorem-3-1.html#2856" class="Bound"
+      >t</a
+      ><a name="3131"
+      >
+
+  </a
+      ><a name="3135" href="theorem-3-1.html#3135" class="Function"
+      >NoIntCCTTUniv</a
+      ><a name="3148"
+      > </a
+      ><a name="3149" class="Symbol"
+      >:</a
+      ><a name="3150"
+      > </a
+      ><a name="3151" href="theorem-3-1.html#673" class="Record"
+      >IntUniv</a
+      ><a name="3158"
+      > </a
+      ><a name="3159" href="agda.cctt.html#389" class="Function"
+      >CCTT</a
+      ><a name="3163"
+      > </a
+      ><a name="3164" class="Symbol"
+      >&#8594;</a
+      ><a name="3165"
+      > </a
+      ><a name="3166" href="agda.prelude.html#3399" class="Datatype"
+      >&#8869;</a
+      ><a name="3167"
+      >
+  </a
+      ><a name="3170" href="theorem-3-1.html#3135" class="Function"
+      >NoIntCCTTUniv</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" href="theorem-3-1.html#3184" class="Bound"
+      >iu</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" class="Symbol"
+      >=</a
+      ><a name="3188"
+      > </a
+      ><a name="3189" href="theorem-3-1.html#1410" class="Function"
+      >NoIntUniv</a
+      ><a name="3198"
+      > </a
+      ><a name="3199" href="agda.cctt.html#389" class="Function"
+      >CCTT</a
+      ><a name="3203"
+      > </a
+      ><a name="3204" href="theorem-3-1.html#2628" class="Function"
+      >coe</a
+      ><a name="3207"
+      > </a
+      ><a name="3208" href="theorem-3-1.html#2778" class="Function"
+      >O&#8801;</a
+      ><a name="3210"
+      > </a
+      ><a name="3211" href="theorem-3-1.html#3184" class="Bound"
+      >iu</a
+      ><a name="3213"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,4841 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >proposition-6-2</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --no-pattern-matching --rewriting </a
+      ><a name="47" class="Symbol"
+      >#-}</a
+      ><a name="50"
+      >
+
+</a
+      ><a name="52" class="Keyword"
+      >module</a
+      ><a name="58"
+      > </a
+      ><a name="59" href="proposition-6-2.html#1" class="Module"
+      >proposition-6-2</a
+      ><a name="74"
+      > </a
+      ><a name="75" class="Keyword"
+      >where</a
+      ><a name="80"
+      >
+
+  </a
+      ><a name="84" class="Keyword"
+      >open</a
+      ><a name="88"
+      > </a
+      ><a name="89" class="Keyword"
+      >import</a
+      ><a name="95"
+      > </a
+      ><a name="96" href="agda.prelude.html#1" class="Module"
+      >agda.prelude</a
+      ><a name="108"
+      >
+  </a
+      ><a name="111" class="Keyword"
+      >open</a
+      ><a name="115"
+      > </a
+      ><a name="116" class="Keyword"
+      >import</a
+      ><a name="122"
+      > </a
+      ><a name="123" href="agda-flat.prelude.html#1" class="Module"
+      >agda-flat.prelude</a
+      ><a name="140"
+      >
+  </a
+      ><a name="143" class="Keyword"
+      >open</a
+      ><a name="147"
+      > </a
+      ><a name="148" class="Keyword"
+      >import</a
+      ><a name="154"
+      > </a
+      ><a name="155" href="agda.postulates.html#1" class="Module"
+      >agda.postulates</a
+      ><a name="170"
+      >
+  </a
+      ><a name="173" class="Keyword"
+      >open</a
+      ><a name="177"
+      > </a
+      ><a name="178" class="Keyword"
+      >import</a
+      ><a name="184"
+      > </a
+      ><a name="185" href="agda.fibration.html#1" class="Module"
+      >agda.fibration</a
+      ><a name="199"
+      >
+
+  </a
+      ><a name="203" class="Comment"
+      >-- Prop 6.2. concerns fibrations with respect to the</a
+      ><a name="255"
+      >
+  </a
+      ><a name="258" class="Comment"
+      >-- exponential path object functor, (_)^&#120128;.</a
+      ><a name="300"
+      >
+  </a
+      ><a name="303" class="Keyword"
+      >open</a
+      ><a name="307"
+      > </a
+      ><a name="308" class="Keyword"
+      >import</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="agda.exp-path.html#1" class="Module"
+      >agda.exp-path</a
+      ><a name="328"
+      >
+
+  </a
+      ><a name="332" class="Keyword"
+      >module</a
+      ><a name="338"
+      >
+    </a
+      ><a name="343" href="proposition-6-2.html#343" class="Module"
+      >Univ</a
+      ><a name="347"
+      >
+      </a
+      ><a name="354" class="Symbol"
+      >(</a
+      ><a name="355" href="proposition-6-2.html#355" class="Bound"
+      >C</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Symbol"
+      >:{</a
+      ><a name="359"
+      >&#9837;</a
+      ><a name="360" class="Symbol"
+      >}</a
+      ><a name="361"
+      > </a
+      ><a name="362" class="Symbol"
+      >{</a
+      ><a name="363" href="proposition-6-2.html#363" class="Bound"
+      >l</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >:</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="372" class="Symbol"
+      >}</a
+      ><a name="373"
+      > </a
+      ><a name="374" class="Symbol"
+      >(</a
+      ><a name="375" href="proposition-6-2.html#375" class="Bound"
+      >A</a
+      ><a name="376"
+      > </a
+      ><a name="377" class="Symbol"
+      >:</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >(</a
+      ><a name="382" class="PrimitiveType"
+      >Set</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="proposition-6-2.html#363" class="Bound"
+      >l</a
+      ><a name="387" class="Symbol"
+      >))</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >&#8594;</a
+      ><a name="391"
+      > </a
+      ><a name="392" class="PrimitiveType"
+      >Set</a
+      ><a name="395"
+      > </a
+      ><a name="396" class="Symbol"
+      >(</a
+      ><a name="397" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="399"
+      > </a
+      ><a name="400" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="401"
+      > </a
+      ><a name="402" href="proposition-6-2.html#363" class="Bound"
+      >l</a
+      ><a name="403" class="Symbol"
+      >))</a
+      ><a name="405"
+      >
+      </a
+      ><a name="412" class="Symbol"
+      >{</a
+      ><a name="413" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="414"
+      > </a
+      ><a name="415" class="Symbol"
+      >:{</a
+      ><a name="417"
+      >&#9837;</a
+      ><a name="418" class="Symbol"
+      >}</a
+      ><a name="419"
+      > </a
+      ><a name="420" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="425" class="Symbol"
+      >}</a
+      ><a name="426"
+      >
+      </a
+      ><a name="433" class="Keyword"
+      >where</a
+      ><a name="438"
+      >
+    </a
+      ><a name="443" class="Keyword"
+      >open</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Keyword"
+      >module</a
+      ><a name="454"
+      > </a
+      ><a name="455" href="proposition-6-2.html#455" class="Module"
+      >F</a
+      ><a name="456"
+      > </a
+      ><a name="457" class="Symbol"
+      >=</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="agda.fibration.html#674" class="Module"
+      >Fib</a
+      ><a name="462"
+      > </a
+      ><a name="463" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="464"
+      > </a
+      ><a name="465" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="467"
+      > </a
+      ><a name="468" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="474"
+      > </a
+      ><a name="475" href="proposition-6-2.html#355" class="Bound"
+      >C</a
+      ><a name="476"
+      >
+
+    </a
+      ><a name="482" class="Keyword"
+      >postulate</a
+      ><a name="491"
+      >
+      </a
+      ><a name="498" href="proposition-6-2.html#498" class="Postulate"
+      >U</a
+      ><a name="499"
+      >  </a
+      ><a name="501" class="Symbol"
+      >:</a
+      ><a name="502"
+      > </a
+      ><a name="503" class="PrimitiveType"
+      >Set</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Symbol"
+      >(</a
+      ><a name="508" href="agda.prelude.html#289" class="Function"
+      >&#8467;&#8322;</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="517"
+      > </a
+      ><a name="518" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="519" class="Symbol"
+      >)</a
+      ><a name="520"
+      >
+
+      </a
+      ><a name="528" class="Comment"
+      >-- unpacked version is more REWRITE-friendly</a
+      ><a name="572"
+      >
+      </a
+      ><a name="579" href="proposition-6-2.html#579" class="Postulate"
+      >El&#8320;</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="Symbol"
+      >:</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="proposition-6-2.html#498" class="Postulate"
+      >U</a
+      ><a name="586"
+      > </a
+      ><a name="587" class="Symbol"
+      >&#8594;</a
+      ><a name="588"
+      > </a
+      ><a name="589" class="PrimitiveType"
+      >Set</a
+      ><a name="592"
+      > </a
+      ><a name="593" class="Symbol"
+      >(</a
+      ><a name="594" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="595" class="Symbol"
+      >)</a
+      ><a name="596"
+      >
+      </a
+      ><a name="603" href="proposition-6-2.html#603" class="Postulate"
+      >El&#8321;</a
+      ><a name="606"
+      > </a
+      ><a name="607" class="Symbol"
+      >:</a
+      ><a name="608"
+      > </a
+      ><a name="609" href="agda.fibration.html#1271" class="Function"
+      >F.isFib</a
+      ><a name="616"
+      > </a
+      ><a name="617" href="proposition-6-2.html#498" class="Postulate"
+      >U</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="proposition-6-2.html#579" class="Postulate"
+      >El&#8320;</a
+      ><a name="622"
+      >
+
+    </a
+      ><a name="628" href="proposition-6-2.html#628" class="Function"
+      >El</a
+      ><a name="630"
+      > </a
+      ><a name="631" class="Symbol"
+      >:</a
+      ><a name="632"
+      > </a
+      ><a name="633" href="agda.fibration.html#1437" class="Function"
+      >Fib</a
+      ><a name="636"
+      > </a
+      ><a name="637" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="proposition-6-2.html#498" class="Postulate"
+      >U</a
+      ><a name="640"
+      >
+    </a
+      ><a name="645" href="proposition-6-2.html#628" class="Function"
+      >El</a
+      ><a name="647"
+      > </a
+      ><a name="648" class="Symbol"
+      >=</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="proposition-6-2.html#579" class="Postulate"
+      >El&#8320;</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="proposition-6-2.html#603" class="Postulate"
+      >El&#8321;</a
+      ><a name="659"
+      > 
+
+    </a
+      ><a name="666" class="Keyword"
+      >postulate</a
+      ><a name="675"
+      >
+      </a
+      ><a name="682" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="686"
+      > </a
+      ><a name="687" class="Symbol"
+      >:</a
+      ><a name="688"
+      >
+        </a
+      ><a name="697" class="Symbol"
+      >{</a
+      ><a name="698" href="proposition-6-2.html#698" class="Bound"
+      >&#915;</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >:{</a
+      ><a name="702"
+      >&#9837;</a
+      ><a name="703" class="Symbol"
+      >}</a
+      ><a name="704"
+      > </a
+      ><a name="705" class="PrimitiveType"
+      >Set</a
+      ><a name="708"
+      > </a
+      ><a name="709" class="Symbol"
+      >(</a
+      ><a name="710" href="agda.prelude.html#289" class="Function"
+      >&#8467;&#8322;</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="721" class="Symbol"
+      >)}</a
+      ><a name="723"
+      >
+        </a
+      ><a name="732" class="Symbol"
+      >(</a
+      ><a name="733" href="proposition-6-2.html#733" class="Bound"
+      >&#934;</a
+      ><a name="734"
+      > </a
+      ><a name="735" class="Symbol"
+      >:{</a
+      ><a name="737"
+      >&#9837;</a
+      ><a name="738" class="Symbol"
+      >}</a
+      ><a name="739"
+      > </a
+      ><a name="740" href="agda.fibration.html#1437" class="Function"
+      >Fib</a
+      ><a name="743"
+      > </a
+      ><a name="744" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="745"
+      > </a
+      ><a name="746" href="proposition-6-2.html#698" class="Bound"
+      >&#915;</a
+      ><a name="747" class="Symbol"
+      >)</a
+      ><a name="748"
+      >
+        </a
+      ><a name="757" class="Symbol"
+      >&#8594;</a
+      ><a name="758"
+      > </a
+      ><a name="759" class="Comment"
+      >------------------------</a
+      ><a name="783"
+      >
+        </a
+      ><a name="792" href="proposition-6-2.html#698" class="Bound"
+      >&#915;</a
+      ><a name="793"
+      > </a
+      ><a name="794" class="Symbol"
+      >&#8594;</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="proposition-6-2.html#498" class="Postulate"
+      >U</a
+      ><a name="797"
+      >
+      </a
+      ><a name="804" href="proposition-6-2.html#804" class="Postulate"
+      >&#946;</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >:</a
+      ><a name="807"
+      >
+        </a
+      ><a name="816" class="Symbol"
+      >{</a
+      ><a name="817" href="proposition-6-2.html#817" class="Bound"
+      >&#915;</a
+      ><a name="818"
+      > </a
+      ><a name="819" class="Symbol"
+      >:{</a
+      ><a name="821"
+      >&#9837;</a
+      ><a name="822" class="Symbol"
+      >}</a
+      ><a name="823"
+      > </a
+      ><a name="824" class="PrimitiveType"
+      >Set</a
+      ><a name="827"
+      > </a
+      ><a name="828" class="Symbol"
+      >(</a
+      ><a name="829" href="agda.prelude.html#289" class="Function"
+      >&#8467;&#8322;</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="833"
+      > </a
+      ><a name="834" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="840" class="Symbol"
+      >)}</a
+      ><a name="842"
+      >
+        </a
+      ><a name="851" class="Symbol"
+      >(</a
+      ><a name="852" href="proposition-6-2.html#852" class="Bound"
+      >&#934;</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >:{</a
+      ><a name="856"
+      >&#9837;</a
+      ><a name="857" class="Symbol"
+      >}</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="agda.fibration.html#1437" class="Function"
+      >Fib</a
+      ><a name="862"
+      > </a
+      ><a name="863" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="864"
+      > </a
+      ><a name="865" href="proposition-6-2.html#817" class="Bound"
+      >&#915;</a
+      ><a name="866" class="Symbol"
+      >)</a
+      ><a name="867"
+      >
+        </a
+      ><a name="876" class="Symbol"
+      >&#8594;</a
+      ><a name="877"
+      > </a
+      ><a name="878" class="Comment"
+      >------------------------</a
+      ><a name="902"
+      >
+        </a
+      ><a name="911" href="proposition-6-2.html#628" class="Function"
+      >El</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="agda.fibration.html#1614" class="Function Operator"
+      >[</a
+      ><a name="915"
+      > </a
+      ><a name="916" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="proposition-6-2.html#852" class="Bound"
+      >&#934;</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="agda.fibration.html#1614" class="Function Operator"
+      >]</a
+      ><a name="924"
+      > </a
+      ><a name="925" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="926"
+      > </a
+      ><a name="927" href="proposition-6-2.html#852" class="Bound"
+      >&#934;</a
+      ><a name="928"
+      >
+      </a
+      ><a name="935" href="proposition-6-2.html#935" class="Postulate"
+      >&#951;</a
+      ><a name="936"
+      > </a
+      ><a name="937" class="Symbol"
+      >:</a
+      ><a name="938"
+      >
+        </a
+      ><a name="947" class="Symbol"
+      >{</a
+      ><a name="948" href="proposition-6-2.html#948" class="Bound"
+      >&#915;</a
+      ><a name="949"
+      > </a
+      ><a name="950" class="Symbol"
+      >:{</a
+      ><a name="952"
+      >&#9837;</a
+      ><a name="953" class="Symbol"
+      >}</a
+      ><a name="954"
+      > </a
+      ><a name="955" class="PrimitiveType"
+      >Set</a
+      ><a name="958"
+      > </a
+      ><a name="959" class="Symbol"
+      >(</a
+      ><a name="960" href="agda.prelude.html#289" class="Function"
+      >&#8467;&#8322;</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="969"
+      > </a
+      ><a name="970" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="971" class="Symbol"
+      >)}</a
+      ><a name="973"
+      >
+        </a
+      ><a name="982" class="Symbol"
+      >(</a
+      ><a name="983" href="proposition-6-2.html#983" class="Bound"
+      >A</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Symbol"
+      >:{</a
+      ><a name="987"
+      >&#9837;</a
+      ><a name="988" class="Symbol"
+      >}</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="proposition-6-2.html#948" class="Bound"
+      >&#915;</a
+      ><a name="991"
+      > </a
+      ><a name="992" class="Symbol"
+      >&#8594;</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="proposition-6-2.html#498" class="Postulate"
+      >U</a
+      ><a name="995" class="Symbol"
+      >)</a
+      ><a name="996"
+      >
+        </a
+      ><a name="1005" class="Symbol"
+      >&#8594;</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Comment"
+      >------------------------</a
+      ><a name="1031"
+      >
+        </a
+      ><a name="1040" href="proposition-6-2.html#983" class="Bound"
+      >A</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" class="Symbol"
+      >(</a
+      ><a name="1050" href="proposition-6-2.html#628" class="Function"
+      >El</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" href="agda.fibration.html#1614" class="Function Operator"
+      >[</a
+      ><a name="1054"
+      > </a
+      ><a name="1055" href="proposition-6-2.html#983" class="Bound"
+      >A</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="agda.fibration.html#1614" class="Function Operator"
+      >]</a
+      ><a name="1058" class="Symbol"
+      >)</a
+      ><a name="1059"
+      >
+
+
+    </a
+      ><a name="1066" class="Comment"
+      >-- unpack the two parts of &#946; and install them as rewrites</a
+      ><a name="1123"
+      >
+
+    </a
+      ><a name="1129" href="proposition-6-2.html#1129" class="Function"
+      >&#946;1</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" class="Symbol"
+      >:</a
+      ><a name="1133"
+      >
+        </a
+      ><a name="1142" class="Symbol"
+      >{</a
+      ><a name="1143" href="proposition-6-2.html#1143" class="Bound"
+      >&#915;</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" class="Symbol"
+      >:{</a
+      ><a name="1147"
+      >&#9837;</a
+      ><a name="1148" class="Symbol"
+      >}</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" class="PrimitiveType"
+      >Set</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" class="Symbol"
+      >(</a
+      ><a name="1155" href="agda.prelude.html#289" class="Function"
+      >&#8467;&#8322;</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="1166" class="Symbol"
+      >)}</a
+      ><a name="1168"
+      >
+        </a
+      ><a name="1177" class="Symbol"
+      >(</a
+      ><a name="1178" href="proposition-6-2.html#1178" class="Bound"
+      >&#934;</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" class="Symbol"
+      >:{</a
+      ><a name="1182"
+      >&#9837;</a
+      ><a name="1183" class="Symbol"
+      >}</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" href="agda.fibration.html#1437" class="Function"
+      >Fib</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="proposition-6-2.html#1143" class="Bound"
+      >&#915;</a
+      ><a name="1192" class="Symbol"
+      >)</a
+      ><a name="1193"
+      >
+        </a
+      ><a name="1202" class="Symbol"
+      >(</a
+      ><a name="1203" href="proposition-6-2.html#1203" class="Bound"
+      >x</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" class="Symbol"
+      >:</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="proposition-6-2.html#1143" class="Bound"
+      >&#915;</a
+      ><a name="1208" class="Symbol"
+      >)</a
+      ><a name="1209"
+      >
+        </a
+      ><a name="1218" class="Symbol"
+      >&#8594;</a
+      ><a name="1219"
+      > </a
+      ><a name="1220" class="Comment"
+      >------------------------</a
+      ><a name="1244"
+      >
+        </a
+      ><a name="1253" href="proposition-6-2.html#579" class="Postulate"
+      >El&#8320;</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" class="Symbol"
+      >(</a
+      ><a name="1258" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="proposition-6-2.html#1178" class="Bound"
+      >&#934;</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" href="proposition-6-2.html#1203" class="Bound"
+      >x</a
+      ><a name="1266" class="Symbol"
+      >)</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" href="proposition-6-2.html#1178" class="Bound"
+      >&#934;</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="proposition-6-2.html#1203" class="Bound"
+      >x</a
+      ><a name="1277"
+      >
+    </a
+      ><a name="1282" href="proposition-6-2.html#1129" class="Function"
+      >&#946;1</a
+      ><a name="1284"
+      > </a
+      ><a name="1285" href="proposition-6-2.html#1285" class="Bound"
+      >&#934;</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" href="proposition-6-2.html#1287" class="Bound"
+      >x</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" class="Symbol"
+      >=</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" class="Symbol"
+      >(\</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" href="proposition-6-2.html#1299" class="Bound"
+      >h</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" class="Symbol"
+      >&#8594;</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" href="proposition-6-2.html#1299" class="Bound"
+      >h</a
+      ><a name="1308"
+      > </a
+      ><a name="1309" href="proposition-6-2.html#1287" class="Bound"
+      >x</a
+      ><a name="1310" class="Symbol"
+      >)</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" class="Symbol"
+      >(</a
+      ><a name="1313" href="proposition-6-2.html#804" class="Postulate"
+      >&#946;</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="proposition-6-2.html#1285" class="Bound"
+      >&#934;</a
+      ><a name="1316" class="Symbol"
+      >)</a
+      ><a name="1317"
+      >
+    </a
+      ><a name="1322" class="Symbol"
+      >{-#</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Keyword"
+      >REWRITE</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" href="proposition-6-2.html#1129" class="Function"
+      >&#946;1</a
+      ><a name="1336"
+      > </a
+      ><a name="1337" class="Symbol"
+      >#-}</a
+      ><a name="1340"
+      >
+
+    </a
+      ><a name="1346" href="proposition-6-2.html#1346" class="Function"
+      >&#946;2</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" class="Symbol"
+      >:</a
+      ><a name="1350"
+      >
+        </a
+      ><a name="1359" class="Symbol"
+      >{</a
+      ><a name="1360" href="proposition-6-2.html#1360" class="Bound"
+      >&#915;</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" class="Symbol"
+      >:{</a
+      ><a name="1364"
+      >&#9837;</a
+      ><a name="1365" class="Symbol"
+      >}</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" class="PrimitiveType"
+      >Set</a
+      ><a name="1370"
+      > </a
+      ><a name="1371" class="Symbol"
+      >(</a
+      ><a name="1372" href="agda.prelude.html#289" class="Function"
+      >&#8467;&#8322;</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="1383" class="Symbol"
+      >)}</a
+      ><a name="1385"
+      >
+        </a
+      ><a name="1394" class="Symbol"
+      >(</a
+      ><a name="1395" href="proposition-6-2.html#1395" class="Bound"
+      >&#934;</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" class="Symbol"
+      >:{</a
+      ><a name="1399"
+      >&#9837;</a
+      ><a name="1400" class="Symbol"
+      >}</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" href="agda.fibration.html#1437" class="Function"
+      >Fib</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="1407"
+      > </a
+      ><a name="1408" href="proposition-6-2.html#1360" class="Bound"
+      >&#915;</a
+      ><a name="1409" class="Symbol"
+      >)</a
+      ><a name="1410"
+      >
+        </a
+      ><a name="1419" class="Symbol"
+      >&#8594;</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" class="Comment"
+      >--------------------------------------</a
+      ><a name="1459"
+      >
+        </a
+      ><a name="1468" class="Symbol"
+      >&#8704;</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" href="proposition-6-2.html#1470" class="Bound"
+      >p</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" class="Symbol"
+      >&#8594;</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" href="proposition-6-2.html#603" class="Postulate"
+      >El&#8321;</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" class="Symbol"
+      >(\</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="proposition-6-2.html#1481" class="Bound"
+      >i</a
+      ><a name="1482"
+      > </a
+      ><a name="1483" class="Symbol"
+      >&#8594;</a
+      ><a name="1484"
+      > </a
+      ><a name="1485" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="1489"
+      > </a
+      ><a name="1490" href="proposition-6-2.html#1395" class="Bound"
+      >&#934;</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" class="Symbol"
+      >(</a
+      ><a name="1493" href="proposition-6-2.html#1470" class="Bound"
+      >p</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="proposition-6-2.html#1481" class="Bound"
+      >i</a
+      ><a name="1496" class="Symbol"
+      >))</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" href="agda.prelude.html#3795" class="Field"
+      >snd</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" href="proposition-6-2.html#1395" class="Bound"
+      >&#934;</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" href="proposition-6-2.html#1470" class="Bound"
+      >p</a
+      ><a name="1508"
+      >
+    </a
+      ><a name="1513" href="proposition-6-2.html#1346" class="Function"
+      >&#946;2</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="proposition-6-2.html#1516" class="Bound"
+      >&#934;</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" href="proposition-6-2.html#1518" class="Bound"
+      >p</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" class="Symbol"
+      >=</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" class="Symbol"
+      >(\</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="proposition-6-2.html#1530" class="Bound"
+      >h</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" class="Symbol"
+      >&#8594;</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" href="agda.prelude.html#1056" class="Function"
+      >subst</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" class="Symbol"
+      >(&#955;</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" href="proposition-6-2.html#1543" class="Bound"
+      >z</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" class="Symbol"
+      >&#8594;</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="proposition-6-2.html#355" class="Bound"
+      >C</a
+      ><a name="1548"
+      > </a
+      ><a name="1549" class="Symbol"
+      >(&#955;</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" href="proposition-6-2.html#1552" class="Bound"
+      >i</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" class="Symbol"
+      >&#8594;</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" href="proposition-6-2.html#1543" class="Bound"
+      >z</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" class="Symbol"
+      >(</a
+      ><a name="1559" href="proposition-6-2.html#1518" class="Bound"
+      >p</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" href="proposition-6-2.html#1552" class="Bound"
+      >i</a
+      ><a name="1562" class="Symbol"
+      >)))</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" href="proposition-6-2.html#1530" class="Bound"
+      >h</a
+      ><a name="1567"
+      > </a
+      ><a name="1568" class="Symbol"
+      >((</a
+      ><a name="1570" href="agda.prelude.html#3795" class="Field"
+      >snd</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" class="Symbol"
+      >(</a
+      ><a name="1575" href="proposition-6-2.html#628" class="Function"
+      >El</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" href="agda.fibration.html#1614" class="Function Operator"
+      >[</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" href="proposition-6-2.html#1516" class="Bound"
+      >&#934;</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" href="agda.fibration.html#1614" class="Function Operator"
+      >]</a
+      ><a name="1588" class="Symbol"
+      >)</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" href="proposition-6-2.html#1518" class="Bound"
+      >p</a
+      ><a name="1591" class="Symbol"
+      >)))</a
+      ><a name="1594"
+      > </a
+      ><a name="1595" class="Symbol"
+      >{</a
+      ><a name="1596" class="Argument"
+      >x</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" class="Symbol"
+      >=</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="1604" class="Symbol"
+      >}</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" class="Symbol"
+      >{</a
+      ><a name="1607" class="Argument"
+      >y</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" class="Symbol"
+      >=</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" class="Symbol"
+      >(</a
+      ><a name="1612" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" class="Symbol"
+      >(</a
+      ><a name="1622" href="proposition-6-2.html#804" class="Postulate"
+      >&#946;</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" href="proposition-6-2.html#1516" class="Bound"
+      >&#934;</a
+      ><a name="1625" class="Symbol"
+      >))}</a
+      ><a name="1628"
+      > </a
+      ><a name="1629" href="agda.postulates.html#326" class="Postulate"
+      >uip</a
+      ><a name="1632"
+      > </a
+      ><a name="1633" href="agda.prelude.html#803" class="Function Operator"
+      >&#183;</a
+      ><a name="1634"
+      >
+             </a
+      ><a name="1648" class="Symbol"
+      >(</a
+      ><a name="1649" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" class="Symbol"
+      >(\</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" href="proposition-6-2.html#1657" class="Bound"
+      >h</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" class="Symbol"
+      >&#8594;</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" href="proposition-6-2.html#1657" class="Bound"
+      >h</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" class="Symbol"
+      >(</a
+      ><a name="1664" href="agda.prelude.html#3795" class="Field"
+      >snd</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" class="Symbol"
+      >(</a
+      ><a name="1669" href="proposition-6-2.html#628" class="Function"
+      >El</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" href="agda.fibration.html#1614" class="Function Operator"
+      >[</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" href="proposition-6-2.html#1516" class="Bound"
+      >&#934;</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" href="agda.fibration.html#1614" class="Function Operator"
+      >]</a
+      ><a name="1682" class="Symbol"
+      >)</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" href="proposition-6-2.html#1518" class="Bound"
+      >p</a
+      ><a name="1685" class="Symbol"
+      >))</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" class="Symbol"
+      >(</a
+      ><a name="1689" href="agda.prelude.html#688" class="Function"
+      >symm</a
+      ><a name="1693"
+      > </a
+      ><a name="1694" class="Symbol"
+      >(</a
+      ><a name="1695" href="agda.prelude.html#1192" class="Function"
+      >subst-cong-assoc</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" class="Symbol"
+      >(&#955;</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" href="proposition-6-2.html#1715" class="Bound"
+      >z</a
+      ><a name="1716"
+      > </a
+      ><a name="1717" class="Symbol"
+      >&#8594;</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" href="proposition-6-2.html#355" class="Bound"
+      >C</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" class="Symbol"
+      >(</a
+      ><a name="1722" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="1724"
+      > </a
+      ><a name="1725" href="proposition-6-2.html#1715" class="Bound"
+      >z</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" href="proposition-6-2.html#1518" class="Bound"
+      >p</a
+      ><a name="1728" class="Symbol"
+      >))</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" class="Symbol"
+      >(</a
+      ><a name="1736" href="proposition-6-2.html#804" class="Postulate"
+      >&#946;</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" href="proposition-6-2.html#1516" class="Bound"
+      >&#934;</a
+      ><a name="1739" class="Symbol"
+      >))))</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="agda.prelude.html#803" class="Function Operator"
+      >&#183;</a
+      ><a name="1745"
+      >
+             </a
+      ><a name="1759" href="agda.prelude.html#1450" class="Function"
+      >congd</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >(\</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" href="proposition-6-2.html#1768" class="Bound"
+      >x</a
+      ><a name="1769"
+      > </a
+      ><a name="1770" class="Symbol"
+      >&#8594;</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="agda.prelude.html#3795" class="Field"
+      >snd</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" href="proposition-6-2.html#1768" class="Bound"
+      >x</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="proposition-6-2.html#1518" class="Bound"
+      >p</a
+      ><a name="1779" class="Symbol"
+      >)</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" class="Symbol"
+      >(</a
+      ><a name="1782" href="proposition-6-2.html#804" class="Postulate"
+      >&#946;</a
+      ><a name="1783"
+      > </a
+      ><a name="1784" href="proposition-6-2.html#1516" class="Bound"
+      >&#934;</a
+      ><a name="1785" class="Symbol"
+      >)</a
+      ><a name="1786"
+      >
+    </a
+      ><a name="1791" class="Symbol"
+      >{-#</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" class="Keyword"
+      >REWRITE</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" href="proposition-6-2.html#1346" class="Function"
+      >&#946;2</a
+      ><a name="1805"
+      > </a
+      ><a name="1806" class="Symbol"
+      >#-}</a
+      ><a name="1809"
+      >
+
+
+    </a
+      ><a name="1816" class="Comment"
+      >-- some lemmas about equality in U</a
+      ><a name="1850"
+      >
+
+    </a
+      ><a name="1856" class="Comment"
+      >-- ported these from an old file but didn't need them; maybe need them later</a
+      ><a name="1932"
+      >
+
+    </a
+      ><a name="1938" class="Comment"
+      >-- cong-code-com : {l1 :{&#9837;} Level} {&#915; :{&#9837;} Set _} {A :{&#9837;} &#915; &#8594; Set l} {&#966;1 &#966;2 :{&#9837;} F.isFib &#915; A} {x : &#915;}</a
+      ><a name="2039"
+      >
+    </a
+      ><a name="2044" class="Comment"
+      >--           &#8594; &#966;1 &#8801; &#966;2 </a
+      ><a name="2067"
+      >
+    </a
+      ><a name="2072" class="Comment"
+      >--           &#8594; (code (A , &#966;1)) x &#8801; (code (A , &#966;2)) x</a
+      ><a name="2124"
+      >
+    </a
+      ><a name="2129" class="Comment"
+      >-- cong-code-com refl = refl</a
+      ><a name="2157"
+      >
+
+    </a
+      ><a name="2163" class="Comment"
+      >-- comEl-code-subst : &#8704; {l2 :{&#9837;} Level} {&#916; :{&#9837;} Set l2} {&#915; :{&#9837;} Set (&#8467;&#8322; &#8852; lsuc l)} </a
+      ><a name="2246"
+      >
+    </a
+      ><a name="2251" class="Comment"
+      >--                  {A :{&#9837;} Fib l &#915;} (f : &#916; &#8594; &#915;)</a
+      ><a name="2299"
+      >
+    </a
+      ><a name="2304" class="Comment"
+      >--                &#8594; El [ (code A) &#8728; f ] &#8801; A [ f ]</a
+      ><a name="2353"
+      >
+    </a
+      ><a name="2358" class="Comment"
+      >-- comEl-code-subst {A = A} f = refl</a
+      ><a name="2394"
+      >
+
+    </a
+      ><a name="2400" class="Comment"
+      >-- universal-code-&#951; : &#8704; {l :{&#9837;} Level} &#8594; (A : U) &#8594; A &#8801; (code El) A</a
+      ><a name="2466"
+      >
+    </a
+      ><a name="2471" class="Comment"
+      >-- universal-code-&#951; A = cong (\ h &#8594; h A) {x = (\ x &#8594; x)}{_} (&#951; (\ X &#8594; X))</a
+      ><a name="2544"
+      >
+
+    </a
+      ><a name="2550" href="proposition-6-2.html#2550" class="Function"
+      >code-flat-assoc</a
+      ><a name="2565"
+      > </a
+      ><a name="2566" class="Symbol"
+      >:</a
+      ><a name="2567"
+      > </a
+      ><a name="2568" class="Symbol"
+      >&#8704;</a
+      ><a name="2569"
+      > </a
+      ><a name="2570" class="Symbol"
+      >{</a
+      ><a name="2571" href="proposition-6-2.html#2571" class="Bound"
+      >&#915;</a
+      ><a name="2572"
+      > </a
+      ><a name="2573" href="proposition-6-2.html#2573" class="Bound"
+      >&#916;</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" class="Symbol"
+      >:{</a
+      ><a name="2577"
+      >&#9837;</a
+      ><a name="2578" class="Symbol"
+      >}</a
+      ><a name="2579"
+      > </a
+      ><a name="2580" class="PrimitiveType"
+      >Set</a
+      ><a name="2583"
+      > </a
+      ><a name="2584" class="Symbol"
+      >(</a
+      ><a name="2585" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="2589"
+      > </a
+      ><a name="2590" class="Symbol"
+      >(</a
+      ><a name="2591" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="2595"
+      > </a
+      ><a name="2596" href="Agda.Primitive.html#609" class="Primitive"
+      >lzero</a
+      ><a name="2601" class="Symbol"
+      >)</a
+      ><a name="2602"
+      > </a
+      ><a name="2603" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="2604"
+      > </a
+      ><a name="2605" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="2609"
+      > </a
+      ><a name="2610" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="2611" class="Symbol"
+      >)}</a
+      ><a name="2613"
+      > 
+                      </a
+      ><a name="2637" class="Symbol"
+      >{</a
+      ><a name="2638" href="proposition-6-2.html#2638" class="Bound"
+      >&#934;</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" class="Symbol"
+      >:{</a
+      ><a name="2642"
+      >&#9837;</a
+      ><a name="2643" class="Symbol"
+      >}</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" href="agda.fibration.html#1437" class="Function"
+      >Fib</a
+      ><a name="2648"
+      > </a
+      ><a name="2649" href="proposition-6-2.html#413" class="Bound"
+      >l</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" href="proposition-6-2.html#2571" class="Bound"
+      >&#915;</a
+      ><a name="2652" class="Symbol"
+      >}</a
+      ><a name="2653"
+      > </a
+      ><a name="2654" class="Symbol"
+      >(</a
+      ><a name="2655" href="proposition-6-2.html#2655" class="Bound"
+      >f</a
+      ><a name="2656"
+      > </a
+      ><a name="2657" class="Symbol"
+      >:{</a
+      ><a name="2659"
+      >&#9837;</a
+      ><a name="2660" class="Symbol"
+      >}</a
+      ><a name="2661"
+      > </a
+      ><a name="2662" href="proposition-6-2.html#2573" class="Bound"
+      >&#916;</a
+      ><a name="2663"
+      > </a
+      ><a name="2664" class="Symbol"
+      >&#8594;</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="proposition-6-2.html#2571" class="Bound"
+      >&#915;</a
+      ><a name="2667" class="Symbol"
+      >)</a
+      ><a name="2668"
+      >
+                      </a
+      ><a name="2691" class="Symbol"
+      >&#8594;</a
+      ><a name="2692"
+      > </a
+      ><a name="2693" class="Symbol"
+      >(</a
+      ><a name="2694" href="proposition-6-2.html#2694" class="Bound"
+      >x</a
+      ><a name="2695"
+      > </a
+      ><a name="2696" class="Symbol"
+      >:</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="proposition-6-2.html#2573" class="Bound"
+      >&#916;</a
+      ><a name="2699" class="Symbol"
+      >)</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" class="Symbol"
+      >&#8594;</a
+      ><a name="2702"
+      > </a
+      ><a name="2703" class="Symbol"
+      >(</a
+      ><a name="2704" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="2708"
+      > </a
+      ><a name="2709" href="proposition-6-2.html#2638" class="Bound"
+      >&#934;</a
+      ><a name="2710" class="Symbol"
+      >)</a
+      ><a name="2711"
+      > </a
+      ><a name="2712" class="Symbol"
+      >(</a
+      ><a name="2713" href="proposition-6-2.html#2655" class="Bound"
+      >f</a
+      ><a name="2714"
+      > </a
+      ><a name="2715" href="proposition-6-2.html#2694" class="Bound"
+      >x</a
+      ><a name="2716" class="Symbol"
+      >)</a
+      ><a name="2717"
+      > </a
+      ><a name="2718" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="2719"
+      > </a
+      ><a name="2720" class="Symbol"
+      >(</a
+      ><a name="2721" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" class="Symbol"
+      >(</a
+      ><a name="2727" href="proposition-6-2.html#2638" class="Bound"
+      >&#934;</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="agda.fibration.html#1614" class="Function Operator"
+      >[</a
+      ><a name="2730"
+      > </a
+      ><a name="2731" href="proposition-6-2.html#2655" class="Bound"
+      >f</a
+      ><a name="2732"
+      > </a
+      ><a name="2733" href="agda.fibration.html#1614" class="Function Operator"
+      >]</a
+      ><a name="2734" class="Symbol"
+      >))</a
+      ><a name="2736"
+      > </a
+      ><a name="2737" href="proposition-6-2.html#2694" class="Bound"
+      >x</a
+      ><a name="2738"
+      >
+    </a
+      ><a name="2743" href="proposition-6-2.html#2550" class="Function"
+      >code-flat-assoc</a
+      ><a name="2758"
+      > </a
+      ><a name="2759" class="Symbol"
+      >{</a
+      ><a name="2760" class="Argument"
+      >&#934;</a
+      ><a name="2761"
+      > </a
+      ><a name="2762" class="Symbol"
+      >=</a
+      ><a name="2763"
+      > </a
+      ><a name="2764" href="proposition-6-2.html#2764" class="Bound"
+      >&#934;</a
+      ><a name="2765" class="Symbol"
+      >}</a
+      ><a name="2766"
+      > </a
+      ><a name="2767" href="proposition-6-2.html#2767" class="Bound"
+      >f</a
+      ><a name="2768"
+      > </a
+      ><a name="2769" href="proposition-6-2.html#2769" class="Bound"
+      >x</a
+      ><a name="2770"
+      > </a
+      ><a name="2771" class="Symbol"
+      >=</a
+      ><a name="2772"
+      > </a
+      ><a name="2773" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="2777"
+      > </a
+      ><a name="2778" class="Symbol"
+      >(\</a
+      ><a name="2780"
+      > </a
+      ><a name="2781" href="proposition-6-2.html#2781" class="Bound"
+      >h</a
+      ><a name="2782"
+      > </a
+      ><a name="2783" class="Symbol"
+      >&#8594;</a
+      ><a name="2784"
+      > </a
+      ><a name="2785" href="proposition-6-2.html#2781" class="Bound"
+      >h</a
+      ><a name="2786"
+      > </a
+      ><a name="2787" href="proposition-6-2.html#2769" class="Bound"
+      >x</a
+      ><a name="2788" class="Symbol"
+      >)</a
+      ><a name="2789"
+      > </a
+      ><a name="2790" class="Symbol"
+      >(</a
+      ><a name="2791" href="proposition-6-2.html#935" class="Postulate"
+      >&#951;</a
+      ><a name="2792"
+      > </a
+      ><a name="2793" class="Symbol"
+      >(\</a
+      ><a name="2795"
+      > </a
+      ><a name="2796" href="proposition-6-2.html#2796" class="Bound"
+      >x</a
+      ><a name="2797"
+      > </a
+      ><a name="2798" class="Symbol"
+      >&#8594;</a
+      ><a name="2799"
+      > </a
+      ><a name="2800" class="Symbol"
+      >(</a
+      ><a name="2801" href="proposition-6-2.html#682" class="Postulate"
+      >code</a
+      ><a name="2805"
+      > </a
+      ><a name="2806" href="proposition-6-2.html#2764" class="Bound"
+      >&#934;</a
+      ><a name="2807" class="Symbol"
+      >)</a
+      ><a name="2808"
+      > </a
+      ><a name="2809" class="Symbol"
+      >(</a
+      ><a name="2810" href="proposition-6-2.html#2767" class="Bound"
+      >f</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" href="proposition-6-2.html#2796" class="Bound"
+      >x</a
+      ><a name="2813" class="Symbol"
+      >)))</a
+      ><a name="2816"
+      >
+
+
+  </a
+      ><a name="2821" class="Comment"
+      >-- Agda doesn't seem to let you quantify over levels like this, so can't abstract this :(</a
+      ><a name="2910"
+      >
+  </a
+      ><a name="2913" class="Comment"
+      >-- isFib-morphism-raw : (C1 C2 :{&#9837;} {l : Level} (A : &#8472; (Set l)) &#8594; Set (&#8467;&#8321; &#8852; l)) &#8594; ?</a
+      ><a name="2996"
+      >
+  </a
+      ><a name="2999" class="Comment"
+      >-- isFib-morphism-raw C1 C2 = {l1 l2 : Level} {&#915; : Set l1} (A : &#915; &#8594; Set l2) &#8594; Fib.isFib C1 &#915; A &#8594; Fib.isFib C2 &#915; A</a
+      ><a name="3112"
+      >
+
+  </a
+      ><a name="3116" href="proposition-6-2.html#3116" class="Function"
+      >i</a
+      ><a name="3117"
+      > </a
+      ><a name="3118" class="Symbol"
+      >:</a
+      ><a name="3119"
+      > </a
+      ><a name="3120" class="Symbol"
+      >(</a
+      ><a name="3121" href="proposition-6-2.html#3121" class="Bound"
+      >C1</a
+      ><a name="3123"
+      > </a
+      ><a name="3124" href="proposition-6-2.html#3124" class="Bound"
+      >C2</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" class="Symbol"
+      >:{</a
+      ><a name="3129"
+      >&#9837;</a
+      ><a name="3130" class="Symbol"
+      >}</a
+      ><a name="3131"
+      > </a
+      ><a name="3132" class="Symbol"
+      >{</a
+      ><a name="3133" href="proposition-6-2.html#3133" class="Bound"
+      >l</a
+      ><a name="3134"
+      > </a
+      ><a name="3135" class="Symbol"
+      >:</a
+      ><a name="3136"
+      > </a
+      ><a name="3137" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3142" class="Symbol"
+      >}</a
+      ><a name="3143"
+      > </a
+      ><a name="3144" class="Symbol"
+      >(</a
+      ><a name="3145" href="proposition-6-2.html#3145" class="Bound"
+      >A</a
+      ><a name="3146"
+      > </a
+      ><a name="3147" class="Symbol"
+      >:</a
+      ><a name="3148"
+      > </a
+      ><a name="3149" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="3150"
+      > </a
+      ><a name="3151" class="Symbol"
+      >(</a
+      ><a name="3152" class="PrimitiveType"
+      >Set</a
+      ><a name="3155"
+      > </a
+      ><a name="3156" href="proposition-6-2.html#3133" class="Bound"
+      >l</a
+      ><a name="3157" class="Symbol"
+      >))</a
+      ><a name="3159"
+      > </a
+      ><a name="3160" class="Symbol"
+      >&#8594;</a
+      ><a name="3161"
+      > </a
+      ><a name="3162" class="PrimitiveType"
+      >Set</a
+      ><a name="3165"
+      > </a
+      ><a name="3166" class="Symbol"
+      >(</a
+      ><a name="3167" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="3169"
+      > </a
+      ><a name="3170" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3171"
+      > </a
+      ><a name="3172" href="proposition-6-2.html#3133" class="Bound"
+      >l</a
+      ><a name="3173" class="Symbol"
+      >))</a
+      ><a name="3175"
+      >
+        </a
+      ><a name="3184" class="Symbol"
+      >{</a
+      ><a name="3185" href="proposition-6-2.html#3185" class="Bound"
+      >l</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" class="Symbol"
+      >:{</a
+      ><a name="3189"
+      >&#9837;</a
+      ><a name="3190" class="Symbol"
+      >}</a
+      ><a name="3191"
+      > </a
+      ><a name="3192" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3197" class="Symbol"
+      >}</a
+      ><a name="3198"
+      > 
+     </a
+      ><a name="3205" class="Symbol"
+      >&#8594;</a
+      ><a name="3206"
+      > </a
+      ><a name="3207" class="Symbol"
+      >(</a
+      ><a name="3208" href="proposition-6-2.html#3208" class="Bound"
+      >Fib12</a
+      ><a name="3213"
+      > </a
+      ><a name="3214" class="Symbol"
+      >:{</a
+      ><a name="3216"
+      >&#9837;</a
+      ><a name="3217" class="Symbol"
+      >}</a
+      ><a name="3218"
+      > </a
+      ><a name="3219" class="Symbol"
+      >{</a
+      ><a name="3220" href="proposition-6-2.html#3220" class="Bound"
+      >l1</a
+      ><a name="3222"
+      > </a
+      ><a name="3223" href="proposition-6-2.html#3223" class="Bound"
+      >l2</a
+      ><a name="3225"
+      > </a
+      ><a name="3226" class="Symbol"
+      >:</a
+      ><a name="3227"
+      > </a
+      ><a name="3228" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3233" class="Symbol"
+      >}</a
+      ><a name="3234"
+      > </a
+      ><a name="3235" class="Symbol"
+      >{</a
+      ><a name="3236" href="proposition-6-2.html#3236" class="Bound"
+      >&#915;</a
+      ><a name="3237"
+      > </a
+      ><a name="3238" class="Symbol"
+      >:</a
+      ><a name="3239"
+      > </a
+      ><a name="3240" class="PrimitiveType"
+      >Set</a
+      ><a name="3243"
+      > </a
+      ><a name="3244" href="proposition-6-2.html#3220" class="Bound"
+      >l1</a
+      ><a name="3246" class="Symbol"
+      >}</a
+      ><a name="3247"
+      > </a
+      ><a name="3248" class="Symbol"
+      >(</a
+      ><a name="3249" href="proposition-6-2.html#3249" class="Bound"
+      >A</a
+      ><a name="3250"
+      > </a
+      ><a name="3251" class="Symbol"
+      >:</a
+      ><a name="3252"
+      > </a
+      ><a name="3253" href="proposition-6-2.html#3236" class="Bound"
+      >&#915;</a
+      ><a name="3254"
+      > </a
+      ><a name="3255" class="Symbol"
+      >&#8594;</a
+      ><a name="3256"
+      > </a
+      ><a name="3257" class="PrimitiveType"
+      >Set</a
+      ><a name="3260"
+      > </a
+      ><a name="3261" href="proposition-6-2.html#3223" class="Bound"
+      >l2</a
+      ><a name="3263" class="Symbol"
+      >)</a
+      ><a name="3264"
+      > </a
+      ><a name="3265" class="Symbol"
+      >&#8594;</a
+      ><a name="3266"
+      > </a
+      ><a name="3267" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="3276"
+      > </a
+      ><a name="3277" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="3278"
+      > </a
+      ><a name="3279" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="3281"
+      > </a
+      ><a name="3282" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="3288"
+      > </a
+      ><a name="3289" href="proposition-6-2.html#3121" class="Bound"
+      >C1</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" href="proposition-6-2.html#3236" class="Bound"
+      >&#915;</a
+      ><a name="3293"
+      > </a
+      ><a name="3294" href="proposition-6-2.html#3249" class="Bound"
+      >A</a
+      ><a name="3295"
+      > </a
+      ><a name="3296" class="Symbol"
+      >&#8594;</a
+      ><a name="3297"
+      > </a
+      ><a name="3298" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="3307"
+      > </a
+      ><a name="3308" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="3309"
+      > </a
+      ><a name="3310" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="3312"
+      > </a
+      ><a name="3313" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="3319"
+      > </a
+      ><a name="3320" href="proposition-6-2.html#3124" class="Bound"
+      >C2</a
+      ><a name="3322"
+      > </a
+      ><a name="3323" href="proposition-6-2.html#3236" class="Bound"
+      >&#915;</a
+      ><a name="3324"
+      > </a
+      ><a name="3325" href="proposition-6-2.html#3249" class="Bound"
+      >A</a
+      ><a name="3326" class="Symbol"
+      >)</a
+      ><a name="3327"
+      >
+     </a
+      ><a name="3333" class="Symbol"
+      >&#8594;</a
+      ><a name="3334"
+      > </a
+      ><a name="3335" href="proposition-6-2.html#498" class="Postulate"
+      >Univ.U</a
+      ><a name="3341"
+      > </a
+      ><a name="3342" href="proposition-6-2.html#3121" class="Bound"
+      >C1</a
+      ><a name="3344"
+      > </a
+      ><a name="3345" class="Symbol"
+      >{</a
+      ><a name="3346" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="3348"
+      > </a
+      ><a name="3349" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3350"
+      > </a
+      ><a name="3351" href="proposition-6-2.html#3185" class="Bound"
+      >l</a
+      ><a name="3352" class="Symbol"
+      >}</a
+      ><a name="3353"
+      > </a
+      ><a name="3354" class="Symbol"
+      >&#8594;</a
+      ><a name="3355"
+      > </a
+      ><a name="3356" href="proposition-6-2.html#498" class="Postulate"
+      >Univ.U</a
+      ><a name="3362"
+      > </a
+      ><a name="3363" href="proposition-6-2.html#3124" class="Bound"
+      >C2</a
+      ><a name="3365"
+      > </a
+      ><a name="3366" class="Symbol"
+      >{</a
+      ><a name="3367" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="3369"
+      > </a
+      ><a name="3370" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3371"
+      > </a
+      ><a name="3372" href="proposition-6-2.html#3185" class="Bound"
+      >l</a
+      ><a name="3373" class="Symbol"
+      >}</a
+      ><a name="3374"
+      >
+  </a
+      ><a name="3377" href="proposition-6-2.html#3116" class="Function"
+      >i</a
+      ><a name="3378"
+      > </a
+      ><a name="3379" href="proposition-6-2.html#3379" class="Bound"
+      >C1</a
+      ><a name="3381"
+      > </a
+      ><a name="3382" href="proposition-6-2.html#3382" class="Bound"
+      >C2</a
+      ><a name="3384"
+      > </a
+      ><a name="3385" class="Symbol"
+      >{</a
+      ><a name="3386" href="proposition-6-2.html#3386" class="Bound"
+      >l</a
+      ><a name="3387" class="Symbol"
+      >}</a
+      ><a name="3388"
+      > </a
+      ><a name="3389" href="proposition-6-2.html#3389" class="Bound"
+      >Fib12</a
+      ><a name="3394"
+      > </a
+      ><a name="3395" class="Symbol"
+      >=</a
+      ><a name="3396"
+      >
+    </a
+      ><a name="3401" href="proposition-6-2.html#682" class="Postulate"
+      >Univ.code</a
+      ><a name="3410"
+      > </a
+      ><a name="3411" href="proposition-6-2.html#3382" class="Bound"
+      >C2</a
+      ><a name="3413"
+      > </a
+      ><a name="3414" class="Symbol"
+      >{</a
+      ><a name="3415" class="Argument"
+      >&#915;</a
+      ><a name="3416"
+      > </a
+      ><a name="3417" class="Symbol"
+      >=</a
+      ><a name="3418"
+      > </a
+      ><a name="3419" href="proposition-6-2.html#498" class="Postulate"
+      >Univ.U</a
+      ><a name="3425"
+      > </a
+      ><a name="3426" href="proposition-6-2.html#3379" class="Bound"
+      >C1</a
+      ><a name="3428" class="Symbol"
+      >}</a
+      ><a name="3429"
+      > </a
+      ><a name="3430" class="Symbol"
+      >(</a
+      ><a name="3431" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="3434"
+      > </a
+      ><a name="3435" class="Symbol"
+      >(</a
+      ><a name="3436" href="proposition-6-2.html#628" class="Function"
+      >Univ.El</a
+      ><a name="3443"
+      > </a
+      ><a name="3444" href="proposition-6-2.html#3379" class="Bound"
+      >C1</a
+      ><a name="3446" class="Symbol"
+      >)</a
+      ><a name="3447"
+      > </a
+      ><a name="3448" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3449"
+      > </a
+      ><a name="3450" class="Symbol"
+      >\</a
+      ><a name="3451"
+      > </a
+      ><a name="3452" href="proposition-6-2.html#3452" class="Bound"
+      >p</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" class="Symbol"
+      >&#8594;</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" href="proposition-6-2.html#3389" class="Bound"
+      >Fib12</a
+      ><a name="3461"
+      > </a
+      ><a name="3462" class="Symbol"
+      >(</a
+      ><a name="3463" href="agda.prelude.html#3783" class="Field"
+      >fst</a
+      ><a name="3466"
+      > </a
+      ><a name="3467" class="Symbol"
+      >((</a
+      ><a name="3469" href="proposition-6-2.html#628" class="Function"
+      >Univ.El</a
+      ><a name="3476"
+      > </a
+      ><a name="3477" href="proposition-6-2.html#3379" class="Bound"
+      >C1</a
+      ><a name="3479" class="Symbol"
+      >)</a
+      ><a name="3480"
+      > </a
+      ><a name="3481" class="Symbol"
+      >{</a
+      ><a name="3482" href="Agda.Primitive.html#625" class="Primitive"
+      >lsuc</a
+      ><a name="3486"
+      > </a
+      ><a name="3487" href="Agda.Primitive.html#609" class="Primitive"
+      >lzero</a
+      ><a name="3492"
+      > </a
+      ><a name="3493" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3494"
+      > </a
+      ><a name="3495" href="proposition-6-2.html#3386" class="Bound"
+      >l</a
+      ><a name="3496" class="Symbol"
+      >}))</a
+      ><a name="3499"
+      > </a
+      ><a name="3500" class="Symbol"
+      >(</a
+      ><a name="3501" href="agda.prelude.html#3795" class="Field"
+      >snd</a
+      ><a name="3504"
+      > </a
+      ><a name="3505" class="Symbol"
+      >(</a
+      ><a name="3506" href="proposition-6-2.html#628" class="Function"
+      >Univ.El</a
+      ><a name="3513"
+      > </a
+      ><a name="3514" href="proposition-6-2.html#3379" class="Bound"
+      >C1</a
+      ><a name="3516"
+      > </a
+      ><a name="3517" class="Symbol"
+      >{</a
+      ><a name="3518" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="3520"
+      > </a
+      ><a name="3521" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3522"
+      > </a
+      ><a name="3523" href="proposition-6-2.html#3386" class="Bound"
+      >l</a
+      ><a name="3524" class="Symbol"
+      >}))</a
+      ><a name="3527"
+      > </a
+      ><a name="3528" href="proposition-6-2.html#3452" class="Bound"
+      >p</a
+      ><a name="3529" class="Symbol"
+      >)</a
+      ><a name="3530"
+      >
+
+  </a
+      ><a name="3534" href="proposition-6-2.html#3534" class="Function"
+      >ident</a
+      ><a name="3539"
+      > </a
+      ><a name="3540" class="Symbol"
+      >:</a
+      ><a name="3541"
+      > </a
+      ><a name="3542" class="Symbol"
+      >(</a
+      ><a name="3543" href="proposition-6-2.html#3543" class="Bound"
+      >C1</a
+      ><a name="3545"
+      > </a
+      ><a name="3546" class="Symbol"
+      >:{</a
+      ><a name="3548"
+      >&#9837;</a
+      ><a name="3549" class="Symbol"
+      >}</a
+      ><a name="3550"
+      > </a
+      ><a name="3551" class="Symbol"
+      >{</a
+      ><a name="3552" href="proposition-6-2.html#3552" class="Bound"
+      >l</a
+      ><a name="3553"
+      > </a
+      ><a name="3554" class="Symbol"
+      >:</a
+      ><a name="3555"
+      > </a
+      ><a name="3556" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3561" class="Symbol"
+      >}</a
+      ><a name="3562"
+      > </a
+      ><a name="3563" class="Symbol"
+      >(</a
+      ><a name="3564" href="proposition-6-2.html#3564" class="Bound"
+      >A</a
+      ><a name="3565"
+      > </a
+      ><a name="3566" class="Symbol"
+      >:</a
+      ><a name="3567"
+      > </a
+      ><a name="3568" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="3569"
+      > </a
+      ><a name="3570" class="Symbol"
+      >(</a
+      ><a name="3571" class="PrimitiveType"
+      >Set</a
+      ><a name="3574"
+      > </a
+      ><a name="3575" href="proposition-6-2.html#3552" class="Bound"
+      >l</a
+      ><a name="3576" class="Symbol"
+      >))</a
+      ><a name="3578"
+      > </a
+      ><a name="3579" class="Symbol"
+      >&#8594;</a
+      ><a name="3580"
+      > </a
+      ><a name="3581" class="PrimitiveType"
+      >Set</a
+      ><a name="3584"
+      > </a
+      ><a name="3585" class="Symbol"
+      >(</a
+      ><a name="3586" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="3588"
+      > </a
+      ><a name="3589" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3590"
+      > </a
+      ><a name="3591" href="proposition-6-2.html#3552" class="Bound"
+      >l</a
+      ><a name="3592" class="Symbol"
+      >))</a
+      ><a name="3594"
+      >
+          </a
+      ><a name="3605" class="Symbol"
+      >{</a
+      ><a name="3606" href="proposition-6-2.html#3606" class="Bound"
+      >l</a
+      ><a name="3607"
+      > </a
+      ><a name="3608" class="Symbol"
+      >:{</a
+      ><a name="3610"
+      >&#9837;</a
+      ><a name="3611" class="Symbol"
+      >}</a
+      ><a name="3612"
+      > </a
+      ><a name="3613" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3618" class="Symbol"
+      >}</a
+      ><a name="3619"
+      > </a
+      ><a name="3620" class="Symbol"
+      >(</a
+      ><a name="3621" href="proposition-6-2.html#3621" class="Bound"
+      >A</a
+      ><a name="3622"
+      > </a
+      ><a name="3623" class="Symbol"
+      >:{</a
+      ><a name="3625"
+      >&#9837;</a
+      ><a name="3626" class="Symbol"
+      >}</a
+      ><a name="3627"
+      > </a
+      ><a name="3628" href="proposition-6-2.html#498" class="Postulate"
+      >Univ.U</a
+      ><a name="3634"
+      > </a
+      ><a name="3635" href="proposition-6-2.html#3543" class="Bound"
+      >C1</a
+      ><a name="3637"
+      > </a
+      ><a name="3638" class="Symbol"
+      >{</a
+      ><a name="3639" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="3641"
+      > </a
+      ><a name="3642" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" href="proposition-6-2.html#3606" class="Bound"
+      >l</a
+      ><a name="3645" class="Symbol"
+      >})</a
+      ><a name="3647"
+      >
+        </a
+      ><a name="3656" class="Symbol"
+      >&#8594;</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" href="proposition-6-2.html#3116" class="Function"
+      >i</a
+      ><a name="3659"
+      > </a
+      ><a name="3660" href="proposition-6-2.html#3543" class="Bound"
+      >C1</a
+      ><a name="3662"
+      > </a
+      ><a name="3663" href="proposition-6-2.html#3543" class="Bound"
+      >C1</a
+      ><a name="3665"
+      > </a
+      ><a name="3666" class="Symbol"
+      >{</a
+      ><a name="3667" href="proposition-6-2.html#3606" class="Bound"
+      >l</a
+      ><a name="3668" class="Symbol"
+      >}</a
+      ><a name="3669"
+      > </a
+      ><a name="3670" class="Symbol"
+      >(\</a
+      ><a name="3672"
+      > </a
+      ><a name="3673" href="proposition-6-2.html#3673" class="Bound"
+      >A</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" href="proposition-6-2.html#3675" class="Bound"
+      >f</a
+      ><a name="3676"
+      > </a
+      ><a name="3677" class="Symbol"
+      >&#8594;</a
+      ><a name="3678"
+      > </a
+      ><a name="3679" href="proposition-6-2.html#3675" class="Bound"
+      >f</a
+      ><a name="3680" class="Symbol"
+      >)</a
+      ><a name="3681"
+      > </a
+      ><a name="3682" href="proposition-6-2.html#3621" class="Bound"
+      >A</a
+      ><a name="3683"
+      > </a
+      ><a name="3684" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3685"
+      > </a
+      ><a name="3686" href="proposition-6-2.html#3621" class="Bound"
+      >A</a
+      ><a name="3687"
+      >
+  </a
+      ><a name="3690" href="proposition-6-2.html#3534" class="Function"
+      >ident</a
+      ><a name="3695"
+      > </a
+      ><a name="3696" href="proposition-6-2.html#3696" class="Bound"
+      >C1</a
+      ><a name="3698"
+      > </a
+      ><a name="3699" href="proposition-6-2.html#3699" class="Bound"
+      >A</a
+      ><a name="3700"
+      > </a
+      ><a name="3701" class="Symbol"
+      >=</a
+      ><a name="3702"
+      > </a
+      ><a name="3703" href="agda.prelude.html#688" class="Function"
+      >symm</a
+      ><a name="3707"
+      > </a
+      ><a name="3708" class="Symbol"
+      >(</a
+      ><a name="3709" href="agda.prelude.html#915" class="Function"
+      >cong</a
+      ><a name="3713"
+      > </a
+      ><a name="3714" class="Symbol"
+      >(\</a
+      ><a name="3716"
+      > </a
+      ><a name="3717" href="proposition-6-2.html#3717" class="Bound"
+      >h</a
+      ><a name="3718"
+      > </a
+      ><a name="3719" class="Symbol"
+      >&#8594;</a
+      ><a name="3720"
+      > </a
+      ><a name="3721" href="proposition-6-2.html#3717" class="Bound"
+      >h</a
+      ><a name="3722"
+      > </a
+      ><a name="3723" href="proposition-6-2.html#3699" class="Bound"
+      >A</a
+      ><a name="3724" class="Symbol"
+      >)</a
+      ><a name="3725"
+      > </a
+      ><a name="3726" class="Symbol"
+      >(</a
+      ><a name="3727" href="proposition-6-2.html#935" class="Postulate"
+      >Univ.&#951;</a
+      ><a name="3733"
+      > </a
+      ><a name="3734" href="proposition-6-2.html#3696" class="Bound"
+      >C1</a
+      ><a name="3736"
+      > </a
+      ><a name="3737" class="Symbol"
+      >(\</a
+      ><a name="3739"
+      > </a
+      ><a name="3740" href="proposition-6-2.html#3740" class="Bound"
+      >X</a
+      ><a name="3741"
+      > </a
+      ><a name="3742" class="Symbol"
+      >&#8594;</a
+      ><a name="3743"
+      > </a
+      ><a name="3744" href="proposition-6-2.html#3740" class="Bound"
+      >X</a
+      ><a name="3745" class="Symbol"
+      >)))</a
+      ><a name="3748"
+      >
+
+  </a
+      ><a name="3752" href="proposition-6-2.html#3752" class="Function"
+      >composition</a
+      ><a name="3763"
+      > </a
+      ><a name="3764" class="Symbol"
+      >:</a
+      ><a name="3765"
+      > </a
+      ><a name="3766" class="Symbol"
+      >(</a
+      ><a name="3767" href="proposition-6-2.html#3767" class="Bound"
+      >C1</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" href="proposition-6-2.html#3770" class="Bound"
+      >C2</a
+      ><a name="3772"
+      > </a
+      ><a name="3773" href="proposition-6-2.html#3773" class="Bound"
+      >C3</a
+      ><a name="3775"
+      > </a
+      ><a name="3776" class="Symbol"
+      >:{</a
+      ><a name="3778"
+      >&#9837;</a
+      ><a name="3779" class="Symbol"
+      >}</a
+      ><a name="3780"
+      > </a
+      ><a name="3781" class="Symbol"
+      >{</a
+      ><a name="3782" href="proposition-6-2.html#3782" class="Bound"
+      >l</a
+      ><a name="3783"
+      > </a
+      ><a name="3784" class="Symbol"
+      >:</a
+      ><a name="3785"
+      > </a
+      ><a name="3786" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3791" class="Symbol"
+      >}</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" class="Symbol"
+      >(</a
+      ><a name="3794" href="proposition-6-2.html#3794" class="Bound"
+      >A</a
+      ><a name="3795"
+      > </a
+      ><a name="3796" class="Symbol"
+      >:</a
+      ><a name="3797"
+      > </a
+      ><a name="3798" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="3799"
+      > </a
+      ><a name="3800" class="Symbol"
+      >(</a
+      ><a name="3801" class="PrimitiveType"
+      >Set</a
+      ><a name="3804"
+      > </a
+      ><a name="3805" href="proposition-6-2.html#3782" class="Bound"
+      >l</a
+      ><a name="3806" class="Symbol"
+      >))</a
+      ><a name="3808"
+      > </a
+      ><a name="3809" class="Symbol"
+      >&#8594;</a
+      ><a name="3810"
+      > </a
+      ><a name="3811" class="PrimitiveType"
+      >Set</a
+      ><a name="3814"
+      > </a
+      ><a name="3815" class="Symbol"
+      >(</a
+      ><a name="3816" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="3818"
+      > </a
+      ><a name="3819" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3820"
+      > </a
+      ><a name="3821" href="proposition-6-2.html#3782" class="Bound"
+      >l</a
+      ><a name="3822" class="Symbol"
+      >))</a
+      ><a name="3824"
+      >
+                </a
+      ><a name="3841" class="Symbol"
+      >(</a
+      ><a name="3842" href="proposition-6-2.html#3842" class="Bound"
+      >Fib12</a
+      ><a name="3847"
+      > </a
+      ><a name="3848" class="Symbol"
+      >:{</a
+      ><a name="3850"
+      >&#9837;</a
+      ><a name="3851" class="Symbol"
+      >}</a
+      ><a name="3852"
+      > </a
+      ><a name="3853" class="Symbol"
+      >{</a
+      ><a name="3854" href="proposition-6-2.html#3854" class="Bound"
+      >l1</a
+      ><a name="3856"
+      > </a
+      ><a name="3857" href="proposition-6-2.html#3857" class="Bound"
+      >l2</a
+      ><a name="3859"
+      > </a
+      ><a name="3860" class="Symbol"
+      >:</a
+      ><a name="3861"
+      > </a
+      ><a name="3862" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="3867" class="Symbol"
+      >}</a
+      ><a name="3868"
+      > </a
+      ><a name="3869" class="Symbol"
+      >{</a
+      ><a name="3870" href="proposition-6-2.html#3870" class="Bound"
+      >&#915;</a
+      ><a name="3871"
+      > </a
+      ><a name="3872" class="Symbol"
+      >:</a
+      ><a name="3873"
+      > </a
+      ><a name="3874" class="PrimitiveType"
+      >Set</a
+      ><a name="3877"
+      > </a
+      ><a name="3878" href="proposition-6-2.html#3854" class="Bound"
+      >l1</a
+      ><a name="3880" class="Symbol"
+      >}</a
+      ><a name="3881"
+      > </a
+      ><a name="3882" class="Symbol"
+      >(</a
+      ><a name="3883" href="proposition-6-2.html#3883" class="Bound"
+      >A</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" class="Symbol"
+      >:</a
+      ><a name="3886"
+      > </a
+      ><a name="3887" href="proposition-6-2.html#3870" class="Bound"
+      >&#915;</a
+      ><a name="3888"
+      > </a
+      ><a name="3889" class="Symbol"
+      >&#8594;</a
+      ><a name="3890"
+      > </a
+      ><a name="3891" class="PrimitiveType"
+      >Set</a
+      ><a name="3894"
+      > </a
+      ><a name="3895" href="proposition-6-2.html#3857" class="Bound"
+      >l2</a
+      ><a name="3897" class="Symbol"
+      >)</a
+      ><a name="3898"
+      > </a
+      ><a name="3899" class="Symbol"
+      >&#8594;</a
+      ><a name="3900"
+      > </a
+      ><a name="3901" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="3910"
+      > </a
+      ><a name="3911" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="3912"
+      > </a
+      ><a name="3913" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="3922"
+      > </a
+      ><a name="3923" href="proposition-6-2.html#3767" class="Bound"
+      >C1</a
+      ><a name="3925"
+      > </a
+      ><a name="3926" href="proposition-6-2.html#3870" class="Bound"
+      >&#915;</a
+      ><a name="3927"
+      > </a
+      ><a name="3928" href="proposition-6-2.html#3883" class="Bound"
+      >A</a
+      ><a name="3929"
+      > </a
+      ><a name="3930" class="Symbol"
+      >&#8594;</a
+      ><a name="3931"
+      > </a
+      ><a name="3932" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="3941"
+      > </a
+      ><a name="3942" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="3943"
+      > </a
+      ><a name="3944" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="3946"
+      > </a
+      ><a name="3947" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="3953"
+      > </a
+      ><a name="3954" href="proposition-6-2.html#3770" class="Bound"
+      >C2</a
+      ><a name="3956"
+      > </a
+      ><a name="3957" href="proposition-6-2.html#3870" class="Bound"
+      >&#915;</a
+      ><a name="3958"
+      > </a
+      ><a name="3959" href="proposition-6-2.html#3883" class="Bound"
+      >A</a
+      ><a name="3960" class="Symbol"
+      >)</a
+      ><a name="3961"
+      >
+                </a
+      ><a name="3978" class="Symbol"
+      >(</a
+      ><a name="3979" href="proposition-6-2.html#3979" class="Bound"
+      >Fib23</a
+      ><a name="3984"
+      > </a
+      ><a name="3985" class="Symbol"
+      >:{</a
+      ><a name="3987"
+      >&#9837;</a
+      ><a name="3988" class="Symbol"
+      >}</a
+      ><a name="3989"
+      > </a
+      ><a name="3990" class="Symbol"
+      >{</a
+      ><a name="3991" href="proposition-6-2.html#3991" class="Bound"
+      >l1</a
+      ><a name="3993"
+      > </a
+      ><a name="3994" href="proposition-6-2.html#3994" class="Bound"
+      >l2</a
+      ><a name="3996"
+      > </a
+      ><a name="3997" class="Symbol"
+      >:</a
+      ><a name="3998"
+      > </a
+      ><a name="3999" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="4004" class="Symbol"
+      >}</a
+      ><a name="4005"
+      > </a
+      ><a name="4006" class="Symbol"
+      >{</a
+      ><a name="4007" href="proposition-6-2.html#4007" class="Bound"
+      >&#915;</a
+      ><a name="4008"
+      > </a
+      ><a name="4009" class="Symbol"
+      >:</a
+      ><a name="4010"
+      > </a
+      ><a name="4011" class="PrimitiveType"
+      >Set</a
+      ><a name="4014"
+      > </a
+      ><a name="4015" href="proposition-6-2.html#3991" class="Bound"
+      >l1</a
+      ><a name="4017" class="Symbol"
+      >}</a
+      ><a name="4018"
+      > </a
+      ><a name="4019" class="Symbol"
+      >(</a
+      ><a name="4020" href="proposition-6-2.html#4020" class="Bound"
+      >A</a
+      ><a name="4021"
+      > </a
+      ><a name="4022" class="Symbol"
+      >:</a
+      ><a name="4023"
+      > </a
+      ><a name="4024" href="proposition-6-2.html#4007" class="Bound"
+      >&#915;</a
+      ><a name="4025"
+      > </a
+      ><a name="4026" class="Symbol"
+      >&#8594;</a
+      ><a name="4027"
+      > </a
+      ><a name="4028" class="PrimitiveType"
+      >Set</a
+      ><a name="4031"
+      > </a
+      ><a name="4032" href="proposition-6-2.html#3994" class="Bound"
+      >l2</a
+      ><a name="4034" class="Symbol"
+      >)</a
+      ><a name="4035"
+      > </a
+      ><a name="4036" class="Symbol"
+      >&#8594;</a
+      ><a name="4037"
+      > </a
+      ><a name="4038" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="4047"
+      > </a
+      ><a name="4048" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="4049"
+      > </a
+      ><a name="4050" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="4052"
+      > </a
+      ><a name="4053" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="4059"
+      > </a
+      ><a name="4060" href="proposition-6-2.html#3770" class="Bound"
+      >C2</a
+      ><a name="4062"
+      > </a
+      ><a name="4063" href="proposition-6-2.html#4007" class="Bound"
+      >&#915;</a
+      ><a name="4064"
+      > </a
+      ><a name="4065" href="proposition-6-2.html#4020" class="Bound"
+      >A</a
+      ><a name="4066"
+      > </a
+      ><a name="4067" class="Symbol"
+      >&#8594;</a
+      ><a name="4068"
+      > </a
+      ><a name="4069" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="4078"
+      > </a
+      ><a name="4079" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="4080"
+      > </a
+      ><a name="4081" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="4083"
+      > </a
+      ><a name="4084" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="4090"
+      > </a
+      ><a name="4091" href="proposition-6-2.html#3773" class="Bound"
+      >C3</a
+      ><a name="4093"
+      > </a
+      ><a name="4094" href="proposition-6-2.html#4007" class="Bound"
+      >&#915;</a
+      ><a name="4095"
+      > </a
+      ><a name="4096" href="proposition-6-2.html#4020" class="Bound"
+      >A</a
+      ><a name="4097" class="Symbol"
+      >)</a
+      ><a name="4098"
+      >
+                </a
+      ><a name="4115" class="Symbol"
+      >(</a
+      ><a name="4116" href="proposition-6-2.html#4116" class="Bound"
+      >Fib23-reindex</a
+      ><a name="4129"
+      > </a
+      ><a name="4130" class="Symbol"
+      >:{</a
+      ><a name="4132"
+      >&#9837;</a
+      ><a name="4133" class="Symbol"
+      >}</a
+      ><a name="4134"
+      > </a
+      ><a name="4135" class="Symbol"
+      >{</a
+      ><a name="4136" href="proposition-6-2.html#4136" class="Bound"
+      >l1</a
+      ><a name="4138"
+      > </a
+      ><a name="4139" href="proposition-6-2.html#4139" class="Bound"
+      >l2</a
+      ><a name="4141"
+      > </a
+      ><a name="4142" class="Symbol"
+      >:</a
+      ><a name="4143"
+      > </a
+      ><a name="4144" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="4149" class="Symbol"
+      >}</a
+      ><a name="4150"
+      > </a
+      ><a name="4151" class="Symbol"
+      >{</a
+      ><a name="4152" href="proposition-6-2.html#4152" class="Bound"
+      >&#915;</a
+      ><a name="4153"
+      > </a
+      ><a name="4154" href="proposition-6-2.html#4154" class="Bound"
+      >&#916;</a
+      ><a name="4155"
+      > </a
+      ><a name="4156" class="Symbol"
+      >:</a
+      ><a name="4157"
+      > </a
+      ><a name="4158" class="PrimitiveType"
+      >Set</a
+      ><a name="4161"
+      > </a
+      ><a name="4162" href="proposition-6-2.html#4136" class="Bound"
+      >l1</a
+      ><a name="4164" class="Symbol"
+      >}</a
+      ><a name="4165"
+      > </a
+      ><a name="4166" class="Symbol"
+      >(</a
+      ><a name="4167" href="proposition-6-2.html#4167" class="Bound"
+      >f</a
+      ><a name="4168"
+      > </a
+      ><a name="4169" class="Symbol"
+      >:</a
+      ><a name="4170"
+      > </a
+      ><a name="4171" href="proposition-6-2.html#4154" class="Bound"
+      >&#916;</a
+      ><a name="4172"
+      > </a
+      ><a name="4173" class="Symbol"
+      >&#8594;</a
+      ><a name="4174"
+      > </a
+      ><a name="4175" href="proposition-6-2.html#4152" class="Bound"
+      >&#915;</a
+      ><a name="4176" class="Symbol"
+      >)</a
+      ><a name="4177"
+      > </a
+      ><a name="4178" class="Symbol"
+      >(</a
+      ><a name="4179" href="proposition-6-2.html#4179" class="Bound"
+      >A</a
+      ><a name="4180"
+      > </a
+      ><a name="4181" class="Symbol"
+      >:</a
+      ><a name="4182"
+      > </a
+      ><a name="4183" href="proposition-6-2.html#4152" class="Bound"
+      >&#915;</a
+      ><a name="4184"
+      > </a
+      ><a name="4185" class="Symbol"
+      >&#8594;</a
+      ><a name="4186"
+      > </a
+      ><a name="4187" class="PrimitiveType"
+      >Set</a
+      ><a name="4190"
+      > </a
+      ><a name="4191" href="proposition-6-2.html#4139" class="Bound"
+      >l2</a
+      ><a name="4193" class="Symbol"
+      >)</a
+      ><a name="4194"
+      >
+                                    </a
+      ><a name="4231" class="Symbol"
+      >&#8594;</a
+      ><a name="4232"
+      > </a
+      ><a name="4233" class="Symbol"
+      >(</a
+      ><a name="4234" href="proposition-6-2.html#4234" class="Bound"
+      >&#966;</a
+      ><a name="4235"
+      > </a
+      ><a name="4236" class="Symbol"
+      >:</a
+      ><a name="4237"
+      > </a
+      ><a name="4238" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="4247"
+      > </a
+      ><a name="4248" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="4249"
+      > </a
+      ><a name="4250" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="4252"
+      > </a
+      ><a name="4253" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="4259"
+      > </a
+      ><a name="4260" href="proposition-6-2.html#3770" class="Bound"
+      >C2</a
+      ><a name="4262"
+      > </a
+      ><a name="4263" href="proposition-6-2.html#4152" class="Bound"
+      >&#915;</a
+      ><a name="4264"
+      > </a
+      ><a name="4265" href="proposition-6-2.html#4179" class="Bound"
+      >A</a
+      ><a name="4266" class="Symbol"
+      >)</a
+      ><a name="4267"
+      > </a
+      ><a name="4268" class="Symbol"
+      >(</a
+      ><a name="4269" href="proposition-6-2.html#4269" class="Bound"
+      >&#948;</a
+      ><a name="4270"
+      > </a
+      ><a name="4271" class="Symbol"
+      >:</a
+      ><a name="4272"
+      > </a
+      ><a name="4273" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="4274"
+      > </a
+      ><a name="4275" href="proposition-6-2.html#4154" class="Bound"
+      >&#916;</a
+      ><a name="4276" class="Symbol"
+      >)</a
+      ><a name="4277"
+      >
+                                    </a
+      ><a name="4314" class="Symbol"
+      >&#8594;</a
+      ><a name="4315"
+      > </a
+      ><a name="4316" class="Symbol"
+      >(</a
+      ><a name="4317" href="proposition-6-2.html#3979" class="Bound"
+      >Fib23</a
+      ><a name="4322"
+      > </a
+      ><a name="4323" href="proposition-6-2.html#4179" class="Bound"
+      >A</a
+      ><a name="4324"
+      > </a
+      ><a name="4325" href="proposition-6-2.html#4234" class="Bound"
+      >&#966;</a
+      ><a name="4326" class="Symbol"
+      >)</a
+      ><a name="4327"
+      > </a
+      ><a name="4328" class="Symbol"
+      >(</a
+      ><a name="4329" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="4331"
+      > </a
+      ><a name="4332" href="proposition-6-2.html#4167" class="Bound"
+      >f</a
+      ><a name="4333"
+      > </a
+      ><a name="4334" href="proposition-6-2.html#4269" class="Bound"
+      >&#948;</a
+      ><a name="4335" class="Symbol"
+      >)</a
+      ><a name="4336"
+      > </a
+      ><a name="4337" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="4338"
+      > </a
+      ><a name="4339" href="proposition-6-2.html#3979" class="Bound"
+      >Fib23</a
+      ><a name="4344"
+      > </a
+      ><a name="4345" class="Symbol"
+      >(</a
+      ><a name="4346" href="proposition-6-2.html#4179" class="Bound"
+      >A</a
+      ><a name="4347"
+      > </a
+      ><a name="4348" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="4349"
+      > </a
+      ><a name="4350" href="proposition-6-2.html#4167" class="Bound"
+      >f</a
+      ><a name="4351" class="Symbol"
+      >)</a
+      ><a name="4352"
+      > </a
+      ><a name="4353" class="Symbol"
+      >(\</a
+      ><a name="4355"
+      > </a
+      ><a name="4356" href="proposition-6-2.html#4356" class="Bound"
+      >p</a
+      ><a name="4357"
+      > </a
+      ><a name="4358" class="Symbol"
+      >&#8594;</a
+      ><a name="4359"
+      > </a
+      ><a name="4360" href="proposition-6-2.html#4234" class="Bound"
+      >&#966;</a
+      ><a name="4361"
+      > </a
+      ><a name="4362" class="Symbol"
+      >(</a
+      ><a name="4363" href="proposition-6-2.html#4167" class="Bound"
+      >f</a
+      ><a name="4364"
+      > </a
+      ><a name="4365" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="4366"
+      > </a
+      ><a name="4367" href="proposition-6-2.html#4356" class="Bound"
+      >p</a
+      ><a name="4368" class="Symbol"
+      >))</a
+      ><a name="4370"
+      > </a
+      ><a name="4371" href="proposition-6-2.html#4269" class="Bound"
+      >&#948;</a
+      ><a name="4372" class="Symbol"
+      >)</a
+      ><a name="4373"
+      >
+                </a
+      ><a name="4390" class="Symbol"
+      >{</a
+      ><a name="4391" href="proposition-6-2.html#4391" class="Bound"
+      >l</a
+      ><a name="4392"
+      > </a
+      ><a name="4393" class="Symbol"
+      >:{</a
+      ><a name="4395"
+      >&#9837;</a
+      ><a name="4396" class="Symbol"
+      >}</a
+      ><a name="4397"
+      > </a
+      ><a name="4398" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="4403" class="Symbol"
+      >}</a
+      ><a name="4404"
+      >
+                </a
+      ><a name="4421" class="Symbol"
+      >(</a
+      ><a name="4422" href="proposition-6-2.html#4422" class="Bound"
+      >A</a
+      ><a name="4423"
+      > </a
+      ><a name="4424" class="Symbol"
+      >:{</a
+      ><a name="4426"
+      >&#9837;</a
+      ><a name="4427" class="Symbol"
+      >}</a
+      ><a name="4428"
+      > </a
+      ><a name="4429" href="proposition-6-2.html#498" class="Postulate"
+      >Univ.U</a
+      ><a name="4435"
+      > </a
+      ><a name="4436" href="proposition-6-2.html#3767" class="Bound"
+      >C1</a
+      ><a name="4438" class="Symbol"
+      >)</a
+      ><a name="4439"
+      >
+                </a
+      ><a name="4456" class="Symbol"
+      >&#8594;</a
+      ><a name="4457"
+      > </a
+      ><a name="4458" href="proposition-6-2.html#3116" class="Function"
+      >i</a
+      ><a name="4459"
+      > </a
+      ><a name="4460" href="proposition-6-2.html#3770" class="Bound"
+      >C2</a
+      ><a name="4462"
+      > </a
+      ><a name="4463" href="proposition-6-2.html#3773" class="Bound"
+      >C3</a
+      ><a name="4465"
+      > </a
+      ><a name="4466" class="Symbol"
+      >{</a
+      ><a name="4467" href="proposition-6-2.html#4391" class="Bound"
+      >l</a
+      ><a name="4468" class="Symbol"
+      >}</a
+      ><a name="4469"
+      > </a
+      ><a name="4470" href="proposition-6-2.html#3979" class="Bound"
+      >Fib23</a
+      ><a name="4475"
+      > </a
+      ><a name="4476" class="Symbol"
+      >(</a
+      ><a name="4477" href="proposition-6-2.html#3116" class="Function"
+      >i</a
+      ><a name="4478"
+      > </a
+      ><a name="4479" href="proposition-6-2.html#3767" class="Bound"
+      >C1</a
+      ><a name="4481"
+      > </a
+      ><a name="4482" href="proposition-6-2.html#3770" class="Bound"
+      >C2</a
+      ><a name="4484"
+      > </a
+      ><a name="4485" class="Symbol"
+      >{</a
+      ><a name="4486" href="proposition-6-2.html#4391" class="Bound"
+      >l</a
+      ><a name="4487" class="Symbol"
+      >}</a
+      ><a name="4488"
+      > </a
+      ><a name="4489" href="proposition-6-2.html#3842" class="Bound"
+      >Fib12</a
+      ><a name="4494"
+      > </a
+      ><a name="4495" href="proposition-6-2.html#4422" class="Bound"
+      >A</a
+      ><a name="4496" class="Symbol"
+      >)</a
+      ><a name="4497"
+      > </a
+      ><a name="4498" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="4499"
+      >
+                  </a
+      ><a name="4518" href="proposition-6-2.html#3116" class="Function"
+      >i</a
+      ><a name="4519"
+      > </a
+      ><a name="4520" href="proposition-6-2.html#3767" class="Bound"
+      >C1</a
+      ><a name="4522"
+      > </a
+      ><a name="4523" href="proposition-6-2.html#3773" class="Bound"
+      >C3</a
+      ><a name="4525"
+      > </a
+      ><a name="4526" class="Symbol"
+      >{</a
+      ><a name="4527" href="proposition-6-2.html#4391" class="Bound"
+      >l</a
+      ><a name="4528" class="Symbol"
+      >}</a
+      ><a name="4529"
+      > </a
+      ><a name="4530" class="Symbol"
+      >(\</a
+      ><a name="4532"
+      > </a
+      ><a name="4533" href="proposition-6-2.html#4533" class="Bound"
+      >A</a
+      ><a name="4534"
+      > </a
+      ><a name="4535" href="proposition-6-2.html#4535" class="Bound"
+      >x</a
+      ><a name="4536"
+      > </a
+      ><a name="4537" class="Symbol"
+      >&#8594;</a
+      ><a name="4538"
+      > </a
+      ><a name="4539" href="proposition-6-2.html#3979" class="Bound"
+      >Fib23</a
+      ><a name="4544"
+      > </a
+      ><a name="4545" href="proposition-6-2.html#4533" class="Bound"
+      >A</a
+      ><a name="4546"
+      > </a
+      ><a name="4547" class="Symbol"
+      >(</a
+      ><a name="4548" href="proposition-6-2.html#3842" class="Bound"
+      >Fib12</a
+      ><a name="4553"
+      > </a
+      ><a name="4554" href="proposition-6-2.html#4533" class="Bound"
+      >A</a
+      ><a name="4555"
+      > </a
+      ><a name="4556" href="proposition-6-2.html#4535" class="Bound"
+      >x</a
+      ><a name="4557" class="Symbol"
+      >))</a
+      ><a name="4559"
+      > </a
+      ><a name="4560" href="proposition-6-2.html#4422" class="Bound"
+      >A</a
+      ><a name="4561"
+      >
+  </a
+      ><a name="4564" href="proposition-6-2.html#3752" class="Function"
+      >composition</a
+      ><a name="4575"
+      > </a
+      ><a name="4576" href="proposition-6-2.html#4576" class="Bound"
+      >C1</a
+      ><a name="4578"
+      > </a
+      ><a name="4579" href="proposition-6-2.html#4579" class="Bound"
+      >C2</a
+      ><a name="4581"
+      > </a
+      ><a name="4582" href="proposition-6-2.html#4582" class="Bound"
+      >C3</a
+      ><a name="4584"
+      > </a
+      ><a name="4585" href="proposition-6-2.html#4585" class="Bound"
+      >Fib12</a
+      ><a name="4590"
+      > </a
+      ><a name="4591" href="proposition-6-2.html#4591" class="Bound"
+      >Fib23</a
+      ><a name="4596"
+      > </a
+      ><a name="4597" href="proposition-6-2.html#4597" class="Bound"
+      >Fib23-reindex</a
+      ><a name="4610"
+      > </a
+      ><a name="4611" class="Symbol"
+      >{</a
+      ><a name="4612" href="proposition-6-2.html#4612" class="Bound"
+      >l</a
+      ><a name="4613" class="Symbol"
+      >}</a
+      ><a name="4614"
+      > </a
+      ><a name="4615" href="proposition-6-2.html#4615" class="Bound"
+      >A</a
+      ><a name="4616"
+      > </a
+      ><a name="4617" class="Symbol"
+      >=</a
+      ><a name="4618"
+      > 
+    </a
+      ><a name="4624" class="Comment"
+      >-- also uses the &#946;'s as rewrites</a
+      ><a name="4656"
+      >
+    </a
+      ><a name="4661" class="Symbol"
+      >(</a
+      ><a name="4662" href="proposition-6-2.html#2550" class="Function"
+      >Univ.code-flat-assoc</a
+      ><a name="4682"
+      > </a
+      ><a name="4683" href="proposition-6-2.html#4582" class="Bound"
+      >C3</a
+      ><a name="4685"
+      > </a
+      ><a name="4686" class="Symbol"
+      >{</a
+      ><a name="4687" class="Argument"
+      >&#934;</a
+      ><a name="4688"
+      > </a
+      ><a name="4689" class="Symbol"
+      >=</a
+      ><a name="4690"
+      > </a
+      ><a name="4691" href="agda.fibration.html#1614" class="Function Operator"
+      >Fib._[_]</a
+      ><a name="4699"
+      > </a
+      ><a name="4700" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="4701"
+      > </a
+      ><a name="4702" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="4704"
+      > </a
+      ><a name="4705" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="4711"
+      > </a
+      ><a name="4712" href="proposition-6-2.html#4582" class="Bound"
+      >C3</a
+      ><a name="4714"
+      > </a
+      ><a name="4715" class="Symbol"
+      >(</a
+      ><a name="4716" href="proposition-6-2.html#628" class="Function"
+      >Univ.El</a
+      ><a name="4723"
+      > </a
+      ><a name="4724" href="proposition-6-2.html#4582" class="Bound"
+      >C3</a
+      ><a name="4726" class="Symbol"
+      >)</a
+      ><a name="4727"
+      > </a
+      ><a name="4728" class="Symbol"
+      >(</a
+      ><a name="4729" href="proposition-6-2.html#3116" class="Function"
+      >i</a
+      ><a name="4730"
+      > </a
+      ><a name="4731" href="proposition-6-2.html#4579" class="Bound"
+      >C2</a
+      ><a name="4733"
+      > </a
+      ><a name="4734" href="proposition-6-2.html#4582" class="Bound"
+      >C3</a
+      ><a name="4736"
+      > </a
+      ><a name="4737" class="Symbol"
+      >{</a
+      ><a name="4738" href="proposition-6-2.html#4612" class="Bound"
+      >l</a
+      ><a name="4739" class="Symbol"
+      >}</a
+      ><a name="4740"
+      > </a
+      ><a name="4741" href="proposition-6-2.html#4591" class="Bound"
+      >Fib23</a
+      ><a name="4746" class="Symbol"
+      >)}</a
+      ><a name="4748"
+      > </a
+      ><a name="4749" class="Symbol"
+      >(</a
+      ><a name="4750" href="proposition-6-2.html#3116" class="Function"
+      >i</a
+      ><a name="4751"
+      > </a
+      ><a name="4752" href="proposition-6-2.html#4576" class="Bound"
+      >C1</a
+      ><a name="4754"
+      > </a
+      ><a name="4755" href="proposition-6-2.html#4579" class="Bound"
+      >C2</a
+      ><a name="4757"
+      > </a
+      ><a name="4758" class="Symbol"
+      >{</a
+      ><a name="4759" href="proposition-6-2.html#4612" class="Bound"
+      >l</a
+      ><a name="4760" class="Symbol"
+      >}</a
+      ><a name="4761"
+      > </a
+      ><a name="4762" href="proposition-6-2.html#4585" class="Bound"
+      >Fib12</a
+      ><a name="4767" class="Symbol"
+      >)</a
+      ><a name="4768"
+      > </a
+      ><a name="4769" href="proposition-6-2.html#4615" class="Bound"
+      >A</a
+      ><a name="4770" class="Symbol"
+      >)</a
+      ><a name="4771"
+      > </a
+      ><a name="4772" href="agda.prelude.html#803" class="Function Operator"
+      >&#183;</a
+      ><a name="4773"
+      >
+     </a
+      ><a name="4779" href="agda-flat.prelude.html#330" class="Function"
+      >cong&#9837;</a
+      ><a name="4784"
+      > </a
+      ><a name="4785" class="Symbol"
+      >(\</a
+      ><a name="4787"
+      > </a
+      ><a name="4788" href="proposition-6-2.html#4788" class="Bound"
+      >h</a
+      ><a name="4789"
+      > </a
+      ><a name="4790" class="Symbol"
+      >&#8594;</a
+      ><a name="4791"
+      > </a
+      ><a name="4792" href="proposition-6-2.html#682" class="Postulate"
+      >Univ.code</a
+      ><a name="4801"
+      > </a
+      ><a name="4802" href="proposition-6-2.html#4582" class="Bound"
+      >C3</a
+      ><a name="4804"
+      > </a
+      ><a name="4805" class="Symbol"
+      >(</a
+      ><a name="4806" href="proposition-6-2.html#579" class="Postulate"
+      >Univ.El&#8320;</a
+      ><a name="4814"
+      > </a
+      ><a name="4815" href="proposition-6-2.html#4576" class="Bound"
+      >C1</a
+      ><a name="4817"
+      > </a
+      ><a name="4818" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4819"
+      > </a
+      ><a name="4820" href="proposition-6-2.html#4788" class="Bound"
+      >h</a
+      ><a name="4821" class="Symbol"
+      >)</a
+      ><a name="4822"
+      > </a
+      ><a name="4823" href="proposition-6-2.html#4615" class="Bound"
+      >A</a
+      ><a name="4824" class="Symbol"
+      >)</a
+      ><a name="4825"
+      >
+           </a
+      ><a name="4837" class="Symbol"
+      >(</a
+      ><a name="4838" href="agda.postulates.html#127" class="Postulate"
+      >funext</a
+      ><a name="4844"
+      > </a
+      ><a name="4845" class="Symbol"
+      >(\</a
+      ><a name="4847"
+      > </a
+      ><a name="4848" href="proposition-6-2.html#4848" class="Bound"
+      >B</a
+      ><a name="4849"
+      > </a
+      ><a name="4850" class="Symbol"
+      >&#8594;</a
+      ><a name="4851"
+      > </a
+      ><a name="4852" href="proposition-6-2.html#4597" class="Bound"
+      >Fib23-reindex</a
+      ><a name="4865"
+      > </a
+      ><a name="4866" class="Symbol"
+      >(</a
+      ><a name="4867" href="proposition-6-2.html#682" class="Postulate"
+      >Univ.code</a
+      ><a name="4876"
+      > </a
+      ><a name="4877" href="proposition-6-2.html#4579" class="Bound"
+      >C2</a
+      ><a name="4879"
+      > </a
+      ><a name="4880" class="Symbol"
+      >(</a
+      ><a name="4881" href="proposition-6-2.html#579" class="Postulate"
+      >Univ.El&#8320;</a
+      ><a name="4889"
+      > </a
+      ><a name="4890" href="proposition-6-2.html#4576" class="Bound"
+      >C1</a
+      ><a name="4892"
+      > </a
+      ><a name="4893" href="agda.prelude.html#3767" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4894"
+      > </a
+      ><a name="4895" href="proposition-6-2.html#4585" class="Bound"
+      >Fib12</a
+      ><a name="4900"
+      > </a
+      ><a name="4901" class="Symbol"
+      >(</a
+      ><a name="4902" href="proposition-6-2.html#579" class="Postulate"
+      >Univ.El&#8320;</a
+      ><a name="4910"
+      > </a
+      ><a name="4911" href="proposition-6-2.html#4576" class="Bound"
+      >C1</a
+      ><a name="4913" class="Symbol"
+      >)</a
+      ><a name="4914"
+      > </a
+      ><a name="4915" class="Symbol"
+      >(</a
+      ><a name="4916" href="proposition-6-2.html#603" class="Postulate"
+      >Univ.El&#8321;</a
+      ><a name="4924"
+      > </a
+      ><a name="4925" href="proposition-6-2.html#4576" class="Bound"
+      >C1</a
+      ><a name="4927" class="Symbol"
+      >)))</a
+      ><a name="4930"
+      > </a
+      ><a name="4931" class="Symbol"
+      >_</a
+      ><a name="4932"
+      > </a
+      ><a name="4933" class="Symbol"
+      >_</a
+      ><a name="4934"
+      > </a
+      ><a name="4935" href="proposition-6-2.html#4848" class="Bound"
+      >B</a
+      ><a name="4936" class="Symbol"
+      >))</a
+      ><a name="4938"
+      >
+
+
+
+  </a
+      ><a name="4944" class="Comment"
+      >-- not sure if this will be useful in examples,</a
+      ><a name="4991"
+      >
+  </a
+      ><a name="4994" class="Comment"
+      >-- but checks that the previous version involving comp morphisms is an instance</a
+      ><a name="5073"
+      >
+
+  </a
+      ><a name="5077" href="proposition-6-2.html#5077" class="Function"
+      >comp-morphism-to-fib-morphism</a
+      ><a name="5106"
+      > </a
+      ><a name="5107" class="Symbol"
+      >:</a
+      ><a name="5108"
+      > </a
+      ><a name="5109" class="Symbol"
+      >(</a
+      ><a name="5110" href="proposition-6-2.html#5110" class="Bound"
+      >C1</a
+      ><a name="5112"
+      > </a
+      ><a name="5113" class="Symbol"
+      >:{</a
+      ><a name="5115"
+      >&#9837;</a
+      ><a name="5116" class="Symbol"
+      >}</a
+      ><a name="5117"
+      > </a
+      ><a name="5118" class="Symbol"
+      >{</a
+      ><a name="5119" href="proposition-6-2.html#5119" class="Bound"
+      >l</a
+      ><a name="5120"
+      > </a
+      ><a name="5121" class="Symbol"
+      >:</a
+      ><a name="5122"
+      > </a
+      ><a name="5123" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="5128" class="Symbol"
+      >}</a
+      ><a name="5129"
+      > </a
+      ><a name="5130" class="Symbol"
+      >(</a
+      ><a name="5131" href="proposition-6-2.html#5131" class="Bound"
+      >A</a
+      ><a name="5132"
+      > </a
+      ><a name="5133" class="Symbol"
+      >:</a
+      ><a name="5134"
+      > </a
+      ><a name="5135" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5136"
+      > </a
+      ><a name="5137" class="Symbol"
+      >(</a
+      ><a name="5138" class="PrimitiveType"
+      >Set</a
+      ><a name="5141"
+      > </a
+      ><a name="5142" href="proposition-6-2.html#5119" class="Bound"
+      >l</a
+      ><a name="5143" class="Symbol"
+      >))</a
+      ><a name="5145"
+      > </a
+      ><a name="5146" class="Symbol"
+      >&#8594;</a
+      ><a name="5147"
+      > </a
+      ><a name="5148" class="PrimitiveType"
+      >Set</a
+      ><a name="5151"
+      > </a
+      ><a name="5152" class="Symbol"
+      >(</a
+      ><a name="5153" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="5155"
+      > </a
+      ><a name="5156" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="5157"
+      > </a
+      ><a name="5158" href="proposition-6-2.html#5119" class="Bound"
+      >l</a
+      ><a name="5159" class="Symbol"
+      >))</a
+      ><a name="5161"
+      >
+                                  </a
+      ><a name="5196" class="Symbol"
+      >(</a
+      ><a name="5197" href="proposition-6-2.html#5197" class="Bound"
+      >C2</a
+      ><a name="5199"
+      > </a
+      ><a name="5200" class="Symbol"
+      >:{</a
+      ><a name="5202"
+      >&#9837;</a
+      ><a name="5203" class="Symbol"
+      >}</a
+      ><a name="5204"
+      > </a
+      ><a name="5205" class="Symbol"
+      >{</a
+      ><a name="5206" href="proposition-6-2.html#5206" class="Bound"
+      >l</a
+      ><a name="5207"
+      > </a
+      ><a name="5208" class="Symbol"
+      >:</a
+      ><a name="5209"
+      > </a
+      ><a name="5210" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="5215" class="Symbol"
+      >}</a
+      ><a name="5216"
+      > </a
+      ><a name="5217" class="Symbol"
+      >(</a
+      ><a name="5218" href="proposition-6-2.html#5218" class="Bound"
+      >A</a
+      ><a name="5219"
+      > </a
+      ><a name="5220" class="Symbol"
+      >:</a
+      ><a name="5221"
+      > </a
+      ><a name="5222" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5223"
+      > </a
+      ><a name="5224" class="Symbol"
+      >(</a
+      ><a name="5225" class="PrimitiveType"
+      >Set</a
+      ><a name="5228"
+      > </a
+      ><a name="5229" href="proposition-6-2.html#5206" class="Bound"
+      >l</a
+      ><a name="5230" class="Symbol"
+      >))</a
+      ><a name="5232"
+      > </a
+      ><a name="5233" class="Symbol"
+      >&#8594;</a
+      ><a name="5234"
+      > </a
+      ><a name="5235" class="PrimitiveType"
+      >Set</a
+      ><a name="5238"
+      > </a
+      ><a name="5239" class="Symbol"
+      >(</a
+      ><a name="5240" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="5242"
+      > </a
+      ><a name="5243" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="5244"
+      > </a
+      ><a name="5245" href="proposition-6-2.html#5206" class="Bound"
+      >l</a
+      ><a name="5246" class="Symbol"
+      >))</a
+      ><a name="5248"
+      >
+                                  </a
+      ><a name="5283" class="Symbol"
+      >(</a
+      ><a name="5284" href="proposition-6-2.html#5284" class="Bound"
+      >C12</a
+      ><a name="5287"
+      > </a
+      ><a name="5288" class="Symbol"
+      >:{</a
+      ><a name="5290"
+      >&#9837;</a
+      ><a name="5291" class="Symbol"
+      >}</a
+      ><a name="5292"
+      > </a
+      ><a name="5293" class="Symbol"
+      >{</a
+      ><a name="5294" href="proposition-6-2.html#5294" class="Bound"
+      >l</a
+      ><a name="5295"
+      > </a
+      ><a name="5296" class="Symbol"
+      >:</a
+      ><a name="5297"
+      > </a
+      ><a name="5298" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="5303" class="Symbol"
+      >}</a
+      ><a name="5304"
+      > </a
+      ><a name="5305" class="Symbol"
+      >(</a
+      ><a name="5306" href="proposition-6-2.html#5306" class="Bound"
+      >A</a
+      ><a name="5307"
+      > </a
+      ><a name="5308" class="Symbol"
+      >:</a
+      ><a name="5309"
+      > </a
+      ><a name="5310" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5311"
+      > </a
+      ><a name="5312" class="Symbol"
+      >(</a
+      ><a name="5313" class="PrimitiveType"
+      >Set</a
+      ><a name="5316"
+      > </a
+      ><a name="5317" href="proposition-6-2.html#5294" class="Bound"
+      >l</a
+      ><a name="5318" class="Symbol"
+      >))</a
+      ><a name="5320"
+      > </a
+      ><a name="5321" class="Symbol"
+      >&#8594;</a
+      ><a name="5322"
+      > </a
+      ><a name="5323" href="proposition-6-2.html#5110" class="Bound"
+      >C1</a
+      ><a name="5325"
+      > </a
+      ><a name="5326" href="proposition-6-2.html#5306" class="Bound"
+      >A</a
+      ><a name="5327"
+      > </a
+      ><a name="5328" class="Symbol"
+      >&#8594;</a
+      ><a name="5329"
+      > </a
+      ><a name="5330" href="proposition-6-2.html#5197" class="Bound"
+      >C2</a
+      ><a name="5332"
+      > </a
+      ><a name="5333" href="proposition-6-2.html#5306" class="Bound"
+      >A</a
+      ><a name="5334" class="Symbol"
+      >)</a
+      ><a name="5335"
+      >
+                                  </a
+      ><a name="5370" class="Symbol"
+      >&#8594;</a
+      ><a name="5371"
+      > </a
+      ><a name="5372" class="Symbol"
+      >({</a
+      ><a name="5374" href="proposition-6-2.html#5374" class="Bound"
+      >l1</a
+      ><a name="5376"
+      > </a
+      ><a name="5377" href="proposition-6-2.html#5377" class="Bound"
+      >l2</a
+      ><a name="5379"
+      > </a
+      ><a name="5380" class="Symbol"
+      >:</a
+      ><a name="5381"
+      > </a
+      ><a name="5382" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="5387" class="Symbol"
+      >}</a
+      ><a name="5388"
+      > </a
+      ><a name="5389" class="Symbol"
+      >{</a
+      ><a name="5390" href="proposition-6-2.html#5390" class="Bound"
+      >&#915;</a
+      ><a name="5391"
+      > </a
+      ><a name="5392" class="Symbol"
+      >:</a
+      ><a name="5393"
+      > </a
+      ><a name="5394" class="PrimitiveType"
+      >Set</a
+      ><a name="5397"
+      > </a
+      ><a name="5398" href="proposition-6-2.html#5374" class="Bound"
+      >l1</a
+      ><a name="5400" class="Symbol"
+      >}</a
+      ><a name="5401"
+      > </a
+      ><a name="5402" class="Symbol"
+      >(</a
+      ><a name="5403" href="proposition-6-2.html#5403" class="Bound"
+      >A</a
+      ><a name="5404"
+      > </a
+      ><a name="5405" class="Symbol"
+      >:</a
+      ><a name="5406"
+      > </a
+      ><a name="5407" href="proposition-6-2.html#5390" class="Bound"
+      >&#915;</a
+      ><a name="5408"
+      > </a
+      ><a name="5409" class="Symbol"
+      >&#8594;</a
+      ><a name="5410"
+      > </a
+      ><a name="5411" class="PrimitiveType"
+      >Set</a
+      ><a name="5414"
+      > </a
+      ><a name="5415" href="proposition-6-2.html#5377" class="Bound"
+      >l2</a
+      ><a name="5417" class="Symbol"
+      >)</a
+      ><a name="5418"
+      > </a
+      ><a name="5419" class="Symbol"
+      >&#8594;</a
+      ><a name="5420"
+      > </a
+      ><a name="5421" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="5430"
+      > </a
+      ><a name="5431" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5432"
+      > </a
+      ><a name="5433" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="5435"
+      > </a
+      ><a name="5436" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="5442"
+      > </a
+      ><a name="5443" href="proposition-6-2.html#5110" class="Bound"
+      >C1</a
+      ><a name="5445"
+      > </a
+      ><a name="5446" href="proposition-6-2.html#5390" class="Bound"
+      >&#915;</a
+      ><a name="5447"
+      > </a
+      ><a name="5448" href="proposition-6-2.html#5403" class="Bound"
+      >A</a
+      ><a name="5449"
+      > </a
+      ><a name="5450" class="Symbol"
+      >&#8594;</a
+      ><a name="5451"
+      > </a
+      ><a name="5452" href="agda.fibration.html#1271" class="Function"
+      >Fib.isFib</a
+      ><a name="5461"
+      > </a
+      ><a name="5462" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5463"
+      > </a
+      ><a name="5464" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="5466"
+      > </a
+      ><a name="5467" href="agda.exp-path.html#481" class="Function"
+      >&#8472;`comp</a
+      ><a name="5473"
+      > </a
+      ><a name="5474" href="proposition-6-2.html#5197" class="Bound"
+      >C2</a
+      ><a name="5476"
+      > </a
+      ><a name="5477" href="proposition-6-2.html#5390" class="Bound"
+      >&#915;</a
+      ><a name="5478"
+      > </a
+      ><a name="5479" href="proposition-6-2.html#5403" class="Bound"
+      >A</a
+      ><a name="5480" class="Symbol"
+      >)</a
+      ><a name="5481"
+      >
+  </a
+      ><a name="5484" href="proposition-6-2.html#5077" class="Function"
+      >comp-morphism-to-fib-morphism</a
+      ><a name="5513"
+      > </a
+      ><a name="5514" href="proposition-6-2.html#5514" class="Bound"
+      >C1</a
+      ><a name="5516"
+      > </a
+      ><a name="5517" href="proposition-6-2.html#5517" class="Bound"
+      >C2</a
+      ><a name="5519"
+      > </a
+      ><a name="5520" href="proposition-6-2.html#5520" class="Bound"
+      >C12</a
+      ><a name="5523"
+      > </a
+      ><a name="5524" href="proposition-6-2.html#5524" class="Bound"
+      >A</a
+      ><a name="5525"
+      > </a
+      ><a name="5526" href="proposition-6-2.html#5526" class="Bound"
+      >&#966;</a
+      ><a name="5527"
+      > </a
+      ><a name="5528" href="proposition-6-2.html#5528" class="Bound"
+      >p</a
+      ><a name="5529"
+      > </a
+      ><a name="5530" class="Symbol"
+      >=</a
+      ><a name="5531"
+      > </a
+      ><a name="5532" href="proposition-6-2.html#5520" class="Bound"
+      >C12</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" class="Symbol"
+      >(</a
+      ><a name="5537" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="5539"
+      > </a
+      ><a name="5540" href="proposition-6-2.html#5524" class="Bound"
+      >A</a
+      ><a name="5541"
+      > </a
+      ><a name="5542" href="proposition-6-2.html#5528" class="Bound"
+      >p</a
+      ><a name="5543" class="Symbol"
+      >)</a
+      ><a name="5544"
+      > </a
+      ><a name="5545" class="Symbol"
+      >(</a
+      ><a name="5546" href="proposition-6-2.html#5526" class="Bound"
+      >&#966;</a
+      ><a name="5547"
+      > </a
+      ><a name="5548" href="proposition-6-2.html#5528" class="Bound"
+      >p</a
+      ><a name="5549" class="Symbol"
+      >)</a
+      ><a name="5550"
+      >
+
+  </a
+      ><a name="5554" href="proposition-6-2.html#5554" class="Function"
+      >comp-morphism-to-fib-morphism-reindex</a
+      ><a name="5591"
+      > </a
+      ><a name="5592" class="Symbol"
+      >:</a
+      ><a name="5593"
+      > </a
+      ><a name="5594" class="Symbol"
+      >(</a
+      ><a name="5595" href="proposition-6-2.html#5595" class="Bound"
+      >C1</a
+      ><a name="5597"
+      > </a
+      ><a name="5598" class="Symbol"
+      >:{</a
+      ><a name="5600"
+      >&#9837;</a
+      ><a name="5601" class="Symbol"
+      >}</a
+      ><a name="5602"
+      > </a
+      ><a name="5603" class="Symbol"
+      >{</a
+      ><a name="5604" href="proposition-6-2.html#5604" class="Bound"
+      >l</a
+      ><a name="5605"
+      > </a
+      ><a name="5606" class="Symbol"
+      >:</a
+      ><a name="5607"
+      > </a
+      ><a name="5608" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="5613" class="Symbol"
+      >}</a
+      ><a name="5614"
+      > </a
+      ><a name="5615" class="Symbol"
+      >(</a
+      ><a name="5616" href="proposition-6-2.html#5616" class="Bound"
+      >A</a
+      ><a name="5617"
+      > </a
+      ><a name="5618" class="Symbol"
+      >:</a
+      ><a name="5619"
+      > </a
+      ><a name="5620" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5621"
+      > </a
+      ><a name="5622" class="Symbol"
+      >(</a
+      ><a name="5623" class="PrimitiveType"
+      >Set</a
+      ><a name="5626"
+      > </a
+      ><a name="5627" href="proposition-6-2.html#5604" class="Bound"
+      >l</a
+      ><a name="5628" class="Symbol"
+      >))</a
+      ><a name="5630"
+      > </a
+      ><a name="5631" class="Symbol"
+      >&#8594;</a
+      ><a name="5632"
+      > </a
+      ><a name="5633" class="PrimitiveType"
+      >Set</a
+      ><a name="5636"
+      > </a
+      ><a name="5637" class="Symbol"
+      >(</a
+      ><a name="5638" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="5640"
+      > </a
+      ><a name="5641" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="5642"
+      > </a
+      ><a name="5643" href="proposition-6-2.html#5604" class="Bound"
+      >l</a
+      ><a name="5644" class="Symbol"
+      >))</a
+      ><a name="5646"
+      >
+                                          </a
+      ><a name="5689" class="Symbol"
+      >(</a
+      ><a name="5690" href="proposition-6-2.html#5690" class="Bound"
+      >C2</a
+      ><a name="5692"
+      > </a
+      ><a name="5693" class="Symbol"
+      >:{</a
+      ><a name="5695"
+      >&#9837;</a
+      ><a name="5696" class="Symbol"
+      >}</a
+      ><a name="5697"
+      > </a
+      ><a name="5698" class="Symbol"
+      >{</a
+      ><a name="5699" href="proposition-6-2.html#5699" class="Bound"
+      >l</a
+      ><a name="5700"
+      > </a
+      ><a name="5701" class="Symbol"
+      >:</a
+      ><a name="5702"
+      > </a
+      ><a name="5703" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="5708" class="Symbol"
+      >}</a
+      ><a name="5709"
+      > </a
+      ><a name="5710" class="Symbol"
+      >(</a
+      ><a name="5711" href="proposition-6-2.html#5711" class="Bound"
+      >A</a
+      ><a name="5712"
+      > </a
+      ><a name="5713" class="Symbol"
+      >:</a
+      ><a name="5714"
+      > </a
+      ><a name="5715" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5716"
+      > </a
+      ><a name="5717" class="Symbol"
+      >(</a
+      ><a name="5718" class="PrimitiveType"
+      >Set</a
+      ><a name="5721"
+      > </a
+      ><a name="5722" href="proposition-6-2.html#5699" class="Bound"
+      >l</a
+      ><a name="5723" class="Symbol"
+      >))</a
+      ><a name="5725"
+      > </a
+      ><a name="5726" class="Symbol"
+      >&#8594;</a
+      ><a name="5727"
+      > </a
+      ><a name="5728" class="PrimitiveType"
+      >Set</a
+      ><a name="5731"
+      > </a
+      ><a name="5732" class="Symbol"
+      >(</a
+      ><a name="5733" href="agda.prelude.html#276" class="Function"
+      >&#8467;&#8321;</a
+      ><a name="5735"
+      > </a
+      ><a name="5736" href="Agda.Primitive.html#655" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="5737"
+      > </a
+      ><a name="5738" href="proposition-6-2.html#5699" class="Bound"
+      >l</a
+      ><a name="5739" class="Symbol"
+      >))</a
+      ><a name="5741"
+      >
+                                          </a
+      ><a name="5784" class="Symbol"
+      >(</a
+      ><a name="5785" href="proposition-6-2.html#5785" class="Bound"
+      >C12</a
+      ><a name="5788"
+      > </a
+      ><a name="5789" class="Symbol"
+      >:{</a
+      ><a name="5791"
+      >&#9837;</a
+      ><a name="5792" class="Symbol"
+      >}</a
+      ><a name="5793"
+      > </a
+      ><a name="5794" class="Symbol"
+      >{</a
+      ><a name="5795" href="proposition-6-2.html#5795" class="Bound"
+      >l</a
+      ><a name="5796"
+      > </a
+      ><a name="5797" class="Symbol"
+      >:</a
+      ><a name="5798"
+      > </a
+      ><a name="5799" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="5804" class="Symbol"
+      >}</a
+      ><a name="5805"
+      > </a
+      ><a name="5806" class="Symbol"
+      >(</a
+      ><a name="5807" href="proposition-6-2.html#5807" class="Bound"
+      >A</a
+      ><a name="5808"
+      > </a
+      ><a name="5809" class="Symbol"
+      >:</a
+      ><a name="5810"
+      > </a
+      ><a name="5811" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5812"
+      > </a
+      ><a name="5813" class="Symbol"
+      >(</a
+      ><a name="5814" class="PrimitiveType"
+      >Set</a
+      ><a name="5817"
+      > </a
+      ><a name="5818" href="proposition-6-2.html#5795" class="Bound"
+      >l</a
+      ><a name="5819" class="Symbol"
+      >))</a
+      ><a name="5821"
+      > </a
+      ><a name="5822" class="Symbol"
+      >&#8594;</a
+      ><a name="5823"
+      > </a
+      ><a name="5824" href="proposition-6-2.html#5595" class="Bound"
+      >C1</a
+      ><a name="5826"
+      > </a
+      ><a name="5827" href="proposition-6-2.html#5807" class="Bound"
+      >A</a
+      ><a name="5828"
+      > </a
+      ><a name="5829" class="Symbol"
+      >&#8594;</a
+      ><a name="5830"
+      > </a
+      ><a name="5831" href="proposition-6-2.html#5690" class="Bound"
+      >C2</a
+      ><a name="5833"
+      > </a
+      ><a name="5834" href="proposition-6-2.html#5807" class="Bound"
+      >A</a
+      ><a name="5835" class="Symbol"
+      >)</a
+      ><a name="5836"
+      >
+                                          </a
+      ><a name="5879" class="Symbol"
+      >{</a
+      ><a name="5880" href="proposition-6-2.html#5880" class="Bound"
+      >l1</a
+      ><a name="5882"
+      > </a
+      ><a name="5883" href="proposition-6-2.html#5883" class="Bound"
+      >l2</a
+      ><a name="5885"
+      > </a
+      ><a name="5886" class="Symbol"
+      >:</a
+      ><a name="5887"
+      > </a
+      ><a name="5888" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="5893" class="Symbol"
+      >}</a
+      ><a name="5894"
+      > </a
+      ><a name="5895" class="Symbol"
+      >{</a
+      ><a name="5896" href="proposition-6-2.html#5896" class="Bound"
+      >&#915;</a
+      ><a name="5897"
+      > </a
+      ><a name="5898" href="proposition-6-2.html#5898" class="Bound"
+      >&#916;</a
+      ><a name="5899"
+      > </a
+      ><a name="5900" class="Symbol"
+      >:</a
+      ><a name="5901"
+      > </a
+      ><a name="5902" class="PrimitiveType"
+      >Set</a
+      ><a name="5905"
+      > </a
+      ><a name="5906" href="proposition-6-2.html#5880" class="Bound"
+      >l1</a
+      ><a name="5908" class="Symbol"
+      >}</a
+      ><a name="5909"
+      > </a
+      ><a name="5910" class="Symbol"
+      >(</a
+      ><a name="5911" href="proposition-6-2.html#5911" class="Bound"
+      >f</a
+      ><a name="5912"
+      > </a
+      ><a name="5913" class="Symbol"
+      >:</a
+      ><a name="5914"
+      > </a
+      ><a name="5915" href="proposition-6-2.html#5898" class="Bound"
+      >&#916;</a
+      ><a name="5916"
+      > </a
+      ><a name="5917" class="Symbol"
+      >&#8594;</a
+      ><a name="5918"
+      > </a
+      ><a name="5919" href="proposition-6-2.html#5896" class="Bound"
+      >&#915;</a
+      ><a name="5920" class="Symbol"
+      >)</a
+      ><a name="5921"
+      > </a
+      ><a name="5922" class="Symbol"
+      >(</a
+      ><a name="5923" href="proposition-6-2.html#5923" class="Bound"
+      >A</a
+      ><a name="5924"
+      > </a
+      ><a name="5925" class="Symbol"
+      >:</a
+      ><a name="5926"
+      > </a
+      ><a name="5927" href="proposition-6-2.html#5896" class="Bound"
+      >&#915;</a
+      ><a name="5928"
+      > </a
+      ><a name="5929" class="Symbol"
+      >&#8594;</a
+      ><a name="5930"
+      > </a
+      ><a name="5931" class="PrimitiveType"
+      >Set</a
+      ><a name="5934"
+      > </a
+      ><a name="5935" href="proposition-6-2.html#5883" class="Bound"
+      >l2</a
+      ><a name="5937" class="Symbol"
+      >)</a
+      ><a name="5938"
+      >
+                                        </a
+      ><a name="5979" class="Symbol"
+      >&#8594;</a
+      ><a name="5980"
+      > </a
+      ><a name="5981" class="Symbol"
+      >(</a
+      ><a name="5982" href="proposition-6-2.html#5982" class="Bound"
+      >&#966;</a
+      ><a name="5983"
+      > </a
+      ><a name="5984" class="Symbol"
+      >:</a
+      ><a name="5985"
+      > </a
+      ><a name="5986" class="Symbol"
+      >_)</a
+      ><a name="5988"
+      > </a
+      ><a name="5989" class="Symbol"
+      >(</a
+      ><a name="5990" href="proposition-6-2.html#5990" class="Bound"
+      >&#948;</a
+      ><a name="5991"
+      > </a
+      ><a name="5992" class="Symbol"
+      >:</a
+      ><a name="5993"
+      > </a
+      ><a name="5994" href="agda.exp-path.html#303" class="Function"
+      >&#8472;</a
+      ><a name="5995"
+      > </a
+      ><a name="5996" href="proposition-6-2.html#5898" class="Bound"
+      >&#916;</a
+      ><a name="5997" class="Symbol"
+      >)</a
+      ><a name="5998"
+      > </a
+      ><a name="5999" class="Symbol"
+      >&#8594;</a
+      ><a name="6000"
+      >
+                                          </a
+      ><a name="6043" class="Symbol"
+      >(</a
+      ><a name="6044" href="proposition-6-2.html#5077" class="Function"
+      >comp-morphism-to-fib-morphism</a
+      ><a name="6073"
+      > </a
+      ><a name="6074" href="proposition-6-2.html#5595" class="Bound"
+      >C1</a
+      ><a name="6076"
+      > </a
+      ><a name="6077" href="proposition-6-2.html#5690" class="Bound"
+      >C2</a
+      ><a name="6079"
+      > </a
+      ><a name="6080" href="proposition-6-2.html#5785" class="Bound"
+      >C12</a
+      ><a name="6083"
+      > </a
+      ><a name="6084" href="proposition-6-2.html#5923" class="Bound"
+      >A</a
+      ><a name="6085"
+      > </a
+      ><a name="6086" href="proposition-6-2.html#5982" class="Bound"
+      >&#966;</a
+      ><a name="6087" class="Symbol"
+      >)</a
+      ><a name="6088"
+      > </a
+      ><a name="6089" class="Symbol"
+      >(</a
+      ><a name="6090" href="agda.exp-path.html#370" class="Function"
+      >&#8472;`</a
+      ><a name="6092"
+      > </a
+      ><a name="6093" href="proposition-6-2.html#5911" class="Bound"
+      >f</a
+      ><a name="6094"
+      > </a
+      ><a name="6095" href="proposition-6-2.html#5990" class="Bound"
+      >&#948;</a
+      ><a name="6096" class="Symbol"
+      >)</a
+      ><a name="6097"
+      > </a
+      ><a name="6098" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="6099"
+      >
+                                          </a
+      ><a name="6142" href="proposition-6-2.html#5077" class="Function"
+      >comp-morphism-to-fib-morphism</a
+      ><a name="6171"
+      > </a
+      ><a name="6172" href="proposition-6-2.html#5595" class="Bound"
+      >C1</a
+      ><a name="6174"
+      > </a
+      ><a name="6175" href="proposition-6-2.html#5690" class="Bound"
+      >C2</a
+      ><a name="6177"
+      > </a
+      ><a name="6178" href="proposition-6-2.html#5785" class="Bound"
+      >C12</a
+      ><a name="6181"
+      > </a
+      ><a name="6182" class="Symbol"
+      >(</a
+      ><a name="6183" href="proposition-6-2.html#5923" class="Bound"
+      >A</a
+      ><a name="6184"
+      > </a
+      ><a name="6185" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="6186"
+      > </a
+      ><a name="6187" href="proposition-6-2.html#5911" class="Bound"
+      >f</a
+      ><a name="6188" class="Symbol"
+      >)</a
+      ><a name="6189"
+      > </a
+      ><a name="6190" class="Symbol"
+      >(\</a
+      ><a name="6192"
+      > </a
+      ><a name="6193" href="proposition-6-2.html#6193" class="Bound"
+      >p</a
+      ><a name="6194"
+      > </a
+      ><a name="6195" class="Symbol"
+      >&#8594;</a
+      ><a name="6196"
+      > </a
+      ><a name="6197" href="proposition-6-2.html#5982" class="Bound"
+      >&#966;</a
+      ><a name="6198"
+      > </a
+      ><a name="6199" class="Symbol"
+      >(</a
+      ><a name="6200" href="proposition-6-2.html#5911" class="Bound"
+      >f</a
+      ><a name="6201"
+      > </a
+      ><a name="6202" href="agda.prelude.html#2752" class="Function Operator"
+      >&#8728;</a
+      ><a name="6203"
+      > </a
+      ><a name="6204" href="proposition-6-2.html#6193" class="Bound"
+      >p</a
+      ><a name="6205" class="Symbol"
+      >))</a
+      ><a name="6207"
+      > </a
+      ><a name="6208" href="proposition-6-2.html#5990" class="Bound"
+      >&#948;</a
+      ><a name="6209"
+      >
+  </a
+      ><a name="6212" href="proposition-6-2.html#5554" class="Function"
+      >comp-morphism-to-fib-morphism-reindex</a
+      ><a name="6249"
+      > </a
+      ><a name="6250" href="proposition-6-2.html#6250" class="Bound"
+      >C1</a
+      ><a name="6252"
+      > </a
+      ><a name="6253" href="proposition-6-2.html#6253" class="Bound"
+      >C2</a
+      ><a name="6255"
+      > </a
+      ><a name="6256" href="proposition-6-2.html#6256" class="Bound"
+      >C12</a
+      ><a name="6259"
+      > </a
+      ><a name="6260" href="proposition-6-2.html#6260" class="Bound"
+      >A</a
+      ><a name="6261"
+      > </a
+      ><a name="6262" href="proposition-6-2.html#6262" class="Bound"
+      >&#966;</a
+      ><a name="6263"
+      > </a
+      ><a name="6264" href="proposition-6-2.html#6264" class="Bound"
+      >p</a
+      ><a name="6265"
+      > </a
+      ><a name="6266" href="proposition-6-2.html#6266" class="Bound"
+      >&#948;</a
+      ><a name="6267"
+      > </a
+      ><a name="6268" class="Symbol"
+      >=</a
+      ><a name="6269"
+      > </a
+      ><a name="6270" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="6274"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>
