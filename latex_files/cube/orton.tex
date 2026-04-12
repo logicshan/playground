@@ -1,0 +1,603 @@
+%\documentclass{ctexart}
+\documentclass{ctexrep}
+
+\usepackage{amsmath,amsthm,extarrows,color,enumitem,framed,markdown,amscd}
+\usepackage[a4paper, left = 2cm, right = 2cm]{geometry}
+\usepackage{mathpartir}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+%\setmathfont[range=\mathbb]{TeX Gyre Termes Math}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\let\mathbb\relax % remove the definition by unicode-math
+\DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}
+%\setmathfont[range={\mathcal,\mathbfcal},StylisticSet=1]{XITS Math}
+%\setmathfont[range=\mathscr]{XITS Math}
+\usepackage{newunicodechar}
+\newunicodechar{ℝ}{\mathbb{R}}
+\newunicodechar{ℚ}{\mathbb{Q}}
+\newunicodechar{ℤ}{\mathbb{Z}}
+\newunicodechar{ℂ}{\mathbb{C}}
+
+\usepackage{bbm}
+
+\usepackage{tikz-cd}
+
+\usepackage{ulem}
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     linkcolor=blue,
+     citecolor=red,
+     %filecolor=magenta,      % color of file links
+     urlcolor=cyan
+}
+\usepackage{cleveref}
+\usepackage{microtype}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{theorem*}{定理}
+\newtheorem{proposition*}[theorem*]{命题}
+\newtheorem{corollary*}[theorem*]{推论}
+\newtheorem{lemma*}[theorem*]{引理}
+\newtheorem{definition*}[theorem*]{定义}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+%\newtheorem{definition*}{定义}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{注意}
+\newtheorem*{perspective}{Perspective}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\newcommand{\bfP}{\mathbf{P}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand\calF{\mathcal{F}}
+\newcommand{\yoneda}{\mathbf{y}}
+
+\newcommand{\VarTop}{\mathbf{VarTop}}
+\newcommand{\Comm}{\mathbf{Comm}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Aff}{\mathbf{Aff}}
+\newcommand{\Diff}{\mathbf{Diff}}
+\newcommand{\Open}{\mathbf{Open}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\true}{\mathrm{true}}
+\newcommand{\UG}{\mathbf{U}}
+\newcommand{\rmH}{H}
+\newcommand{\Gposet}{G\text{-}\mathbf{poset}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\PG}{\calP\rtimes G}
+\newcommand{\kPG}{k\PG}
+\newcommand{\EI}{\mathrm{EI}}
+\newcommand\frakm{\mathfrak{m}}
+\newcommand\pgrhp{\pi_{\gamma}r_P^H}
+\newcommand\barN{\overline{N}}
+\newcommand\Cl{\mathrm{Cl}}
+\newcommand\Tr{\mathrm{Tr}}
+\newcommand{\abs}[1]{\left\lvert\#1\right\rvert}
+\newcommand\calO{\mathcal{O}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\OGb{\OG b}
+\newcommand\ZOG{\mathbf{Z}\OG}
+\newcommand\OGG{(\OG)^G}
+\newcommand\Irr{\mathrm{Irr}}
+\newcommand\Proj{\mathrm{Proj}}
+\newcommand\ksng{k_{\sharp}\widehat{\overline{N}}_G}
+\newcommand\LP{\mathcal{LP}}
+\newcommand\Res{\mathrm{Res}}
+\newcommand\ResNCGPVg{\Res_{\overline{C}_G(P)}^{\overline{N}_G(P_{\gamma})}(V(\gamma))}
+\newcommand\BOG{\mathbf{B}(\OG)}
+\newcommand\pSubGrp{\mathrm{psGrp}}
+\newcommand\GL{\mathrm{GL}}
+\newcommand\PGL{\mathrm{PGL}}
+\newcommand\Inn{\mathrm{Inn}}
+\newcommand\std{\mathrm{std}}
+\newcommand\bfZ{\mathbf{Z}}
+\newcommand\kP{k\calP}
+%\newcommand\Mor{\mathrm{Mor}}
+\newcommand\Bas{\mathrm{Bas}}
+\newcommand\Orb{\mathrm{Orb}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\Br{\mathrm{Br}}
+\newcommand\Image{\mathrm{Im}}
+\newcommand\calD{\mathcal{D}}
+\newcommand\Ker{\mathrm{Ker}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\ttI{\mathtt{I}}
+\newcommand\Rad{\mathrm{Rad}}
+\newcommand\Soc{\mathrm{Soc}}
+\newcommand\Perm{\mathrm{Perm}}
+\newcommand\bbA{\mathbb{A}}
+\newcommand\rmP{\mathrm{P}}
+\newcommand\Fam{\mathbf{Fam}}
+\newcommand\rmOb{\mathrm{Ob}}
+
+\newcommand\rmMor{\mathrm{Mor}}
+\newcommand\rmType{\mathrm{Type}}
+\newcommand\rmTerms{\mathrm{Terms}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\sfp{\mathsf{p}}
+\newcommand\sfq{\mathsf{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Psh{\mathrm{Psh}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\C{\mathbf{C}}
+\newcommand\Sets{\mathbf{Sets}}
+\newcommand\Cube{\square^{\op}}
+\newcommand\cSets{[\square^{\op},\Sets]}
+\newcommand\Setspointed{\mathbf{Sets}_{\kappa}^{\bullet}}
+\newcommand{\qq}{\mathtt{q}}
+\newcommand{\pp}{\mathtt{p}}
+\newcommand{\Cof}{\mathtt{Cof}}
+\newcommand{\dec}{\mathrm{dec}}
+\newcommand{\fib}{\mathtt{fib}}
+\newcommand{\ttzero}{\mathtt{0}}
+\newcommand{\ttone}{\mathtt{1}}
+
+\DeclareMathOperator\Obj{Obj}
+\DeclareMathOperator\inl{inl}
+\DeclareMathOperator\inr{inr}
+\DeclareMathOperator\ob{ob}
+\DeclareMathOperator\pt{pt}
+\DeclareMathOperator\osf{sf}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\Sub{Sub}
+\DeclareMathOperator\Mor{Mor}
+\DeclareMathOperator\Colim{Colim}
+\DeclareMathOperator\colim{colim}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\Pre{Pr}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Sh{Sh}
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\Func{Func}
+\DeclareMathOperator\cof{cof}
+\DeclareMathOperator\obj{obj}
+
+\newcommand{\DM}{\mathbf{DM}}
+\newcommand{\dM}{\mathsf{dM}}
+\newcommand{\yc}{\yoneda c}
+\newcommand{\yb}{\yoneda b}
+\newcommand{\yd}{\yoneda d}
+\newcommand{\yone}{\yoneda[1]}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\bbmone}{\mathbbm{1}}
+\newcommand{\two}{\mathbbm{2}}
+
+\newcommand{\ax}[1]{\mathbf{ax_{#1}}}
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\Om}{\Omega}
+\newcommand{\cube}{\square}
+
+\newcommand{\forces}{\Vdash} % Kripke-Joyal forcing symbol
+\newcommand{\valid}{\vdash} % Internal validity symbol
+
+%\setlength{\parindent}{0pt}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\chapter{引言}
+外延性是这样一个原则：如果两个数学对象具有相同的可观测属性，那么它们就被视为相等。通常，数学的形式系统会包含旨在体现这一原则的公理。在公理集合论的背景下，我们有外延公理，它表明如果两个集合包含相同的元素，那么这两个集合相等。其形式表述为：
+\[\forall A . \forall B .((\forall x .(x \in A \Leftrightarrow x \in B)) \Rightarrow A=B)\] 
+在（单值/同伦）类型论的语境中，我们有沃沃斯基（Voevodsky）的单值公理[62，第2.10节]，大致来说，该公理表明如果两个类型是同构的，那么它们相等。在类型论的语言中，它可以表述为：
+\[\prod_{A, B: U} A \simeq B \to A=B\]
+其中\(A \simeq B\)是\(A\)和\(B\)之间等价关系的类型。例如，我们可能有十进制自然数类型\(\mathbb{N}_{dec}\)，其项为\(0, 1, 2, 3, \cdots: \mathbb{N}_{dec}\)，还有二进制自然数类型\(\mathbb{N}_{bin}\)，其项为\(0, 1, 10, 11, \cdots: \mathbb{N}_{bin}\) 。很容易展示如何在这两种编码之间来回转换，也就是说，这两种类型是等价的。因此，根据单值公理，我们可以推断出\(\mathbb{N}_{dec} = \mathbb{N}_{bin}\)。 
+
+乍一看，这些类型相等可能会让人觉得奇怪。例如，7是\(\mathbb{N}_{dec}\)（十进制自然数类型）的一个元素，但不是\(\mathbb{N}_{bin}\)（二进制自然数类型）的元素，那么这两种类型怎么会相等呢？这个公理之所以是自洽的，是因为类型论的规则不允许你构造诸如“7是\(\mathbb{N}_{bin}\)的元素”这样的陈述。这些规则确保所有陈述都以一种适当的通用方式表述，这样一来，陈述就只能利用一个类型的外部可观察到的属性，而不是所使用的特定编码。
+
+我们来看一个类型论中有效陈述的例子：交换幺半群的性质。我们说，类型X构成一个交换幺半群，当且仅当存在一个运算\(\_+\_: X \to X \to X\)，该运算满足结合律、交换律，并且存在一个单位元\(e: X\)。这个定义在类型论中是合理的，因为它适用于任意类型；它对$X$的元素具体是什么样子没有任何假设。 
+
+在类型论中，可以证明\(\mathbb{N}_{dec}\)（十进制自然数类型）构成一个交换幺半群，其中“+”为加法运算，\(e\)为\(0\)。由于\(\mathbb{N}_{dec}\)和\(\mathbb{N}_{bin}\)（二进制自然数类型）只是同一对象（自然数）的不同编码形式，那么\(\mathbb{N}_{bin}\)也应该构成一个交换幺半群。然而，如果没有单值公理，要证明这一点，就需要在两种编码之间来回转换，手动重新构建针对\(\mathbb{N}_{dec}\)的证明过程。单值公理的强大之处在于，由于\(\mathbb{N}_{dec} \simeq \mathbb{N}_{bin}\)，进而\(\mathbb{N}_{dec}=\mathbb{N}_{bin}\)，它能让我们直接将交换幺半群的结构从\(\mathbb{N}_{dec}\)迁移到\(\mathbb{N}_{bin}\) 。 
+
+用这种新的单值性原则扩展类型论的最简单方法，就是将其作为一条公理添加进去。也就是说，假设存在一个项能够证明单值性原则。然而，这种方法存在一个问题。类型论是一个构造性系统，其基本元素具有计算意义。这意味着我们不仅知道如何构造项，还知道如何对这些项进行计算。这种特性的一个例子是，如果我们证明了一个形如 “存在一个自然数$n$使得\ldots” 的命题，那么我们应该能够从这个证明中实际计算出$n$的值。然而，仅仅把单值性作为一条公理提出来，我们无法先验地知道涉及单值性的表达式应该如何计算。 
+
+为了理解这类表达式应如何计算，我们研究单值类型论的模型。一旦我们有了单值类型论（UTT）的模型，我们就有可能通过查看表达式在模型中的解释来计算其值。或者，更有可能的是，我们可以利用该模型来证明新的计算规则的合理性，然后将这些规则添加到类型论中，以恢复良好的计算属性。 
+
+为了理解这类表达式应如何计算，我们研究单值类型论的模型。一旦我们有了单值类型论（UTT）的模型，我们就有可能通过查看表达式在模型中的解释来计算其值。或者，更有可能的是，我们可以利用该模型来证明新的计算规则的合理性，然后将这些规则添加到类型论中，以恢复良好的计算属性。 
+
+单值类型论的首个模型——单纯集模型[39]，本质上利用经典逻辑来判定某些不可判定的命题。因此，虽然它表明单值公理是一致的，但实际上它并不能为恢复类型论的计算内容提供良好基础，因为在该模型中对表达式求值是不可计算的。 
+
+为了解决这些问题，科恩等人引入了类型论的立方体集模型[18]。这个新模型是用构造性元理论构建的，在该模型中对表达式求值是可计算的，从而为恢复类型论的计算内容提供了一种方法。本论文中的大部分工作都基于这个模型展开。 
+
+总的来说，本文使用立方体集拓扑斯的内部语言分析立方体集模型。这种方法具有诸多优势。具体而言，该方法能使立方体集模型的某些方面更加清晰、易于理解；通过对构建单值类型论模型所需的属性进行公理化，我们得以对现有模型进行推广；同时，它还能明确为模拟类型论的各个方面需要哪些属性。
+
+对模型进行公理化的过程并非总是一帆风顺。例如，我们将在第7章中看到，构建单值全域的问题给这种方法带来了特殊挑战。然而，我们认为这样做是一项值得的努力。这种方法为许多应用提供了坚实的基础。例如，在第6章中，我们使用这种方法对单值公理进行了另一种表述。其他作者也将这项工作应用于其他方面，比如证明独立性结果[61]。 
+
+- 在第5章中，我们展示了如何在任何具有适当结构的基本拓扑斯中，使用内部语言对类型论的立方体集模型进行公理化。然而，我们无法定义一个单值全域，尽管我们确实证明了一种与全域无关的单值形式。 
+
+- 在第6章中，我们将单值公理分解为一些替代公理，并表明在具有第5章所规定额外结构的任何拓扑斯中，这些公理都能得到满足。这本质上是对前面提到的与全域无关的单值性证明的一种简化。 
+
+- 在第7章中，我们将解释如何通过一种模态来扩展内部语言，以便能够对拓扑斯的某些全局性质进行公理化。利用这种模态，我们展示如何构建一个单值全域，从而解决前面章节中的不足。 
+
+\chapter{类型论导论}
+
+在本章中，我们将介绍阅读本论文其余部分所需的一些背景知识。特别地，我们将引入单值类型论（也称为同伦类型论），并解释沃沃斯基（Voevodsky）的单值公理。然后，我们将介绍立方体类型论系统，它可被视为标准单值类型论的扩展或细化。立方体类型论的关键特性在于，它为单值公理提供了一种计算解释。 
+
+\section{单值类型论}
+单值类型论（UTT），也称为同伦类型论（HoTT），是内涵马丁-洛夫类型论的一个变体。在这个理论中，我们通过引入一个新的公理，即沃沃斯基单值公理，将数学中把同构的结构认为是相等的这样一个常见做法形式化。这样做使我们不得不重新思考内涵类型论中关于等式本质的许多直觉。 
+
+在本节中，我们将回顾马丁-洛夫类型论（Martin-Löf type theory）的基本内容，包括内涵恒等类型的概念，并探讨一种新的直观理解，即把这些恒等类型的元素看作是某个拓扑空间中的路径。我们会发现，这种直观理解使我们对 “任意两个相等性证明本身也相等” 这一原则产生质疑，该原则通常被称为恒等证明的唯一性（UIP）。然后，我们将讨论沃沃斯基（Voevodsky）的单值公理，它体现了这样一种概念：当且仅当两个空间可以相互连续变形时，这两个空间是等价的。最后，我们会看到单值公理实际上与UIP原则是不一致的。 
+
+这里呈现的信息仅作为总结。为避免疑问，我们在此描述的类型论与《同伦类型论》书籍[62]附录A中定义的完全一致。 
+
+\subsection{马丁-洛夫类型论}
+马丁-洛夫类型论（MLTT）是一种数学基础体系，它基于类型而非更为常见的集合概念。它允许将命题编码为类型，而这些类型的项则是相关命题的证明。这种解释通常被称为柯里 - 霍华德对应（Curry - Howard correspondence），有时也被称作命题即类型。马丁-洛夫类型论包含许多组件，我们可以用它们来构建和操作类型及项。这些组件包括： 
+
+恒等类型——给定一个类型A以及两个项\(x,y:A\)，我们可以构造出类型\(\mathtt{Id}_{A}(x,y)\)，该类型用于证明\(x\)等于\(y\) 。根据自反性，我们知道任何事物都必然与自身相等，所以对于任意的A以及\(x:A\)，我们都有一个证明\(\mathtt{refl}_{x}:\mathtt{Id}_{A}(x,x)\)，它表明\(x\)等于自身。我们也会将类型\(\mathtt{Id}_{A}(x,y)\)写作\(x =_{A} y\)，或者简写成\(x = y\)。当我们有一个证明\(p:\mathtt{Id}_{A}(x,y)\)时，我们就说\(x\)和\(y\)在命题上相等，这与通过一系列\(\beta\eta\) -归约可相互转换的情况不同，在后一种情况下，我们说它们在定义上相等，并写作\(x \equiv y\)。
+
+\subsection{恒等类型与恒等证明的唯一性（UIP）}
+如上文所述，对于任意类型\(A\)以及项\(x,y\in A\)，我们可以构造恒等类型\(\mathtt{Id}_{A}(x,y)\)。我们通过J -消除器来利用恒等证明。这个消除器表明，给定一个依赖于项\(y\in A\)和\(p:x = y\)的类型\(C(x,y,p)\)，我们只需给出一个类型为\(C(x,x,\mathtt{refl}_{x})\)的项，就可以得到\(C(x,y,p)\)的一个实例。或者说，为了证明关于某个与\(x\)命题上相等（由\(p\)见证）的\(y\)的性质\(C\)，只需假设\(y\equiv x\)且\(p\equiv \mathtt{refl}_{x}\) 。 
+
+对类型论的一种标准直觉是，类型代表集合，其项代表该集合的元素。在这种解释下，如果\(x\)和\(y\)不同，我们可能会预期恒等类型对应空集；如果\(x\)和\(y\)实际上代表同一元素，恒等类型则对应单元素集。这让我们可以简单地把自反构造子\(\mathtt{refl}\)解释为单元素集中的唯一元素。理解J-消除器也很容易，因为证明\(p: \mathtt{Id}_{A}(x, y)\)告诉我们\(x\)和\(y\)代表同一元素，并且\(\mathtt{refl}\)和\(p\)都表示单元素集的唯一元素，因此\(C(x, y, p)\)实际上必然与\(C(x, x, \mathtt{refl}_{x})\)表示同一个集合。 
+
+事实上，在这种解释下，由于恒等类型表示的集合最多包含一个元素，那么任何\(p,q:\mathtt{Id}_{A}(x,y)\)实际上必然表示同一个元素。所以我们会期望嵌套恒等类型\(\mathtt{Id}_{\mathtt{Id}_{A}(x,y)}(p,q)\)总是有元素的。这个原则通常被称为恒等证明的唯一性（UIP）。然而，霍夫曼（Hofmann）和施特赖歇尔（Streicher）[29, 32]通过在群胚范畴（每个态射都可逆的范畴）中展示一个模型，表明这个原则并不能从类型论的常规规则推出。在这个模型中：类型被解释为群胚，项\(x,y:A\)被解释为群胚中的元素\(x,y\in \obj A\)，恒等类型\(\mathtt{Id}_{A}(x,y)\)被解释为\(\hom_{A}(x,y)\)上的离散群胚 。UIP原则不成立，因为群胚中两个对象之间可以有多个不同的态射。 
+
+单值类型论（UTT）/同伦类型论（HoTT）的许多工作都受到这样一种直觉的启发：我们不应把类型看作集合、把类型中的项看作集合的元素，而应将类型视为表现得像拓扑空间的对象，其项则是空间中的点。然后，我们把恒等类型的元素\(p: \mathtt{Id}_{A}(x, y)\)视为从点\(x\)到点\(y\)的路径。所以，我们认为\(p\)的行为类似于一个连续函数\(p: \mathbb{I} \to A\)，其中\(\mathbb{I}\)是单位区间\([0, 1]\)，\(p(0) = x\)且\(p(1) = y\)。接着，我们把嵌套恒等类型的元素\(\alpha: \mathtt{Id}_{\mathtt{Id}_{A}(x, y)}(p, q)\)视为同伦\(\alpha: \mathbb{I}×\mathbb{I} \to A\)，使得对于所有\(i \in \mathbb{I}\)，有\(\alpha(0, i) = p(i)\)、\(\alpha(1, i) = q(i)\)，以及\(\alpha(i, 0) = x\)和\(\alpha(i, 1) = y\)。 
+
+在这种类型论的解释下，恒等证明唯一性（UIP）原则似乎不再显而易见。事实上，通过考虑图2.1所示的例子，我们就能明白为什么完全摒弃这一原则是合理的。点\(x\)和\(y\)代表类型\(A\)的两个元素。图中所示的两条路径都是从\(x\)到\(y\)的，因此在这种解释下，它们对应于恒等类型的元素\(p,q:\mathtt{Id}_{A}(x,y)\)。然而，由于空间中心存在空洞，显然在不移动任何一个端点的情况下，无法将其中一条路径连续变形为另一条路径。因此，它们之间不存在同伦，所以，嵌套恒等类型\(\mathtt{Id}_{\mathtt{Id}_{A}(x,y)}(p,q)\)中不存在元素。 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{torus}
+\end{figure}
+
+\subsection{沃沃斯基单值公理}
+在上一节中，我们讨论了单值类型论（UTT）/同伦类型论（HoTT）背后的新直觉，以及为什么这可能会让我们对恒等证明的唯一性（UIP）原则产生质疑。然而，我们实际上并没有以任何方式扩展类型论，将这种直觉形式化。这是通过沃沃斯基（Voevodsky）的单值公理实现的（见参考文献[62]的2.10节）。该公理将类型之间的相等类型\(\mathtt{Id}_{U}(A, B)\)（也写作\(A = B\)）与等价类型\(A \simeq B\)等同起来。
+
+单值公理体现了一种同伦直观：具有相同同伦群的两个空间（即两个相互等价的空间）在某个分类空间中由一条路径相连。也就是说，我们将\(U\)视为（小）同伦型的分类空间。
+
+从逻辑的角度来看，我们可以把单值公理视为将数学中同构对象视为同一这一常见做法进行形式化的工具。例如，一位数学家可能证明了某个数学对象，比如群\(A\)，与另一个对象\(B\)同构，而我们已经知道\(B\)具有某些性质。接着，这位数学家会在不验证所讨论的性质在同构关系下是否保持的情况下，很自然地得出\(A\)也具有该性质的结论。单值公理通过本质上声明类型论中的每一种构造在等价关系下都保持不变，从而将这种推理形式进行了形式化。 
+
+单值公理的确切表述涉及到一些微妙之处，尤其是关于类型之间等价关系的定义。我们现在给出确切的定义，先从等价关系的定义以及可缩类型这一辅助概念开始。 
+
+定义 2.1.1（可缩性）。如果类型
+\[\mathtt{isContr} (A) \triangleq \sum_{a_{0}: A} \prod_{a: A}\left(a_{0}=a\right)\]
+有元素，那么称类型\(A\)是可缩的。可缩性表达了这样一个事实，即一个类型有唯一的元素。 
+
+定义 2.1.2（等价关系）。一个等价关系\(A \simeq B\)是一个序对\((f, e)\)，其中\(f: A \to B\)，并且\(e\)是一个证明，它表明对于每一个\(b: B\)，\(f\)在\(b\)处的纤维是可缩的。准确地说：
+\[A \simeq B \triangleq \sum_{f: A \to B} \mathtt{isEquiv}(f)\]
+其中
+\[\fib_{f}(b) \triangleq \sum_{a: A}(f\ a = b)\] 且 \[\mathtt{isEquiv}(f) \triangleq \prod_{b: B} \mathtt{isContr}\left(\fib_{f}(b)\right)\]
+对于\(A: U_{i}\)，\(B: U_{j}\)，其中\(i\)、\(j\)为任意值。 
+
+等价关系的一个简单例子是对于任意类型\(A\)的恒等函数\(id_{A}: A \to A\)。为了证明\(id_{A}\)是一个等价关系，我们必须证明\(\prod_{a: A} \mathtt{isContr} (\sum_{x: A}(x = a))\)，利用J-消除器很容易证明这一事实。 
+
+请注意，存在许多相互竞争的等价概念（见参考文献[62]的第4章）。我们选择了这里所使用的这个定义，是因为它简化了第6章中的一些证明。同样值得注意的是，在单值类型论（UTT）中，传统的同构定义并不是一个表现良好的等价概念。具体来说，将\(isEquiv(f)\)定义为存在一个映射\(g: B \to A\)，使得\(\prod_{a: A} g(f a)=a\)且\(\prod_{b: B} f(g b)=b\)，这种定义方式表现欠佳。这是因为这个被称为拟逆的概念并非一个简单的命题（见参考文献[62]的定理4.1.3），因此可能存在多个不同的证明来表明\(f\)具有一个拟逆。这会带来一些不良后果。例如，拟逆等价的类型并非类型\(A \to B\)的子类型，而且事实上，使用拟逆等价来陈述的单值公理是不一致的（见参考文献[62]的练习4.6）。 
+
+接下来，需注意的是，从两个类型之间的相等关系类型到它们之间的等价关系类型，总是存在一个典范映射。 
+
+定义 2.1.3（\textbf{idtoeqv}）。对于所有的\(i\)，以及类型\(A,B: U_{i}\)，存在一个典范映射\(\mathtt{idtoeqv}: (A = B) \to (A \simeq B)\)，它是通过对证明\(A = B\)进行路径归纳法\footnote{这只不过是2.1.2节中所描述的J消除器。我们使用这个名称是考虑到将相等性证明看作路径的这种直观概念。 }来定义的：
+\[\mathtt{idtoeqv} \left(\mathtt{refl}_{A}\right) \triangleq id_{A}\]
+其中\(id_{A}: A \simeq A\)是被视为等价关系的恒等映射。
+
+最后，我们将单值公理形式化为这样一个陈述：上述映射（\(\mathtt{idtoeqv}\)）本身就是一个等价关系。 
+
+定义 2.1.4（沃沃斯基单值公理）。对于全域\(U_{i}\) 的单值公理断言，对于所有\(A, B \in U_{i}\)，映射\(\mathtt{idtoeqv}: (A = B) \to (A \simeq B)\) 是一个等价关系。 
+
+请注意，单值公理是关于特定全域\(U_{i}\)的一个陈述。一般来说，在单值类型论（UTT）中进行研究时，除非另有明确说明，我们假定所有的全域都是单值的。正是这一假设，将单值类型论/同伦类型论与普通的马丁-洛夫类型论区分开来。 
+
+\subsection{函数外延性}
+我们现在回顾一下类型论中的函数外延性原则： 
+
+定义2.1.5（函数外延性）。函数外延性原理表明，对于两个函数\(f, g: \prod_{x: A} B(x)\)，只要它们逐点相等，那么这两个函数就相等。也就是说，我们有这样一个映射：
+\[f \approx g \to f = g\qquad\text{其中}\qquad f \approx g \triangleq \prod_{x: A} f(x) = g(x)\]
+当我们假定存在这样一个项时，我们就说我们“假定了函数外延性”：
+\[\mathtt{funext}_{i, j}: \prod_{A: U_{i}} \prod_{B: A \to U_{j}} \prod_{f, g: \Pi_{x: A} B(x)} f \approx g \to f=g\]
+对于所有的全域层级\(i\)和\(j\) 。 
+
+请注意，函数外延性无法从标准的马丁-洛夫类型论的规则中推导得出。然而，它却可以从单值公理中推导出来（见参考文献[62]的4.9节）。 
+
+\subsection{单值公理的另一种表述形式}
+
+虽然定义2.1.4非常简洁，但有时使用单值公理的一种略有不同但等价的表述来进行研究工作会更加容易，我们在此给出这种表述。鉴于以下定义，我们有时会将单值公理称为“真正的单值公理”。 
+
+定义 2.1.6（\textbf{Coerce}）。对于所有的\(i\)，以及类型\(A\)、\(B \in U_{i}\)，我们可以通过路径归纳法，或者按照如下方式来定义一个映射\(\mathtt{coerce} : (A = B) \to A \to B\)：
+\[\mathtt{coerce}(p, a) \triangleq \mathtt{fst}(\mathtt{idtoeqv}(p))(a)\]
+其中\(\mathtt{fst}\)表示取第一个分量的投影操作。 
+
+定义 2.1.7（朴素单值公理）。对于全域\(U_{i}\) 的朴素单值公理表明，对于所有\(A\)、\(B \in U_{i}\)，存在一个从等价关系到相等关系的映射。换句话说，它断言存在一个属于以下类型的元素：
+\[\mathtt{UA}_{i} \triangleq \prod_{A, B: U_{i}} A \simeq B \to A = B\] 
+
+当使用项\(ua : \mathtt{UA}_{i}\)时，我们常常会省略前两个参数（\(A\)和\(B\)）。朴素单值公理的证明可能还会带有一个相关的计算规则。也就是说，存在一个属于类型\(\mathtt{UA}\beta_{i}(ua)\)的元素，其中：
+\[\mathtt{UA}\beta_{i}(ua) \triangleq \prod_{A, B: U_{i}} \prod_{f: A \to B} \prod_{e: \mathtt{isEquiv}(f)} \mathtt{coerce}(ua(f, e)) = f\] 
+
+接下来，我们给出一个在单值类型论（UTT）/同伦类型论（HoTT）圈子里广为人知的结果。这一结果将真正的单值公理分解为朴素版本和一条计算规则。需注意，该结果要求函数外延性原理成立。首先，我们给出一个引理，它对这一结果的核心构造进行了推广。 
+
+引理2.1.8。给定\(X: U_{i}\)，\(Y: X \to X \to U_{j}\)以及一个映射\(f: \prod_{x, x': X} x = x' \to Y(x, x')\)，那么对于所有的\(x, x': X\)，\(f\ x\ x'\)是一个等价关系，当且仅当存在一个映射
+\[g: \prod_{x, x': X} Y\left(x, x'\right) \to x = x'\]
+使得对于所有的\(x, x': X\)以及\(y: Y(x, x')\)，我们有\(f(g(y)) = y\)（我们默认省略\(f\)和\(g\)的前两个参数）。 
+
+定理2.1.9。假设函数外延性成立，那么朴素单值公理连同一条计算规则在逻辑上等价于真正的单值公理。也就是说，存在项
+\[ua: \mathtt{UA}_{i}, \qquad ua\beta: \mathtt{UA}\beta_{i}(ua)\]
+当且仅当对于所有类型\(A, B \in U_{i}\)，映射\(\mathtt{idtoeqv}: (A = B) \to (A \simeq B)\)是一个等价关系。 
+
+\chapter{马丁-洛夫类型论的模型}
+
+在上一章中，我们讨论了马丁-洛夫类型论以及它的各种扩展，比如单值公理，还有立方体相关的特性，如区间和合成运算。在本章中，我们将描述如何构建马丁-洛夫类型论的范畴模型，并探讨立方体集合范畴中的一个特定模型，该模型将对2.2节中描述的所有扩展进行建模，从而为单值公理提供一个模型。 
+
+\section{范畴族（CwFs）}
+
+对于如何呈现依赖类型理论的模型，存在许多不同的概念。在本论文中，我们将采用迪布耶（Dybjer）提出的范畴族（CwF）概念[23]。我们使用的符号与迪布耶的略有不同，并且将他定义中属于族范畴的函子拆分为两个不同的函子，但除此之外，定义保持不变。我们首先回顾一下预层\(P: \C^{op} \to \Set\)的元素范畴的定义。
+
+定义3.1.1（元素范畴）。给定任意预层\(P: \C^{op} \to \Set\)，\(P\)的元素范畴记为\(\int P\)，其对象为形如\((X, p)\)的对，其中\(X \in \C\)且\(p \in P(X)\)。态射\(f: (X, p) \to (X', p')\)就是\(\C\)中从\(X\)到\(X'\)的态射，并且满足\(P(f)(p') = p\)。 
+
+定义3.1.2（范畴族）。一个范畴族由以下数据构成：
+\begin{itemize}
+  \item 一个上下文范畴$\C$，其对象代表类型论中的上下文，态射代表上下文之间的替换。这个范畴必须有一个终对象$1$，它代表空上下文。 
+  \item 一个函子$\Ty:\C^{op}\to \Set$，它给每个上下文$\Gamma$指定一个集合$\Ty(\Gamma)$，该集合表示上下文$\Gamma$中的类型。对于任意态射$\gamma:\Delta\to\Gamma$以及类型$A\in \Ty(\Gamma)$， $\Ty$ 作用于态射的操作给出了替换的解释，我们用 $A[\gamma]$ 来表示 $\Ty(\gamma)(A) \in \Ty(\Delta)$，这样的表示很直观。$\Ty$ 的函子性质确保了替换是严格可结合的。
+  \item 一个函子$\Ter: (\int \Ty)^{op} \to \Set$，它为每个上下文$\Gamma$以及$\Gamma$中的类型$A \in \Ty(\Gamma)$分配一个集合$\Ter(\Gamma, A)$，该集合表示在上下文$\Gamma$中类型为$A$的项。我们将$\Ter(\Gamma, A)$这个集合写作$\Ter(\Gamma \vdash A)$ 。同样，$\Ter$作用于态射的方式严格结合地模拟了替换操作。给定$\gamma: \Delta \to \Gamma$、$A \in \Ty(\Gamma)$以及$a \in \Ter(\Gamma \vdash A)$，我们把$\Ter(\gamma)(a) \in \Ter(\Delta \vdash A[\gamma])$写作$a[\gamma]$。
+  \item 一种上下文扩展操作$\_.\_$，它以一个属于$\C$的上下文$\Gamma$和一个属于$\Ty(\Gamma)$的类型$A$为输入，返回一个属于$\C$的对象$\Gamma.A$。同时存在一个态射$\pp: \Gamma.A \to \Gamma$，它代表上下文弱化；还有一个项$\qq \in \Ter(\Gamma . A \vdash A[\pp])$，代表新添加的类型为$A$的变量。这种操作必须满足以下泛性质：对于任何从$\Delta$到$\Gamma$的替换$\gamma$以及属于$\Ter(\Delta \vdash A[\gamma])$的项$a$，都存在唯一的态射$\langle\gamma, a\rangle: \Delta \to \Gamma . A$，使得$\pp \circ\langle\gamma, a\rangle=\gamma$且$\qq[\langle\gamma, a\rangle]=a$。 
+\end{itemize}
+
+\section{类型论的预层模型}
+在本节中，我们将展示任意预层范畴\(\widehat{\C} = \Set^{\C^{op}}\) 是如何具备范畴族结构的。按照[18]中使用的符号表示法，我们用\(I\)、\(J\)、\(K\)表示范畴\(\C\)的对象，用\(f\)、\(g\)、\(h\)表示范畴\(\C\)的态射。
+
+\section{立方集模型}
+在本节中，我们将概述科恩（Cohen）等人[18]提出的类型论的预层模型，该模型对2.2节中讨论的立方类型论的所有特征进行了建模。 
+
+回想一下，德摩根代数是一种分配格，配备了一个函数\(d \mapsto 1 - d\)，该函数是对合的（即\(1 - (1 - d) = d\)），并且满足德摩根定律\(1 - (d_1 \lor d_2) = (1 - d_1) \land (1 - d_2)\)；详见[9，第十一章]。德摩根代数的同态是一种保持有限交、并以及对合函数的函数。令\(\DM\)表示德摩根代数和同态构成的范畴，\(\dM(I)\)表示集合\(I\)上的自由德摩根代数。
+
+定义3.3.1（立方体范畴，\(\square\)）。固定一个可数无限集\(\mathbb{D}\)，其元素我们称为名称，记作\(i\)，\(j\)，\(k\)，… 。\(\square\)的对象是\(\mathbb{D}\)的有限子集，我们记作\(I\)，\(J\)，\(K\)，… 。态射\(\square(I, J)\)是所有从\(J\)到\(\dM(I)\)的函数。这样的函数与从\(\dM(J)\)到\(\dM(I)\)的德摩根代数同态一一对应，并且对于\(f\in\square(I, J)\)和\(g\in\square(J, K)\)，在\(\square\)中的复合是集合范畴中\(g: K \to \dM(J)\)与对应于\(f\)的从\(\dM(J)\)到\(\dM(I)\)的同态的复合 。
+
+因此，\(\square\)等价于德摩根代数范畴（\(\DM\)）的全子范畴的对偶范畴，该全子范畴的对象是有限生成的自由德摩根代数。 因此，作为一种劳威尔理论（Lawvere theory）[41, 2]，它是德摩根代数的代数理论：它是一个具有有限积的范畴，配备了一个内部德摩根代数（对于某个选定的\(i \in \mathbb{D}\)，其基础对象是\(\{i\}\) ），并且在这类范畴中具有泛性质。 
+
+定义3.3.2。一个立方集是立方体范畴上的一个预层。 
+
+立方集范畴\(\Set^{\square^{op}}\)构成了一个范畴族（CwF）的上下文范畴，这将使我们能够解释立方类型论的所有特征。在后续章节中我们将对这个范畴的某些性质进行公理化处理，并以公理化的方式证明前面的陈述。在本节的剩余部分，我们将非常简要地概述科恩等人在文献[18]中所采用的原始方法。
+
+我们首先引入一些在本节中会用到的符号表示。对于任意属于范畴\(\square\)的符号集合\(I\)以及不属于\(I\)的符号\(i\)，我们将\(I,i\)写作\(I \cup \{i\}\)的缩写形式。我们还将\((i0)\)记为从\(I\)到\(I,i\)的映射，该映射将\(i\)映射到\(0\)，而在其他地方是恒等映射。类似地，我们将\((i1)\)记为从\(I\)到\(I,i\)的映射，它将\(i\)映射到\(1\)。这里\(0\)和\(1\)是自由德摩根代数\(\dM(I)\)中的最小元和最大元。最后，我们将\(s_{i}: I,i \to I\)记为包含映射\(I \subseteq \dM(I, i)\) 。 
+
+在接下来的章节中，我们使用\(\Ty\)、\(\Ter\)和\(\_.\_\)来表示立方集范畴上的标准范畴族（CwF），如定义3.2.1中所描述的那样。
+
+\subsection{区间与面格}
+
+\chapter{拓扑斯的内部类型论}
+
+\chapter{在拓扑斯中给出立方类型论模型需要的公理}
+
+在第4章中，我们看到了每个拓扑斯（topos）如何容纳一种基于外延型马丁-洛夫类型论（extensional Martin-Löf type theory）的丰富内部语言。在本论文的其余部分，我们将展示第3.3节中描述的立方类型论模型如何使用这种内部语言来呈现。在此过程中，我们隐式地将Cohen等人[18]给出的模型推广到任何具有适当结构的拓扑斯。为了具体说明这种附加结构，我们采取了一种公理化方法，给出了一组我们要求在内部语言中成立的公理。我们对该模型的表述随后利用了这些公理，而不是假设我们总是在第3.3节描述的拓扑斯中工作。
+
+这种方法有几个优点。首先，它能让我们更好地理解立方集合拓扑斯的哪些性质使其适合用于建模立方类型论；哪些性质是本质的，哪些是多余的。其次，它能让我们确切地看到这些性质是如何被使用的，以及用于哪些构造。例如，我们将看到，某一类命题的封闭性质仅在用于建模$J$-消去子的定义性计算规则时才需要，如果不要求类型论具有这一性质，则可以省去。第三，这种方法使得寻找立方类型论的新模型变得更加容易。这是因为这些公理澄清了拓扑斯为了建模立方类型论必须具备的性质。事实上，在Lawvere理论中存在一个直接且相当明显的模型，由公理的一个子集定义，尽管这实际上与Cohen等人[18]给出的模型非常相似。或者，与其寻找建模立方类型论的新拓扑斯，我们可能想检查现有的感兴趣的拓扑斯，如单纯形集合的拓扑斯[39]，是否也是潜在的模型。利用这里介绍的工作，这项任务被简化为检查拓扑斯的几个简单性质。
+
+\section{公理}
+
+在本节中，我们提出需要在拓扑斯 $\calE$ 的内部类型论中成立的公理。我们对每个公理进行概述，给出其目的的直观解释，并说明它在立方类型论模型构造中的使用位置。这使我们能够看到某些公理仅在用于建模立方类型论的特定部分时才需要，例如定义性相等类型（第5.3.4节）。因此，例如在寻找仅具有命题相等类型的立方类型论模型时，这些公理可以被舍弃。为方便参考，这些公理在本节末尾的图5.4中汇总，使用第4章描述的语言书写。
+
+\subsection{区间$\ttI$}
+
+我们首先公理化建模带有区间对象 $\bbI$ 的类型论所需的结构，如第2.2.1节所述。首先，我们假设存在一个对象 $\ttI:\calU$ ，它将是 $\bbI$ 在模型中的解释。我们假设 $\ttI$ 具有足够的结构来建模区间上的所需运算。具体而言，我们假设 $\ttI$ 配备了态射 $\ttzero,\ttone:1→\ttI$ 和 $\_\sqcap\_, \_\sqcup\_ : \mathtt{I} \to \mathtt{I} \to \mathtt{I}$ ，满足图5.1中的公理 $\ax{1}$--$\ax{4}$​。
+
+公理 $\ax{1}$ 表达了区间 $\ttI$ 在内部是连通的，在这个意义上，其元素的任何可判定子集要么是空的，要么是整个 $\ttI$ 。这意味着如果归纳数据类型中的一条路径在路径的某一点具有某种构造子形式，那么它在任何其他点也具有相同的形式。这在第5.3.3节末尾用于证明拓扑斯中的自然数对象是纤维化的（即表示一个类型），以及纤维化在二元余积下封闭。它还在第5.4节中用于证明粘合构造的性质。与公理 $\ax{2}$ 一起，$\ttI$ 的连通性意味着在 $1+1$  中没有从 $\mathtt{inl}\ \ast$ 到 $\mathtt{inr}\ \ast$ 的路径，因此由这些公理确定的马丁-洛夫类型论的路径模型在逻辑上是非退化的。
+
+公理 $\ax{3}$ 和 $\ax{4}$ 赋予 $\ttI$ 一种连接代数（connection algebra）结构[15]。它们捕捉了实数单位区间 $[0,1]$ 上最小值和最大值运算的一些非常简单的性质，这些性质足以确保单例类型的可缩性（第5.2节），并且与后续公理结合，用于定义纤维化从复合的路径提升（见第5.3.1节）。在[18]的模型中，连接代数结构由区间的格结构给出，取 $\_\sqcap\_$ 为二元交（meet），$\_\sqcup\_$ 为二元并（join），并利用 $\ttzero$ 和 $\ttone$ 分别是最小元和最大元这一事实。
+
+\begin{figure}[htbp]
+\centering
+
+区间 $\mathtt{I} : \mathcal{U}$ 是连续的
+\[
+\ax{1} : [\forall (\varphi : \mathtt{I} \to \Omega).\ 
+(\forall (i : \mathtt{I}).\ \varphi\,i \lor \neg\varphi\,i) \Rightarrow 
+(\forall (i : \mathtt{I}).\ \varphi\,i) \lor (\forall (i : \mathtt{I}).\ 
+\neg\varphi\,i)]
+\]
+有不同的端点 $\ttzero, \ttone : \mathtt{I}$
+\[
+\ax{2} : [\neg(\ttzero = \ttone)]
+\]
+有一个连接代数结构
+$\_\sqcap\_, \_\sqcup\_ : \mathtt{I} \to \mathtt{I} \to \mathtt{I}$
+\[
+\ax{3} : [\forall (x : \mathtt{I}).\ \ttzero \sqcap x = \ttzero = x \sqcap \ttzero \land 
+\ttone \sqcap x = x = x \sqcap \ttone]
+\]
+\[
+\ax{4} : [\forall (x : \mathtt{I}).\ \ttzero \sqcup x = x = x \sqcup \ttzero \land 
+\ttone \sqcup x = \ttone = x \sqcup \ttone].
+\]
+
+\caption{区间满足的公理}
+\label{fig:interval-axioms}
+
+\end{figure}
+
+\begin{remark}[德摩根对合]
+注意，在第 2.2.1 节以及文献 [18] 的模型中，$\mathtt{I}$ 不仅仅是一个格，而且还具有一个对合运算 $1 - (\_) : \mathtt{I} \to \mathtt{I}$（使得 $(1 - (1 - i)) = i$），这使得 
+$\sqcup$ 成为 $\sqcap$ 的德摩根对偶，在这个意义上，$i \sqcup j = 1 - ((1 - i) \sqcap (1 - j))$。虽然这种对合结构很方便，但对于接下来的构造来说，它并不是真正必需的。相反，我们只是给出某些概念的 $0$-版本和 $1$-版本；例如，在第 5.3.1 节中的``从 $1$ 复合到 $0$''以及``从 $0$ 复合到 $1$''。
+\end{remark}
+
+公理 $\ax{2}$--$\ax{4}$，再加上随后两个公理，将使我们能够证明纤维化提供了 $\Pi$-类型和 $\Sigma$-类型的模型；并且进一步证明由区间对象 $\mathtt{I}$（第 5.2 节）确定的路径类型在命题意义上满足相等类型的规则 [20,63]。
+
+\subsection{上纤维化命题}
+
+接下来，我们需要将立方类型论中面格 $\mathbb{F}$ 的性质公理化。一种方法是假设存在一个具有特定代数性质的对象来建模 $\mathbb{F}$，就像我们在前一节对 $\mathbb{I}$ 所做的那样。然而，我们采取了另一种方法，基于面格的原始直观，即指定一个类 Kan 填充问题的输入，如第 2.2.4 节所述。
+
+Kan 填充以及子空间集合上的其他上纤维化条件，涉及将定义在子空间上的映射扩展到定义在整个空间上的映射。在这里，我们将``空间的子空间''理解为拓扑斯中对象的子对象。由于子对象由到 $\Omega$ 的态射来分类，因此可以考虑由某些命题一般性地指定的子对象集合。更具体地说，给定命题的一个性质 $\mathtt{cof} : \Omega \to \Omega$，我们得到一个相应的命题集合：
+\begin{equation}
+\mathtt{Cof} \triangleq \{\varphi : \Omega \mid \mathtt{cof}\ \varphi\}
+\end{equation}
+
+利用这种直观，我们将面格 $\mathbb{F}$ 内部化为这样一个命题集合。然后我们可以将这个集合的性质公理化，以便构造立方类型论的模型。这些性质展示在图 5.2 中。公理 $\ax{5}$、$\ax{6}$ 和 $\ax{7}$ 与第 2.2.3 节中给出的语法最后四种情况密切对应，该语法生成面格的元素。在这种表述中，$\ax{7}$ 明确表明合取可能是依赖的，这一点在句法表述中并不清晰。公理 $\ax{8}$ 表明上纤维化命题在 $\mathtt{I}$-索引量词下封闭。与 $\ax{7}$ 中的依赖性一样，这不是显式添加到句法表述的面格中的，而是对于定义 $\mathbb{F}$ 的自由生成项集合恰好成立的事实。公理 $\ax{8}$ 用于证明重新对齐引理（引理 5.3.10），该引理用于弱形式粘合的定义中，以确保诱导的纤维化结构扩展到我们正在``粘合''的族上的纤维化结构。
+
+考虑单态射类 $m : A \rightarrowtail B$，其分类态射
+\[
+\lambda(y : B) \to \exists(x : A).\ m\,x = y : B \to \Omega
+\]
+通过 $\mathtt{Cof} \rightarrowtail \Omega$ 分解。我们称这样的单态射为上纤维化。类 Kan 填充性质涉及态射 $A \to X$ 何时可以沿着上纤维化 $m : A \rightarrowtail B$ 扩展。相反，在 $\mathcal{E}$ 的内部语言中工作，我们将考虑定义域在 $\mathtt{Cof}$ 中的部分元何时可以扩展到全定义的元。回想一下，在直觉主义逻辑中，类型 $A$ 的部分元通常由子单例表示，即由满足以下条件的函数 $s : A \to \Omega$ 表示：
+\[
+\forall(x\,x' : A).\ s\,x \land s\,x' \Rightarrow x = x'
+\]
+然而，使用外延等价的依赖对 $\varphi : \Omega$ 和 $f : [\varphi] \to A$ 将更加方便，如下一定义所示。命题 $\varphi$ 是部分元的范围；用子单例的术语来说，它等于 $\exists(x : A).\ s\,x$。
+
+\begin{definition}[上纤维化偏元，$\square A$]
+我们称类型 $\mathtt{Cof}$ 的元素为上纤维化命题。给定类型 $A : \mathcal{U}$，我们定义 $A$ 的上纤维化偏元类型为：
+\begin{equation}
+\square A \triangleq (\varphi : \mathtt{Cof}) \times ([\varphi] \to A)
+\end{equation}
+
+这样一个偏元 $(\varphi, f) : \square A$ 的扩展是一个元素 $a : A$ 连同以下关系的证明：
+\begin{equation}
+(\varphi, f) \nearrow a \triangleq \forall(u : [\varphi]).\ f\,u = a
+\end{equation}
+\end{definition}
+
+注意，通过在公理 $\ax{5}$ 中取 $i = 0$，我们有 $\mathtt{cof}(0 = 0)$（即 $\mathtt{cof}\,\top$）和 $\mathtt{cof}(0 = 1)$；将后者与公理 $\ax{2}$ 结合，我们还推导出 $\mathtt{cof}\,\bot$ 成立。因此 $\top$ 和 $\bot$ 都是上纤维化命题，对应于生成面格元素的语法中的前两种情况（第 2.2.3 节）。所以 $A \rightarrowtail A$ 和 $\emptyset \rightarrowtail A$ 总是上纤维化，其中 $\emptyset$ 是始对象。由于 $\mathtt{cof}\,\top$ 成立，对于每个 $a : A$ 存在一个全上纤维化偏元 $(\top, \lambda\_ \to a) : \square A$，其中 $a$ 是扩展 $(\top, \lambda\_ \to a)$ 的唯一元素。由于 $\mathtt{cof}\,\bot$ 成立，每个对象 $A$ 都有一个由 $(\bot, \mathtt{elim}_\emptyset) : \square A$ 给出的空上纤维化偏元，使得每个 $a : A$ 都是 $(\bot, \mathtt{elim}_\emptyset)$ 的扩展。（对于任何 $B : \mathcal{U}$，$\mathtt{elim}_\emptyset : [\bot] \to B$ 表示由 $[\bot]$ 的始性给出的唯一函数。）
+
+\begin{figure}[htbp]
+\centering
+
+上纤维化命题 $\mathtt{Cof} = \{\varphi : \Omega \mid \mathtt{cof}\,\varphi\}$（其中 $\mathtt{cof} : \Omega \to \Omega$）
+
+端点等式
+\[
+\ax{5} : [\forall(i : \mathtt{I}).\ \mathtt{cof}(i = 0) \land \mathtt{cof}(i = 1)]
+\]
+在二元析取下封闭
+\[
+\ax{6} : [\forall(\varphi\,\psi : \Omega).\ \mathtt{cof}\,\varphi \Rightarrow \mathtt{cof}\,\psi \Rightarrow \mathtt{cof}(\varphi \lor \psi)]
+\]
+依赖合取
+\[
+\ax{7} : [\forall(\varphi\,\psi : \Omega).\ \mathtt{cof}\,\varphi \Rightarrow (\varphi \Rightarrow \mathtt{cof}\,\psi) \Rightarrow \mathtt{cof}(\varphi \land \psi)]
+\]
+在 $\mathtt{I}$ 上的全称量词
+\[
+\ax{8} : [\forall(\varphi : \mathtt{I} \to \Omega).\ (\forall(i : \mathtt{I}).\ \mathtt{cof}(\varphi\,i)) \Rightarrow \mathtt{cof}(\forall(i : \mathtt{I}).\ \varphi\,i)]
+\]
+
+\caption{上纤维化命题的公理}
+\label{fig:cofibrant-axioms}
+
+\end{figure}
+
+\begin{example}
+将类型 $\mathtt{I}$ 的变量视为空间中维度的名称是有帮助的，因此在上下文 $i_1, ..., i_n : \mathtt{I}$ 中工作对应于在 $n$ 维中工作。假设我们在具有 $i, j, k : \mathtt{I}$ 的上下文中工作；因此这对应于在三维中工作。我们将元素 $i, j, k : \mathtt{I} \vdash a : A$ 视为空间 $A$ 中的一个立方体，如下所示。令 $\varphi \triangleq (i = 0) \lor (j = 0) \lor (j = 1 \land k = 1)$。由 $\ax{5}$--$\ax{7}$ 我们有 $i, j, k : \mathtt{I} \vdash \varphi : \mathtt{Cof}$。我们将 $\varphi$ 视为指定立方体的某些面和边，在这种情况下是底面 $(i = 0)$、左面 $(j = 0)$ 和前右边 $(j = 1 \land k = 1)$，如下右图所示。那么上纤维化偏元 $f : [\varphi] \to A$ 可以被视为一个偏立方体，仅在 $\varphi$ 指定的区域上有定义。
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{partial}
+%\includegraphics{partial}
+\end{figure}
+\end{example}
+
+\begin{definition}[相容偏元的并]
+称两个偏元 $f : [\varphi] \to A$ 和 $g : [\psi] \to A$ 是相容的，如果它们在都有定义的地方一致：
+\begin{equation}
+(\varphi, f) \smile (\psi, g) \triangleq \forall(u : [\varphi])(v : [\psi]).\ f\,u = g\,v
+\end{equation}
+
+在这种情况下，我们可以形成它们的并 $f \cup g : [\varphi \lor \psi] \to A$，使得：
+\[
+\forall(u : [\varphi]).\ (f \cup g)\,u = f\,u \qquad \forall(v : [\psi]).\ (f \cup g)\,v = g\,v
+\]
+
+为了理解为什么，考虑拓扑斯中的如下推出方：
+\[
+\begin{tikzcd}
+{[\varphi \land \psi]} \arrow[r, tail] \arrow[d,tail] \arrow[dr, phantom, "\ulcorner" very near end] & {[\psi]} \arrow[d,tail] \arrow[ddr, bend left, "g"] \\
+{[\varphi]} \arrow[r, tail] \arrow[drr, bend right, "f"'] & {[\varphi \lor \psi]} \arrow[dr, dashed, "f \cup g" description] \\
+& & A
+\end{tikzcd}
+\]
+
+外方交换是因为 $(\varphi, f) \smile (\psi, g)$ 成立，然后 $f \cup g$ 是从推出诱导的唯一态射。注意，图 5.2 中的公理 $\ax{6}$ 意味着上纤维化偏元的集合在取相容偏元的二元并下封闭。
+\end{definition}
+
+以下引理给出了公理 $\ax{7}$ 和 $\ax{8}$ 的另一种刻画。由于我们在上面注意到 $\mathtt{cof}\,\top$ 成立，引理的第 (i) 部分告诉我们上纤维化在综合域论的意义上形成一个优势（dominance）[56]；我们仅在从命题相等类型构造定义性相等类型时使用 $\mathtt{Cof}$ 的这一性质（见第 5.3.4 节）。
+
+\begin{lemma}
+\begin{enumerate}
+\item[(i)] 公理 $\ax{7}$ 等价于要求上纤维化类在复合下封闭。
+\item[(ii)] 公理 $\ax{8}$ 等价于要求上纤维化类在由 $\mathtt{I}$ 的指数化下封闭。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+对于第 (i) 部分，首先假设 $\ax{7}$ 成立，且 $f : A \rightarrowtail B$ 和 $g : B \rightarrowtail C$ 是上纤维化。因此 $\forall(b : B).\ \mathtt{cof}(\exists(a : A).\ f\,a = b)$ 和 $\forall(c : C).\ \mathtt{cof}(\exists(b : B).\ g\,b = c)$ 都成立，我们希望证明 $\forall(c : C).\ \mathtt{cof}(\exists(a : A).\ g(f\,a) = c)$。注意对于 $b : B$ 和 $c : C$：
+\begin{align*}
+g\,b = c &\Rightarrow (\exists(a : A).\ g(f\,a) = c) = (\exists(a : A).\ f\,a = b) \quad \text{因为 } g \text{ 是单态射} \\
+&\Rightarrow \mathtt{cof}(\exists(a : A).\ g(f\,a) = c) = \mathtt{cof}(\exists(a : A).\ f\,a = b) = \top
+\end{align*}
+
+因此令 $\varphi \triangleq \exists(b : B).\ g\,b = c$ 和 $\psi \triangleq \exists(a : A).\ g(f\,a) = c$，我们有 $\mathtt{cof}\,\varphi$ 和 $\varphi \Rightarrow \mathtt{cof}\,\psi$。因此由 $\ax{7}$ 我们得到 $\mathtt{cof}(\varphi \land \psi)$，由于 $\psi \Rightarrow \varphi$，这等于 $\mathtt{cof}(\psi)$。所以我们确实有 $\forall(c : C).\ \mathtt{cof}(\exists(a : A).\ g(f\,a) = c)$。
+
+反之，假设上纤维化在复合下封闭，且 $\varphi, \psi : \Omega$ 满足 $\mathtt{cof}\,\varphi$ 和 $\varphi \Rightarrow \mathtt{cof}\,\psi$。$\mathtt{cof}\,\varphi$ 成立等价于单态射 $[\varphi] \rightarrowtail 1$ 是上纤维化；并且由于
+\[
+\varphi \Rightarrow (\psi = \varphi \land \psi) \Rightarrow (\mathtt{cof}\,\psi = \mathtt{cof}(\varphi \land \psi))
+\]
+由 $\varphi \Rightarrow \mathtt{cof}\,\psi$ 我们得到 $\varphi \Rightarrow \mathtt{cof}(\varphi \land \psi)$，因此单态射 $[\varphi \land \psi] \rightarrowtail [\varphi]$ 是上纤维化。复合这些单态射，我们有 $[\varphi \land \psi] \rightarrowtail 1$ 是上纤维化，即 $\mathtt{cof}(\varphi \land \psi)$ 成立。
+
+对于第 (ii) 部分，首先假设 $\ax{8}$ 成立，且 $f : A \rightarrowtail B$ 是上纤维化。我们必须证明 $\mathtt{I} \to f : (\mathtt{I} \to A) \rightarrowtail (\mathtt{I} \to B)$ 也是上纤维化。给定 $\beta : \mathtt{I} \to B$ 我们有
+\begin{align*}
+&(\forall i : \mathtt{I})(\exists a : A).\ f\,a = \beta\,i \\
+&\Rightarrow (\forall i : \mathtt{I})(\exists! a : A).\ f\,a = \beta\,i \quad \text{（因为 } f \text{ 是单态射）} \\
+&\Rightarrow (\exists \alpha : \mathtt{I} \to A)(\forall i : \mathtt{I}).\ f(\alpha\,i) = \beta\,i \quad \text{（由拓扑斯中的唯一选择）} \\
+&\Rightarrow (\forall i : \mathtt{I})(\exists a : A).\ f\,a = \beta\,i
+\end{align*}
+
+因此 $(\forall i : \mathtt{I})(\exists a : A).\ f\,a = \beta\,i$ 等于 $(\exists \alpha : \mathtt{I} \to A)(\forall i : \mathtt{I}).\ f(\alpha\,i) = \beta\,i$；并且后者由拓扑斯中的函数外延性等于 $(\exists \alpha : \mathtt{I} \to A).\ (\mathtt{I} \to f)\,\alpha = \beta$。由于 $f$ 是上纤维化，对于每个 $i : \mathtt{I}$ 我们有 $\mathtt{cof}(\exists(a : A).\ f\,a = \beta\,i)$。因此由公理 $\ax{8}$ 我们也有 $\mathtt{cof}((\forall i : \mathtt{I})(\exists a : A).\ f\,a = \beta\,i)$，即 $\mathtt{cof}(\exists \alpha : \mathtt{I} \to A).\ (\mathtt{I} \to f)\,\alpha = \beta)$，正如 $\mathtt{I} \to f$ 为上纤维化所要求的。
+
+反之，假设上纤维化在 $\mathtt{I} \to (\_)$ 下封闭，且 $\varphi : \mathtt{I} \to \Omega$ 满足 $(\forall i : \mathtt{I}).\ \mathtt{cof}(\varphi\,i)$。后者意味着 $\{i : \mathtt{I} \mid \varphi\,i\} \rightarrowtail \mathtt{I}$ 是上纤维化。因此单态射 $(\mathtt{I} \to \{i : \mathtt{I} \mid \varphi\,i\}) \rightarrowtail (\mathtt{I} \to \mathtt{I})$ 也是。由于 $id : \mathtt{I} \to \mathtt{I}$ 在这个单态射的像中当且仅当 $(\forall i : \mathtt{I}).\ \varphi\,i$ 成立，我们有 $\mathtt{cof}((\forall i : \mathtt{I}).\ \varphi\,i)$，正如公理 $\ax{8}$ 所要求的。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+
+严格性公理：任何上纤维化偏类型 $A$
+
+如果在 $A$ 有定义的任何地方都与全类型 $B$ 同构
+
+则可以扩展为一个与 $B$ 同构的全类型 $B'$：
+\begin{align*}
+\ax{9} : &\{\varphi : \mathsf{Cof}\}(A : [\varphi] \to \mathcal{U})(B : \mathcal{U})(s : (u : [\varphi]) \to (A\,u \cong B)) \to \\
+&(B' : \mathcal{U}) \times \{s' : B' \cong B \mid \forall(u : [\varphi]).\ A\,u = B' \land s\,u = s'\}
+\end{align*}
+
+\caption{严格性公理}
+\label{fig:strictness-axiom}
+
+\end{figure}
+
+\subsection{严格性公理}
+
+我们的最后一个公理与其他公理不同，它与其说是关于公理化立方类型论的某些本质方面，不如说是关于解决内部语言方法的一个弱点。这最后一个公理 $\ax{9}$ 指出，任何上纤维化偏类型 $A$，如果在 $A$ 有定义的任何地方都与全类型 $B$ 同构，则可以扩展为一个与 $B$ 同构的全类型 $B'$。该公理的精确定义在图 5.3 中给出，同构的定义如下：
+
+\begin{definition}[同构]
+给定对象 $A, B : \mathcal{U}$，$A$ 和 $B$ 之间的\textbf{同构}是一个具有双边逆的函数 $f : A \to B$。令 $A \cong B$ 为 $A$ 和 $B$ 之间同构的类型，定义为：
+\[
+A \cong B \triangleq \{f : A \to B \mid (\exists g : B \to A)\, (g \circ f = id) \land (f \circ g = id)\}
+\]
+
+我们说 $A$ 和 $B$ \textbf{同构}，如果存在同构 $f : A \cong B$。我们说两个族 $A, B : \Gamma \to \mathcal{U}$ \textbf{同构}，如果它们的每个纤维都同构，并且我们滥用记号写作：
+\[
+A \cong B \triangleq (x : \Gamma) \to A\,x \cong B\,x
+\]
+\end{definition}
+
+同构在内部类型论的外延相等意义下具有逆，这与我们后面引入的等价概念形成对比，后者仅在路径相等意义下具有逆。此外，这些逆是唯一的，因此，使用唯一选择，我们总能构造同构的逆。因此，给定 $f : A \cong B$，我们将 $f^{-1} : B \cong A$ 写作 $f$ 的这个逆。
+
+为了对这个公理的作用获得一些直观理解，考虑以下例子。我们有一个在区间上的类型族 $B : \mathtt{I} \to \mathcal{U}$ 和一个单一类型 $A : \mathcal{U}$ 使得 $A \cong B\,0$。我们希望能够在某种意义上``覆盖'' $B$ 在 $0$ 处的值，用 $A$ 替换它。这应该给我们一个族 $B' : \mathtt{I} \to \mathcal{U}$，它与原始族 $B$ 同构，但满足 $A = B'\,0$。给定公理 $\ax{9}$，我们可以将 $B'\,i : \mathcal{U}$ 定义为 $\ax{9}\,\{i=0\}\,(\lambda\_ \to A)\,(B\,i)\,(\lambda\_ \to s)$ 的第一个投影，其中 $s : A \cong B\,0$ 是见证 $A$ 在 $0$ 处与 $B$ 同构的同构。第二个投影给出新的同构，见证 $B'$ 与 $B$ 同构，特别是当 $i = 0$ 时这个新的同构就是原来的那个。
+
+先验地，没有公理 $\ax{9}$，在内部类型论中没有办法执行这样的构造。事实上，从范畴论的角度来看，这样的构造似乎相当奇怪，因为我们通常只在``同构意义下''工作。然而，这个公理后面将需要用于验证类型论中必须成立的某些定义性相等。在这个意义上，对公理 $\ax{9}$ 的需求让人想起在范畴模型中将类型论中的替换解释为拉回时出现的一些问题。
+
+公理 $\ax{9}$ 将用于恢复 Cohen 等人 [18] 使用的严格形式的粘合。它在预层模型中的有效性依赖于外部元理论中的一个构造，该构造无法在内部复制；详见定理 5.6.3。
+\end{document}
