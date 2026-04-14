@@ -521,11 +521,11 @@ res Γ Φ = Σ x ∈ Γ , [ Φ x ]
   \item $(A,\alpha):\Fib\Gamma$ 是一个纤维化
   \item $A:\Gamma\to\calU$, $\isFib\, A\triangleq(e:\{\ttzero,\ttone\})(p:\ttI\to\Gamma)\to\Comp\,e\,(A\circ p)$
   \item 对 $x : \Gamma$, 要证明 $\Gamma\, x$ 是纤维化的
-  \item 我们证明 $\bar{A_x}\triangleq\lambda(\ul:\ttone)\to A\,x : \ttone\to\calU$ 上有一个纤维化结构
+  \item 我们证明 $\overline{A_x}\triangleq\lambda(\ul:\ttone)\to A\,x : \ttone\to\calU$ 上有一个纤维化结构
   \item $\gamma \triangleq \lambda(\ul:\ttone)\to x : \ttone \to \Gamma$
-  \item 我们要证明 $(\bar{A_x},\alpha[\gamma]) \in \Fib\,\ttone$
+  \item 我们要证明 $(\overline{A_x},\alpha[\gamma]) \in \Fib\,\ttone$
   \item $(A,\alpha)[\gamma]$ 就满足要求
-  \item 按定义, $\bar{A_x} = A\circ\gamma$
+  \item 按定义, $\overline{A_x} = A\circ\gamma$
 \end{itemize}
 \end{frame}
 
@@ -539,10 +539,10 @@ res Γ Φ = Σ x ∈ Γ , [ Φ x ]
   \item \begin{align*}\isFib\ \ttk Pi &\triangleq &&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttone)\to\Comp\ e\ (\ttk Pi \circ p) \\
        &\triangleq&&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttone)\to (\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(\ttk Pi \circ p)) \to\\
        &&&\{ a_0 : (\ttk Pi \circ p)\ e \mid (\varphi,f)\,@\,e \nearrow a_0 \} \to \\
-       &&&\{a_1:(\ttk Pi \circ p)\,\bar{e}\mid(\varphi,f)\,@\,\bar{e}\nearrow a_1 \}\\
+       &&&\{a_1:(\ttk Pi \circ p)\,\overline{e}\mid(\varphi,f)\,@\,\overline{e}\nearrow a_1 \}\\
        &\triangleq&&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttone)\to (\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(\ttk Pi \circ p)) \to\\
        &&&\{ a_0 : P\,i \mid (\varphi,f)\,@\,e \nearrow a_0 \} \to \\
-       &&&\{a_1:P\,i \mid(\varphi,f)\,@\,\bar{e}\nearrow a_1 \}
+       &&&\{a_1:P\,i \mid(\varphi,f)\,@\,\overline{e}\nearrow a_1 \}
   \end{align*}
 \end{itemize}
 \end{frame}
@@ -552,7 +552,7 @@ res Γ Φ = Σ x ∈ Γ , [ Φ x ]
   \item \begin{align*}\isFib\ P &\triangleq &&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttI)\to\Comp\ e\ (P \circ p) \\
        &\triangleq&&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttI)\to (\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(P \circ p)) \to\\
        &&&\{ a_0 : (P \circ p)\ e \mid (\varphi,f)\,@\,e \nearrow a_0 \} \to \\
-       &&&\{a_1:(P \circ p)\,\bar{e}\mid(\varphi,f)\,@\,\bar{e}\nearrow a_1 \}
+       &&&\{a_1:(P \circ p)\,\overline{e}\mid(\varphi,f)\,@\,\overline{e}\nearrow a_1 \}
   \end{align*}
   \item 如果存在 $\rho : \isFib\ P$
   \item 对任意$B:\calU$, $\elim_{\emptyset} : [\bot]\to B$
@@ -587,6 +587,30 @@ res Γ Φ = Σ x ∈ Γ , [ Φ x ]
   \[
   \ttfill\,e\,\alpha\,(\gamma\circ p) = \ttfill\,e\,(\varphi[\gamma])\,p
   \]
+\end{frame}
+
+\begin{frame}[fragile,shrink]{分析}
+\begin{itemize}
+  \item $e : \{ \ttzero, \ttone \}$, $A:\ttI\to\calU$
+  \item \begin{align*}
+\mathtt{Fill}\,e\,A \triangleq &(\varphi : \mathtt{Cof})(f : [\varphi] \to \Pi_\mathtt{I} A)(a : \{a' : A\,e \mid (\varphi, f) \ @\  e \nearrow a'\}) \to \\
+&\{g : \Pi_\mathtt{I} A \mid (\varphi, f) \nearrow g \land g\,e = a\}
+\end{align*}
+\item \begin{align*}
+\mathtt{Comp}\,e\,A \triangleq &(\varphi : \mathtt{Cof})(f : [\varphi] \to \Pi_\mathtt{I} A) \to \\
+&\{a_0 : A\,e \mid (\varphi, f) \ @\  e \nearrow a_0\} \to \{a_1 : A\,\overline{e} \mid (\varphi, f) \ @\  \overline{e} \nearrow a_1\}
+\end{align*}
+  \item $\alpha : \Fill\ e\ A$
+  \item $(\lambda\varphi\ f\ a \to \alpha\ \varphi\ f\ a\ \overline{e}) : \Comp\ e\ A$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+\begin{figure}[htbp]
+\centering
+%\includegraphics[width=0.75\textwidth]{comp_fill}
+\includegraphics{comp_fill}
+\end{figure}
 \end{frame}
 
 \begin{frame}[fragile,shrink]
