@@ -45,8 +45,10 @@
 \newcommand\snd{\mathtt{snd}}
 \newcommand\Ty{\mathtt{Ty}}
 \newcommand\ttI{\mathtt{I}}
+\newcommand\ttk{\mathtt{k}}
 \newcommand\Ter{\mathtt{Ter}}
 \newcommand\Path{\mathtt{Path}}
+\newcommand\elim{\mathtt{elim}}
 \newcommand\dM{\mathsf{dM}}
 \newcommand\ttp{\mathtt{p}}
 \newcommand\ttq{\mathtt{q}}
@@ -499,7 +501,7 @@ res Γ Φ = Σ x ∈ Γ , [ Φ x ]
   
   $\alpha[\gamma]:\isFib(A\circ\gamma)\triangleq((e:\{\ttzero,\ttone\})(p:\ttI\to\Delta)\to\Comp\,e\,(A\circ\gamma\circ p)$
 \end{framed}
-因此我们得到一个函数$\_[\_]:(\Delta\to\Gamma)\to\Fib\Gamma\to\Fib\Delta$, 定义为
+因此我们得到一个函数$\_[\_]:\Fib\Gamma\to(\Delta\to\Gamma)\to\Fib\Delta$, 定义为
 \[
 (A,\alpha)[\gamma]\triangleq(A\circ\gamma,\alpha[\gamma])
 \]
@@ -507,7 +509,72 @@ res Γ Φ = Σ x ∈ Γ , [ Φ x ]
 \end{frame}
 
 \begin{frame}[fragile,shrink]{纤维对象}
-  我们称$A:\calU$是一个纤维对象, 如果我们有一个关于常数族$\lambda(\ul:1)\to A$ 在终对象 $1$ 上的纤维化结构. 注意: 如果$(A,\alpha):\Fib\Gamma$是一个纤维化, 那么对于每个$x:\Gamma$, 类型$A\,x:\calU$是纤维的, 其纤维化结构由通过映射$\lambda(\ul:1)\to x:1\to\Gamma$对$\alpha$进行重索引得到. 然而, 反过来不成立: 拥有一个纤维化结构的族, 即$(x:\Gamma)\to\isFib(\lambda(\ul:1)\to A\,x)$ 的一个元素, 要弱于拥有一个对于 $A:\Gamma\to\calU$的纤维化结构.
+  我们称$A:\calU$是一个纤维对象, 如果我们有一个关于常数族$\lambda(\ul:1)\to A$ 在终对象 $1$ 上的纤维化结构. 注意: 如果$(A,\alpha):\Fib\Gamma$是一个纤维化, 那么对于每个$x:\Gamma$, 类型$A\,x:\calU$是纤维的, 其纤维化结构由通过映射$\gamma\triangleq(\lambda(\ul:1)\to x):1\to\Gamma$对$\alpha$进行重索引得到. $(A,\alpha)[\gamma]$就满足要求.
+
+  \bigskip  
+
+  然而, 反过来不成立: 拥有一个纤维化结构的族, 即$(x:\Gamma)\to\isFib(\lambda(\ul:1)\to A\,x)$ 的一个元素, 要弱于拥有一个对于 $A:\Gamma\to\calU$的纤维化结构.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{分析}
+\begin{itemize}
+  \item $(A,\alpha):\Fib\Gamma$ 是一个纤维化
+  \item $A:\Gamma\to\calU$, $\isFib\, A\triangleq(e:\{\ttzero,\ttone\})(p:\ttI\to\Gamma)\to\Comp\,e\,(A\circ p)$
+  \item 对 $x : \Gamma$, 要证明 $\Gamma\, x$ 是纤维化的
+  \item 我们证明 $\bar{A_x}\triangleq\lambda(\ul:\ttone)\to A\,x : \ttone\to\calU$ 上有一个纤维化结构
+  \item $\gamma \triangleq \lambda(\ul:\ttone)\to x : \ttone \to \Gamma$
+  \item 我们要证明 $(\bar{A_x},\alpha[\gamma]) \in \Fib\,\ttone$
+  \item $(A,\alpha)[\gamma]$ 就满足要求
+  \item 按定义, $\bar{A_x} = A\circ\gamma$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{分析}
+\begin{itemize}
+  \item 我们要证明$(x:\Gamma)\to\isFib(\lambda(\ul:1)\to A\,x)$ 推不出 $A:\Gamma\to\calU$ 有一个纤维化结构
+  \item 考虑 $P : \ttI \to \calU$, $P\ i \triangleq [\ttzero = i]$
+  \item 下面我们证明对任意 $i : \ttI$, $P\ i : \calU$ 是一个纤维化对象
+  \item $\rho_i : \isFib(\lambda(\ul:\ttone)\to P\ i)$, $\rho_i\ e\ p\ \phi\ f\ x\triangleq x$
+  \item $\ttk Pi \triangleq \lambda(\ul:\ttone)\to P\ i$
+  \item \begin{align*}\isFib\ \ttk Pi &\triangleq &&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttone)\to\Comp\ e\ (\ttk Pi \circ p) \\
+       &\triangleq&&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttone)\to (\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(\ttk Pi \circ p)) \to\\
+       &&&\{ a_0 : (\ttk Pi \circ p)\ e \mid (\varphi,f)\,@\,e \nearrow a_0 \} \to \\
+       &&&\{a_1:(\ttk Pi \circ p)\,\bar{e}\mid(\varphi,f)\,@\,\bar{e}\nearrow a_1 \}\\
+       &\triangleq&&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttone)\to (\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(\ttk Pi \circ p)) \to\\
+       &&&\{ a_0 : P\,i \mid (\varphi,f)\,@\,e \nearrow a_0 \} \to \\
+       &&&\{a_1:P\,i \mid(\varphi,f)\,@\,\bar{e}\nearrow a_1 \}
+  \end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{分析(续)}
+\begin{itemize}
+  \item \begin{align*}\isFib\ P &\triangleq &&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttI)\to\Comp\ e\ (P \circ p) \\
+       &\triangleq&&(e:\{\ttzero,\ttone\})(p:\ttI\to\ttI)\to (\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(P \circ p)) \to\\
+       &&&\{ a_0 : (P \circ p)\ e \mid (\varphi,f)\,@\,e \nearrow a_0 \} \to \\
+       &&&\{a_1:(P \circ p)\,\bar{e}\mid(\varphi,f)\,@\,\bar{e}\nearrow a_1 \}
+  \end{align*}
+  \item 如果存在 $\rho : \isFib\ P$
+  \item 对任意$B:\calU$, $\elim_{\emptyset} : [\bot]\to B$
+  \item \begin{align*}\rho\ \ttzero\ id\ \elim_{\emptyset} : &\{a_0:(P\circ id) \ttzero \mid (\bot,\elim_{\emptyset})@\ttzero\nearrow a_0\} \to \\
+  &\{ a_1:(P\circ id) \ttone \mid (\bot,\elim_{\emptyset})@\ttone\nearrow a_1 \} \end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{分析(续)}
+\begin{itemize}
+  \item $(\bot,\elim_{\emptyset})@\ttzero = (\bot,\lambda(u:[\bot])\to \elim_{\emptyset}\ u\ i)$
+  \item \begin{align*}(\bot,\elim_{\emptyset})@\ttzero\nearrow a_0 &= (\bot,\lambda(u:[\bot])\to \elim_{\emptyset}\ u\ i)\nearrow a_0 \\
+  &= \forall(u:[\bot]).(\lambda(u:[\bot])\to \elim_{\emptyset}\ u\ i)u = a_0 \\
+  &=\forall(u:[\bot]).\elim_{\emptyset}\ u\ i = a_0\\
+  &=\elim_{\emptyset}
+\end{align*}
+  \item \begin{align*}\rho\ \ttzero\ id\ \elim_{\emptyset} : &\{a_0:[\ttzero=\ttzero] \mid (\bot,\elim_{\emptyset})@\ttzero\nearrow a_0\} \to \\
+  &\{ a_1:[\ttzero=\ttone] \mid (\bot,\elim_{\emptyset})@\ttone\nearrow a_1 \} \end{align*}
+  \item \[\rho\ \ttzero\ id\ \elim_{\emptyset} : \{\ast\} \to \{ a_1:[\ttzero=\ttone] \mid (\bot,\elim_{\emptyset})@\ttone\nearrow a_1 \} \]
+  \item 那么 $\rho\ \ttzero\ id\ \bot\ \elim_{\emptyset}\ \ast : [\ttzero = \ttone]$
+  \item 这和 $\ax{2}$ 矛盾
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile,shrink]{组合结构和填充结构的关系}

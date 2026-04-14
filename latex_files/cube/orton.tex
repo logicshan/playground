@@ -764,7 +764,7 @@ a_0 \sim a_1 \triangleq \{p : \mathtt{I} \to A \mid p\,0 = a_0 \land p\,1 = a_1\
 \mathtt{Fib}\,\Gamma \triangleq (A : \Gamma \to \mathcal{U}) \times \mathtt{isFib}\,A
 \end{equation}
 
-CCHM 纤维化在重索引下封闭：给定 $\gamma : \Delta \to \Gamma$ 和 $A : \Gamma \to \mathcal{U}$，我们得到一个函数 $\_[\gamma] : \mathtt{isFib}\,A \to \mathtt{isFib}(A \circ \gamma)$，定义为 $\alpha[\gamma]\,e\,p \triangleq \alpha\,e\,(\gamma \circ p)$。因此我们得到一个函数 $\_[\_] : (\Delta \to \Gamma) \to \mathtt{Fib}\,\Gamma \to \mathtt{Fib}\,\Delta$，定义为：
+CCHM 纤维化在重索引下封闭：给定 $\gamma : \Delta \to \Gamma$ 和 $A : \Gamma \to \mathcal{U}$，我们得到一个函数 $\_[\gamma] : \mathtt{isFib}\,A \to \mathtt{isFib}(A \circ \gamma)$，定义为 $\alpha[\gamma]\,e\,p \triangleq \alpha\,e\,(\gamma \circ p)$。因此我们得到一个函数 $\_[\_] : \mathtt{Fib}\,\Gamma \to (\Delta \to \Gamma) \to \mathtt{Fib}\,\Delta$，定义为：
 \begin{equation}
 (A, \alpha)[\gamma] \triangleq (A \circ \gamma, \alpha[\gamma])
 \end{equation}
@@ -773,43 +773,43 @@ CCHM 纤维化在重索引下封闭：给定 $\gamma : \Delta \to \Gamma$ 和 $A
 \end{definition}
 
 \begin{remark}[纤维化对象]
-我们说 $A : \mathcal{U}$ 是一个\textbf{纤维化对象}，如果我们在终对象 $1$ 上的常值族 $\lambda(\_ : 1) \to A$ 有一个纤维化结构。注意，如果 $(A, \alpha) : \mathtt{Fib}\,\Gamma$ 是一个纤维化，那么对于每个 $x : \Gamma$，类型 $A\,x : \mathcal{U}$ 是纤维化的，其纤维化结构由通过映射 $\lambda(\_ : 1) \to x : 1 \to \Gamma$ 重索引 $\alpha$ 给出。然而，其逆不成立：拥有一族纤维化结构，即 $(x : \Gamma) \to \mathtt{isFib}(\lambda(\_ : 1) \to A\,x)$ 的元素，比拥有 $A : \Gamma \to \mathcal{U}$ 的纤维化结构要弱。为了理解为什么，考虑由以下定义的族 $P : \mathtt{I} \to \mathcal{U}$：
+我们说 $A : \mathcal{U}$ 是一个\textbf{纤维化对象}，如果我们在终对象 $1$ 上的常值族 $\lambda(\_ : 1) \to A$ 有一个纤维化结构。注意，如果 $(A, \alpha) : \mathtt{Fib}\ \Gamma$ 是一个纤维化，那么对于每个 $x : \Gamma$，类型 $A\ x : \mathcal{U}$ 是纤维化的，其纤维化结构由通过映射 $\lambda(\_ : 1) \to x : 1 \to \Gamma$ 重索引 $\alpha$ 给出。然而，其逆不成立：拥有一族纤维化结构，即 $(x : \Gamma) \to \mathtt{isFib}(\lambda(\_ : 1) \to A\ x)$ 的元素，比拥有 $A : \Gamma \to \mathcal{U}$ 的纤维化结构要弱。为了理解为什么，考虑由以下定义的族 $P : \mathtt{I} \to \mathcal{U}$：
 \begin{equation}
-P\,i \triangleq [0 = i]
+P\ i \triangleq [0 = i]
 \end{equation}
 
-对于每个 $i : \mathtt{I}$，纤维 $P\,i : \mathcal{U}$ 是一个纤维化对象，具有纤维化结构 $\rho_i : \mathtt{isFib}(\lambda(\_ : 1) \to P\,i)$，由 $\rho_i\,e\,p\,\varphi\,f\,x \triangleq x$ 给出。然而，不可能构造 $\rho : \mathtt{isFib}\,P$。因为如果可能，我们可以定义 $\rho\,0\,id\,\bot\,\mathtt{elim}_\emptyset\,* : [0 = 1]$；结合 $\mathrm{ax}_2$，这将导致矛盾。这个例子将在后面第 7.1 节中更详细地探讨。
+对于每个 $i : \mathtt{I}$，纤维 $P\ i : \mathcal{U}$ 是一个纤维化对象，具有纤维化结构 $\rho_i : \mathtt{isFib}(\lambda(\_ : 1) \to P\ i)$，由 $\rho_i\ e\ p\ \varphi\ f\ x \triangleq x$ 给出。然而，不可能构造 $\rho : \mathtt{isFib}\ P$。因为如果可能，我们可以定义 $\rho\ 0\ id\ \bot\ \mathtt{elim}_\emptyset\ \ast : [0 = 1]$；结合 $\ax{2}$，这将导致矛盾。这个例子将在后面第 7.1 节中更详细地探讨。
 \end{remark}
 
-如果 $\alpha : \mathtt{Fill}\,e\,A$，那么 $\lambda\varphi\,f\,a \to \alpha\,\varphi\,f\,a\,\overline{e} : \mathtt{Comp}\,e\,A$，因此每个填充结构都产生一个复合结构。反之，CCHM 纤维化的复合结构产生填充结构：
+如果 $\alpha : \mathtt{Fill}\ e\ A$，那么 $\lambda\varphi\ f\ a \to \alpha\ \varphi\ f\ a\ \overline{e} : \mathtt{Comp}\ e\ A$，因此每个填充结构都产生一个复合结构。反之，CCHM 纤维化的复合结构产生填充结构：
 
 \begin{lemma}[从复合结构构造填充结构]
-给定 $\Gamma : \mathcal{U}$，$A : \Gamma \to \mathcal{U}$，$e : \{0, 1\}$，$\alpha : \mathtt{isFib}\,A$ 和 $p : \mathtt{I} \to \Gamma$，存在一个填充结构 $\mathtt{fill}\ e\ \alpha\ p : \mathtt{Fill}\ e\ (A \circ p)$，它在 $\overline{e}$ 处与 $\alpha$ 一致，即：
+给定 $\Gamma : \mathcal{U}$，$A : \Gamma \to \mathcal{U}$，$e : \{0, 1\}$，$\alpha : \mathtt{isFib}\ A$ 和 $p : \mathtt{I} \to \Gamma$，存在一个填充结构 $\mathtt{fill}\ e\ \alpha\ p : \mathtt{Fill}\ e\ (A \circ p)$，它在 $\overline{e}$ 处与 $\alpha$ 一致，即：
 \begin{align}
-\forall(\varphi : \mathtt{Cof})(f : [\varphi] \to \Pi_\mathtt{I} A)(a : A&(p\,e)).\notag\\
-&(\varphi, f) \ @\  e \nearrow a \Rightarrow \mathtt{fill}\,e\,\alpha\,p\,\varphi\,f\,a\,\overline{e} = \alpha\,e\,p\,\varphi\,f\,a
+\forall(\varphi : \mathtt{Cof})(f : [\varphi] \to \Pi_\mathtt{I} A)(a : A&(p\ e)).\notag\\
+&(\varphi, f) \ @\  e \nearrow a \Rightarrow \mathtt{fill}\ e\ \alpha\ p\ \varphi\ f\ a\ \overline{e} = \alpha\ e\ p\ \varphi\ f\ a
 \end{align}
 
 此外，$\mathtt{fill}$ 在重索引下是\textbf{稳定的}，在这个意义上，对于所有 $\gamma : \Delta \to \Gamma$ 和 $p : \mathtt{I} \to \Delta$：
 \begin{equation}
-\mathtt{fill}\,e\,\alpha\,(\gamma \circ p) = \mathtt{fill}\,e\,(\alpha[\gamma])\,p
+\mathtt{fill}\ e\ \alpha\ (\gamma \circ p) = \mathtt{fill}\ e\ (\alpha[\gamma])\ p
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-从复合构造填充遵循 [18, 第 4.4 节]，但仅使用 $\mathtt{I}$ 上的连接代数结构（公理 $\mathrm{ax}_3$ 和 $\mathrm{ax}_4$），而非德摩根代数结构。假设 $\Gamma : \mathcal{U}$，$A : \Gamma \to \mathcal{U}$，$e : \{0, 1\}$，$\alpha : \mathtt{isFib}\,A$，$p : \mathtt{I} \to \Gamma$，$\varphi : \mathtt{Cof}$，$f : [\varphi] \to \Pi_\mathtt{I}(A \circ p)$，$a : A(p\,e)$ 满足 $(\varphi, f) \ @\  e \nearrow a$，以及 $i : \mathtt{I}$。然后使用定义 5.1.4 我们可以定义：
+从复合构造填充遵循 [18, 第 4.4 节]，但仅使用 $\mathtt{I}$ 上的连接代数结构（公理 $\ax{3}$ 和 $\ax{4}$），而非德摩根代数结构。假设 $\Gamma : \mathcal{U}$，$A : \Gamma \to \mathcal{U}$，$e : \{0, 1\}$，$\alpha : \mathtt{isFib}\ A$，$p : \mathtt{I} \to \Gamma$，$\varphi : \mathtt{Cof}$，$f : [\varphi] \to \Pi_\mathtt{I}(A \circ p)$，$a : A(p\ e)$ 满足 $(\varphi, f) \ @\  e \nearrow a$，以及 $i : \mathtt{I}$。然后使用定义 5.1.4 我们可以定义：
 \begin{equation}
-\mathtt{fill}\,e\,\alpha\,p\,\varphi\,f\,a\,i \triangleq \alpha\,e\,(p'\,i)\,(\varphi \lor i = e)\,(f'\,i \cup g\,i)\,a
+\mathtt{fill}\ e\ \alpha\ p\ \varphi\ f\ a\ i \triangleq \alpha\ e\ (p'\ i)\ (\varphi \lor i = e)\ (f'\ i \cup g\ i)\ a
 \end{equation}
 
 其中
 \begin{align*}
 &p' : \mathtt{I} \to \mathtt{I} \to \Gamma \\
-&p'\,i\,j \triangleq p(i \sqcap_e j) \\
-&f' : (i : \mathtt{I}) \to [\varphi] \to \Pi_\mathtt{I}(A \circ (p'\,i)) \\
-&f'\,i\,u\,j \triangleq f\,u\,(i \sqcap_e j) \\
-&g : (i : \mathtt{I}) \to \{g' : [i = e] \to \Pi_\mathtt{I}(A \circ (p'\,i)) \mid (\varphi, f'\,i) \sim (i = e, g')\} \\
-&g\,i\,v\,j \triangleq a
+&p'\ i\ j \triangleq p(i \sqcap_e j) \\
+&f' : (i : \mathtt{I}) \to [\varphi] \to \Pi_\mathtt{I}(A \circ (p'\ i)) \\
+&f'\ i\ u\ j \triangleq f\ u\ (i \sqcap_e j) \\
+&g : (i : \mathtt{I}) \to \{g' : [i = e] \to \Pi_\mathtt{I}(A \circ (p'\ i)) \mid (\varphi, f'\ i) \sim (i = e, g')\} \\
+&g\ i\ v\ j \triangleq a
 \end{align*}
 
 其中 $\sqcap_e$ 由 $\sqcap_0 \triangleq \sqcap$ 和 $\sqcap_1 \triangleq \sqcup$ 给出。最后，性质 (5.18) 从定义 (5.15) 和 (5.19) 立即可得。
