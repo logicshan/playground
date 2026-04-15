@@ -27,6 +27,7 @@
 
 \usepackage{fontspec}
 
+\newcommand\realign{\mathtt{realign}}
 \newcommand\calV{\mathcal{V}}
 \newcommand\calU{\mathcal{U}}
 \newcommand\bfC{\mathbf{C}}
@@ -712,5 +713,47 @@ _∪_ {A} {φ} {ψ} f g {p} w = ∥∥-elim h q w where
 
 \begin{frame}[fragile,shrink]{纤维化的性质}
   给定一个类型族$A:\Gamma\to\calU$和一个纤维化$(B,\beta):\Fib\Gamma$, 使得$A\cong B$, 那么我们可以构造 $\alpha$ 使得 $(A,\alpha):\Fib\Gamma$.
+  \begin{itemize}
+    \item $A:\Gamma\to\calU$
+     \begin{align*}
+      \alpha :\isFib\ A \triangleq &(e:\{\ttzero,\ttone\})(p:\ttI\to\Gamma)\to(\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(A\circ p))\to\\
+      &\{a_0:(A\circ p)\ e\mid(\varphi,f)@e\nearrow a_0\}\to\{a_1:(A\circ p)\ \overline{e}\mid(\varphi,f)@\overline{e}\nearrow a_1\}\end{align*}
+       \begin{align*}
+      \beta :\isFib\ B \triangleq &(e:\{\ttzero,\ttone\})(p:\ttI\to\Gamma)\to(\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(B\circ p))\to\\
+      &\{a_0:(B\circ p)\ e\mid(\varphi,f)@e\nearrow a_0\}\to\{a_1:(B\circ p)\ \overline{e}\mid(\varphi,f)@\overline{e}\nearrow a_1\}\end{align*}
+      $A \cong B \triangleq (x : \Gamma) \to A\,x \cong B\,x$
+    \item $\alpha\ e\ p\ \varphi\ q\ a_0\triangleq f^{-1}\,(p\ \overline{e})\,(\beta\ e\ p\ \varphi\ (\lambda u\ i\to f\ (p\ i)\ (q\ u\ i))\ (f\ (p\ e)\ a_0))$
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,shrink]{上纤维部分族(Cofibrant-partial families)}
+  \begin{itemize}
+    \item $\Gamma : \calU$, $\Phi : \Gamma \to \Cof$
+    \item $\Gamma|\Phi \triangleq (x:\Gamma)\times[\Phi\ x]$
+    \item $\iota : \Gamma|\Phi \rightarrowtail \Gamma$ (就是投影映射)
+    \item $\Gamma$ 限制在 $\Phi$ 上的一个上纤维部分族定义为 $A: (\Gamma|\Phi)\to\calU$
+  \end{itemize}
+
+  对齐引理: 对$A : \Gamma \to \calU$, $\beta : \isFib(A\circ\iota)$, $\alpha : \isFib\ A$, 存在一个复合结构 $\realign(\Phi,\beta,\alpha) : \isFib\ A$, 使得 $\beta = \realign(\Phi,\beta,\alpha)[\iota]$
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+     \begin{align*}
+      \alpha :\isFib\ A \triangleq &(e:\{\ttzero,\ttone\})(p:\ttI\to\Gamma)\to(\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}(A\circ p))\to\\
+      &\{a_0:(A\circ p)\ e\mid(\varphi,f)@e\nearrow a_0\}\to\{a_1:(A\circ p)\ \overline{e}\mid(\varphi,f)@\overline{e}\nearrow a_1\}\end{align*}
+       \begin{align*}
+      \beta :\isFib\ (A\circ\iota) \triangleq &(e:\{\ttzero,\ttone\})(p:\ttI\to\Gamma|\Phi)\to(\varphi:\Cof)(f:[\varphi]\to\Pi_{\ttI}((A\circ\iota)\circ p))\to\\
+      &\{a_0:((A\circ\iota)\circ p)\ e\mid(\varphi,f)@e\nearrow a_0\}\to\\
+      &\{a_1:((A\circ\iota)\circ p)\ \overline{e}\mid(\varphi,f)@\overline{e}\nearrow a_1\}
+    \end{align*}
+    $ \realign(\Phi, \beta, \alpha)\ e\ p\ \psi\ f\ g \triangleq \alpha\ e\ p\ (\psi \lor (\forall(i : \mathtt{I}).\ \Phi\ (p\ i)))\ (f \cup f')\ g $
+
+    其中
+
+    \begin{align*}
+      f' : [\forall(i : \mathtt{I}).\ \Phi\ (p\ i)] &\to \Pi_{\mathtt{I}}(A \circ p)\\
+    u &\mapsto \mathtt{fill}\ e\ \beta\ (\lambda i \to (p, u\ i))\ \psi\ f\ g 
+  \end{align*}
 \end{frame}
 \end{document}
