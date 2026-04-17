@@ -1346,7 +1346,7 @@ b_1 \triangleq \beta\ 1\ (\lambda(\_ : \ttI) \to x)\ (\Phi\ x \lor \psi)\ (p_b \
 简单地取 $G = \mathtt{SGlue}\ \Phi\,A\,B\,f$；由定理 5.4.10 我们得到 $G$ 的复合结构，然后我们使用引理 5.3.10 来调整它以得到一个新的复合结构 $\gamma$ 满足所需的等式。
 \end{proof}
 
-\subsection{泛等性}
+\section{泛等性}
 
 Voevodsky 的\textbf{泛等性公理}（第 2.1.3 节）对于 CwF 中的宇宙 $\mathcal{V}$（至少具有 $\Sigma$-、$\Pi$- 和 $\mathtt{Id}$-类型）指出，对于每个 $A, B : \mathcal{V}$，从 $\mathtt{Id}\ \mathcal{V}\ A\ B$ 到 $(f : A \to B) \times \mathtt{Equiv}\ f$ 的典范函数是一个等价。Cohen 等人构造了立方体集合预层拓扑斯中的（与 CwF 相关联的）宇宙，其类型族对于具有小纤维的 CCHM 纤维化是通用的（对于元理论中``小''的适当概念），并证明它满足泛等性公理。他们通过调整 Hofmann-Streicher 预层范畴的宇宙构造 [31] 来实现这一点，细节参见第 3.3.5 节。仅使用一般拓扑斯的内部类型论来表达他们的宇宙构造是不可能的，原因我们将在定理 7.1.1 中讨论。在第 7 章中，我们解释了为什么宇宙构造不能简单地被公理化，然后展示了如何通过工作于内部类型论的模态扩展来解决这个问题。目前，我们只证明一个不涉及纤维化宇宙的泛等性版本。
 
@@ -1357,13 +1357,13 @@ Voevodsky 的\textbf{泛等性公理}（第 2.1.3 节）对于 CwF 中的宇宙 
 \begin{definition}[纤维化之间的路径相等性]
 定义 CCHM 纤维化之间的路径类型 $\_\sim_{\mathcal{U}}\_ : \{\Gamma : \mathcal{U}\} \to \mathtt{Fib}\ \Gamma \to \mathtt{Fib}\ \Gamma \to \mathcal{U}_1$ 为
 \[
-A \sim_{\mathcal{U}} B \triangleq \{P : \mathtt{Fib}(\Gamma \times \ttI) \mid P[\langle  id , 0\rangle] = A \land P[\langle  id , 1\rangle] = B\}
+A \sim_{\mathcal{U}} B \triangleq \{P : \mathtt{Fib}(\Gamma \times \ttI) \mid P[\langle  id , \ttzero\rangle] = A \land P[\langle  id , \ttone\rangle] = B\}
 \]
 \end{definition}
 
 先前，我们指出了为什么这样的路径概念应该对应于存在的 CCHM 纤维化宇宙。在这里，我们解释为什么这个概念在 [18] 给出的具体模型中确实是等价的。回忆那里的宇宙构造是由预层范畴的通常 Hofmann-Streicher 宇宙构造的变体给出的，如第 3.3.5 节所述。这意味着，在外部元理论中，对于所有 $\Gamma$ 存在一个类型 $\mathcal{V} \in \mathtt{Ty}(\Gamma)$ 由 $\mathcal{V}(I, \rho) \triangleq \mathtt{FTy}_0(\mathtt{y}I)$ 给出，其中 $\mathtt{y}I$ 表示 $I$ 的 Yoneda 嵌入。每个（小）纤维化类型 $A \in \mathtt{FTy}_0(\Gamma)$ 有一个编码 $\ulcorner A \urcorner \in \mathtt{Ter}(\Gamma \vdash \mathcal{V})$，每个 $a \in \mathtt{Ter}(\Gamma \vdash \mathcal{V})$ 编码一个类型 $\mathtt{El}\ a \in \mathtt{FTy}_0(\Gamma)$ 使得 $\mathtt{El}\ (\ulcorner A \urcorner) = A$ 且 $\ulcorner \mathtt{El}\ a \urcorner = a$ 对所有 $a$ 和 $A$ 成立。
 
-现在考虑以下情况：外部地，路径 $P : A \sim_{\mathcal{U}} B$ 对应于纤维化 $P \in \mathtt{FTy}_0(\Gamma.\ttI)$ 使得对于某个 $\Gamma \in \hatsquare$ 和 $A, B \in \mathtt{FTy}_0(\Gamma)$ 有 $P[\langle  id , 0\rangle] = A$ 和 $P[\langle  id , 1\rangle] = B$。从这些数据我们可以构造 $p \in \mathtt{Ter}(\Gamma \vdash \mathtt{Path}_{\mathcal{V}}\ \ulcorner A \urcorner\ \ulcorner B \urcorner)$ 如下：
+现在考虑以下情况：外部地，路径 $P : A \sim_{\mathcal{U}} B$ 对应于纤维化 $P \in \mathtt{FTy}_0(\Gamma.\bbI)$ 使得对于某个 $\Gamma \in \hatsquare$ 和 $A, B \in \mathtt{FTy}_0(\Gamma)$ 有 $P[\langle  id , \ttzero\rangle] = A$ 和 $P[\langle  id , \ttone\rangle] = B$。从这些数据我们可以构造 $p \in \mathtt{Ter}(\Gamma \vdash \mathtt{Path}_{\mathcal{V}}\ \ulcorner A \urcorner\ \ulcorner B \urcorner)$ 如下：
 \[
 p(\rho) \triangleq \langle i \rangle\ \ulcorner P \urcorner(\rho s_i, i)
 \]
@@ -1374,7 +1374,7 @@ p(\rho) \triangleq \langle i \rangle\ \ulcorner P \urcorner(\rho s_i, i)
 \]
 因此 $(\ulcorner P \urcorner(\rho s_i, i))(i0) = \ulcorner A \urcorner(\rho)$。类似地，当 $i = 1$ 时我们有 $(\ulcorner P \urcorner(\rho s_i, i))(i1) = \ulcorner B \urcorner(\rho)$，因此 $\langle i \rangle\ \ulcorner P \urcorner(\rho s_i, i) \in \mathtt{Path}_{\mathcal{V}}\ \ulcorner A \urcorner\ \ulcorner B \urcorner(\rho)$ 如所要求。
 
-反之，给定 $p \in \mathtt{Ter}(\Gamma \vdash \mathtt{Path}_{\mathcal{V}}\ \ulcorner A \urcorner\ \ulcorner B \urcorner)$ 我们可以定义 $P \in \mathtt{FTy}_0(\Gamma.\ttI)$ 具有所需性质如下：
+反之，给定 $p \in \mathtt{Ter}(\Gamma \vdash \mathtt{Path}_{\mathcal{V}}\ \ulcorner A \urcorner\ \ulcorner B \urcorner)$ 我们可以定义 $P \in \mathtt{FTy}_0(\Gamma.\bbI)$ 具有所需性质如下：
 \[
 P \triangleq \mathtt{El}(p') \qquad \text{其中} \qquad p'(\rho, i) \triangleq p\ \rho\ i
 \]
@@ -1390,8 +1390,8 @@ P[\langle  id , 0\rangle] = \mathtt{El}(p')[\langle  id , 0\rangle] = \mathtt{El
 \begin{theorem}[路径转换为等价]
 存在一个函数
 \begin{align}
-&\mathtt{pathToEquiv} : \{\Gamma : \mathcal{U}\}\{A\ B : \mathtt{Fib}\ \Gamma\} \\
-&\quad(P : A \sim_{\mathcal{U}} B) \to (f : (x : \Gamma) \to \mathtt{fst}\ A\ x \to \mathtt{fst}\ B\ x) \times \mathtt{Equiv}\ f \notag
+\mathtt{pathToEquiv} : &\{\Gamma : \mathcal{U}\}\{A\ B : \mathtt{Fib}\ \Gamma\} \\
+&(P : A \sim_{\mathcal{U}} B) \to (f : (x : \Gamma) \to \mathtt{fst}\ A\ x \to \mathtt{fst}\ B\ x) \times \mathtt{Equiv}\ f \notag
 \end{align}
 \end{theorem}
 
@@ -1423,8 +1423,8 @@ f\ x\ a \triangleq \rho\ 0\ \langle x,  id \rangle\ \bot\ \mathtt{elim}_{\emptys
 \begin{theorem}[等价转换为路径]
 存在一个函数
 \begin{align}
-&\mathtt{equivToPath} : \{\Gamma : \mathcal{U}\}\{A\ B : \mathtt{Fib}\ \Gamma\} \\
-&\quad(f : (x : \Gamma) \to \mathtt{fst}\ A\ x \to \mathtt{fst}\ B\ x) \to (\mathtt{Equiv}\ f) \to A \sim_{\mathcal{U}} B \notag
+\mathtt{equivToPath} : &\{\Gamma : \mathcal{U}\}\{A\ B : \mathtt{Fib}\ \Gamma\} \\
+&(f : (x : \Gamma) \to \mathtt{fst}\ A\ x \to \mathtt{fst}\ B\ x) \to (\mathtt{Equiv}\ f) \to A \sim_{\mathcal{U}} B \notag
 \end{align}
 \end{theorem}
 
@@ -1508,4 +1508,122 @@ eq'\ x\ i \triangleq (\lambda u : [i = 0] \to eq) \cup (\lambda u : [i = 1] \to 
 
 由于这只是应用于 $f\ x\ a$ 的两个平凡合成，我们可以使用填充来推导出一条路径 $f\ x\ a \sim \mathtt{coerce}\ (P, \rho)\ x\ a$。现在，两次应用函数外延性（注记 5.3.16）得到一条路径 $f \sim \mathtt{coerce}\ (P, \rho)$，如所要求。
 \end{proof}
+
+\section{满足公理}
+
+在构造性集合论中非形式化地工作，[18] 的作者使用特定小范畴 $\square$（他们称之为\textbf{立方体范畴}，如第 3.3 节所述）上的反变集值函子构成的拓扑斯 $\hatcube = \mathbf{Set}^{\square^{\mathrm{op}}}$ 给出了他们类型论的一个模型。在本节中，我们给出任意小范畴 $\mathbf{C}$ 的充分条件，使得集值预层拓扑斯 $\widehat{\mathbf{C}} = \mathbf{Set}^{\mathbf{C}^{\mathrm{op}}}$（在直觉主义 ZF 集合论 [1, 第 3.2 节] 中）具有满足图 5.4 中公理的区间对象和余纤维命题的子对象。我们证明立方体范畴是这种 $\mathbf{C}$ 的一个实例（以不止一种方式）；并且我们还证明在排中律成立的情况下，单纯形范畴 $\Delta$ 也是如此。
+
+\subsubsection{区间对象 ($\ax{1}$--$\ax{4}$)}
+
+回到具有其相关预层拓扑斯 $\widehat{\mathbf{C}}$ 的小范畴 $\mathbf{C}$ 的一般情况，如果我们取区间对象 $\ttI \in \widehat{\mathbf{C}}$ 为某个对象 $\mathbf{i} \in \mathbf{C}$ 的可表函子 $\mathtt{y}_i \triangleq \mathbf{C}(\_, i)$，那么以下定理给出了这种区间对象满足公理 $\ax{1}$ 的一个有用判据。
+
+\begin{theorem}
+在预层拓扑斯 $\widehat{\mathbf{C}}$ 中，可表函子 $\ttI = \mathtt{y}_i$ 满足公理 $\ax{1}$，如果 $\mathbf{C}$ 是一个\textbf{余筛选范畴}，即如果 $\mathbf{Set}$ 中的有限积与 $\mathbf{C}^{\mathrm{op}}$ 上的余极限交换 [26]。
+\end{theorem}
+
+\begin{proof}
+$\mathbf{C}$ 是余筛选的，如果余极限函子 $\operatorname{colim}_{\mathbf{C}^{\mathrm{op}}} : \widehat{\mathbf{C}} \to \mathbf{Set}$ 保持有限积。
+
+回忆 $\operatorname{colim}_{\mathbf{C}^{\mathrm{op}}} : \widehat{\mathbf{C}} \to \mathbf{Set}$ 是常值预层函子 $\Delta : \mathbf{Set} \to \widehat{\mathbf{C}}$ 的左伴随，并且（因此）对于任何 $c \in \mathbf{C}$ 有 $\operatorname{colim}_{\mathbf{C}^{\mathrm{op}}} \mathtt{y}_c \cong 1$。因此当 $\mathbf{C}$ 是余筛选时，
+\begin{align*}
+\widehat{\mathbf{C}}(\mathtt{y}_c \times \mathtt{y}_i, \Delta\{0,1\}) &\cong \mathbf{Set}(\operatorname{colim}_{\mathbf{C}^{\mathrm{op}}}(\mathtt{y}_c \times \mathtt{y}_i), \{0,1\}) \\
+&\cong \mathbf{Set}(\operatorname{colim}_{\mathbf{C}^{\mathrm{op}}} \mathtt{y}_c \times \mathtt{y}_i, \{0,1\}) \\
+&\cong \mathbf{Set}(1 \times 1, \{0,1\}) \cong \{0,1\}
+\end{align*}
+由于 $\widehat{\mathbf{C}}$ 中的可判定子对象由 $1 + 1 = \Delta\{0,1\}$ 分类，这意味着 $\mathtt{y}_c \times \mathtt{y}_i$ 只有两个可判定子对象：最小和最大子对象。由于这对所有 $c \in \mathbf{C}$ 成立，因此 $\ttI = \mathtt{y}_i$ 满足 $\ax{1}$。
+\end{proof}
+
+余筛选性的一个更初等的刻画是：$\mathbf{C}$ 是居住的，并且对于每对对象 $c, c' \in \mathbf{C}$，跨度范畴 $c \leftarrow \cdot \rightarrow c'$ 是连通范畴 [2, 定理 2.15]。任何具有有限积的范畴显然具有这一性质。这对于上面定义的立方体范畴 $\square$ 成立，因此 [18] 中的模型（其中 $\mathbf{C} = \square$ 且 $i$ 是泛 De Morgan 代数）的区间满足 $\ax{1}$。不具有有限积但仍然是余筛选的一个相关例子是 $\Delta$，居住有限线性有序集 $[0 < 1 < \cdots < n]$ 的范畴，其 $\widehat{\Delta}$ 是\textbf{单纯形集}范畴，在同伦论中被广泛使用 [28]。因此 $\widehat{\Delta}$ 中区间的自然候选，即当 $i$ 是 1-单纯形 $[0 < 1]$ 时的 $\mathtt{y}_i$，满足 $\ax{1}$。
+
+除了 $\ax{1}$ 之外，图 5.4 中关于区间的其他公理说 $\ttI$ 是由 $\ax{3}$ 和 $\ax{4}$ 给出的代数理论的一个非平凡 ($\ax{2}$) 模型，我们称之为\textbf{连接代数}。（另见 [27, 定义 1.7]，它在更抽象的设定中考虑类似概念。）对于立方体集，Yoneda 嵌入 $\mathtt{y} : \square \to \hatcube$ 将 $\square$ 中的泛 De Morgan 代数发送到 $\hatcube$ 中的一个 De Morgan 代数。这是一个非平凡连接代数：常数是最小和最大元素，二元运算是交和并。[18] 主题的一个明显变体是用连接代数的 Lawvere 理论替换 $\square$。还注意到 $\widehat{\Delta}$ 中的 1-单纯形是一个非平凡连接代数，常数是它的两个端点，二元运算是由 $[0 < 1]$ 上的保序二元运算最小值和最大值诱导的。
+
+\subsubsection{余纤维命题 ($\ax{5}$--$\ax{8}$) 和严格性公理 ($\ax{9}$)}
+
+在具有区间对象的拓扑斯中，有许多候选的子对象 $\mathtt{Cof} \hookrightarrow \Omega$ 满足图 5.4 中的公理 $\ax{5}$--$\ax{8}$。在一个极端，我们可以取 $\mathtt{Cof}$ 为整个 $\Omega$。在相反的极端，我们可以取（内部地）由以下要求归纳定义的子对象：它包含命题 $i = 0$ 和 $i = 1$（对于所有 $i : \ttI$）并且对二元析取、依赖和 $\ttI$-索引合取封闭，从而获得满足 $\ax{5}$--$\ax{8}$ 的最小 $\mathtt{Cof}$。然而，余纤维命题还必须满足严格性公理 $\ax{9}$，我们接下来考虑这一点。
+
+给定预层拓扑斯 $\widehat{\mathbf{C}}$，我们在与 $\widehat{\mathbf{C}}$ 相关联的 CwF 中工作，如定义 3.2.1 中所述。特别地，预层 $\Gamma \in \widehat{\mathbf{C}}$ 上的族由函子 $(\int \Gamma)^{\mathrm{op}} \to \mathbf{Set}$ 给出，其中 $\int \Gamma$ 是 $\Gamma$ 的通常元素范畴，$\mathrm{obj}(\int \Gamma) = (c \in \mathrm{obj}\ \mathbf{C}) \times \Gamma c$ 且 $(\int \Gamma)((c, x), (d, y)) = \{f \in \mathbf{C}(c, d) \mid \Gamma f\ y = x\}$。
+
+如果 $\mathcal{S}$ 是环境集合论中的一个 Grothendieck 宇宙，那么它在该 CwF 中的 Hofmann-Streicher 提升 [31] 到一个宇宙 $\mathcal{U}$ 满足：$\widehat{\mathbf{C}}$ 中的态射 $\Gamma \to \mathcal{U}$ 命名取值于 $\mathcal{S}$ 的族 $(\int \Gamma)^{\mathrm{op}} \to \mathcal{S}$。
+
+\begin{definition}[$\Omega_{\mathrm{dec}}$]
+预层拓扑斯 $\widehat{\mathbf{C}}$ 中的子对象分类器 $\Omega$ 将每个 $c \in \mathbf{C}$ 映射到 $c$ 上的筛集合 $\Omega(c)$，即前复合封闭的子集 $S \subseteq \mathrm{obj}(\mathbf{C}/c)$。令 $\Omega_{\mathrm{dec}} \hookrightarrow \Omega$ 为子预层，其在每个 $c \in \mathrm{obj}\ \mathbf{C}$ 处的值是 $\Omega(c)$ 中由 $\mathrm{obj}(\mathbf{C}/c)$ 的可判定子集构成的那些筛组成的子集。
+\end{definition}
+
+当然，如果环境集合论满足排中律，那么 $\Omega_{\mathrm{dec}} = \Omega$。一般来说，$\Omega_{\mathrm{dec}}$ 分类 $\widehat{\mathbf{C}}$ 中的单态射 $\alpha : F \hookrightarrow G$，使得对于所有 $c \in \mathrm{obj}\ \mathbf{C}$，（单射）函数 $\alpha_c : F\ c \to G\ c$ 具有可判定像。
+
+\begin{theorem}
+将宇宙 $\mathcal{U}$ 解释为 $\mathbf{Set}$ 中 Grothendieck 宇宙的 Hofmann-Streicher 提升 [31]，预层拓扑斯 $\widehat{\mathbf{C}}$ 中的子对象 $\mathtt{cof} \hookrightarrow \Omega$ 满足严格性公理 $\ax{9}$，如果它包含在 $\Omega_{\mathrm{dec}} \hookrightarrow \Omega$ 中。
+\end{theorem}
+
+\begin{proof}
+对于每个 $c \in \mathrm{obj}\ \mathbf{C}$，假设给定 $S \in \Omega_{\mathrm{dec}}(c)$。因此 $S$ 是 $c$ 上的一个筛，并且对于每个 $c' \in \mathrm{obj}\ \mathbf{C}$ 和 $\mathbf{C}$-态射 $f : c' \to c$，$f \in S$ 是否成立是可判定的。我们也可以将 $S$ 视为子预层 $\iota : S \hookrightarrow \mathtt{y}_c$。
+
+假设我们有族 $A : (\int S)^{\mathrm{op}} \to \mathcal{S}$，$B : (\int \mathtt{y}_c)^{\mathrm{op}} \to \mathcal{S}$ 以及 $A$ 与 $B$ 沿 $S \hookrightarrow \mathtt{y}_c$ 的限制之间的自然同构 $s$。对于每个 $\mathbf{C}$-态射 $f : c' \to c$，利用 $S$ 的可判定性我们可以定义双射 $s'(f) : B'(f) \cong B(f)$ 如下：
+\[
+B'(f) \triangleq \begin{cases} A(f) & \text{如果 } f \in S \\ B(f) & \text{如果 } \neg(f \in S) \end{cases} \qquad \text{并且} \qquad s'(f) \triangleq \begin{cases} s(f) & \text{如果 } f \in S \\ f & \text{如果 } \neg(f \in S) \end{cases}
+\]
+（与 [18, 定义 15] 比较）。我们通过在这些双射上转移 $B$ 的函子作用使 $B'$ 成为函子 $(\int \mathtt{y}_c)^{\mathrm{op}} \to \mathcal{S}$。这样做之后，$s'$ 成为自然同构 $B' \cong B$；并且根据定义，它沿 $S \hookrightarrow \mathtt{y}_c$ 的限制是 $s$。
+\end{proof}
+
+\begin{corollary}
+令 $\mathbf{C}$ 为具有有限积的小范畴，包含一个具有非平凡连接代数结构 $0, 1 : 1 \to i, \sqcap, \sqcup : i \times i \to i$（参见图 5.4）的对象 $i$。假设对于每个对象 $c \in \mathbf{C}$，集合 $\mathbf{C}(c, i)$ 具有可判定等式。那么如果我们取区间 $\ttI$ 为 $\mathtt{y}_i$，$\mathtt{Cof}$ 为 $\Omega_{\mathrm{dec}}$，预层拓扑斯 $\widehat{\mathbf{C}}$ 满足图 5.4 中的所有公理。
+\end{corollary}
+
+\begin{proof}
+我们已经在第 5.6.1 节中注意到，这种 $\ttI$ 的选择满足公理 $\ax{1}$--$\ax{4}$。每个集合 $\mathbf{C}(c, i)$ 的可判定性意味着 $\widehat{\mathbf{C}}$ 中的子对象 $\{0\} \hookrightarrow \ttI$ 和 $\{1\} \hookrightarrow \ttI$ 通过 $\Omega_{\mathrm{dec}} \hookrightarrow \Omega$ 分解，因此当 $\mathtt{Cof} = \Omega_{\mathrm{dec}}$ 时公理 $\ax{5}$ 得到满足。注意这种 $\mathtt{Cof}$ 的选择自动满足 $\ax{6}$ 和 $\ax{7}$；并且由定理 5.6.3 它满足公理 $\ax{9}$。因此只需检查公理 $\ax{8}$ 是否满足。我们在引理 5.1.5(ii) 中看到，这个公理等价于要求余纤维在由 $\ttI$ 取指数下封闭。在这种情况下，余纤维是由 $\Omega_{\mathrm{dec}}$ 分类的单态射 $\alpha : F \hookrightarrow G$，我们在定义 5.6.2 之后注意到它们由每个函数 $\alpha_c \in \mathbf{Set}(F\ c, G\ c)$ 具有可判定像这一事实刻画。这些单态射在由 $\ttI$ 取指数下的封闭性来自于 $\mathbf{C}$ 具有有限积且 $\ttI = \mathtt{y}_i$ 是可表的事实；因为那时 $\ttI \to (\_)$ 同构于由 $(\_) \times i : \mathbf{C} \to \mathbf{C}$ 预复合诱导的函子 $\widehat{\mathbf{C}} \to \widehat{\mathbf{C}}$，这显然保持逐分量可判定像性质。
+\end{proof}
+
+上述关于公理 $\ax{8}$ 的论证不适用于 $\Delta$，因为它不具有有限积；我们不知道构造性单纯形集是否满足该公理。然而，在排中律 (LEM) 成立的情况下，$\Omega_{\mathrm{dec}} = \Omega$ 并且我们有：
+
+\begin{corollary}[经典单纯形集]
+假设 LEM 在集合论语元理论中成立，那么如果我们取 $\ttI$ 为 1-单纯形上的可表预层，$\mathtt{Cof}$ 为整个 $\Omega$，单纯形集的预层拓扑斯 $\widehat{\Delta}$ 满足图 5.4 中的公理。
+\end{corollary}
+
+\begin{proof}
+我们已经在第 5.6.1 节中注意到，这种 $\ttI$ 的选择满足公理 $\ax{1}$--$\ax{4}$。如果 $\mathtt{Cof} = \Omega$（即 $\mathtt{cof} = \lambda\_ \to \top$），那么公理 $\ax{5}$--$\ax{8}$ 平凡成立。此外，如果 LEM 成立，那么 $\Omega_{\mathrm{dec}} = \Omega$，因此由定理 5.6.3 公理 $\ax{9}$ 成立。
+\end{proof}
+
+\begin{remark}
+作为定理 5.6.3 的部分逆，我们有如果 $\ax{9}$ 被与 $\widehat{\mathbf{C}}$ 相关联的 CwF 中的 Hofmann-Streicher 宇宙满足，那么每个余纤维单态射 $\alpha : F \hookrightarrow G$ 的分量函数 $\alpha_c \in \mathbf{Set}(F\ c, G\ c)$（$c \in \mathrm{obj}\ \mathbf{C}$）的像是 $\neg\neg$-闭子集。为看到这一点，我们可以应用 Andrew Swan 的一个论证 [私人通信]，它依赖于环境集合论中有
+\begin{equation}
+(X = \emptyset) = \forall x \in X.\ \bot = \neg\neg(\forall x \in X.\ \bot) = \neg\neg(X = \emptyset)
+\end{equation}
+这一事实。
+
+假设给定 $c \in \mathrm{obj}\ \mathbf{C}$ 和 $S \in \mathtt{Cof}(c)$。我们必须使用公理 $\ax{9}$ 来证明 $S$ 是 $\mathrm{obj}(\mathbf{C}/c)$ 的 $\neg\neg$-闭子集。令 $A : (\int S)^{\mathrm{op}} \to \mathcal{S}$ 为将每个 $(c', f)$ 映射到 $\{\emptyset\}$ 的常值函子；令 $B : (\int \mathtt{y}_c)^{\mathrm{op}} \to \mathcal{S}$ 将每个 $(c', f)$ 映射到 $\{\{\emptyset\}, \{\emptyset \mid f \in S\}\}$（这确实扩展为一个函子，因为 $S$ 是一个筛）。$B$ 沿 $S \hookrightarrow \mathtt{y}_c$ 的限制同构于 $A$，因此由 $\ax{9}$ 存在某个 $B' : (\int \mathtt{y}_c)^{\mathrm{op}} \to \mathcal{S}$ 其沿 $S \hookrightarrow \mathtt{y}_c$ 的限制等于 $A$，以及某个同构 $s' : B' \cong B$。对于任何 $(c', f) \in \mathrm{obj}(\int \mathtt{y}_c)$，假设 $X \in B'(c', f)$；那么 $f \in S \Rightarrow X = \emptyset$ 因此 $\neg\neg(f \in S) \Rightarrow \neg\neg(X = \emptyset)$，从而由 (5.52)，
+\[
+\neg\neg(f \in S) \Rightarrow B'(c', f) = \{\emptyset\} \Rightarrow B(c', f) \cong \{\emptyset\} \Rightarrow f \in S
+\]
+因此 $S$ 确实是 $\mathrm{obj}(\mathbf{C}/c)$ 的 $\neg\neg$-闭子集。
+
+注意这个结果意味着，除非环境集合论满足 LEM，否则不可能取 $\mathtt{Cof}$ 为整个 $\Omega$ 并满足 $\ax{9}$。
+\end{remark}
+
+由于在构造性设定中自由 De Morgan 代数的等式是可判定的，因此当 $\mathbf{C} = \square$（立方体范畴，定义 3.3.1）时推论 5.6.4 给出了我们公理的一个模型。然而，这使用了与 [18, 第 4.1 节] 中不同的余纤维性选择。在本节剩余部分，我们检查 CCHM 的余纤维性概念是否满足我们的公理。
+
+\begin{definition}[[18] 中的余纤维命题]
+对于立方体范畴的每个对象 $I \in \mathrm{obj}\ \square$，Cohen 等人定义\textbf{面格} $\mathbb{F}(I)$ 为由符号 $(i = 0)$ 和 $(i = 1)$（对于每个 $i \in I$）生成的分配格，服从方程 $(i = 0) \land (i = 1) = \bot$。
+
+由于自由 De Morgan 代数 $\mathsf{dM}(I)$ 作为分配格由符号 $i$ 和 $1-i$（当 $i$ 遍历有限集 $I$）自由生成，我们可以将 $\mathbb{F}(I)$ 视为 $\mathsf{dM}(I)$ 的商格，通过将 $i$ 映射到 $(i = 1)$、$1-i$ 映射到 $(i = 0)$ 的函数；我们记 $q_I : \mathsf{dM}(I) \to \mathbb{F}(I)$ 为商映射。不难看到，对于每个 $f \in \mathbf{C}(J, I)$，相应的 De Morgan 代数同态 $\mathsf{dM}(I) \to \mathsf{dM}(J)$（我们也记为 $f$）诱导面格之间的格同态：
+\[
+\begin{tikzcd}
+\mathsf{dM}(I) \arrow[r] \arrow[d, "q_I"'] & \mathsf{dM}(J) \arrow[d, "q_J"] \\
+\mathbb{F}(I) \arrow[r, "\mathbb{F}f"'] & \mathbb{F}(J)
+\end{tikzcd}
+\]
+这使得 $\mathbb{F}$ 成为 $\square$ 中的一个对象，并且存在单态射 $m : \mathbb{F} \hookrightarrow \Omega$，其在 $I \in \mathrm{obj}\ \square$ 处的分量将每个 $\varphi \in \mathbb{F}(I)$ 发送到筛
+\[
+m_I(\varphi) = \{\cdot \xrightarrow{f} I \mid \mathbb{F}f\ \varphi = \top\}
+\]
+
+我们现在在 $\hatcube$ 中取由这个单态射 $m : \mathbb{F} \hookrightarrow \Omega$ 给出的子对象 $\mathtt{Cof} \hookrightarrow \Omega$。公理 $\ax{1}$--$\ax{4}$ 无需改变即可由推论 5.6.4 得出；公理 $\ax{5}$--$\ax{7}$ 由面格 $\mathbb{F}(I)$ 的定义得出。因此只需检查公理 $\ax{8}$ 和 $\ax{9}$。
+
+回忆 $\hatcube$ 中的区间对象是单元素子集 $\{i\} \in \mathrm{obj}\ \square$ 上的可表预层 $\ttI = \mathtt{y}_{\{i\}}$。对于任意对象 $I \in \mathrm{obj}\ \square$，设其中有 $n$ 个不同元素 $i_1, \ldots, i_n \in \mathbb{D}$，可表 $\mathtt{y}_I$ 同构于 $\hatcube$ 中的 $n$ 重积 $\ttI^n$。因此筛 (5.53) 对应于 $n$-立方体 $\ttI^n$ 的子对象。确实，面格 $\mathbb{F}(I)$ 中的每个元素是有限个不可约元素的有限并；每个不可约元素是形如 $i = 0$ 或 $j = 1$ 的原子条件的有限合取。$\ttI^n$ 的相应子对象是面的有限并，即通过将某些坐标设为 0 或 1 得到的 $\ttI^n$ 的子对象。$\mathbb{F}(I)$ 元素的这种析取范式意味着其等式是可判定的，因此这个 $\mathtt{Cof}$ 包含在 $\Omega_{\mathrm{dec}}$ 中且公理 $\ax{9}$ 得到满足（定理 5.6.3）。最后，公理 $\ax{8}$ 来自于余纤维沿投影 $\pi_1 : \ttI^n \times \ttI \to \ttI^n$ 的拉回具有（稳定的）右伴随，或者等价地，格态射 $\mathbb{F}(I) \to \mathbb{F}(I \cup \{i\})$（对于任意 $I \in \mathrm{obj}\ \square$ 和 $i \in \mathbb{D} - I$）具有（稳定的）右伴随这一事实。这是面格的\textbf{量词消去}结果；参见 [18, 引理 2]。
+\end{definition}
+
+\section{相关工作}
+
+本章呈现的工作受到 Coquand [19] 的建议启发，即 [18] 中发展的某些构造可能使用拓扑斯的内部逻辑来更好地理解。我们展示了如何在拓扑斯的内部类型论中表达 Cohen、Coquand、Huber 和 Mörtberg 的纤维化概念。与例如 Gambino 和 Sattler [27, 第 3 节] 为同样目的使用的更抽象的弱分解系统和模型范畴的范畴论方法相比，内部语言的使用允许一个令人愉悦的简单描述（定义 5.3.3）。Birkedal 等人 [12] 发展了守卫立方类型论，其语义基于预层拓扑斯内部逻辑中 [18] 的公理化版本。
+
+在配备有类似区间对象的拓扑斯的框架内，我们发现相当简单的公理集合（图 5.4）足以使其建模具有满足弱形式泛等性的内涵恒等类型的 Martin-Löf 类型论。特别地，区间上只需要简单的连接代数结构，而非 De Morgan 代数结构。此外，适合一致 Kan 填充的命题集合不是紧密约束的，可以以多种方式选择。在第 5.6 节中，我们只考虑了预层范畴如何满足我们的公理。考虑一般 Grothendieck 拓扑斯（其中预层被限制为给定覆盖概念的层）中的模型可能是有趣的，特别是如 Johnstone 的拓扑拓扑斯 [36] 这样的大拓扑斯；这允许区间对象是（对应于）通常的拓扑区间，因此类型论的模型与空间的经典同伦类型有相当直接的联系。然而，尽管 Hofmann-Streicher [31] 的宇宙构造（[18] 第 8.2 节中满足完全泛等性公理的纤维化宇宙构造的基础）可以通过使用层化 [59, 第 3 节] 从预层拓扑斯扩展到层拓扑斯，但层化似乎与 CCHM 的纤维化概念交互不佳。在另一个方向上，Frumin 和 Van Den Berg [25] 的最新工作使用我们的初等、公理化方法，使用非 Grothendieck 拓扑斯，即有效拓扑斯 [35]。最后，Uemura 也应用这种方法证明了立方类型论中命题调整公理的独立性。
 \end{document}
