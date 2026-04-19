@@ -1516,7 +1516,7 @@ eq'\ x\ i \triangleq (\lambda u : [i = 0] \to eq) \cup (\lambda u : [i = 1] \to 
 
 在构造性集合论中非形式化地工作，[18] 的作者使用特定小范畴 $\square$（他们称之为\textbf{立方体范畴}，如第 3.3 节所述）上的反变集值函子构成的拓扑斯 $\hatcube = \mathbf{Set}^{\square^{\mathrm{op}}}$ 给出了他们类型论的一个模型。在本节中，我们给出任意小范畴 $\mathbf{C}$ 的充分条件，使得集值预层拓扑斯 $\widehat{\mathbf{C}} = \mathbf{Set}^{\mathbf{C}^{\mathrm{op}}}$（在直觉主义 ZF 集合论 [1, 第 3.2 节] 中）具有满足图 5.4 中公理的区间对象和余纤维命题的子对象。我们证明立方体范畴是这种 $\mathbf{C}$ 的一个实例（以不止一种方式）；并且我们还证明在排中律成立的情况下，单纯形范畴 $\Delta$ 也是如此。
 
-\subsubsection{区间对象 ($\ax{1}$--$\ax{4}$)}
+\subsection{区间对象 ($\ax{1}$--$\ax{4}$)}
 
 回到具有其相关预层拓扑斯 $\widehat{\mathbf{C}}$ 的小范畴 $\mathbf{C}$ 的一般情况，如果我们取区间对象 $\ttI \in \widehat{\mathbf{C}}$ 为某个对象 $\mathtt{i} \in \mathbf{C}$ 的可表函子 $\mathtt{y}_{\tti} \triangleq \mathbf{C}(\ul , \tti)$，那么以下定理给出了这种区间对象满足公理 $\ax{1}$ 的一个有用判据。
 
@@ -1540,7 +1540,7 @@ $\mathbf{C}$ 是余筛选的，如果余极限函子 $\operatorname{colim}_{\mat
 
 除了 $\ax{1}$ 之外，图 5.4 中关于区间的其他公理说 $\ttI$ 是由 $\ax{3}$ 和 $\ax{4}$ 给出的代数理论的一个非平凡 ($\ax{2}$) 模型，我们称之为\textbf{连接代数}。（另见 [27, 定义 1.7]，它在更抽象的设定中考虑类似概念。）对于立方体集，Yoneda 嵌入 $\mathtt{y} : \square \to \hatcube$ 将 $\square$ 中的泛 De Morgan 代数发送到 $\hatcube$ 中的一个 De Morgan 代数。这是一个非平凡连接代数：常数是最小和最大元素，二元运算是交和并。[18] 主题的一个明显变体是用连接代数的 Lawvere 理论替换 $\square$。还注意到 $\widehat{\Delta}$ 中的 1-单纯形是一个非平凡连接代数，常数是它的两个端点，二元运算是由 $[0 < 1]$ 上的保序二元运算最小值和最大值诱导的。
 
-\subsubsection{余纤维命题 ($\ax{5}$--$\ax{8}$) 和严格性公理 ($\ax{9}$)}
+\subsection{余纤维命题 ($\ax{5}$--$\ax{8}$) 和严格性公理 ($\ax{9}$)}
 
 在具有区间对象的拓扑斯中，有许多候选的子对象 $\mathtt{Cof} \rightarrowtail \Omega$ 满足图 5.4 中的公理 $\ax{5}$--$\ax{8}$。在一个极端，我们可以取 $\mathtt{Cof}$ 为整个 $\Omega$。在相反的极端，我们可以取（内部地）由以下要求归纳定义的子对象：它包含命题 $i = \ttzero$ 和 $i = \ttone$（对于所有 $i : \ttI$）并且对二元析取、依赖和 $\ttI$-索引合取封闭，从而获得满足 $\ax{5}$--$\ax{8}$ 的最小 $\mathtt{Cof}$。然而，余纤维命题还必须满足严格性公理 $\ax{9}$，我们接下来考虑这一点。
 
@@ -1629,4 +1629,389 @@ m_I(\varphi) = \{\cdot \xrightarrow{f} I \mid \mathbb{F}f\ \varphi = \top\}
 本章呈现的工作受到 Coquand [19] 的建议启发，即 [18] 中发展的某些构造可能使用拓扑斯的内部逻辑来更好地理解。我们展示了如何在拓扑斯的内部类型论中表达 Cohen、Coquand、Huber 和 Mörtberg 的纤维化概念。与例如 Gambino 和 Sattler [27, 第 3 节] 为同样目的使用的更抽象的弱分解系统和模型范畴的范畴论方法相比，内部语言的使用允许一个令人愉悦的简单描述（定义 5.3.3）。Birkedal 等人 [12] 发展了守卫立方类型论，其语义基于 [18] 的公理化版本，并在预层拓扑斯的内部逻辑中给出。
 
 在配备有类似区间对象的拓扑斯的框架内，我们发现相当简单的公理集合（图 5.4）足以使其建模具有满足弱形式泛等性的内涵恒等类型的 Martin-Löf 类型论。特别地，区间上只需要简单的连接代数结构，而非 De Morgan 代数结构。此外，适合一致 Kan 填充的命题集合不是紧密约束的，可以以多种方式选择。在第 5.6 节中，我们只考虑了预层范畴如何满足我们的公理。考虑一般 Grothendieck 拓扑斯（其中预层被限制为给定覆盖概念的层）中的模型可能是有趣的，特别是如 Johnstone 的拓扑拓扑斯 [36] 这样的大拓扑斯；这允许区间对象是通常的拓扑区间（对应的可表层），因此类型论的模型与空间的经典同伦类型有相当直接的联系。然而，尽管 Hofmann-Streicher [31] 的宇宙构造（[18] 第 8.2 节中满足完全泛等性公理的纤维化宇宙构造的基础）可以通过使用层化 [59, 第 3 节] 从预层拓扑斯扩展到层拓扑斯，但层化似乎与 CCHM 的纤维化概念交互不佳。在另一个方向上，Frumin 和 Van Den Berg [25] 的最新工作使用我们的初等、公理化方法，使用非 Grothendieck 拓扑斯，即有效拓扑斯 [35]。最后，Uemura 也应用这种方法证明了立方类型论中命题调整公理的独立性。
+
+\chapter{分解泛等性公理}
+
+在上一章中，我们使用初等拓扑斯的内部语言给出了 Cohen 等人 [18] 模型的公理化表述。虽然使用内部语言的方法是新的，但许多证明的结构，例如纤维化在类型构造子下封闭的事实，或使用粘合来发展泛等性，都遵循了 Cohen 等人原始工作的相同结构。在本章中，我们将使用内部语言来呈现新的工作，即：在任何满足我们公理的拓扑斯中给出泛等性公理的一个替代证明。
+
+我们通过首先将泛等性分解为一系列更简单的性质来做到这一点。我们解释了为什么这些新性质中除了一个之外，不仅应该在满足我们公理的拓扑斯中成立，而且事实上在任何以通常方式构造 CwF 的预层拓扑斯中都应该成立（如第 3.2 节所述）。然后我们解释了剩下的那个性质如何在任何满足我们原始公理的拓扑斯中容易地得到验证。事实上，这个我们称之为\textbf{收缩}的构造是一般粘合构造的一个特例。然而，其定义和随后的证明比用于粘合的那些要简单得多。
+
+\section{分解}
+
+回忆定理 2.1.9 中给出的适当泛等性公理分解为一个朴素形式连同一条计算规则。在本节中，我们在具有函数外延性的 MLTT 中进一步将泛等性公理分解为更简单的性质，但不假设 UIP 或泛等性。注意本节中给出的证明应在源语言中解释，即我们最终希望建模的语言，而不是在拓扑斯的内部语言中。我们证明宇宙 $U_i$ 的泛等性公理等价于表 6.1 中给出的宇宙 $U_i$ 的公理 (1) 到 (5)。
+
+我们首先将朴素泛等性 $\mathtt{UA}_i$ 分解为公理 (1)--(3)。这些公理也来自 $\mathtt{UA}_i$。回忆我们取函数外延性作为环境假设。首先，我们回顾单例类型的定义。
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|l|l|l|}
+\hline
+& \textbf{公理} & \textbf{前提} & \textbf{等式} \\
+\hline
+(1) & $\mathtt{unit}$ & $:$ & $A = \sum_{a:A} 1$ \\
+(2) & $\mathtt{flip}$ & $:$ & $\sum_{a:A}\sum_{b:B} C\,a\,b = \sum_{b:B}\sum_{a:A} C\,a\,b$ \\
+(3) & $\mathtt{contract}$ & $: \mathtt{isContr}\,A \to$ & $A = 1$ \\
+(4) & $\mathtt{unit}\beta$ & $:$ & $\mathtt{coerce}\,\mathtt{unit}\,a = (a, *)$ \\
+(5) & $\mathtt{flip}\beta$ & $:$ & $\mathtt{coerce}\,\mathtt{flip}\,(a, b, c) = (b, a, c)$ \\
+\hline
+\end{tabular}
+\caption{($A, B : U_i$, $C : A \to B \to U_i$, $a : A$, $b : B$ 且 $c : C\,a\,b$，对于某个宇宙 $U_i$)}
+\end{table}
+
+\begin{definition}[单例]
+给定类型 $A$ 和元素 $a : A$，我们可以定义
+\[
+\mathtt{sing}(a) \triangleq \sum_{x:A}(a = x)
+\]
+为 $A$ 中等于 $a$ 的元素类型。通过路径归纳容易证明，类型 $\mathtt{sing}(a)$ 在定义 2.1.1 的意义上总是可收缩的。
+\end{definition}
+
+\begin{theorem}
+宇宙 $U_i$ 的公理 (1)--(3) 合起来逻辑等价于 $\mathtt{UA}_i$。
+\end{theorem}
+
+\begin{proof}
+我们首先证明正向方向。假设给定公理 (1) 到 (3)。我们现在旨在定义一个项 $\mathtt{ua} : \mathtt{UA}_i$。给定任意类型 $A, B : U_i$ 和等价 $(f, e) : A \simeq B$，那么对于所有 $a : A$ 我们知道 $\mathtt{sing}(a)$ 是可收缩的，因此由 $\mathtt{contract}$ 我们有：
+\[
+1 = \mathtt{sing}(f\,a) = \sum_{b:B} f\,a = b
+\]
+此外，对于任何 $b : B$，由 $e(b) : \mathtt{isContr}(\mathtt{fib}_f(b))$ 我们知道 $\mathtt{fib}_f(b)$ 是可收缩的。因此，由 $\mathtt{contract}$，我们有：
+\[
+1 = \mathtt{fib}_f(b) = \sum_{a:A} f\,a = b
+\]
+因此，我们如下定义 $\mathtt{ua}(f, e) : A = B$：
+\begin{align*}
+A &= \sum_{a:A} 1 && \text{由 unit} \\
+&= \sum_{a:A} \sum_{b:B} f\,a = b && \text{由 funext 和 contract 在 } \mathtt{sing}(f\,a) \text{ 上} \\
+&= \sum_{b:B} \sum_{a:A} f\,a = b && \text{由 flip} \\
+&= \sum_{b:B} 1 && \text{由 funext 和 contract 在 } \mathtt{fib}_f(b) \text{ 上} \\
+&= B && \text{由 unit}
+\end{align*}
+其中 $A = B$ 的证明由上述计算每一步的连接给出。
+
+反向方向来自于明显的映射
+\[
+\begin{aligned}
+A &\to \sum_{a:A} 1 & \sum_{a:A}\sum_{b:B} C\,a\,b &\to \sum_{b:B}\sum_{a:A} C\,a\,b \\
+a &\mapsto (a, *) & (a, b, c) &\mapsto (b, a, c)
+\end{aligned}
+\]
+都容易证明是双可逆的，从而是等价的，以及任何可收缩类型等价于 1 [62, 引理 3.11.3]{62} 这一事实。因此给定 $\mathtt{ua} : \mathtt{UA}_i$ 我们只需将这些等价应用于它们即可得到所需的等式 (1)--(3)。
+\end{proof}
+
+接下来，我们将朴素泛等性 $\mathtt{UA}\beta_i$ 的计算规则分解为公理 (4) 和 (5)。由于 $\mathtt{UA}\beta_i$ 依赖于 $\mathtt{UA}_i$，而公理 (4) 和 (5) 分别依赖于公理 (1) 和 (2)，我们事实上证明了 $\mathtt{UA}_i$ 和 $\mathtt{UA}\beta_i$ 这一对，与公理 (1)--(5) 之间的逻辑等价。
+
+\begin{lemma}
+函数 $\mathtt{coerce}$ 是复合的。即，给定类型 $A, B, C : U_i$，以及等式 $p : A = B$ 和 $q : B = C$，我们有 $\mathtt{coerce}(p \cdot q) = \mathtt{coerce}(q) \circ \mathtt{coerce}(p)$，其中 $p \cdot q$ 是 $A = C$ 的传递性证明。
+\end{lemma}
+
+\begin{proof}
+通过对 $p$ 或 $q$ 之一，或两者进行路径归纳，是直接的。
+\end{proof}
+
+\begin{theorem}
+宇宙 $U_i$ 的公理 (1)--(5) 合起来逻辑等价于 $\sum_{\mathtt{ua}:\mathtt{UA}_i} \mathtt{UA}\beta_i(\mathtt{ua})$。
+\end{theorem}
+
+\begin{proof}
+对于正向方向，我们从定理 6.1.2 知道公理 (1) 到 (3) 允许我们构造一个项 $\mathtt{ua} : \mathtt{UA}_i$。此外，如果我们假设公理 (4) 和 (5)，那么我们可以证明对于所有 $(f, e) : A \simeq B$ 有 $\mathtt{coerce}(\mathtt{ua}(f, e)) = f$，如下。
+
+由于 $\mathtt{ua}$ 被构造为五个等式的连接，根据引理 6.1.3，我们有沿 $\mathtt{ua}(f, e)$ 的强制等于沿复合等式 $\mathtt{ua}(f, e)$ 每个阶段强制结果。我们从 $\mathtt{unit}\beta$ 和 $\mathtt{flip}\beta$ 分别知道沿 $\mathtt{unit}$ 和 $\mathtt{flip}$ 的强制结果。在 $\mathtt{contract}$ 的情况下，我们在两个可收缩类型之间强制，因此可以将强制取为我们喜欢的任何函数，因为所有这样的函数都是命题相等的。因此，从任意 $a : A$ 开始，我们可以追踪此过程每个阶段发生的情况，如下：
+\[
+a \mapsto (a, *) \mapsto (a, f\,a, \mathtt{refl}) \mapsto (f\,a, a, \mathtt{refl}) \mapsto (f\,a, *) \mapsto f\,a
+\]
+因此我们看到对于所有 $a : A$ 有 $\mathtt{coerce}(\mathtt{ua}(f, e))(a) = f(a)$，因此由函数外延性我们有 $\mathtt{coerce}(\mathtt{ua}(f, e)) = f$，如所要求。
+
+对于反向方向，我们假设给定 $\mathtt{ua} : \mathtt{UA}_i$ 和 $\mathtt{ua}\beta : \mathtt{UA}\beta_i(\mathtt{ua})$。我们现在可以应用定理 6.1.2 从 $\mathtt{ua}$ 构造满足公理 (1) 到 (3) 的项 $\mathtt{unit}$、$\mathtt{flip}$ 和 $\mathtt{contract}$。
+
+由于 $\mathtt{unit}$ 和 $\mathtt{flip}$ 是通过将 $\mathtt{ua}$ 应用于明显的等价构造的，因此由 $\mathtt{ua}\beta$ 我们知道将这些等式应用 $\mathtt{coerce}$ 将返回我们开始时的等价。由此我们可以容易地构造满足公理 (4) 和 (5) 的项 $\mathtt{unit}\beta$ 和 $\mathtt{flip}\beta$。
+\end{proof}
+
+\begin{corollary}
+宇宙 $U_i$ 的公理 (1)--(5) 合起来逻辑等价于 $U_i$ 的适当泛等性公理。
+\end{corollary}
+
+\begin{proof}
+通过结合定理 2.1.9 和定理 6.1.4。
+\end{proof}
+
+\section{在类型论模型中的应用}
+
+在本节中，我们讨论了推论 6.1.5 给出的结果在尝试构造泛等类型论模型时为何有用的一个原因。具体而言，我们相信这种分解对于证明具有区间对象的类型论模型支持泛等性公理特别有用。我们首先用一般术语解释为什么我们相信情况如此，然后精确说明在第 5.1 节描述的结构拓扑斯的具体情况下会发生什么。如那里所讨论的，这个结果因此将适用于 [18] 中呈现的立方体集模型，但它也应该适用于许多类似的类型论模型 [11, 6, 8, 54, 12]。
+
+注意我们假设函数外延性。泛等性的每个模型都必须满足函数外延性 [62, 第 4.9 节]，但在类型论模型中验证函数外延性通常比验证适当的泛等性公理容易得多。特别地，函数外延性在任何包含适当区间对象的类型论中都成立，参见 [62, 引理 6.3.2]。
+
+经验表明，公理 (1)、(2)、(4) 和 (5) 在许多潜在的泛等类型论模型中容易验证。为了理解为什么，考虑这种模型中 $A \simeq B$ 的解释是有用的。类型论中的命题等式通常不被解释为模型元理论中的等式，而是作为类型上的构造，例如 HoTT 模型中的路径空间。因此，使用带族范畴的记号，类型论中的等价将产生项
+\[
+f \in \mathtt{Ter}(\Gamma \vdash A \to B) \qquad \text{和} \qquad g \in \mathtt{Ter}(\Gamma \vdash B \to A)
+\]
+它们不是精确的逆，而是模命题等式解释的逆，即存在项
+\[
+\alpha \in \mathtt{Ter}(\Gamma \vdash \mathtt{Id}_{A \to B}(g \circ f,  id )) \qquad \text{和} \qquad \beta \in \mathtt{Ter}(\Gamma \vdash \mathtt{Id}_{B \to A}(f \circ g,  id )).
+\]
+这些的存在并不意味着 $g \circ f =  id $ 或 $f \circ g =  id $，例如在立方体集模型中 $\alpha$ 和 $\beta$ 将是复合与恒等之间的路径，如第 3.3.3 节所述。然而，在许多模型中，$A$ 和 $\sum_{a:A} 1$ 的解释，以及 $\sum_{a:A}\sum_{b:B} C\,a\,b$ 和 $\sum_{b:B}\sum_{a:A} C\,a\,b$ 的解释将是同构的，即存在来回的态射，它们在模型元理论的等式意义下是逆。这在第 3.2 节描述的那种类型论预层模型中是成立的，更一般地在任何验证 1 和 $\Sigma$ 的 eta-规则的模型中也应该成立，因为那时来回的映射在类型论的判断等式意义下是逆，因此它们在模型中的解释将是严格逆。
+
+这意味着我们可以通过证明这种更强的同构概念产生类型之间的命题等式来满足 (1) 和 (2)。验证公理 (4) 和 (5) 然后应该简化为涉及此构造的两个实例的相当直接的计算。
+
+这留下了公理 (3)，它捕捉了每个可收缩空间可以连续变形为一个点的同伦条件。希望是验证前面的公理应该相当直接，将此作为唯一需要检查的非平凡条件。
+
+我们现在检查在第 5.1 节中公理化的结构拓扑斯的具体情况下会发生什么。为便于引用，我们将此拓扑斯称为 $\mathcal{E}$。对于本节的其余部分，我们回到在 $\mathcal{E}$ 的内部类型论中工作。
+
+\subsection{严格化}
+
+回忆第 5.1.3 节中我们假定了以下项的存在：
+\begin{align*}
+\ax{9} : &\{\varphi : \mathtt{Cof}\}(A : [\varphi] \to \mathcal{U})(B : \mathcal{U})(s : (u : [\varphi]) \to (A\,u \cong B)) \to \\
+&(B' : \mathcal{U}) \times \{s' : B' \cong B \mid \forall(u : [\varphi]).\,A\,u = B' \land s\,u = s'\}
+\end{align*}
+
+换言之，这说给定任何对象 $B : \mathcal{U}$ 和任何余纤维部分对象 $A : [\varphi] \to \mathcal{U}$ 使得 $A$ 在其定义的每个地方都同构于 $B$，那么可以构造一个新对象 $B' : \mathcal{U}$ 扩展 $A$，同构于 $B$，并且这个同构扩展原始同构。
+
+我们现在将这个严格化性质从对象提升到纤维化。
+
+\begin{theorem}
+给定 $\Gamma : \mathcal{U}$ 和 $\Phi : \Gamma \to \mathtt{Cof}$，余纤维-部分纤维化 $A : \mathtt{Fib}(\Gamma|\Phi)$ 和全纤维化 $B : \mathtt{Fib}\,\Gamma$ 且满足 $\mathtt{iso} : A \cong B[\iota]$，我们可以构造一个新类型和同构：
+\[
+A' : \mathtt{Fib}(\Gamma) \qquad \text{和} \qquad \mathtt{iso}' : A' \cong B
+\]
+使得
+\[
+A'[\iota] = A \qquad \text{和} \qquad \mathtt{iso}' \circ \iota = \mathtt{iso}
+\]
+其中 $\iota$ 是包含 $\Gamma|\Phi \hookrightarrow \Gamma$。
+\end{theorem}
+
+\begin{proof}
+给定 $\Gamma : \mathcal{U}$，$\Phi : \Gamma \to \mathtt{Cof}$，$(A, \alpha) : \mathtt{Fib}(\Gamma|\Phi)$ 和 $(B, \beta) : \mathtt{Fib}\,\Gamma$ 且满足 $\mathtt{iso} : A \cong B \circ \iota$，我们定义 $A'$, $\mathtt{iso}'$ 为：
+\begin{align*}
+A'\,x &\triangleq \mathtt{fst}(\ax{9}(A(x, \_), B\,x, \mathtt{iso}(x, \_))) \\
+\mathtt{iso}'\,x &\triangleq \mathtt{snd}(\ax{9}(A(x, \_), B\,x, \mathtt{iso}(x, \_)))
+\end{align*}
+
+现在考虑需要成立的等式。由 $\ax{9}$ 的性质我们已经有 $A' \circ \iota = A$ 和 $\mathtt{iso}' \circ \iota = \mathtt{iso}$。因此我们只需定义合成结构 $\alpha' : \mathtt{isFib}\,A'$ 使得 $\alpha'[\iota] = \alpha$。
+
+由于 $A' \cong B$ 且 $\beta : \mathtt{isFib}\,B$，我们可以使用引理 5.3.8 推导出 $A'$ 具有合成结构，我们称之为 $\alpha'_{\mathrm{pre}}$。然后我们定义 $\alpha' \triangleq \mathtt{realign}(\Phi, \alpha, \alpha'_{\mathrm{pre}})$ 使用引理 5.3.10 以确保 $\alpha'[\iota] = \alpha$。
+
+注意，由于 $\mathtt{realign}$ 在重索引下是稳定的，在这个意义上对于任何 $\gamma : \Delta \to \Gamma$ 有 $\mathtt{realign}(\Phi, \beta, \alpha)[\gamma] = \mathtt{realign}(\Phi \circ \gamma, \beta[\gamma \times  id ], \alpha[\gamma])$，并且上面使用的所有其他构造都是逐纤维执行的，我们可以推断定理 6.2.1 中给出的构造在重索引下也是稳定的。
+\end{proof}
+
+\subsection{纤维化之间的错位路径}
+
+我们现在引入纤维化之间的一种新关系，我们称之为\textbf{错位路径}。这类似于定义 5.5.1 中引入的纤维化之间路径的概念，只不过在端点处，路径只需同构于 $A$ 和 $B$，而非等于 $A$ 和 $B$。
+
+\begin{definition}[纤维化之间的错位路径相等性]
+定义 CCHM 纤维化之间的错位路径类型 $\_\sim_{\cong}\_ : \{\Gamma : \mathcal{U}\} \to \mathtt{Fib}\,\Gamma \to \mathtt{Fib}\,\Gamma \to \mathcal{U}_1$ 为
+\[
+A \sim_{\cong} B \triangleq (P : \mathtt{Fib}(\Gamma \times \mathbb{I})) \times (A \cong P[\langle  id , 0\rangle]) \times (B \cong P[\langle  id , 1\rangle])
+\]
+\end{definition}
+
+我们可以证明每个错位路径都可以改进为纤维化之间的常规路径。首先，我们引入纤维化上的一个构造。
+
+\begin{definition}[纤维化的不交并]
+给定纤维化 $A, B : \mathtt{Fib}\ \Gamma$，我们定义一个新的纤维化
+$$A \veebar B : \mathtt{Fib}\big((\Gamma \times \mathtt{I})|\Phi\big) \qquad \text{其中} \qquad \Phi(x,i) \triangleq (i = \mathtt{0}) \veebar (i = \mathtt{1})$$
+由 $(A,\alpha) \veebar (B,\beta) \triangleq (C,\gamma)$ 给出，其中
+\begin{align*}
+& C : (\Gamma \times \mathtt{I})|\Phi \to \mathcal{U} \\
+& C\big((x,i),u\big) \triangleq \Big(\big(\lambda\_ : [i=0] \to A\ x\big) \cup \big(\lambda\_ : [i=1] \to B\ x\big)\Big)u
+\end{align*}
+
+这里 $C$ 是族 $A$ 和 $B$ 的一种不交并，注意到 $(\Gamma \times \mathtt{I})|\Phi \cong \Gamma + \Gamma$，因此我们可以将 $C$ 视为本质上是 $[A,B] : \Gamma + \Gamma \to \mathcal{U}$。
+
+为了看出 $C$ 是纤维化的，我们观察到区间 $\mathtt{I}$ 在公理 $\ax{1}$（图 5.4）的意义上是内部连通的。这意味着任何路径 $p : \mathtt{I} \to (\Gamma \times \mathtt{I})|\Phi$ 必须要么分解为 $p = \langle p', \mathtt{0}, * \rangle$，要么分解为 $p = \langle p', \mathtt{1}, * \rangle$。
+
+因此，$C$ 的任何复合问题必须要么完全在 $A$ 中，此时我们使用 $\alpha$ 来构造解；要么完全在 $B$ 中，此时我们使用 $\beta$。更多细节我们请读者参考定理 5.5.3，其中族 $C$ 作为中间构造出现，并且我们在那里更详细地定义了这个纤维化结构。注意这个构造在重索引下是稳定的：
+$$A[\gamma] \veebar B[\gamma] = (A \veebar B)[\gamma \times  id  \times  id ]$$
+对于任何 $\gamma : \Delta \to \Gamma$。最后，观察到对于所有 $A, B : \mathtt{Fib}\ \Gamma$ 我们有：
+$$(A \veebar B)[\langle  id , \mathtt{0}, * \rangle] = A \qquad \text{且} \qquad (A \veebar B)[\langle  id , \mathtt{1}, * \rangle] = B$$
+\end{definition}
+
+\begin{definition}[不对齐路径的拼接]
+给定 $\Gamma : \mathcal{U}$，纤维化 $A, B : \mathtt{Fib}\ \Gamma$ 和一个不对齐路径 $(D, f_0, f_1) : A \sim_{\cong} B$，我们定义如下：
+$$f_0 \veebar f_1 : A \veebar B \cong D[\iota]$$
+\begin{align*}
+& (f_0 \veebar f_1)(x,i,u) : \big(\mathtt{fst}(A \veebar B)\big)(x,i,u) \to \big(\mathtt{fst}\ D\big)(x,i) \\
+& (f_0 \veebar f_1)(x,i,u) \triangleq \begin{cases} f_0\ x & \text{当}\ u : [i=0] \\ f_1\ x & \text{当}\ u : [i=1] \end{cases}
+\end{align*}
+其中 $(x,i,u) : (\Gamma \times \mathtt{I})|\Phi$。观察到对于所有 $\gamma : \Delta \to \Gamma$ 我们有，
+$$(f_0 \circ \gamma) \veebar (f_1 \circ \gamma) = (f_0 \veebar f_1) \circ (\gamma \times  id  \times  id )$$
+并且也有：
+$$(f_0 \veebar f_1) \circ \langle  id , \mathtt{0}, * \rangle = f_0 \qquad \text{且} \qquad (f_0 \veebar f_1) \circ \langle  id , \mathtt{1}, * \rangle = f_1$$
+\end{definition}
+
+\begin{lemma}[改进不对齐路径]
+存在函数
+$$\mathtt{improve} : \{\Gamma : \mathcal{U}\}\{A\ B : \mathtt{Fib}\ \Gamma\} \to A \sim_{\cong} B \to A \sim_{\mathcal{U}} B$$
+\end{lemma}
+
+\begin{proof}
+取 $\Gamma : \mathcal{U}$，$A, B : \mathtt{Fib}\ \Gamma$ 和 $(P, f_0, f_1) : A \sim_{\cong} B$ 并观察到 $f_0 \veebar f_1 : A \veebar B \cong P[\iota]$。因此我们可以使用定理 6.2.1 来严格化 $P$ 以获得 $P' : \mathtt{Fib}(\Gamma \times \mathbb{I})$ 使得 $P'[\iota] = A \veebar B$，其中 $\iota$ 是限制 $(\Gamma \times \mathtt{I})|\Phi \to \Gamma \times \mathtt{I}$。现在考虑将 $P'$ 沿着 $\langle  id , \mathtt{0} \rangle : \Gamma \to \Gamma \times \mathtt{I}$ 重索引，我们得到：
+$$P'[\langle  id , \mathtt{0} \rangle] = P'[\iota \circ \langle  id , \mathtt{0}, * \rangle] = P'[\iota][\langle  id , \mathtt{0}, * \rangle] = (A \veebar B)[\langle  id , \mathtt{0}, * \rangle] = A$$
+且类似地 $P'[\langle  id , \mathtt{1} \rangle] = B$。因此我们有 $P' : A \sim_{\mathcal{U}} B$ 如所需。此外我们有
+$$\mathtt{improve}(P[\gamma \times  id ], f_0 \circ \gamma, f_1 \circ \gamma) = \mathtt{improve}(P, f_0, f_1)[\gamma \times  id ]$$
+对于任何 $\gamma : \Delta \to \Gamma$。
+\end{proof}
+
+\subsection{函数外延性}
+
+如前所述，函数外延性在任何包含具有特定计算性质的区间对象/类型的类型理论中直接成立，参见 [62, 引理 6.3.2]。对于立方体类型论的情况，参见注记 5.3.16 或 [18, 第 3.2 节]。
+
+\subsection{公理 (1)、(2)、(4) 和 (5)}
+
+如前所述，我们可以通过证明存在一种在严格同构的（纤维化的）类型 $A, B : \mathtt{Fib}\ \Gamma$ 之间构造路径的方式来满足公理 (1) 和 (2)。
+
+\begin{theorem}[同构等价性]
+给定纤维化 $A, B : \mathtt{Fib}\ \Gamma$ 且 $f : A \cong B$，我们可以构造路径 $\mathtt{isopath}(f) : A \sim_{\mathcal{U}} B$。
+\end{theorem}
+
+\begin{proof}
+给定上述 $A, B, f$，令 $B' \triangleq B[\mathtt{fst}] : \mathtt{Fib}(\Gamma \times \mathbb{I})$ 并注意到 $f : A \cong B'[\langle  id , \mathtt{0} \rangle]$ 且 $ id  : B \cong B'[\langle  id , \mathtt{1} \rangle]$，其中 $ id $ 是明显的同构 $B \cong B$。因此我们可以定义
+$$\mathtt{isopath}(f) \triangleq \mathtt{improve}(B[\mathtt{fst}], f,  id ) : A \sim_{\mathcal{U}} B$$
+如所需。注意，在这种情况下，$\mathtt{improve}$ 实际上只会在 $\mathtt{0}$ 处改进 $B[\mathtt{fst}]$，因为在 $\mathtt{1}$ 处我们沿着恒等映射改进，这不起作用。注意，对于任何 $\gamma : \Delta \to \Gamma$ 我们有：
+\begin{align*}
+\mathtt{isopath}(f \circ \gamma) &= \mathtt{improve}(B[\gamma][\mathtt{fst}], f \circ \gamma,  id _{B[\gamma]}) \\
+&= \mathtt{improve}(B[\mathtt{fst}][\gamma \times  id ], f \circ \gamma,  id _B \circ \gamma) \\
+&= \mathtt{improve}(B[\mathtt{fst}], f,  id _B)[\gamma \times  id ] \\
+&= (\mathtt{isopath}\ f)[\gamma \times  id ]
+\end{align*}
+因此 $\mathtt{isopath}$ 在替换下是稳定的。
+\end{proof}
+
+\begin{corollary}
+公理 (1) 和 (2) 在 $\mathcal{E}$ 中的纤维化类型的 CwF 中成立。
+\end{corollary}
+
+\begin{proof}
+明显的同构 $A \cong A \times 1$ 和 $\sum_{a:A} \sum_{b:B} C\ a\ b \cong \sum_{b:B} \sum_{a:A} C\ a\ b$ 在定义 5.1.6 的意义上都是严格的同构。因此我们可以构造所需的路径 $A \sim_{\mathcal{U}} (A \times 1)$ 和 $\big(\sum_{a:A} \sum_{b:B} C\ a\ b\big) \sim_{\mathcal{U}} \big(\sum_{b:B} \sum_{a:A} C\ a\ b\big)$。因此公理 (1) 和 (2) 成立。
+\end{proof}
+
+我们已经看到我们可以使用我们的公理轻松满足性质 (1) 和 (2)。然而，我们还需要知道沿着这些相等性强制转换时会发生什么。这可以一般性地陈述为任何严格同构的类型。
+
+\begin{theorem}
+给定纤维化 $(A,\alpha), (B,\beta) : \mathtt{Fib}\ \Gamma$ 且 $f : A \cong B$，沿着 $\mathtt{isopath}\ f$ 强制转换（命题地）等于应用 $f$。
+\end{theorem}
+
+\begin{proof}
+取上述 $(A,\alpha), (B,\beta), f$ 并令 $(P,\rho) = \mathtt{isopath}\ f$。通过展开所使用的构造，我们可以看到 $\rho$ 是通过重新对齐某个 $\rho_{pre}$ 获得的，而 $\rho_{pre}$ 又是通过将 $\beta[\mathtt{fst}]$ 沿着同构转移获得的：
+$$\mathtt{iso}(x,i) = \mathtt{snd}\big(\ax{9}((A \veebar B)(x,i,\_), B\ x, (f \veebar  id )(x,i,\_))\big) : P\ x \cong B\ x$$
+现在考虑任意的 $x : \Gamma, a_0 : A\ x$ 并注意到
+$$\mathtt{iso}(x,\mathtt{0}) = (f \veebar  id )(x,\mathtt{0}) = f\ x \qquad \text{且} \qquad \mathtt{iso}(x,\mathtt{1}) = (f \veebar  id )(x,\mathtt{1}) =  id $$
+
+同时，观察到
+$$\forall i.(i = \mathtt{0} \veebar i = \mathtt{1}) \Rightarrow (\forall i.i = \mathtt{0}) \veebar (\forall i.i = \mathtt{1}) \Rightarrow \mathtt{1} = \mathtt{0} \veebar \mathtt{0} = \mathtt{1} \Rightarrow \bot$$
+由公理 $\ax{1}$，通过实例化 $\forall$，由公理 $\ax{2}$，因此 $\forall i.(i = \mathtt{0} \veebar i = \mathtt{1}) = \bot$。现在计算：
+\begin{align*}
+&\mathtt{coerce}(\mathtt{isopath}\ f)\ x\ a_0 \\
+&\quad = \rho\ \mathtt{0}\ \langle x,  id  \rangle\ \bot\ \mathtt{elim}_{\emptyset}\ a_0 && \text{由定义} \\
+&\quad = \rho_{pre}\ \mathtt{0}\ \langle x,  id  \rangle\ (\bot \veebar (i = \mathtt{0} \veebar i = \mathtt{1}))\ \mathtt{elim}\ a_0 && \text{由引理 5.3.10（或类似）} \\
+&\quad = \rho_{pre}\ \mathtt{0}\ \langle x,  id  \rangle\ \bot\ \mathtt{elim}_{\emptyset}\ a_0 \\
+&\quad = \rho_{pre}\ \mathtt{0}\ \langle x,  id  \rangle\ \bot\ \mathtt{elim}_{\emptyset}\ (\mathtt{iso}(x,\mathtt{0})\ a_0) \\
+&\quad = \beta\ \mathtt{0}\ \langle x,  id  \rangle\ \bot\ \mathtt{elim}_{\emptyset}\ (\mathtt{iso}(x,\mathtt{0})\ a_0) && \text{由引理 5.3.8} \\
+&\quad = \beta\ \mathtt{0}\ \langle x,  id  \rangle\ \bot\ \mathtt{elim}_{\emptyset}\ (f\ x\ a_0) \\
+&\quad = \beta\ \langle x,  id  \rangle\ \bot\ \mathtt{elim}_{\emptyset}\ (f\ x\ a_0) && \text{由切片} (\mathtt{iso}(x,\mathtt{1}) =  id ) \\
+&\quad = \beta\ \langle x,  id  \rangle\ \bot\ \mathtt{elim}_{\emptyset}\ (f\ x\ a_0) && \text{由切片}
+\end{align*}
+由于这只是应用于 $f\ x\ a_0$ 的平凡/空复合，我们可以如下构造从 $f\ a_0$ 到 $\mathtt{coerce}(\mathtt{isopath}\ f)\ x\ a_0$ 的路径：
+$$\mathtt{fill}\ \mathtt{0}\ \beta\ \langle x,  id  \rangle\ \bot\ \mathtt{elim}_{\emptyset}\ (f\ x\ a_0) : f\ x\ a_0 \sim \mathtt{coerce}(\mathtt{isopath}\ f)\ x\ a_0$$
+因此，沿着 $\mathtt{isopath}\ f$ 强制转换总是命题地等于应用 $f$。
+\end{proof}
+
+\begin{corollary}
+公理 (4) 和 (5) 在 $\mathcal{E}$ 中的纤维化类型的 CwF 中成立（对于在推论 6.2.7 中构造的项）。
+\end{corollary}
+
+\begin{proof}
+由定理 6.2.8。
+\end{proof}
+
+\subsection{公理 (3)}
+
+鉴于前一节，唯一剩下的公理是公理 (3)。我们此处的目标是，给定一个可缩纤维化 $A : \mathtt{Fib}\ \Gamma$，定义路径 $A \sim_{\mathcal{U}} 1$。注意，对于任何 $\Gamma : \mathcal{U}$，存在唯一的纤维化结构 $!_1$ 使得 $(\lambda\_ \to 1, !_1) : \mathtt{Fib}(\Gamma)$。因此我们将模糊地写 $1 : \mathtt{Fib}(\Gamma)$ 表示对 $(\lambda\_ \to 1, !_1)$。
+
+\footnote{注意有不同的方式来解释模型中的 $\mathtt{coerce}$。这种解释通常与直接解释定义 2.1.6 获得的解释不同。然而，这两种解释在模型中总是路径相等的（另一种解释会有更多平凡/空复合），因此当使用另一种解释时结果仍然成立。}
+
+\begin{definition}[族的收缩]
+给定族 $A : \Gamma \to \mathcal{U}$，我们定义 $A$ 的收缩为
+\begin{align*}
+& C_A : \Gamma \times \mathbb{I} \to \mathcal{U} \\
+& C_A(x,i) \triangleq [i = \mathtt{0}] \to A(x)
+\end{align*}
+注意，对于任何 $\gamma : \Delta \to \Gamma$，我们有 $C_{A \circ \gamma} = C_A \circ (\gamma \times  id )$。
+\end{definition}
+
+我们现在需要证明当 $A$ 既是纤维化的又是可缩的（定义 5.4.4）时，$C_A$ 是纤维化的。回顾引理 5.4.5，一个族既是纤维化的又是可缩的等价于对该族具有扩展结构（定义 5.4.3）。
+
+因此我们如下构造 $C_A$ 的纤维化结构：
+
+\begin{theorem}
+如果 $(A,\alpha) : \mathtt{Fib}\ \Gamma$ 是可缩的，那么我们可以为 $C_A$ 构造复合结构。即，存在函数
+$$\mathtt{isFib}_C : \{\Gamma : \mathcal{U}\}\{A : \Gamma \to \mathcal{U}\} \to \mathtt{isFib}\ A \to \mathtt{Contr}\ A \to \mathtt{isFib}\ C_A$$
+\end{theorem}
+
+\begin{proof}
+取 $\Gamma : \mathcal{U}$，$A : \Gamma \to \mathcal{U}$，$\alpha : \mathtt{isFib}\ A$ 和 $\mathtt{ctr} : \mathtt{Contr}\ A$。由于 $A$ 既是纤维化的又是可缩的，那么由引理 5.4.5，我们可以构造扩展结构 $\varepsilon = \mathtt{toExt}\ \alpha\ \mathtt{ctr} : \mathtt{Ext}\ A$。我们然后可以如下定义复合结构 $\mathtt{isFib}_C\ \alpha\ \mathtt{ctr} : \mathtt{isFib}(C_A)$：
+$$\mathtt{isFib}_C\ \alpha\ \mathtt{ctr}\ e\ p\ \varphi\ f\ c_0\ u \triangleq \varepsilon\ \big(\mathtt{fst}(p\ \overline{e})\big)\ \big(\varphi, \big(\lambda v \to f\ v\ \overline{e}\ u\big)\big)$$
+对于 $u : [\mathtt{snd}(p\ \overline{e}) = \mathtt{0}]$。由于 $\varepsilon$ 是扩展结构，我们有对于任何 $v : [\varphi]$，
+\begin{align*}
+\mathtt{isFib}_C\ \alpha\ \mathtt{ctr}\ e\ p\ \varphi\ f\ c_0 &= \lambda u \to \varepsilon\ \big(\mathtt{fst}(p\ \overline{e})\big)\ \big(\varphi, (\lambda v \to f\ v\ \overline{e}\ u)\big) \\
+&= \lambda u \to f\ v\ \overline{e}\ u \\
+&= f\ v\ \overline{e}
+\end{align*}
+因此 $(\varphi, f) @ \overline{e} \nearrow \mathtt{isFib}_C\ \alpha\ \mathtt{ctr}\ e\ p\ \varphi\ f\ c_0$ 如所需。因此我们为 $C_A$ 定义了有效的复合操作。进一步，注意对于任何 $\gamma : \Delta \to \Gamma$ 我们有：
+\begin{align*}
+&\mathtt{isFib}_C\ (\alpha[\gamma])\ (\mathtt{ctr} \circ \gamma)\ e\ p\ \varphi\ f\ c_0\ u \\
+&\quad = \mathtt{toExt}\ (\alpha[\gamma])\ (\mathtt{ctr} \circ \gamma)\ \big(\mathtt{fst}(p\ \overline{e})\big)\ \big(\varphi, \big(\lambda v \to f\ v\ \overline{e}\ u\big)\big) \\
+&\quad = \big((\mathtt{toExt}\ \alpha\ \mathtt{ctr}) \circ \gamma\big)\ \big(\mathtt{fst}(p\ \overline{e})\big)\ \big(\varphi, \big(\lambda v \to f\ v\ \overline{e}\ u\big)\big) \\
+&\quad = (\mathtt{toExt}\ \alpha\ \mathtt{ctr})\ \big(\gamma\ (\mathtt{fst}(p\ \overline{e}))\big)\ \big(\varphi, \big(\lambda v \to f\ v\ \overline{e}\ u\big)\big) \\
+&\quad = (\mathtt{toExt}\ \alpha\ \mathtt{ctr})\ \big(\mathtt{fst}((\gamma \times  id )(p\ \overline{e}))\big)\ \big(\varphi, \big(\lambda v \to f\ v\ \overline{e}\ u\big)\big) \\
+&\quad = (\mathtt{isFib}_C\ \alpha\ \mathtt{ctr})\ [\gamma \times  id ]\ e\ p\ \varphi\ f\ c_0\ u
+\end{align*}
+\end{proof}
+
+因此 $\mathtt{isFib}_C\ (\alpha[\gamma])\ (\mathtt{ctr} \circ \gamma) = (\mathtt{isFib}_C\ \alpha\ \mathtt{ctr})[\gamma \times  id ]$，因此 $\mathtt{isFib}_C$ 在重索引下是稳定的。
+
+\begin{theorem}
+存在函数
+$$\mathtt{contract} : \{\Gamma : \mathcal{U}\}(A : \mathtt{Fib}\ \Gamma) \to \mathtt{Contr}\ A \to A \sim_{\mathcal{U}} 1$$
+\end{theorem}
+
+\begin{proof}
+给定 $\Gamma : \mathcal{U}$，$(A,\alpha) : \mathtt{Fib}\ \Gamma$ 和 $\mathtt{ctr} : \mathtt{Contr}\ A$，我们观察到
+$$C_A[\langle  id , \mathtt{0} \rangle](x) = C_A(x,\mathtt{0}) = \big([\mathtt{0}=\mathtt{0}] \to A(x)\big) \cong \big(1 \to A(x)\big) \cong A(x)$$
+$$C_A[\langle  id , \mathtt{1} \rangle](x) = C_A(x,\mathtt{1}) = \big([\mathtt{1}=\mathtt{0}] \to A(x)\big) \cong \big(\emptyset \to A(x)\big) \cong 1$$
+因此我们有
+$$\big((C_A, \mathtt{isFib}_C\ \alpha\ \mathtt{ctr}), f_A, g_A\big) : (A,\alpha) \sim_{\cong} 1$$
+其中 $f_A : A \cong C_A[\langle  id , \mathtt{0} \rangle]$ 和 $g_A : 1 \cong C_A[\langle  id , \mathtt{1} \rangle]$ 是上面指出的明显同构。因此我们可以定义
+$$\mathtt{contract}((A,\alpha), \mathtt{ctr}) \triangleq \mathtt{improve}((C_A, \mathtt{isFib}_C\ \alpha\ \mathtt{ctr}), f_A, g_A) : (A,\alpha) \sim_{\mathcal{U}} 1$$
+如所需。进一步，对于任何 $\gamma : \Delta \to \Gamma$，我们有：
+\begin{align*}
+&\mathtt{contract}((A,\alpha)[\gamma])(\mathtt{ctr} \circ \gamma) \\
+&\quad = \mathtt{improve}((C_{A \circ \gamma}, \mathtt{isFib}_C\ (\alpha[\gamma])\ (\mathtt{ctr} \circ \gamma)), f_{A \circ \gamma}, g_{A \circ \gamma}) \\
+&\quad = \mathtt{improve}((C_A \circ (\gamma \times  id ), (\mathtt{isFib}_C\ \alpha\ \mathtt{ctr})[\gamma \times  id ]), f_A \circ \gamma, g_A \circ \gamma) \\
+&\quad = \mathtt{improve}((C_A, \mathtt{isFib}_C\ \alpha\ \mathtt{ctr})[\gamma \times  id ], f_A \circ \gamma, g_A \circ \gamma) \\
+&\quad = \mathtt{improve}((C_A, \mathtt{isFib}_C\ \alpha\ \mathtt{ctr}), f_A, g_A)[\gamma \times  id ] \\
+&\quad = \mathtt{contract}((A,\alpha), \mathtt{ctr})[\gamma \times  id ]
+\end{align*}
+因此 $\mathtt{contract}$ 在重索引下是稳定的。
+\end{proof}
+
+\begin{corollary}
+$\mathcal{E}$ 中的纤维化类型的 CwF 建模公理 (3)。
+\end{corollary}
+
+\section{结论}
+
+在本章中，我们展示了单值性公理如何被分解为一组替代性质。这种分解发生在 MLTT 内部，不涉及任何特定模型。然后我们展示了这些新性质如何被任何满足我们第五章公理的拓扑斯满足。大多数新性质相当直接地从严格性公理 $\ax{9}$ 和纤维化的性质得出，例如重新对齐引理（引理 5.3.10）以及纤维化在同构下封闭的事实。最后的性质，编号 (3)，通过定义族的收缩（定义 6.2.10）被证明成立。这可以被视为第 5.4 节中呈现的粘合构造的显著简化情形。
+
+在第五章中，我们展示了如何使用拓扑斯的内部语言重复 Cohen 等人 [18] 的许多构造。尽管我们无法使用内部语言构造单值宇宙，我们确实展示了一些与单值性相关的结果。其思想是这些结果应该意味着，如果存在一个包含所有小纤维化的宇宙，那么该宇宙将满足单值性公理。在本章中，我们用我们相信更简单的构造证明了相同的结果。因此，当本章的结果与第五章的结果一起考虑时，证明了以下定理：
+
+\begin{theorem}
+给定任何作为我们公理（图 5.4）模型的拓扑斯 $\mathcal{E}$。如果 $\mathcal{E}$ 还建模 $\mathcal{U}$-小纤维化的类型论宇宙，那么该宇宙满足单值性。
+\end{theorem}
+
+公平地说，应该注意到，虽然这个单值性公理的证明避免了使用第 5.4 节的粘合构造，但这并不意味着我们完全消除了对粘合的需要。特别是，证明 $\mathcal{U}$-小纤维化宇宙是纤维化对象（在 1 上的纤维化）的外部证明仍然需要使用粘合构造。宇宙是纤维化的事实是至关重要的，不仅为了确保它包含在纤维化类型的 CwF 中，而且为了允许我们在宇宙中复合路径，如我们在定理中所做的那样。
+
+因此，为了给出立方体集合模型中单值类型论的完整内部描述，唯一缺失的部分是构造这样一个纤维化类型的宇宙。这个问题在第七章中得到解决。
+
 \end{document}
