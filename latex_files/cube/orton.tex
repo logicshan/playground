@@ -2014,4 +2014,371 @@ $\mathcal{E}$ 中的纤维化类型的 CwF 建模公理 (3)。
 
 因此，为了给出立方体集合模型中单值类型论的完整内部描述，唯一缺失的部分是构造这样一个纤维化类型的宇宙。这个问题在第七章中得到解决。
 
+\chapter{内部宇宙}
+
+在第5章中，我们看到了如何使用初等\textbf{拓扑斯}的内部类型论来公理化单值类型论的模型。
+然而，虽然我们能够用这种方法复制Cohen等人的许多构造，
+但我们无法使用内部语言来公理化（小）纤维化宇宙的必要性质（第3.3.5节）。
+
+在本章中，我们提出对通常内部语言的扩展，这将使我们能够公理化我们想要的性质。
+然后我们将使用这种扩展语言来展示如何从区间是\textbf{微小的}这一更简单要求构造宇宙。
+
+%----------------------------------------
+% 7.1 内部宇宙的"不可行"定理
+%----------------------------------------
+\section{内部宇宙的"不可行"定理}
+
+在本节中，我们证明为什么不存在在内部意义下弱分类CCHM纤维化的宇宙。
+这样一个弱分类器将由以下数据给出：
+\begin{equation}
+\begin{aligned}
+& \mathcal{V} : \mathcal{U}_1 \qquad && \mathsf{code} : \{\Gamma : \mathcal{U}\}(\Phi : \mathsf{Fib}\,\Gamma) \to \Gamma \to \mathcal{V} \\
+& \mathcal{E} : \mathsf{Fib}\,\mathcal{V} \qquad && \mathsf{Elcode} : \{\Gamma : \mathcal{U}\}(\Phi : \mathsf{Fib}\,\Phi) \to [\mathcal{E}\ell[\mathsf{code}\,\Phi] = \Phi]
+\end{aligned}
+\end{equation}
+
+其中 $\mathsf{Fib}\,\Gamma$ 如定义5.3.5中所述，是 $\Gamma$ 上小纤维化的集合，
+即那些纤维在 $\mathcal{U}$ 中的纤维化。
+
+这里 $\mathcal{V}$ 是宇宙，$\mathcal{E}$ 是其上的CCHM纤维化，它是一个弱分类器，
+意思是任何（小）纤维化 $\Phi : \mathsf{Fib}\,\Gamma$ 都可以通过对某个函数 
+$\mathsf{code}\,\Phi : \Gamma \to \mathcal{V}$ 进行重索引而从它得到（直至相等）。
+（"弱"一词指的是我们不要求存在唯一的函数 $\gamma : \Gamma \to \mathcal{V}$ 使得 
+$\mathcal{E}\ell[\gamma] = \tilde{\Phi}$。）
+
+我们将证明(7.1)中的数据意味着区间必须是平凡的（$0=1$），
+这与图5.4中的假设 $\mathbf{ax}_2$ 矛盾。这是因为(7.1)允许我们推断：
+如果类型族 $A : \Gamma \to \mathcal{U}$ 具有这样的性质——当每个 $A\,x$ 被视为单位类型 $1$ 上的族时都有纤维化结构，
+那么整个族 $A$ 就有纤维化结构；然而存在某些族不可能具有这种性质。
+
+这首先在注记5.3.6中指出，但这里为了可读性我们重复这个构造。
+考虑族 $P : \mathbb{I} \to \mathcal{U}$，其中 $P\,i \triangleq [0=i]$。
+对于每个 $i : \mathbb{I}$，类型 $P\,i$ 具有纤维化结构 
+$\pi\,i : \mathsf{isFib}\,\{1\}\,(\lambda\_ \to P\,i)$，
+因为内部相等满足恒等证明唯一性原理。
+具体而言，给定 $e : \{0,1\}$，$p : \mathbb{I} \to 1$，$\varphi : \mathtt{Cof}$，
+$f : ([\varphi] \to \Pi_\mathbb{I}\,(\lambda\_ \to P\,i)) = ([\varphi] \to \mathbb{I} \to [0=i])$
+以及 $a_0 : \{a_0 : [0=i] \mid (\varphi,f)@e \nearrow a_0\}$，
+那么我们可以简单地定义：
+\begin{equation}
+\pi\,i\,e\,p\,\varphi\,f\,a_0 \triangleq \{a_1 : [0=i] \mid (\varphi,f)@e \nearrow a_1\}
+\end{equation}
+
+其中条件 $(\varphi,f)@e \nearrow a_0$ 由证明类型 $[0=i]$ 是次终端的这一事实满足。
+
+然而，族 $P$ 作为一个整体不可能具有纤维化结构。也就是说，我们有
+$\mathsf{isFib}\,P \to \bot$。这是因为如果我们有纤维化结构 $\alpha : \mathsf{isFib}\,P$，
+那么我们就可以如(5.35)那样定义替换函数：
+\begin{equation}
+\mathsf{subst} : i \sim j \to P\,i \to P\,j
+\end{equation}
+
+由于我们有 $\mathsf{id} : 0 \sim 1$ 和 $* : P\,0$，因此我们可以将这些参数应用于 
+$\mathsf{subst}$ 以得到：
+\begin{equation}
+\mathsf{subst}\,\mathsf{id}\,* : P\,1
+\end{equation}
+
+然而，我们知道 $P\,1 = [0=1]$；因此将其与图5.4中的 $\mathbf{ax}_2$ 结合就得到矛盾。
+
+由此我们推导出以下关于CCHM纤维化内部宇宙的"不可行"定理：
+
+\begin{theorem}[不可行定理]
+对于CCHM纤维化，如(7.1)中的类型和函数的存在是矛盾的。
+更精确地说，如果 $\mathsf{IntUniv} : \mathcal{U}_2$ 是具有字段 $\mathcal{V}$、$\mathcal{E}$、$\mathsf{code}$ 和 $\mathsf{Elcode}$ 
+（如(7.1)）的依赖记录类型，那么存在类型为 $\mathsf{IntUniv} \to \bot$ 的项。
+\end{theorem}
+
+\begin{proof}
+假设我们有 $\mathsf{IntUniv}$ 的一个元素，因此有如(7.1)中的函数。
+给定任何族 $A : \Gamma \to \mathcal{U}$ 使得每个纤维都是纤维化对象，
+$\pi : (x : \Gamma) \to \mathsf{isFib}\,\{1\}\,(\lambda\_ \to A\,x)$，
+那么对于每个 $x : \Gamma$ 我们可以定义：
+\begin{equation}
+\mathsf{code}\,((\lambda\_ \to A\,x), \pi\,x) : 1 \to \mathcal{V}
+\end{equation}
+
+因此通过对 $*: 1$ 应用然后对 $x$ 抽象，我们得到映射 $a : \Gamma \to \mathcal{V}$，定义如下：
+\begin{equation}
+a\,x = \mathsf{code}\,((\lambda\_ \to A\,x), \pi\,x)\,*
+\end{equation}
+
+然后我们可以重索引以得到 $\Gamma$ 上的纤维化：
+\begin{equation}
+\Phi : \mathsf{Fib}\,\Gamma \qquad \Phi = \mathcal{E}\ell[a]
+\end{equation}
+
+使用 $\mathsf{Elcode}$ 我们可以证明 $\mathsf{fst}\,\Phi = A$。具体而言，给定任何 $x : \Gamma$ 我们有：
+\begin{equation}
+\begin{aligned}
+\mathsf{fst}\,\Phi\,x &= \mathsf{fst}\,(\mathcal{E}\ell[a])\,x && \mathtt{根据}\Phi\mathtt{的定义} \\
+&= \mathsf{fst}\,(\mathcal{E}\ell(a\,x)) && \mathtt{根据[\_]的定义} \\
+&= \mathsf{fst}\,(\mathcal{E}\ell(\mathsf{code}((\lambda\_ \to A\,x), \pi\,x)\,*)) && \mathtt{根据a的定义} \\
+&= \mathsf{fst}\,(\mathcal{E}\ell[\mathsf{code}((\lambda\_ \to A\,x), \pi\,x)])\,* && \mathtt{根据[\_]的定义} \\
+&= \mathsf{fst}\,((\lambda\_ \to A\,x), \pi\,x)\,* && \mathtt{根据\mathsf{Elcode}} \\
+&= A\,x && \mathtt{根据求值}
+\end{aligned}
+\end{equation}
+
+因此根据函数外延性我们有 $\mathsf{fst}\,\Phi = A$。
+
+因此我们可以推断 $\mathsf{snd}\,\Phi : \mathsf{isFib}\,A$。然而，我们在上面看到了如何将这样的元素转换为对 $\bot$ 的证明，
+通过取 $\Gamma \triangleq \mathbb{I}$ 和 $A \triangleq \lambda i \to [0=i]$。
+所以总的来说我们有 $\mathsf{IntUniv} \to \bot$ 的证明。
+\end{proof}
+
+\begin{remark}
+这个反例推广到其他纤维化概念：通常并非任何类型族 $A : \Gamma \to \mathcal{U}$ 
+（对于所有 $x : \Gamma$，$A\,x$ 在 $1$ 上是纤维化的）在 $\Gamma$ 上都是纤维化的。
+上述证明应与同伦类型系统（HTS）中不存在"纤维化替换"类型构造器的证明相比较；
+参见 \url{https://ncatlab.org/homotopytypetheory/show/Homotopy+Type+System#fibrant_replacement}。
+下面的定理7.3.2提供了另一个不内部化的全局构造的例子。
+\end{remark}
+
+%----------------------------------------
+% 7.2 清晰类型论
+%----------------------------------------
+\section{清晰类型论}
+
+定理7.1.1的证明依赖于这样一个事实：在内部语言中，$\mathsf{code}$ 函数可以应用于具有自由变量的元素。
+在这种情况下，它是 $\mathsf{code}((\lambda\_ \to A\,x), \pi\,x)$ 中的变量 $x : \Gamma$；
+通过对它抽象，我们得到函数 $\Gamma \to \mathcal{V}$，并且沿着这个函数重索引 $\mathcal{E}$ 就得到了有问题的纤维化(7.3)。
+
+尽管如此，立方体集合预层\textbf{拓扑斯}确实包含一个（单值的）宇宙，它是CCHM纤维化分类器，
+但仅在外部意义上。因此在 $\hatcube$ 中存在对象 $\mathcal{V}$ 和全局截面 
+$\mathcal{E} : 1 \to \mathsf{Fib}\,\mathcal{V}$，具有这样的性质：对于任何对象 $\Gamma$ 和态射 
+$\Phi : 1 \to \mathsf{Fib}\,\Gamma$，存在态射 $\mathsf{code}\,\Phi : \Gamma \to \mathcal{V}$ 使得 $\Phi$ 等于复合
+$\mathsf{Fib}(\mathsf{code}\,\Phi) \circ \mathcal{E} : 1 \to \mathsf{Fib}\,\Gamma$；参见第3.3.5节对 $\mathcal{V}$ 的具体描述。
+
+这个性质的内部化将对象的全局元素 $1 \to \Gamma$ 的使用替换为局部元素，
+即态射 $X \to \Gamma$（其中 $X$ 在某个合适的生成对象集合上变化，例如预层\textbf{拓扑斯}中的可表示对象）；
+我们已经看到这样的内部化版本不可能存在。
+
+尽管如此，我们希望用某种建立在第5章基础上的类型论语言来解释像 
+$\mathcal{V} \in \hatcube$ 这样的宇宙的构造。因此我们寻求在内部语言中操作对象 $\Gamma$ 的全局元素的方法。
+不能简单地通过量化类型 $1 \to \Gamma$ 的元素来做到这一点，因为（内部）同构 
+$\Gamma \cong (1 \to \Gamma)$。相反，我们转向能够谈论全局元素的模态类型论，我们称之为\textbf{清晰类型论}。
+
+它的判断，如 $\Delta \mid \Gamma \vdash a : A$，有两个上下文区域——其中 $\Delta$ 表示全局元素，
+$\Gamma$ 表示通常的局部元素。上下文结构是用于S4必然模态词的结构，
+因为来自 $\Delta$ 的全局元素可以在局部使用，但全局元素不能依赖于来自 $\Gamma$ 的局部变量。
+遵循，我们说左侧上下文 $\Delta$ 包含关于变量类型的\textbf{清晰}假设，写作 $x :: A$。
+
+清晰类型论在立方体集合中的解释使用了余单子 
+$\flat : \hatcube \to \hatcube$，它将预层 $A$ 发送到 $A$ 的全局截面集合上的常数预层；
+因此 $\flat A(X) \cong A(1)$ 对所有 $X \in \square$ 成立（其中 $1 \in \square$ 是终对象）。
+那么判断 $\Delta \mid \Gamma \vdash a : A$ 描述的情况是：$\Delta$ 是预层，$\Gamma$ 是 
+$\flat(\Delta)$ 上的预层族，$A$ 是 $\Sigma(\flat(\Delta))\Gamma$ 上的族，而 $a$ 是该族的元素。
+清晰类型论的规则被设计为对这种解释是可靠的。
+
+与普通类型论相比，关键约束是清晰上下文中的类型和替换清晰变量的项仅依赖于清晰变量。
+清晰变量和（可接受的）替换规则是：
+\begin{equation}
+\frac{\Delta}{\Delta, x :: A, \Delta' \mid \Gamma \vdash x : A}
+\qquad
+\frac{\Delta \mid \diamond \vdash a : A \qquad \Delta, x :: A, \Delta' \mid \Gamma \vdash b : B}
+     {\Delta, \Delta'[a/x] \mid \Gamma[a/x] \vdash b[a/x] : B[a/x]}
+\end{equation}
+
+变量规则的语义（它说全局元素可以在局部使用）使用了上述余单子 $\flat$ 的余单位 
+$\varepsilon_A : \flat A \to A$。在替换规则中，$\diamond$ 代表空上下文，
+因此 $a$ 和 $A$ 可能仅依赖于来自 $\Delta$ 的清晰变量。
+
+清晰类型论的其他规则（那些关于 $\Pi$ 类型、$\Sigma$ 类型等的规则）携带清晰上下文。
+对于我们的应用，我们不需要 $\flat$ 的类型构造器，而是使用清晰 $\Pi$ 类型（参见例如），
+即域是清晰的 $\Pi$ 类型，具有 $\beta\eta$ 判断等式。形成、引入和消去规则如图7.1所示。
+在这些规则中，因为参数变量 $x$ 是清晰的，它的类型 $A$ 以及函数 $f$ 应用的项 $a$ 也必须是清晰的。
+
+我们还使用的清晰归纳来处理清晰类型论的恒等类型 $x \equiv y$。
+具体而言，这是具有族 $y :: A, p :: x \equiv y \vdash C(y,p)$（其参数是清晰变量）的恒等消去，
+因此对于每个这样的 $A :: \mathcal{U}_n$，$x :: A$ 和 $C : (y :: A)(p :: x \equiv y) \to \mathcal{U}_n$，我们得到映射：
+\begin{equation}
+\mathsf{crispind} : (x \equiv y) \to (y :: A)(p :: x \equiv y)(z : C\,x\,\mathsf{refl}) \to C\,y\,p
+\end{equation}
+
+以及 $\beta$ 判断等式。在本文中，我们使用\textbf{拓扑斯}的内部恒等类型，
+由 $x \equiv y \triangleq [x = y]$ 定义且 $\mathsf{refl} \triangleq *$，因此上述归纳原理立即从这个恒等类型是外延的这一事实得出。
+然而，我们提到这个事实是为了澄清在没有外延恒等类型的设置中工作时我们需要什么，
+例如本文附带的Agda开发中。
+
+\begin{remark}[清晰类型论的预层模型]
+清晰类型论是由特定的预层\textbf{拓扑斯} $\hatcube$ 驱动的。
+然而，对于预层\textbf{拓扑斯} $\widehat{\mathbf{C}}$ 使用余单子 
+$\flat = p^* \circ p_*$ 来可靠地解释它（其中 $p_* : \widehat{\mathbf{C}} \to \mathsf{Set}$ 
+取预层的全局截面，其左伴随 $p^* : \mathsf{Set} \to \widehat{\mathbf{C}}$ 将集合发送到常数预层），
+对范畴 $\mathbf{C}$ 的要求很少。明确地说：
+\begin{equation}
+p_*(A) \triangleq \widehat{\mathbf{C}}(1, A) \quad p^*(X)(\_) \triangleq X
+\end{equation}
+
+这个 $\flat$ 保持有限极限（因为 $p^*$ 有左伴随，由沿 $\mathbf{C} \to 1$ 的左Kan扩张给出）。
+虽然细节仍有待完全解决，但似乎为了用满足图7.1中规则和清晰恒等归纳(7.5)的清晰 $\Pi$ 类型
+（以及 moreover 我们不在这里使用的具有清晰 $\flat$ 归纳的 $\flat$ 模态词）来建模清晰类型论，
+唯一需要的额外条件是这个余单子是幂等的（意味着余乘法 $\delta : \flat \to \flat \circ \flat$ 是同构）。
+\end{remark}
+
+这个幂等性在 $\widehat{\mathbf{C}}$ 是连通\textbf{拓扑斯}时成立，这在 $\mathbf{C}$ 是连通范畴时成立——
+例如，当 $\mathbf{C}$ 有终对象时。在这种情况下，当 $\mathbf{C}$ 连通时，任何自然变换 
+$f : 1 \to p^*(X)$ 完全由其在任何对象上的作用决定，因为如果 $I$ 和 $J$ 由 
+$\mathbf{C}$ 中的态射连接，则 $f_I(*) = f_J(*) \in X$。因此 
+$p_*(p^*(X)) = \widehat{\mathbf{C}}(1, p^*(X)) \cong X$ 对任何集合 $X$ 成立，
+因此 $p_* \circ p^* \cong \mathsf{id}$。由此我们推导出 
+$\flat \circ \flat = p^* \circ p_* \circ p^* \circ p_* \cong p^* \circ p_* = \flat$。
+其中 $\delta : \flat \to \flat \circ \flat$ 是这个同构的一方。注意这个论证假设 
+$\mathbf{C}$ 是 inhabited 的，但当 $\mathbf{C}$ 为空时 $\delta$ 平凡地是同构。
+
+如果 $\widehat{\mathbf{C}}$ 有终对象，那么它实际上是局部\textbf{拓扑斯}，
+且 $\flat$ 有右伴随；在这种情况下，猜想，
+人们会得到Shulman整个空间类型论的模型，而清晰类型论是其中的一部分。
+事实上 $\square$ 不仅有终对象，它还有所有有限积（如任何Lawvere理论那样），
+由此得出 $\hatcube$ 不仅是局部的，而且是凝聚的。
+
+\begin{remark}[Agda-flat]
+Vezzosi创建了Agda的一个分支，称为Agda-flat，
+它使我们能够探索清晰类型论。它增加了在Agda中通常变量 $x : A$ 可能出现的地方使用清晰变量 $x :: A$ 的能力，
+并检查上述规则中的模态约束。例如，Agda-flat正确地拒绝了以下将清晰-$\Pi$ 函数应用于普通参数的尝试：
+\begin{equation}
+\mathsf{wrong} : (A :: \mathcal{U}_n)(B : \mathcal{U}_m)(f :: (\_ :: A) \to B)(x : A) \to B \qquad 
+\mathsf{wrong}\,A\,B\,f\,x = f(x)
+\end{equation}
+
+而带有 $x :: A$ 的变体则成功。这是遵守清晰类型论所施加的模态纪律的一个简单例子；
+对于更复杂的情况，例如下面定理7.3.3证明中出现的情况，我们发现Agda-flat对于避免错误是不可或缺的。
+然而，Agda-flat实现了清晰类型论的超集，需要更多的工作来理解它们的精确关系。
+例如，Agda定义归纳类型的能力导致了Agda-flat中的新类型，如 $\flat$ 模态词本身；
+及其模式匹配工具允许人们证明超出清晰类型论的 $\flat$ 的性质。
+Agda允许人们在模块中关闭模式匹配；为了安全，我们在开发中尽可能这样做。
+Agda-flat的安装说明见 \url{https://doi.org/10.17863/CAM.35681}。
+\end{remark}
+
+%----------------------------------------
+% 7.3 来自微小区间的宇宙
+%----------------------------------------
+\section{来自微小区间的宇宙}
+
+在清晰类型论中，为了避免"不可行"定理（定理7.1.1）中的不一致性，
+我们可以通过取 $\mathsf{code}$ 和 $\mathsf{Elcode}$ 为纤维化 $\Phi$ 的清晰函数（以及隐含的纤维化的基类型 $\Gamma$）
+来弱化(7.1)中宇宙的定义。因为如果 $\mathsf{code}$ 具有类型 
+$\{\Gamma :: \mathcal{U}\}(\Phi :: \mathsf{Fib}\,\Gamma)(x : \Gamma) \to \mathcal{V}$，
+那么在(7.2)中当我们尝试将 $\mathsf{code}$ 应用于依赖于局部变量 $x : \Gamma$ 的 
+$\Phi = ((\lambda\_ \to A\,x), \pi\,x)$ 时，矛盾的证明就被阻止了。
+
+确实，我们在本节中证明，给定关于区间 $\mathbb{I}$ 的额外假设（这对立方体集合成立），
+可以定义具有这样清晰编码函数的宇宙，而且它们是唯一的，因此人们得到分类纤维化，
+而不仅仅是弱分类的。
+
+应该注意的是，本章的结果都不依赖于定义5.3.3中给出的纤维化的精确定义。
+事实上，宇宙构造和其他结果直接推广到其他纤维化概念，
+如笛卡尔立方体类型论中使用的那种。
+因此，在本章剩余部分，我们将更一般地工作，通过将纤维化概念抽象为参数化于任意 $\mathsf{Comp}$ 结构的东西。
+
+\begin{definition}[$\mathsf{Comp}$-纤维化]
+给定某个结构 $\mathsf{Comp} : \mathcal{U}^\mathbb{I} \to \mathcal{U}$，我们为族 $A : \Gamma \to \mathcal{U}$ 定义 $\mathsf{Comp}$-纤维化结构的类型为：
+\begin{equation}
+\mathsf{isFib}_\mathsf{Comp}\,A \triangleq (p : \Gamma^\mathbb{I}) \to \mathsf{Comp}(A \circ p)
+\end{equation}
+
+当 $\mathsf{Comp}$ 从上下文中明确时，我们将简单地将 $\mathsf{isFib}$ 写作 $\mathsf{isFib}_\mathsf{Comp}$。
+注意，通过取
+\begin{equation}
+\mathsf{Comp}\,A \triangleq (e : \{0,1\}) \to \mathsf{Comp}'\,e\,A
+\end{equation}
+
+我们恢复了之前的纤维化概念（直至参数重排序），其中 $\mathsf{Comp}'$ 是之前定义5.3.3中定义的复合运算。
+像之前一样，我们将 $\mathsf{Fib}\,\Gamma$ 写作类型 $(A : \Gamma \to \mathcal{U}) \times \mathsf{isFib}(A)$。
+\end{definition}
+
+回想第3.3.1节，在立方体集合模型中，类型 $\mathbb{I}$ 表示对象 $\{i\} \in \square$ 上的可表示预层 
+$\mathsf{y}\{i\} \in \hatcube$。由于 $\square$ 有有限积，存在函子 $-\times\{i\} : \square \to \square$。
+与此函子的预复合诱导了预层上的自函子 $(-\times\{i\})^* : \hatcube \to \hatcube$，
+它有左右伴随，由沿 $-\times\{i\}$ 的左右Kan扩张给出。
+因此根据Yoneda引理，对于任何 $F \in \hatcube$ 和 $X \in \square$：
+\begin{equation}
+\begin{aligned}
+(F^\mathbb{I})X &= \hatcube(\mathsf{y}X \times \mathbb{I}, F) \\
+&= \hatcube(\mathsf{y}X \times \mathsf{y}\{i\}, F) \\
+&\cong \hatcube(\mathsf{y}(X \times \{i\}), F) \\
+&\cong F(X \times \{i\}) \\
+&= ((-\times\{i\})^*F)X
+\end{aligned}
+\end{equation}
+
+自然地在 $X$ 和 $F$ 中。因此，指数函子 $(-)^\mathbb{I} : \hatcube \to \hatcube$ 自然同构于 $(-\times\{i\})^*$，
+因此不仅具有左伴随（对应于与 $\mathbb{I}$ 的积），而且具有右伴随。
+
+Lawvere 在综合微分几何的背景下首次指出了具有有限积的范畴中那些不仅可指数化（与它们的积具有右伴随），而且其指数函子也具有右伴随的对象的重要性。
+他称这样的对象为"原子的"，但我们将遵循后来的用法，称它们为\textbf{微小的}。\footnote{警告：形容词"微小的"有时用于描述 $\mathcal{V}$-丰富的余完备范畴 $\mathcal{C}$ 中的对象 $X$，
+使得同态 $\mathcal{V}$-函子 $\mathcal{C}(X, -) : \mathcal{C} \to \mathcal{V}$ 保持余极限；参见例如。
+我们更倾向于使用 Kelly 的术语"小投射对象"来表示这个性质。
+在特殊情况下，当 $\mathcal{V} = \mathcal{C}$ 且 $\mathcal{C}$ 是笛卡尔闭的并具有足够的性质使得存在伴随函子定理时，
+小投射对象特别是我们这里使用的意义上的微小对象。}
+
+因此，立方体集合中的区间是微小的，我们有一个右伴随于路径函子 $(-)^\mathbb{I}$，记作 
+$\sqrt{-} : \hatcube \to \hatcube$。所以对于每个 $B \in \hatcube$，函子 
+$\hatcube(-^\mathbb{I}, B) : \hatcube \to \mathsf{Set}$ 由 $\sqrt{B}$ 表示，
+即存在自然双射 $\hatcube(A^\mathbb{I}, B) \cong \hatcube(A, \sqrt{B})$。
+
+给定 $\Gamma$ 和 $A : \Gamma \to \mathcal{U}$ 在 $\hatcube$ 中，从定义5.3.3我们有，纤维化结构 
+$\mathsf{isFib}\,A$ 对应于投影 $\mathsf{fst} : ((p : \Gamma^\mathbb{I}) \times \mathsf{Comp}(A \circ p)) \to \Gamma^\mathbb{I}$ 的截面，
+如下图所示中的 $\alpha$：
+\[
+\begin{tikzcd}
+\Gamma^\mathbb{I} \arrow[rr, "\alpha"] \arrow[rrd, "\mathsf{id}"'] \&\& (p : \Gamma^\mathbb{I}) \times \mathsf{Comp}(A \circ p) \arrow[d, "\mathsf{fst}"] \\
+\&\& \Gamma^\mathbb{I}
+\end{tikzcd}
+\]
+
+在伴随 $(-)^\mathbb{I} \dashv \sqrt{-}$ 上转置，我们得到使下图交换的态射：
+\[
+\begin{tikzcd}
+\Gamma \arrow[rr, "\bar{\alpha}"] \arrow[rrd, "\mathsf{id}"'] \&\& \sqrt{((p : \Gamma^\mathbb{I}) \times \mathsf{Comp}(A \circ p))} \arrow[d, "\sqrt{\mathsf{fst}}"] \\
+\&\& \sqrt{(\Gamma^\mathbb{I})}
+\end{tikzcd}
+\]
+
+因此，$A$ 的纤维化结构对应于沿伴随在 $\Gamma$ 处的单位 
+$\eta_\Gamma : \Gamma \to \sqrt{(\Gamma^\mathbb{I})}$（这是 $\mathsf{id} : \Gamma^\mathbb{I} \to \Gamma^\mathbb{I}$ 的伴随转置）
+拉回 $\sqrt{\mathsf{fst}}$ 的投影 $\pi_1 : R_\Gamma A \to \Gamma$ 的截面，如下图所示：
+\[
+\begin{tikzcd}
+\Gamma \arrow[rr, "\bar{\alpha}", dotted] \arrow[rrd, "\mathsf{id}"'] \&\& R_\Gamma A \arrow[r, "\pi_2"] \arrow[d, "\pi_1"'] \& \sqrt{((p : \Gamma^\mathbb{I}) \times \mathsf{Comp}(A \circ p))} \arrow[d, "\sqrt{\mathsf{fst}}"] \\
+\&\& \Gamma \arrow[r, "\eta_\Gamma"'] \& \sqrt{(\Gamma^\mathbb{I})}
+\end{tikzcd}
+\]
+
+% 图7.2
+\begin{figure}[htbp]
+\centering
+\begin{tabular}{l}
+$\mathsf{R} : \{A :: \mathcal{U}_n\}\{B :: \mathcal{U}_m\}(f :: A^\mathbb{I} \to B) \to A \to \sqrt{B}$ \\
+$\mathsf{L} : \{A :: \mathcal{U}_n\}\{B :: \mathcal{U}_m\}(g :: A \to \sqrt{B}) \to A^\mathbb{I} \to B$ \\
+$\mathsf{LR} : \{A :: \mathcal{U}_n\}\{B :: \mathcal{U}_m\}\{f :: A^\mathbb{I} \to B\} \to \mathsf{L}(\mathsf{R}\,f) \equiv f$ \\
+$\mathsf{RL} : \{A :: \mathcal{U}_n\}\{B :: \mathcal{U}_m\}\{g :: A \to \sqrt{B}\} \to \mathsf{R}(\mathsf{L}\,g) \equiv g$ \\
+$\mathsf{R}_{nat} : \{A :: \mathcal{U}_n\}\{B :: \mathcal{U}_m\}\{C :: \mathcal{U}_k\}(g :: A \to B)(f :: B^\mathbb{I} \to C) \to \mathsf{R}(f \circ g^\mathbb{I}) \equiv \mathsf{R}\,f \circ g$
+\end{tabular}
+\caption{清晰类型论中区间的微小性公理}
+\label{fig:tiny-axioms}
+\end{figure}
+
+这种纤维化结构的刻画不依赖于 $\mathsf{Comp}$ 的特定定义，因此应适用于许多纤维化概念。
+我们将展示它如何导致宇宙 $\mathcal{V} = R_\mathcal{U}\mathsf{id}$ 和族 $\pi_1 : R_\mathcal{U}\mathsf{id} \to \mathcal{U}$ 的构造，
+后者是纤维化的分类器。然而，为了在类型论中执行构造，必须解决两个问题：
+\begin{itemize}
+\item 首先，为了使 (7.1) 中的 $\mathsf{Elcode}$ 成为等式（而不仅仅是同构），
+需要选择 $R_\Gamma A$ 严格地关于沿 $\Gamma$ 的重索引是函子性的
+（因此是意义上的依赖右伴随）。
+\item 其次，不能使用普通类型论作为内部语言来表述构造，
+因为 $(-)^\mathbb{I}$ 的右伴随不能内部化，如下定理所示。
+\end{itemize}
+
+\begin{theorem}
+对于立方体集合，不存在路径函子 $(-)^\mathbb{I} : \hatcube \to \hatcube$ 的内部右伴随。
+换句话说，不存在自然同构族 
+$\hatcube(A^\mathbb{I}, B) \cong \hatcube(A, \sqrt{B}) : \hatcube \to \hatcube$（对于 $B \in \hatcube$）。
+\end{theorem}
+
+
+
+
+
 \end{document}
