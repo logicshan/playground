@@ -2531,18 +2531,18 @@ $\mathtt{isFib}^1$ 和 $\mathtt{isFib}^2$ 是对应的纤维化结构，$\mathca
 本文研究了在何种程度上可以使用立方体集合\textbf{拓扑斯}的内部语言来解释同伦类型论的 Kan 立方体集合模型。
 第5章表明，从图5.4中给出的九个公理出发，可以完成大部分构造。
 这种公理化方法意味着在内部语言中进行的构造要么直接适用，要么容易适应于相关的类型论模型，
-如笛卡尔立方体模型\cite{angiuli2019cartesian}。
+如笛卡尔立方体模型[6]。
 我们还相信这种表述比外部表述更清晰，特别是对于熟悉类型论的读者而言。
 
 在第6章中，我们展示了这种内部方法如何用于一个新的目的，即呈现一个更简单的单值性证明。
 在此过程中，我们证明了关于模型的中间结果，这些结果可能对其他目的有用，
-如等值原理（定理6.2.1）。
+如等值原理（定理6.2.6）。
 
 上述工作中缺失的最后一步是使用这种内部方法构造单值宇宙。
 这个问题在第7章中得到了解决，在那里我们用处理类型全局元素的模态词扩展了内部语言，
 这使我们能够公理化构造单值宇宙所需的性质，即区间是微小的这一事实（第7.3节）。
 
-因此，总而言之，本文呈现了 Cohen 等人\cite{cohen2016cubical}给出的模型的完整内部表述，
+因此，总而言之，本文呈现了 Cohen 等人[18]给出的模型的完整内部表述，
 包括单值宇宙的构造。它通过公理化内部语言中的充分性质，将模型推广到其他设置以进行模型构造。
 最后，它还通过将单值公理分解为子公理，然后证明这些子公理在任何满足基本性质的\textbf{拓扑斯}中都能得到直接验证，
 从而给出了单值公理的另一种证明。
@@ -2558,14 +2558,14 @@ Agda 不仅对于检查纸上完成的工作有用，而且对于实验新想法
 %----------------------------------------
 \section{未来工作（高阶归纳类型）}
 
-未来工作的明显方向是研究我们能在何种程度上使用内部语言方法进行高阶归纳类型（HITs）\cite{univalent2013homotopy}的构造。
-最近，Coquand、Huber 和 Mörtberg\cite{coquand2018higher}的一篇新论文发表了，
+未来工作的明显方向是研究我们能在何种程度上使用内部语言方法进行高阶归纳类型（HITs）[62, 第6章]的构造。
+最近，Coquand、Huber 和 Mörtberg[21]的一篇新论文发表了，
 该论文在立方体集合模型中呈现了某些 HIT 的语义，并朝着定义 HIT 的一般模式迈出了第一步。
-初步实验表明，通过使用商归纳类型（QITs）\cite{altenkirch2016quotient}，
+初步实验表明，通过使用商归纳类型（QITs）[5]，
 可以在内部语言中重复其中一些构造。虽然需要进一步调查以了解使用这种方法能完成多少工作，
 以及完全证明 QIT 的语义，但初步结果似乎很有希望。
 
-\cite{coquand2018higher}中近期工作的关键见解是，定义5.3.3中描述的纤维化结构可以分解为两个新的运算，
+[21]中近期工作的关键见解是，定义5.3.3中描述的纤维化结构可以分解为两个新的运算，
 称为\textbf{齐次纤维化结构}和\textbf{传输结构}。
 当族的每个纤维都是纤维化对象（$1$ 上的纤维化）时，该族具有齐次纤维化结构。
 在注记5.3.6中，我们观察到每个纤维化都满足这个性质，但不是每个满足这个性质的族都是纤维化。
@@ -2579,11 +2579,10 @@ $\mathtt{isHFib} : \{\Gamma : \mathcal{U}\}\big(A : \Gamma \to \mathcal{U}\big) 
 \begin{equation}
 \begin{aligned}
 \mathtt{isHFib}\ \{\Gamma\}\ A \triangleq & (e : \{0,1\})(x : \Gamma)(\varphi : \mathtt{Cof})(f : [\varphi] \to \ttI \to A\ x) \to \\
-& \{a_0 : A\ x \mid (\varphi,f)@\overline{e} \nearrow a_0\} \to \{a_1 : A\ x \mid (\varphi,f)@\overline{e} \nearrow a_1\}
+& \{a_0 : A\ x \mid (\varphi,f)@e \nearrow a_0\} \to \{a_1 : A\ x \mid (\varphi,f)@\overline{e} \nearrow a_1\}
 \end{aligned}
 \end{equation}
 \end{definition}
-
 这个定义等价于要求每个纤维都是纤维化对象。我们只是消除了直接使用该定义时会出现的冗余的 $p : \ttI \to 1$。
 
 \begin{definition}[传输结构]
@@ -2595,9 +2594,8 @@ $\mathtt{isHFib} : \{\Gamma : \mathcal{U}\}\big(A : \Gamma \to \mathcal{U}\big) 
 & (a_0 : A\ (p\ e)) \to \{a_1 : A\ (p\ \overline{e}) \mid (\varphi, \overline{a_0}) \nearrow a_1\}
 \end{aligned}
 \end{equation}
-\end{definition}
-
 其中 $\overline{a_0} : [\varphi] \to A\ (p\ \overline{e})$ 是将 $a_0$ 视为 $A\ (p\ \overline{e})$ 的部分元素。
+\end{definition}
 
 然后我们可以展示上面提到的纤维化结构分解为齐次纤维化结构和传输结构。
 
@@ -2639,7 +2637,7 @@ f'\ u\ i \triangleq t_A\ e\ (\lambda(j : \ttI) \to p\ (i \sqcup_e j))\ (i = \ove
 \end{proof}
 
 为了理解这种分解的优势，考虑我们可能如何尝试构造高阶归纳类型。
-作为一个例子，取纬垂（suspension）\cite[第6.5节]{univalent2013homotopy}。
+作为一个例子，取纬垂（suspension）[62, 第6.5节]。
 这是一个参数化 HIT，在外部立方体集合 CwF 的语言中（第3.3节）定义如下：
 给定任何类型 $A \in \mathtt{FTy}(\Gamma)$，我们有一个新类型 
 $\Sigma A \in \mathtt{FTy}(\Gamma)$，称为 $A$ 的纬垂，带有项：
@@ -2650,7 +2648,6 @@ $\Sigma A \in \mathtt{FTy}(\Gamma)$，称为 $A$ 的纬垂，带有项：
 \mathtt{merid}(a) &\in \mathtt{Ter}\big(\Gamma \vdash \mathtt{Path}_{\Sigma A}(\mathtt{north}, \mathtt{south})\big)
 \end{aligned}
 \]
-
 对于每个 $a \in \mathtt{Ter}(\Gamma \vdash A)$，它在具有这种结构的类型中是初始的（在适当意义上）。
 此外，这些构造必须在通常意义下对重索引稳定。
 
@@ -2663,27 +2660,25 @@ $\Sigma A \in \mathtt{FTy}(\Gamma)$，称为 $A$ 的纬垂，带有项：
 \mathtt{merid} &: A \to \ttI \to \Sigma A
 \end{aligned}
 \]
-
 商去使 $\mathtt{merid}(a, 0) = \mathtt{north}$ 和 $\mathtt{merid}(a, 1) = \mathtt{south}$（对所有 $a : A$）的关系。
 这将以纤维方式提升到 
 $\Sigma : \{\Gamma : \mathcal{U}\}\big(A : \Gamma \to \mathcal{U}\big) \to \Gamma \to \mathcal{U}$：
-\begin{equation}
-\Sigma\ \dot{A}\ x \triangleq \Sigma\ (A\ x)
-\end{equation}
-
+\[
+\Sigma\ A\ x \triangleq \Sigma\ (A\ x)
+\]
 问题出现在尝试进一步将其提升为映射 
 $\Sigma : \{\Gamma : \mathcal{U}\} \to \mathtt{Fib}\ \Gamma \to \mathtt{Fib}\ \Gamma$ 时，
 因为，给定 $A$ 是纤维化的，没有明显的原因说明 $\Sigma A$ 也会是纤维化的。
 
 一个想法是尝试将任何未解决的复合问题的结果自由添加到 $\Sigma A$ 中，
-以构造 $\Sigma A$ 上的"自由纤维化族"。这个过程被称为\textbf{纤维化替换}，并提出了两个主要问题。
+以构造 $\Sigma A$ 上的``自由纤维化族"。这个过程被称为\textbf{纤维化替换}，并提出了两个主要问题。
 第一个是纤维化替换运算通常对替换不稳定，但我们对 HIT 的解释必须对替换稳定。
 第二个问题是，在不担心稳定性的情况下，纤维化替换的明显定义不保持纤维的小性。
 例如，给定 $\Gamma : \mathcal{U}_1$ 和 $A : \Gamma \to \mathcal{U}$，
 那么目前我们有 $\Sigma A : \Gamma \to \mathcal{U}$，
 但如果我们以明显的方式纤维化替换 $\Sigma A$，那么我们会得到一个映射 
 $\Gamma \to \mathcal{U}_1$，即向上提升一个宇宙层次（等于基 $\Gamma$ 的宇宙层次）。
-这些问题，以及 HIT 的语义更一般地，在\cite{coquand2018higher}中讨论。
+这些问题，以及 HIT 的语义更一般地，在[45]中讨论。
 
 然而，由于具有齐次复合结构是一个纤维层面性质，
 构造族的"齐次纤维化替换"似乎是可能的，并且这个过程对重索引稳定并保持小性。
@@ -2698,24 +2693,23 @@ t_{\Sigma A}\ e\ p\ \varphi\ \mathtt{south} &\triangleq \mathtt{south} \\
 t_{\Sigma A}\ e\ p\ \varphi\ (\mathtt{merid}\ a\ i) &\triangleq \mathtt{merid}\ (t_A\ e\ p\ \varphi\ a)\ i
 \end{aligned}
 \]
-
 这尊重 $\Sigma A$ 上的商，并满足传输结构的要求。
 
 因此我们可以如下构造纬垂。取纤维化 $(A, \alpha) : \mathtt{Fib}\ \Gamma$ 并令 
-$\Sigma_0 A$ 为 $\Sigma A$ 的齐次纤维化替换。从上面我们知道，
+$\Sigma' A$ 为 $\Sigma A$ 的齐次纤维化替换。从上面我们知道，
 每当 $A$ 是纤维化的，因此具有传输结构时，$\Sigma A$ 也具有传输结构，
-因此其齐次纤维化替换也具有传输结构。根据定义 $\Sigma_0 A$ 总是齐次纤维化的。
-因此，由 (8.4)，$\Sigma_0 A$ 是纤维化的。此外，齐次纤维化替换的"自由"部分确保 
-$\Sigma_0 A$ 仍将在纤维化类型中满足正确的消去原理。
-因此 $\Sigma_0 A$ 正确地建模了 $A$ 的纬垂。
+因此其齐次纤维化替换也具有传输结构。根据定义 $\Sigma' A$ 总是齐次纤维化的。
+因此，由 (8.4)，$\Sigma' A$ 是纤维化的。此外，齐次纤维化替换的"自由"部分确保 
+$\Sigma' A$ 仍将在纤维化类型中满足正确的消去原理。
+因此 $\Sigma' A$ 正确地建模了 $A$ 的纬垂。
 
 这里描述的工作仍处于非常初级的阶段。上述论证的形式化可以在本文附带的 Agda 开发中找到，
 网址为 \url{https://doi.org/10.17863/CAM.35681}。
-正如本章开头提到的，齐次纤维化替换的构造需要商归纳类型（QITs）\cite{altenkirch2016quotient}的存在。
+正如本章开头提到的，齐次纤维化替换的构造需要商归纳类型（QITs）[5]的存在。
 目前，这些在 Agda 中使用一些潜在不健全的扩展进行模拟，
 这个方向的任何未来工作都需要在一般\textbf{拓扑斯}中，
 或特别是在立方体集合\textbf{拓扑斯}中建立这些构造的可靠性。
 
-在这个方向上也可以看到类似的方法，在 Simon Boulier 的论文\cite[第5.2.5节]{boulier2018extending}中，
-他通过使用商类型然后在内部语言中（他称之为 ITT）取纤维化替换来构造同伦推出。
+在这个方向上也可以看到类似的方法，在 Simon Boulier 的论文[13, 第5.2.5节]中，
+他通过使用商类型然后在内部语言中（他称之为 $\mathbb{I}$TT）取纤维化替换来构造同伦推出。
 \end{document}
