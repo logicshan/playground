@@ -1,0 +1,322 @@
+\documentclass{ctexart}
+
+\usepackage{amsmath,amsthm,extarrows,color,enumitem,framed,markdown,amscd}
+\usepackage[a4paper, left = 1cm, right = 1cm]{geometry}
+
+\usepackage{tikz-cd}
+
+\usepackage{ulem}
+
+\usepackage{enumitem}
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     linkcolor=blue,
+     citecolor=red,
+     %filecolor=magenta,      % color of file links
+     urlcolor=cyan
+}
+\usepackage{cleveref}
+\usepackage{microtype}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{theorem*}{定理}
+\newtheorem{proposition*}[theorem*]{命题}
+\newtheorem{corollary*}[theorem*]{推论}
+\newtheorem{lemma*}[theorem*]{引理}
+\newtheorem{definition*}[theorem*]{定义}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{注记}
+\newtheorem*{perspective}{Perspective}
+
+\theoremstyle{definition}
+\newtheorem{notation}[theorem]{记法}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\newcommand{\bfP}{\mathbf{P}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand\calF{\mathcal{F}}
+\newcommand{\yoneda}{\mathbf{y}}
+
+\newcommand{\VarTop}{\mathbf{VarTop}}
+\newcommand{\Comm}{\mathbf{Comm}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Aff}{\mathbf{Aff}}
+\newcommand{\Diff}{\mathbf{Diff}}
+\newcommand{\Open}{\mathbf{Open}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\true}{\mathrm{true}}
+\newcommand{\UG}{\mathbf{U}}
+\newcommand{\rmH}{H}
+\newcommand{\Gposet}{G\text{-}\mathbf{poset}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\PG}{\calP\rtimes G}
+\newcommand{\kPG}{k\PG}
+\newcommand{\EI}{\mathrm{EI}}
+\newcommand\frakm{\mathfrak{m}}
+\newcommand\pgrhp{\pi_{\gamma}r_P^H}
+\newcommand\barN{\overline{N}}
+\newcommand\Cl{\mathrm{Cl}}
+\newcommand\Tr{\mathrm{Tr}}
+\newcommand{\abs}[1]{\left\lvert\#1\right\rvert}
+\newcommand\calO{\mathcal{O}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\OGb{\OG b}
+\newcommand\ZOG{\mathbf{Z}\OG}
+\newcommand\OGG{(\OG)^G}
+\newcommand\Irr{\mathrm{Irr}}
+\newcommand\Proj{\mathrm{Proj}}
+\newcommand\ksng{k_{\sharp}\widehat{\overline{N}}_G}
+\newcommand\LP{\mathcal{LP}}
+\newcommand\Res{\mathrm{Res}}
+\newcommand\ResNCGPVg{\Res_{\overline{C}_G(P)}^{\overline{N}_G(P_{\gamma})}(V(\gamma))}
+\newcommand\BOG{\mathbf{B}(\OG)}
+\newcommand\pSubGrp{\mathrm{psGrp}}
+\newcommand\GL{\mathrm{GL}}
+\newcommand\PGL{\mathrm{PGL}}
+\newcommand\Inn{\mathrm{Inn}}
+\newcommand\std{\mathrm{std}}
+\newcommand\bfZ{\mathbf{Z}}
+\newcommand\kP{k\calP}
+%\newcommand\Mor{\mathrm{Mor}}
+\newcommand\Bas{\mathrm{Bas}}
+\newcommand\Orb{\mathrm{Orb}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\Br{\mathrm{Br}}
+\newcommand\Image{\mathrm{Im}}
+\newcommand\calD{\mathcal{D}}
+\newcommand\Ker{\mathrm{Ker}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\ttI{\mathtt{I}}
+\newcommand\ttk{\mathtt{k}}
+\newcommand\Rad{\mathrm{Rad}}
+\newcommand\Soc{\mathrm{Soc}}
+\newcommand\Perm{\mathrm{Perm}}
+\newcommand\bbA{\mathbb{A}}
+\newcommand\rmP{\mathrm{P}}
+\newcommand\Fam{\mathbf{Fam}}
+\newcommand\rmOb{\mathrm{Ob}}
+
+\newcommand\rmMor{\mathrm{Mor}}
+\newcommand\rmType{\mathrm{Type}}
+\newcommand\rmTerms{\mathrm{Terms}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\sfp{\mathsf{p}}
+\newcommand\sfq{\mathsf{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Psh{\mathrm{Psh}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\C{\mathbf{C}}
+\newcommand\Sets{\mathbf{Sets}}
+\newcommand\Cube{\square^{\op}}
+\newcommand\hatcube{\widehat{□}}
+\newcommand\hatsquare{\widehat{□}}
+\newcommand\cubicalsets{\widehat{□}}
+\newcommand\cSets{[\square^{\op},\Sets]}
+\newcommand\Setspointed{\mathbf{Sets}_{\kappa}^{\bullet}}
+\newcommand{\qq}{\mathtt{q}}
+\newcommand{\pp}{\mathtt{p}}
+\newcommand{\Cof}{\mathtt{Cof}}
+\newcommand{\dec}{\mathrm{dec}}
+\newcommand{\fib}{\mathtt{fib}}
+\newcommand{\ttzero}{\mathtt{0}}
+\newcommand{\ttone}{\mathtt{1}}
+
+\DeclareMathOperator\Obj{Obj}
+\DeclareMathOperator\inl{inl}
+\DeclareMathOperator\inr{inr}
+\DeclareMathOperator\ob{ob}
+\DeclareMathOperator\pt{pt}
+\DeclareMathOperator\osf{sf}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\Sub{Sub}
+\DeclareMathOperator\Mor{Mor}
+\DeclareMathOperator\Colim{Colim}
+\DeclareMathOperator\colim{colim}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\Pre{Pr}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Sh{Sh}
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\Func{Func}
+\DeclareMathOperator\cof{cof}
+\DeclareMathOperator\obj{obj}
+
+\newcommand{\DM}{\mathbf{DM}}
+\newcommand{\dM}{\mathsf{dM}}
+\newcommand{\yc}{\yoneda c}
+\newcommand{\yb}{\yoneda b}
+\newcommand{\yd}{\yoneda d}
+\newcommand{\yone}{\yoneda[1]}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\bbmone}{\mathbbm{1}}
+\newcommand{\two}{\mathbbm{2}}
+
+\newcommand{\ax}[1]{\mathbf{ax_{#1}}}
+\newcommand{\ul}{{\rule[0ex]{0.4em}{0.4pt}}} % [0.2ex]：基线以上的高度（可调）{1em}：长度（可调）{0.4pt}：粗细
+%\newcommand{\ul}{{\scalebox{0.4}[0.4]{\ul }}}
+\newcommand{\mi}{{\rule[0.5ex]{0.4em}{0.4pt}}}
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\Om}{\Omega}
+\newcommand{\cube}{\square}
+\newcommand{\tti}{\mathtt{i}}
+
+\newcommand{\forces}{\Vdash} % Kripke-Joyal forcing symbol
+\newcommand{\valid}{\vdash} % Internal validity symbol
+
+\numberwithin{equation}{section}
+
+%\setlength{\parindent}{0pt}
+
+\title{在拓扑斯中建模立方类型理论的公理}
+\author{Ian Orton, Andrew M. Pitts}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+同伦方法视内涵类型理论中的相等证明为路径。我们探讨了在拓扑斯中，一个对象 $\ttI$ 需要满足什么条件，才能为类型理论提供一个基于路径的模型，其中路径仅仅是定义域为 $\ttI$ 的函数。科恩、科坎、胡贝尔和默特伯格使用一个特定的预层范畴给出了这样的模型。我们研究了他们的模型构造能在多大程度上用任意拓扑斯的内部类型理论来表达，并为此目的确定了一组相当弱的公理。这澄清了``均匀 Kan 填充"概念的定义和性质，而该概念是他们构造性地解释沃沃德斯基的单值公理的核心。
+\end{abstract}
+
+\section{引言}
+
+立方类型理论 [CCHM18] 为沃沃德斯基的单值公理提供了构造性解释，该公理对在马丁-洛夫类型理论中形式化数学具有重要意义 [Uni13]。Cohen 等人 [CCHM18] 在构造性集合论的框架下非形式地工作，使用范畴 $\hat{\mathcal{C}}$ 给出了他们类型理论的一个模型，其中 $\mathcal{C}$ 是德摩根代数的 Lawvere 理论 [BD75, Chapter XI] 上的一个小范畴；参见 [Spi15]。$\mathcal{C}$ 中泛型德摩根代数上的可表函子被用作 $\hat{\mathcal{C}}$ 中的一个区间对象 $\ttI$，相等证明由相应的路径概念建模，即定义域为 $\ttI$ 的态射。Cohen 等人称 $\hat{\mathcal{C}}$ 的对象为\textit{立方集}。与先前同名的概念 [BCH14, Hub15] 相比，它们具有更丰富的结构。一方面，它们允许路径类型简单地通过指数 $X^{\ttI}$ 来建模，而不是通过名称抽象 [Pit13, Chapter 4]。更重要的是，德摩根代数运算赋予了区间 $\ttI$ 某种结构，大大简化了 [CCHM18] 核心的构造性 Kan 填充概念的定义和性质。特别地，填充操作是通过一个简单的特殊情况获得的，该情况将区间一端的填充\textit{复合}到另一端的填充。Coquand [Coq15] 提出，这种独特的复合操作可以在拓扑斯的内在高阶逻辑中，通过部分元素及其到全元素的延拓的性质来理解 [LS86]。在本文中，我们表明情况确实如此，而且是富有成效的。特别地，当在内部表述这些操作时，关于复合操作的\textit{均匀性}条件 [CCHM18, Definition 13]（该条件使得人们可以避免经典 Kan 填充概念的非构造性方面 [BC15]）变得自动满足。我们的方法具有公理化的通常好处——有助于阐明拓扑斯的哪些性质足以执行用于建模立方类型理论 [CCHM18] 的各种构造，为简化、推广和新例子铺平道路。
+
+为了实现这一点，我们发现不在拓扑斯的高阶谓词逻辑中工作，而是在一个外延类型理论中工作是有帮助的，该类型理论配备了一个非直谓的命题宇宙 $\Omega$，代表拓扑斯的子对象分类器 [Mai05]。在这种语言中工作，我们的公理化涉及拓扑斯 $\mathcal{E}$ 可能具有的两个结构：一个对象 $\ttI$，它被赋予单位区间的一些基本特征；以及一个子对象 $\mathtt{Cof} \rightarrowtail \Omega$，其元素我们称为\textit{余纤维化命题}，它们决定了与 Kan 式填充概念相关的子对象。（在 [CCHM18] 的情况下，$\mathtt{Cof}$ 分类了由超立方体面的并集生成的子对象。）在内部使用余纤维化命题，而不是在外部使用一类余纤维化单态射，导致了一个简洁优美的纤维化概念（第 5 节），当拓扑斯是 $\hat{\mathcal{C}}$ 时，Cohen 等人的概念就是一个实例。这些纤维化是配备了额外结构（复合操作）的类型族，当组织为例如带族范畴 (Category with Families, CwF) [Dyb96] 时，它们应该建模内涵马丁-洛夫类型理论。为了实现这一点，我们对区间和余纤维化子对象做了一系列假设，这些假设在 [CCHM18] 的预层模型中成立。第 3 节给出了这些假设的概述，随后的章节在纤维化的 CwF 中进行了构造，表明它是马丁-洛夫类型理论的一个模型，具有 $\Sigma$、$\Pi$、数据类型（我们仅考虑自然数和不交并）以及内涵相等类型。在第 6 节中，我们给出了胶合的内部处理，这对于与单值性相关的构造是必要的 [Uni13]。我们的胶合方法与 [CCHM18] 略有不同，使我们能够独立于胶合，分离出余纤维化命题的一个严格性性质（图 1 中的公理 $\ax{9}$），并且区分出使用余纤维化谓词在区间上对全称量化封闭这一事实（图 1 中的公理 $\ax{8}$）。在第 7 节中，我们给出了一个关于单值性的结果，该结果可以从我们的公理中证明。然而，由于该节末尾讨论的原因，我们无法给出 [CCHM18] 中单值宇宙构造的内部描述。（[LOPS18] 中通过用合适的模态扩展内部类型理论来规避这个问题。）
+
+在第 8 节中，我们指出了为什么 [CCHM18] 中的模型满足我们的公理，以及更一般地，哪些其他预层拓扑斯满足这些公理。选择余纤维化命题的子对象有一定的自由度；我们为区间 $\ttI$ 假定的连接代数结构（图 1 中的公理 $\ax{3}$ 和 $\ax{4}$）比德摩根代数更弱，因为我们可以避免使用德摩根对合运算。在第 9 节中，我们通过考虑其他相关工作来结束本文。
+
+\textbf{Agda 形式化。} 我们在拓扑斯内部类型理论中进行的定义和构造足够复杂，值得用机器辅助形式化。我们选择的工具是 Agda [Agd]。我们使用 Escardo [Esc15] 的方法，说服 Agda 提供一个纯命题的非直谓宇宙 [Uni13, Section 3.3]。这给出了子对象分类器 $\Omega$ 以及第 2 节中描述的类型理论的一个内涵的、证明相关的版本。在此基础上，我们添加了对应于图 1 中公理的假设。我们还适度使用了近期 Agda 版本中用户自定义重写的功能 [CA16]，以使连接代数公理 $\ax{3}$ 和 $\ax{4}$ 成为定义性的，而不仅仅是命题相等，从而将一些证明转化为计算，省去了这些证明。
+
+使用 Agda 要求我们构造并传递证明项，而在纸面版本中这些证明项是隐式的；我们发现这是相当可承受的，并且对于确保细节正确也是极其宝贵的。我们的开发可以在 \href{https://doi.org/10.17863/CAM.21675}{https://doi.org/10.17863/CAM.21675} 找到。
+
+\section{拓扑斯的内部类型理论}
+
+我们依赖于基于\textit{带族范畴} (Category with Families, CwF) [Dyb96] 的依赖类型理论的范畴语义。对于每个拓扑斯 $ \mathcal{E} $（具有子对象分类器 $ \top : 1 \to \Omega $），可以找到一个具有相同对象的 CwF，使得每个对象 $ X $ 处的族范畴等价于切片范畴 $ \mathcal{E}/X $。这可以通过多种方式实现；例如 [Pit00, Example 6.14]，或更新的参考文献 [KL16, Section 1.3]、[LW15] 和 [Awo16]，它们适用于比拓扑斯更一般的范畴（并且在前两种情况下适用于语境范畴或理解范畴，而不是 CwF）。使用这个 CwF 的对象、族和元素作为签名，我们得到了一个内部类型理论，类似于 [Mai05] 中讨论的那些，并以标准方式 [Hof97] 在 CwF 中进行典范解释。我们使用受 Agda [Agd] 启发的具体语法，在这个内部语言中为 $ \mathcal{E} $ 进行定义和假设。依赖函数类型写作 $ (x : A) \to B $；它们的典范项是函数抽象，写作 $ \lambda(x : A) \to t $。依赖乘积类型写作 $ (x : A) \times B $；它们的典范项是对，写作 $ (s, t) $。在正文中，我们非正式地使用这种语言，类似于 [Uni13] 中呈现同伦类型理论的方式。例如，形式版本中判断的 typing 上下文，如
+$[x_0 : A_0, x_1 : A_1(x_0), x_2 : A_2(x_0, x_1)],$
+在像“给定 $ x_0 : A_0, x_1 : A_1(x_0) $ 和 $ x_2 : A_2(x_0, x_1) $，那么…”这样的短语中成为运行文本的一部分。
+
+在内部类型理论中，拓扑斯的子对象分类器 $ \Omega $ 变成了一个非直谓的命题宇宙，具有逻辑连接词 $ (\top, \bot, \neg, \land, \lor, \Rightarrow) $、量词 $ (\forall(x : A), \exists(x : A)) $ 和相等 ($=$)，并满足函数外延性和命题外延性性质。子对象分类器的泛性质产生了理解子类型：给定 $ \Gamma, x : A \vdash \varphi(x) : \Omega $，则 $ \Gamma \vdash \{x : A \mid \varphi(x)\} $ 是一个类型，其项是那些满足 $ \varphi(t) $ 可证的 $ t : A $，证明被视为无关紧要的。\footnote{我们的 Agda 开发是证明相关的，因此理解类型的项包含作为其组成部分的成员关系证明。}取 $ A = 1 $ 为终对象，对于每个 $ \varphi : \Omega $，我们有一个类型，其居留对应于 $ \varphi $ 的可证性：
+
+\begin{equation}[\varphi] \triangleq \{ \ul : 1 \mid \varphi \}\end{equation}
+我们将广泛使用这些类型来处理类型的部分元素；参见第 5.1 节。
+
+我们不是外部地量化与 $ \mathcal{E} $ 相关联的 CwF 的对象、族和元素，而是假设 $ \mathcal{E} $ 带有一个内部的完整子拓扑斯 $ \mathcal{U} $。在内部语言中，我们使用 $ \mathcal{U} $ 作为 Russell 风格的宇宙（也就是说，如果 $ A : \mathcal{U} $，那么 $ A $ 本身表示一个类型），它包含 $ \Omega $ 并且在形成乘积、指数和理解子类型下封闭。
+
+\section{公理}
+
+在本节中，我们提出在拓扑斯 $\mathcal{E}$ 的内部类型理论中要求成立的一组公理。我们概述每条公理，给出关于其用途的一些直观解释，并说明它在构建立方类型论模型中的使用位置。这使我们能够看到，某些公理仅在建模立方类型论的特定部分时需要，例如定义相等类型（第5.3节）。因此，当例如仅寻找具有命题相等类型的立方类型论模型（第4节）时，这些公理可以被省略。为便于参考，这些公理汇总在图1中，使用第2节描述的语言书写。
+
+\begin{figure}[htbp]
+\centering
+
+区间 $\mathtt{I} : \mathcal{U}$ 是连通的
+\[
+\ax{1} : [\forall(\varphi : \mathtt{I} \to \Omega).\ (\forall(i : \mathtt{I}).\ \varphi\,i \lor \neg\varphi\,i) \Rightarrow (\forall(i : \mathtt{I}).\ \varphi\,i) \lor (\forall(i : \mathtt{I}).\ \neg\varphi\,i)]
+\]
+
+具有不同的端点 $0, 1 : \mathtt{I}$
+\[
+\ax{2} : [\neg(0 = 1)]
+\]
+
+以及连接代数结构 $\ul \sqcap\ul , \ul \sqcup\ul  : \mathtt{I} \to \mathtt{I} \to \mathtt{I}$
+\[
+\ax{3} : [\forall(x : \mathtt{I}).\ 0 \sqcap x = 0 = x \sqcap 0 \land 1 \sqcap x = x = x \sqcap 1]
+\]
+\[
+\ax{4} : [\forall(x : \mathtt{I}).\ 0 \sqcup x = x = x \sqcup 0 \land 1 \sqcup x = 1 = x \sqcup 1]
+\]
+
+\vspace{1em}
+
+上纤维化命题 $\Cof = \{\varphi : \Omega \mid \mathtt{cof}\,\varphi\}$（其中 $\mathtt{cof} : \Omega \to \Omega$）
+
+包含端点等式
+\[
+\ax{5} : [\forall(i : \mathtt{I}).\ \mathtt{cof}(i = 0) \land \mathtt{cof}(i = 1)]
+\]
+
+在二元析取下封闭
+\[
+\ax{6} : [\forall(\varphi\,\psi : \Omega).\ \mathtt{cof}\,\varphi \Rightarrow \mathtt{cof}\,\psi \Rightarrow \mathtt{cof}(\varphi \lor \psi)]
+\]
+
+依赖合取
+\[
+\ax{7} : [\forall(\varphi\,\psi : \Omega).\ \mathtt{cof}\,\varphi \Rightarrow (\varphi \Rightarrow \mathtt{cof}\,\psi) \Rightarrow \mathtt{cof}(\varphi \land \psi)]
+\]
+
+在 $\mathtt{I}$ 上的全称量词
+\[
+\ax{8} : [\forall(\varphi : \mathtt{I} \to \Omega).\ (\forall(i : \mathtt{I}).\ \mathtt{cof}(\varphi\,i)) \Rightarrow \mathtt{cof}(\forall(i : \mathtt{I}).\ \varphi\,i)]
+\]
+
+\vspace{1em}
+
+严格性公理：任何上纤维化部分类型 $A$
+
+如果在 $A$ 有定义的任何地方都与全类型 $B$ 同构
+
+则可以扩展为一个与 $B$ 同构的全类型 $B'$：
+\begin{align*}
+\ax{9} : &\{\varphi : \Cof\}(A : [\varphi] \to \mathcal{U})(B : \mathcal{U})(s : (u : [\varphi]) \to (A\,u \cong B)) \to \\
+&(B' : \mathcal{U}) \times \{s' : B' \cong B \mid \forall(u : [\varphi]).\ A\,u = B' \land s\,u = s'\}
+\end{align*}
+
+\caption{所有公理}
+\label{fig:all-axioms}
+
+\end{figure}
+
+\begin{notation}[中缀与隐式参数]。在图中以及其他地方，我们采用Agda [Agd] 中的一些有用的符号约定。首先，使用中缀表示法书写的函数参数由占位符“\ul”表示；例如，$\ul\sqcap\ul : \ttI \to \ttI \to \ttI$ 应用于 $i, j : \ttI$ 时写作 $i \sqcap j$。其次，我们使用花括号 $\{ \}$ 表示隐式参数；例如，图1中 $\ax{9}$ 应用于 $\varphi : \mathtt{Cof}, A : [\varphi] \to \mathcal{U}, B : \mathcal{U}$ 和 $s : (u : [\varphi]) \to (A\,u \cong B)$ 时写作 $\ax{9}\ A\,B\,s$，如果 $\varphi$ 不能从上下文中推导出来，则写作 $\ax{9}\ \{\varphi\}\,A\ B\ s$。
+\end{notation}
+
+类型论的同伦方法 [Uni13] 将相等类型的元素视为被等同的两个元素之间的路径。我们严格采用这一观点，使用拓扑斯 $\mathcal{E}$ 中的路径，这些路径是出自一个被称为\textit{区间}的特指对象 $\ttI$ 的态射。回顾第2节，我们假设给定的拓扑斯 $\mathcal{E}$ 带有一个Russell风格的宇宙 $\mathcal{U}$。我们假设区间 $\ttI$ 是 $\mathcal{U}$ 的一个元素。我们还假设 $\ttI$ 配备了态射 $0, 1 : 1 \to \ttI$ 以及 $\ul\sqcap\ul, \ul\sqcup\ul : \ttI \times \ttI \to \ttI$，满足图1中的公理 $\ax{1}-\ax{4}$。其他公理（$\ax{5}-\ax{9}$）涉及\textit{余纤维命题}，这些在第5节中用于定义立方类型论模型中的纤维化（类型的索引族）。
+
+公理 $\ax{1}$ 表达了区间 $\ttI$ 是内部连通的，即其元素的任何可判定子集要么为空，要么为整个 $\ttI$。这意味着，如果归纳数据类型中的一条路径在路径的某一点具有特定的构造子形式，那么它在任何其他点也具有相同的形式。这一点在第5.2节的末尾用于证明拓扑斯中的自然数对象是纤维化的（即表示一个类型），并且纤维化在二元余积下封闭。它还在第6节用于证明glueing构造的性质。结合公理 $\ax{2}$，$\ttI$ 的连通性意味着在 $1+1$ 中不存在从 $\inl *$ 到 $\inr *$ 的路径，因此由这些公理确定的基于路径的Martin-L\"of类型论模型在逻辑上是非退化的。
+
+公理 $\ax{3}$ 和 $\ax{4}$ 赋予 $\ttI$ 一种 connection 代数结构 [BM99]。它们捕捉了实数单位区间 $[0, 1]$ 上的最小值和最大值运算的一些非常简单的性质，足以保证 singleton 类型的可收缩性（第4节），并且与 $\ax{2}, \ax{5}$ 和 $\ax{6}$ 结合，可以用纤维化的复合定义路径提升（见第5.2节）。在 [CCHM18] 的模型中，connection代数结构由区间的格结构给出，取 $\ul\sqcap\ul$ 为二元交，$\ul\sqcup\ul$ 为二元并，并利用 $0$ 和 $1$ 分别是最小元和最大元这一事实。
+
+\begin{remark}[De Morgan 对合]
+  在 [CCHM18] 的模型中，$\ttI$ 不仅是一个格，还具有一个对合运算 $1 - (\ul) : \ttI \to \ttI$（使得 $1 - (1 - i) = i$），这使得 $\sqcup$ 成为 $\sqcap$ 的De Morgan对偶，即 $i \sqcup j = 1 - ((1 - i) \sqcap (1 - j))$。尽管这种对合结构很方便，但对于后续的构造并非真正必要。相反，我们为某些概念提供0-版本和1-版本；例如，第5.2节中的“从1到0复合”以及“从0到1复合”。
+\end{remark}
+
+公理 $\ax{2}-\ax{6}$ 使我们能够证明纤维化提供了 $\Pi$-类型和 $\Sigma$-类型的模型；并且进一步证明由区间对象 $\ttI$ 确定的路径类型（第4节）满足命题相等类型的规则 [CD13, van16]。公理 $\ax{7}$ 用于通过Swan构造的一个版本 [Swa16] 从这些命题相等类型获得Martin-L\"of类型论中恰当的、定义性的相等类型；见第5.3节。
+
+在第7节中，我们考虑 univalence [Uni13, 第2.10节]——宇宙中取值于类型的路径与基于路径相等的等价函数之间的对应关系。为此，我们首先在第6节中，在拓扑斯的内部类型理论中给出Cohen等人的glueing构造的一个非严格的、“同构意义下”的版本。公理 $\ax{8}$ 用于在这个弱形式的glueing的定义中，确保诱导的纤维化结构扩展了我们正在“glueing”的族上的纤维化结构。公理 $\ax{9}$ 使我们能够恢复Cohen等人 [CCHM18] 所使用的严格形式的glueing。它在预层模型中的有效性依赖于外部元理论中的一个无法在内部复制的构造；详见定理8.4。
+
+\section{路径类型}
+
+给定 $ A : \mathcal{U} $，我们称类型为 $ \ttI \to A $ 的元素为 $ A $ 中的\textit{路径}。与 $ A $ 相关联的\textit{路径类型}为 $\ul\sim\ul : A \to A \to \mathcal{U}$  
+其中  
+\begin{equation}
+ a_0 \sim a_1 \triangleq \{ p : \ttI \to A \mid p\ 0 = a_0 \land p\ 1 = a_1 \} \end{equation}
+这些类型能否用于建模 Martin-Löf 相等类型的规则？我们当然可以解释相等引入规则（自反性），因为由常函数给出的退化路径  
+\begin{equation} \ttk \ a \ i \triangleq a \end{equation}  
+满足 $\ttk : \{ A : \mathcal{U} \} (a : A) \to a \sim a $。然而，我们需要进一步的假设来解释相等消除规则，也称为路径归纳法 [Uni13, 第 1.12.1 节]。Coquand 给出了相等消除的另一种（命题等价）表述，使用替换函数 $ a_0 \sim a_1 \to P \, a_0 \to P \, a_1 $ 和 singleton 类型的可收缩性 $ (a_1 : A) \times (a_0 \sim a_1) $；参见 [BCH14, 图 2]。connection 代数结构给出了后者，因为利用 $ \ax{3} $ 和 $ \ax{4} $ 我们有  
+\begin{align} &\mathtt{ctr} : \{ A : \mathcal{U} \} (a_0 \ a_1 : A) (p : a_0 \sim a_1) \to (a_0, \ttk \ a_0) \sim (a_1, p) \tag{4.3} \\  
+ &\mathtt{ctr} \ p \ i \triangleq (p \ i, \lambda j \to p(i \sqcap j)) \notag\end{align}
+然而，为了获得行为良好的替换函数，我们必须考虑赋予了某些额外结构的类型族；并且该结构必须能够通过类型形成运算（积、函数、相等类型等）提升。这正是下一节中的定义所实现的。
+\end{document}
