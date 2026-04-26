@@ -36,6 +36,8 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{定义}
+
+\theoremstyle{definition}
 \newtheorem{example}[theorem]{例}
 
 \theoremstyle{definition}
@@ -319,4 +321,84 @@ $[x_0 : A_0, x_1 : A_1(x_0), x_2 : A_2(x_0, x_1)],$
 \begin{align} &\mathtt{ctr} : \{ A : \mathcal{U} \} (a_0 \ a_1 : A) (p : a_0 \sim a_1) \to (a_0, \ttk \ a_0) \sim (a_1, p) \tag{4.3} \\  
  &\mathtt{ctr} \ p \ i \triangleq (p \ i, \lambda j \to p(i \sqcap j)) \notag\end{align}
 然而，为了获得行为良好的替换函数，我们必须考虑赋予了某些额外结构的类型族；并且该结构必须能够通过类型形成运算（积、函数、相等类型等）提升。这正是下一节中的定义所实现的。
+
+\section{COHEN-COQUAND-HUBER-MÖRTBERG (CCHM) 纤维化}
+
+在本节中，我们展示如何将 [CCHM18, 定义13] 中引入的纤维化概念从该文考虑的特定预层模型推广到任何具有如前一节所述的区间对象的拓扑斯。为此，我们使用图1中的\textit{余纤维命题}概念来内化 [CCHM18] 中描述的复合和填充运算。
+
+\subsection{余纤维命题}
+
+Kan 填充及其他关于子空间族的余纤维性条件与将定义在子空间上的映射扩展到整个空间上的映射有关。这里，我们将“空间的子空间”理解为拓扑斯中对象的子对象。由于子对象由到 $\Omega$ 的态射分类，可以考虑由某些命题一般性指定的子空间族。更具体地说，给定命题的一个性质 $\mathtt{cof} : \Omega \to \Omega$，我们得到相应的命题集合
+
+\begin{equation}\mathtt{Cof} \triangleq \{ \varphi : \Omega \mid \mathtt{cof}\, \varphi \}\end{equation}
+考虑单态射类 $m : A \rightarrowtail B$，其分类态射
+\[\lambda(y : B) \to \exists(x : A). \, m\, x = y : B \to \Omega\]
+通过 $\mathtt{Cof} \rightarrowtail \Omega$ 分解。我们称这样的单态射为\textit{余纤维化}。类 Kan 的填充性质涉及何时一个态射 $A \to X$ 可以沿着余纤维化 $m : A \rightarrowtail B$ 扩展。相反，在 $\mathcal{E}$ 的内部语言中工作，我们将考虑定义域在 $\mathtt{Cof}$ 中的部分元素何时可以扩展到完全定义的元素。回顾在直觉主义逻辑中，类型 $A$ 的部分元素通常由子单集表示，即满足以下条件的函数 $s : A \to \Omega$
+\[\forall(x \, x' : A). \, s\, x \land s\, x' \Rightarrow x = x'\]
+然而，使用依赖对 $\varphi : \Omega$ 和 $f : [\varphi] \to A$ 作为外延等价的表示将更为方便，如下一个定义所示。命题 $\varphi$ 是部分元素的范围；用子单集的术语来说，它等于 $\exists(x : A) . s\, x$。
+
+\begin{definition}[余纤维部分元素, $\square A$]
+  我们假设给定一个满足图1中公理 $\ax{5}-\ax{8}$ 的子对象 $\mathtt{Cof} \rightarrowtail \Omega$。我们称类型 $\mathtt{Cof}$ 的元素为\textit{余纤维命题}。给定一个类型 $A : \mathcal{U}$，我们定义 $A$ 的\textit{余纤维部分元素}类型为
+\begin{equation}\square A \triangleq (\varphi : \mathtt{Cof}) \times ([\varphi] \to A)\end{equation}
+这样一个部分元素 $(\varphi, f) : \square A$ 的一个\textit{扩展}是一个元素 $a : A$ 连同以下关系的证明：
+\begin{equation}(\varphi, f) \nearrow a \triangleq \forall(u : [\varphi]) . f\, u = a\end{equation}
+\end{definition}
+注意，在公理 $\ax{5}$ 中取 $i = 0$，我们有 $\mathtt{cof}(0 = 0)$（即 $\mathtt{cof}\, \top$）和 $\mathtt{cof}(0 = 1)$；将后者与公理 $\ax{2}$ 结合，我们还可以推导出 $\mathtt{cof}\, \bot$ 成立。因此 $A \rightarrowtail A$ 和 $\emptyset \rightarrowtail A$ 总是余纤维化，其中 $\emptyset$ 是始对象。由于 $\mathtt{cof}\, \top$ 成立，对于每个 $a : A$，存在一个\textit{整体的}余纤维部分元素 $(\top, \lambda\ul \to a) : \square A$，且 $a$ 是扩展 $(\top, \lambda\ul \to a)$ 的唯一元素。由于 $\mathtt{cof}\, \bot$ 成立，每个对象 $A$ 都有一个空余纤维部分元素，由 $(\bot, \mathtt{elim}_\emptyset) : \square A$ 给出，使得每个 $a : A$ 都是 $(\bot, \mathtt{elim}_\emptyset)$ 的一个扩展。（对于任意 $B : \mathcal{U}$，$\mathtt{elim}_\emptyset : [\bot] \to B$ 表示由 $[\bot]$ 的始性给出的唯一函数。）
+
+\begin{example}
+将类型 $\ttI$ 的变量视为空间中维度的名称是有帮助的，因此在上下文 $i_1, ..., i_n : \ttI$ 中工作对应于在 $n$ 维中工作。假设我们在一个具有 $i, j, k : \ttI$ 的上下文中工作；因此这对应于在三维中工作。我们将元素 $i, j, k : \ttI \vdash a : A$ 视为空间 $A$ 中的一个立方体，如下所示。令 $\varphi \triangleq (i = 0) \lor (j = 0) \lor (j = 1 \land k = 1)$。由 $\ax{5}-\ax{7}$ 我们有 $i, j, k : \ttI \vdash \varphi : \mathtt{Cof}$。我们将 $\varphi$ 视为指定一个立方体的某些面和边，在这种情况下是底面 $(i = 0)$，左面 $(j = 0)$ 和前右边 $(j = 1 \land k = 1)$，如下右图所示。那么一个余纤维部分元素 $f : [\varphi] \to A$ 可以被认为是一个部分立方体，仅在由 $\varphi$ 指定的区域上有定义。
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{partial}
+\end{figure}
+\end{example}
+
+\begin{definition}[相容部分元的并]
+称两个部分元 $f : [\varphi] \to A$ 和 $g : [\psi] \to A$ 是相容的，如果它们在都有定义的地方一致：
+\begin{equation}
+(\varphi, f) \smallsmile (\psi, g) \triangleq \forall(u : [\varphi])(v : [\psi]).\ f\,u = g\,v
+\end{equation}
+在这种情况下，我们可以形成它们的并 $f \cup g : [\varphi \lor \psi] \to A$，使得：
+\[
+\forall(u : [\varphi]).\ (f \cup g)\,u = f\,u \qquad \forall(v : [\psi]).\ (f \cup g)\,v = g\,v
+\]
+\end{definition}
+要理解为什么，考虑拓扑斯中的以下推出方块：
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{partial_join}
+\end{figure}
+外层方块交换是因为 $(\varphi, f) \smallsmile (\psi, g)$ 成立，然后 $f \cup g$ 是推出诱导的唯一态射。注意，图1中的公理 $\ax{6}$ 意味着余纤维部分元素的集合在取兼容部分元素的二元并下封闭。
+
+下面的引理给出了公理 $\ax{7}$ 和 $\ax{8}$ 的另一种刻画。由于我们上面注意到 $\mathtt{cof}\, \top$ 成立，引理的第(i)部分告诉我们，余纤维化在综合域论的意义上构成一个 \textit{dominance} [Ros86]；我们仅使用 $\mathtt{Cof}$ 的这一性质来从命题相等类型构造定义相等类型（见第5.3节）。
+
+\begin{lemma}
+\begin{enumerate}[label=(\roman*)]
+\item 公理 $\ax{7}$ 等价于要求余纤维化类在复合下封闭。
+\item 公理 $\ax{8}$ 等价于要求余纤维化类在 $\ttI$ 的指数化下封闭。
+\end{enumerate}
+\end{lemma}
+\begin{proof}对于第(i)部分，首先假设 $\ax{7}$ 成立，且 $f : A \rightarrowtail B$ 和 $g : B \rightarrowtail C$ 是余纤维化。因此 $\forall(b : B). \mathtt{cof}(\exists(a : A). f\, a = b)$ 和 $\forall(c : C). \mathtt{cof}(\exists(b : B). g\, b = c)$ 都成立，我们希望证明 $\forall(c : C). \mathtt{cof}(\exists(a : A). g(f\, a) = c)$。注意到对于 $b : B$ 和 $c : C$
+
+\[g b = c \implies (\exists(a : A). g(f a) = c) = (\exists(a : A). f a = b) \quad \text{由于 } g \text{ 是单态射}\]
+\[\implies \mathtt{cof}(\exists(a : A). g(f a) = c) = \mathtt{cof}(\exists(a : A). f a = b) = \top\]
+所以对于 $\varphi \triangleq \exists(b : B). g b = c$ 和 $\psi \triangleq \exists(a : A). g(f a) = c$，我们有 $\mathtt{cof} \, \varphi$ 和 $\mathtt{cof} \, \psi$。因此由 $\ax{7}$ 我们得到 $\mathtt{cof}(\phi \wedge \psi)$，它等于 $\mathtt{cof}(\psi)$，因为 $\psi \Rightarrow \varphi$。所以确实有 $\forall(c : C). \mathtt{cof}(\exists(a : A). g(f a) = c)$。
+
+反之，假设余纤维化在复合下封闭，且 $\varphi, \psi : \Omega$ 满足 $\mathtt{cof} \, \varphi$ 和 $\mathtt{cof} \, \psi$。$\mathtt{cof} \, \varphi$ 成立等价于单态射 $[\varphi] \rightarrowtail 1$ 是余纤维化；并且由于
+
+\[\varphi \implies (\psi = \varphi \wedge \psi) \implies (\mathtt{cof} \, \psi = \mathtt{cof}(\varphi \wedge \psi))\]
+
+从 $\varphi \Rightarrow \mathtt{cof} \, \psi$ 我们得到 $\varphi \Rightarrow \mathtt{cof}(\varphi \wedge \psi)$，因此单态射 $[\varphi \wedge \psi] \rightarrowtail [\varphi]$ 是余纤维化。复合这些单态射，我们得到 $[\varphi \wedge \psi] \to 1$ 是余纤维化，即 $\mathtt{cof}(\varphi \wedge \psi)$ 成立。
+
+对于第(ii)部分，首先假设 $\ax{8}$ 成立，且 $f : A \to B$ 是余纤维化。我们必须证明 $\ttI \to f : (\ttI \to A) \to (\ttI \to B)$ 也是余纤维化。给定 $\beta : \ttI \to B$，我们有
+
+\[(\forall i : \ttI)(\exists a : A). f a = \beta i\]
+\[\implies (\forall i : \ttI)(\exists! a : A). f a = \beta i \quad \text{(由于 } f \text{ 是单态射)}\]
+\[\implies (\exists \alpha : \ttI \to A)(\forall i : \ttI). f(\alpha i) = \beta i \quad \text{(由拓扑斯中的唯一选择)}\]
+\[\implies (\forall i : \ttI)(\exists a : A). f a = \beta i\]
+
+因此 $(\forall i : \ttI)(\exists a : A). f a = \beta i$ 等于 $(\exists \alpha : \ttI \to A)(\forall i : \ttI). f(\alpha i) = \beta i$；而后者由拓扑斯中的函数外延性等于 $(\exists \alpha : \ttI \to A). (\ttI \to f)\alpha = \beta$。由于 $f$ 是余纤维化，对每个 $i : \ttI$ 我们有 $\mathtt{cof}(\exists(a : A)). f a = \beta i)$。因此由公理 $\ax{8}$，我们也有 $\mathtt{cof}((\forall i : \ttI)(\exists a : A). f a = \beta i)$，即 $\mathtt{cof}(\exists\alpha : \ttI \to A). (\ttI \to f)\alpha = \beta)$，正如 $\ttI \to f$ 成为余纤维化所需的那样。
+
+反之，假设余纤维化在 $\ttI \to (\_)$ 下封闭，且 $\varphi : \ttI \to \Omega$ 满足 $(\forall i : \ttI). \mathtt{cof}(\varphi i)$。后者意味着 $\{i : \ttI \mid \varphi i\} \to \ttI$ 是余纤维化。因此单态射 $(\ttI \to \{i : \ttI \mid \varphi i\}) \to (\ttI \to \ttI)$ 也是余纤维化。由于 $id : \ttI \to \ttI$ 在该单态射的像中当且仅当 $(\forall i : \ttI). \varphi i$ 成立，我们得到 $\mathtt{cof}((\forall i : \ttI). \varphi i)$，正如公理 $\ax{8}$ 所要求的。
+\end{proof}
 \end{document}
