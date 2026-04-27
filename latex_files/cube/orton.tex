@@ -1038,6 +1038,11 @@ f\ u\ \overline{e}\ a_1 = f\ u\ \overline{e}\ (f_1\ \overline{e}) = f_2\ u\ \ove
 \end{equation}
 \end{theorem}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.75\textwidth]{gamma_id_id}
+\end{figure}
+
 \begin{proof}
 给定 $\Gamma : \mathcal{U}$，$A : \Gamma \to \mathcal{U}$，$\alpha : \mathtt{isFib}\ A$，$e : \{0,1\}$，$p : \mathtt{I} \to (x : \Gamma) \times (A\ x \times A\ x)$，$\varphi : \mathtt{Cof}$，$f : [\varphi] \to \Pi_{\mathtt{I}}((\mathtt{Path}\ A) \circ p)$，$q : \mathtt{Path}\ A\ (p\ e)$ 且满足 $(\varphi, f)\ @\ e \nearrow q$ 以及 $i : \mathtt{I}$，假设 $p = \langle p', \langle q_0, q_1\rangle\rangle$ 其中 $p' : \mathtt{I} \to \Gamma$ 且 $q_0, q_1 : \Pi_{\mathtt{I}}(A \circ p)$，并定义
 \begin{equation}
@@ -1250,7 +1255,10 @@ p_a\ i \triangleq \varepsilon\ x\ (i = 1, \lambda\ul  \to a)
 &\mathtt{isFib}\ A \to \mathtt{isFib}\ B \to \mathtt{isFib}(\mathtt{Glue}\ \Phi\,A\,B\,f)\notag
 \end{align}
 \end{theorem}
-
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\textwidth]{Phi_equiv}
+\end{figure}
 \begin{proof}
 给定 $\Gamma : \mathcal{U}$，$\Phi : \Gamma \to \mathtt{Cof}$，$A : \Gamma|\Phi \to \mathcal{U}$，$B : \Gamma \to \mathcal{U}$，$f : (x : \Gamma)(u : [\Phi\ x]) \to A(x, u) \to B\ x$，$eq : (x : \Gamma)(u : [\Phi\ x]) \to \mathtt{Equiv}(f\ x\ v)$，$\alpha : \mathtt{isFib}\ A$，$\beta : \mathtt{isFib}\ B$，我们希望定义一个 $\mathtt{isFib}(\mathtt{Glue}\ \Phi\,A\,B\,f)$ 类型的元素。因此，取
 \begin{align*}
@@ -1310,8 +1318,8 @@ b_1 \triangleq \beta\ 1\ (\lambda(\ul  : \ttI) \to x)\ (\Phi\ x \lor \psi)\ (p_b
 
 我们现在回忆图 5.4 中的公理 $\ax{9}$：
 \begin{align*}
-&\ax{9} : \{\varphi : \mathtt{Cof}\}(A : [\varphi] \to \mathcal{U})(B : \mathcal{U})(s : (u : [\varphi]) \to (A\ u \cong B)) \to\\
-&\quad(B' : \mathcal{U}) \times \{s' : B' \cong B \mid \forall(u : [\varphi]).\ A\ u = B' \land s\ u = s'\}
+\ax{9} : &\{\varphi : \mathtt{Cof}\}(A : [\varphi] \to \mathcal{U})(B : \mathcal{U})(s : (u : [\varphi]) \to (A\ u \cong B)) \to\\
+&(B' : \mathcal{U}) \times \{s' : B' \cong B \mid \forall(u : [\varphi]).\ A\ u = B' \land s\ u = s'\}
 \end{align*}
 
 这表明任何部分类型 $A$，如果在其定义的每个地方都同构于一个全类型 $B$，则可以扩展为一个全类型 $B'$，它同构于 $B$。我们在第 5.6.2 节中研究为什么立方体预层拓扑斯 [18] 满足这个公理。给定 $\ax{9}$，定义一个严格形式的粘合是直接的。
