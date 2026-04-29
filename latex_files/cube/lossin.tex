@@ -193,7 +193,8 @@
 \newcommand{\arr}{\operatorname{arr}}
 \newcommand{\fib}{\operatorname{fib}}
 \newcommand{\ap}{\operatorname{ap}}
-\newcommand{\refl}{\operatorname{refl}}
+\newcommand{\refl}{\mathsf{refl}}
+%\newcommand{\refl}{\operatorname{refl}}
 \newcommand{\id}{\operatorname{id}}
 \newcommand{\bool}{\mathsf{bool}}
 \newcommand{\iscontr}{\mathsf{is\text{-}contr}}
@@ -1127,69 +1128,83 @@ g\circ f \coloneqq \lambda a.\,g(f(a))
 
 \section{同伦}
 
-在完成了Martin-Löf类型论中最重要的概念之后，我们现在介绍HoTT中最重要的概念：命题相等，也称为恒等类型、路径类型或简称为$=$-类型。我们仍然遵循[1]和[19]。正如我们在介绍判断相等时已经讨论过的，这两个概念是不同的。判断相等是一个判断，所以它要么成立要么不成立；而命题相等是一个类型，所以我们在理论中有类型$x =_A y$的一个元素，它证明了$x$等于$y$（在类型$A$中）这一事实。然而，这个证明不是“要么存在要么不存在”的东西，而是可能附加了一些额外的数据。它存储了$x$等于$y$的方式，并且可能存在多种不同的方式使得两个值相等。
+在完成了Martin-Löf类型论中最重要的概念之后，我们现在介绍HoTT中最重要的概念：命题相等，也称为恒等类型、路径类型或简称为$=$-类型。我们仍然遵循[1]和[19]。正如我们在介绍判断相等时已经讨论过的，这两个概念是不同的。判断相等是一个判断，所以它要么成立要么不成立；而命题相等是一个类型，所以我们在理论中有类型$x \underset{A}{=} y$的一个元素，它证明了$x$等于$y$（在类型$A$中）这一事实。然而，这个证明不是“要么存在要么不存在”的东西，而是可能附加了一些额外的数据。它存储了$x$等于$y$的方式，并且可能存在多种不同的方式使得两个值相等。
 
-这给我们带来了一个重要观察：我们可以嵌套命题相等类型，本质上是问两个证明$p,q:x=_A y$本身是否相等，即$p =_{x=y} q$是否居留。这个问题可以递归地提出，给出两个证明两个证明相等的证明。用等式写出来，这很快变得难以解析：
+这给我们带来了一个重要观察：我们可以嵌套命题相等类型，本质上是问两个证明$p,q:x\underset{A}{=} y$本身是否相等，即$p \underset{x=y}{=} q$是否居留。这个问题可以递归地提出，给出两个证明两个证明相等的证明。用等式写出来，这很快变得难以解析：
 \[
-p,q:x=_A y \qquad H_1,H_2:p =_{x=y} q \qquad H_1 =_{p=y} H_2
+p, q : x \underset{A}{=} y \qquad\qquad H_1, H_2 : p \underset{x \underset{A}{=} y}{=} q \qquad\qquad H_1 \underset{p \underset{p \underset{x \underset{A}{=} y}{=} q}{=} q}{=} H_2
 \]
 这是恒等类型无限结构的一瞥。人们可能担心这种记法的索引漂移。但由于我们总是需要指定元素，考虑等式的类型几乎总是从上下文中可知。此外，我们很少考虑等式类型的多重嵌套，而是以一种允许代入任何类型的通用形式来书写定理。
 
-$=$-类型的主要替代解释是路径的解释：$p:x=y$是从$x$到$y$在$A$中的一条路径。这种解释当然采用了同伦论的观点。所有对同伦论有趣的属性都源于这个类型的消去规则。如果之前从未见过，它相当神秘，所以需要一些时间来适应。
+$=$-类型的主要替代解释是路径的解释：$x \underset{A}{=} y$是从$x$到$y$在$A$中的一条路径。这种解释当然采用了同伦论的观点。所有对同伦论有趣的属性都源于这个类型的消去规则。如果之前从未见过，它相当神秘，所以需要一些时间来适应。
 
 \begin{definition}[$=$-类型]
-我们已经给出了$=$-类型的语法。给定两个元素$x,y:A$，我们写$x =_A y$表示$x$和$y$之间路径或等式的类型。当$x$和$y$的类型从上下文中清晰可见时（通常如此），我们也只写$x=y$。对于消去规则，我们需要一个特殊符号，我们使用$J$。
+我们已经给出了$=$-类型的语法。给定两个元素$x,y:A$，我们写$x \underset{A}{=} y$表示$x$和$y$之间路径或等式的类型。当$x$和$y$的类型从上下文中清晰可见时（通常如此），我们也只写$x=y$。对于消去规则，我们需要一个特殊符号，我们使用$\mathsf{J}$。
 \end{definition}
 形成和引入规则是直接的：
-\[
-\frac{\Gamma\vdash A:\UU \quad \Gamma\vdash x:A \quad \Gamma\vdash y:A}{\Gamma\vdash x=_A y:\UU} \qquad \frac{\Gamma\vdash A:\UU \quad \Gamma\vdash x:A}{\Gamma\vdash \refl_x:x=_A x}
-\]
-如果从上下文中不明显，我们也允许在等号下方书写类型$x=_A y$；对于值也一样，所以$\refl_x:x=x$。消去规则如前所述相当复杂，我们在下面给出更广泛的解释：
-\[
-\frac{\Gamma, x:A, y:A, p:x=_A y \vdash C:\UU \quad \Gamma, x:A \vdash c:C[x,y,p\mapsto x,x,\refl_x] \quad \Gamma\vdash a:A \quad \Gamma\vdash b:A \quad \Gamma\vdash q:a=_A b}{\Gamma\vdash J(C,c,a,b,q):C[a,b,q]}
-\]
+\begin{mathpar}
+
+\inferrule*[right={$=$-F}]
+  {A : \mathcal{U} \quad x : A \quad y : A}
+  {x = y : \mathcal{U}}
+\qquad\qquad
+\inferrule*[right={$=$-I}]
+  {A : \mathcal{U} \quad x : A}
+  {\mathsf{refl} : x = x}
+
+\end{mathpar}
+如果从上下文中不明显，我们也允许在等号下方书写类型$x\underset{A}{=} y$；对于值也一样，所以$\refl_x:x=x$。消去规则如前所述相当复杂，我们在下面给出更广泛的解释：
+\begin{mathpar}
+    \inferrule*[Right={$=$-E}]
+        {A : \mathcal{U} \quad x : A \quad C : (y : A, p : x = y) \to \mathcal{U} \quad c : C(x, \text{refl}_x)}
+        {\textsf{J}(C) : (y : A, p : x = y) \to C(y, p)}
+\end{mathpar}
 我们与$\equiv$的兼容性由以下规则给出：
 \[
-J(C)(x,\refl_x)\equiv c
+\mathsf{J}(C)(x,\refl_x)\equiv c
 \]
-在消去规则中，我们从任何类型$A$开始，然后固定一个起点$x:A$。接下来，我们有一个类型族$C$，它允许依赖于$A$中一条以$x$为起点的路径，但有一个自由的终点$y$。作为规则的最后一个要素，我们有一个证明$c$，表明类型族$C$对于终点$x$和路径$\refl_x$是居留的。消去规则的结论是，对于任何以$x$为起点的路径，$C$都是居留的。这个规则也称为（基点）路径归纳法，因为证明$\refl_x$的（依赖）陈述$C$就能证明所有其他路径$p:x=y$的$C$。
+在消去规则中，我们从任何类型$A$开始，然后固定一个起点$x:A$。接下来，我们有一个类型族$C$，它允许依赖于$A$中一条以$x$为起点的路径，但有一个自由的终点$y$。作为规则的最后一个要素，我们有一个证明$c$，表明类型族$C$对于终点$x$和路径$\refl_x$是居留的。消去规则的结论是，对于任何以$x$为起点的路径，$C$都是居留的。这个规则也称为（基点）路径归纳法，因为证明$\refl_x$的（依赖）陈述$C$就能证明所有其他路径$x = y$的$C$。
 
 消去规则的另一个视角需要我们稍微向前跳跃，使用我们尚未引入的等价概念。消去规则允许我们的理论在等价下保持不变。考虑以下交换图：
 \[
-\begin{array}{ccc}
-(x:A)\to C(x,x,\refl_x) & \stackrel{\sim}{\to} & (x:A,y:A,p:x=y)\to C(x,y,p) \\
-\downarrow & & \downarrow \\
-C(x,x,\refl_x) & \to & C(x,y,p)
-\end{array}
+\begin{tikzcd}[column sep=large, row sep=huge]
+& \Sigma(y : A, p : x = y, C(y,p)) \arrow[d, "\pi_1"] \\
+\mathbb{1} \arrow[ur, "{(x, \textsf{refl}_x, c)}"] \arrow[r, "{(x, \textsf{refl}_x)}"'] & \Sigma(y : A, x = y) \arrow[u, dashed, bend right=50]
+\end{tikzcd}
 \]
 我们稍后会证明底部的映射是等价。通过这个等价，我们应该能够获得右侧垂直映射的一个截面，如图中虚线映射所示。从这个角度来看，虚线映射就是$=$-类型的消去规则，因为我们只需要证明交换三角形的存在性（一旦我们有了$c$，它就存在）。当我们稍后讨论将等价与命题相等等同起来的幺半等价性公理时，这种解释将获得更多可信度。
 
 注意，我们的消去规则表述有点不寻常，经典变体将函数反柯里化，并允许族随起点$x$变化：
-\[
-A:\UU \quad C:(x:A,y:A,p:x=y)\to\UU \quad c:(a:A)\to C(a,a,\refl_a) \quad x:A \quad y:A \quad p:x=y
-\]
-\[
-J(C,p):C(x,y,p)
-\]
-虽然我们的基于路径归纳法的规则和这个非基于路径归纳法的规则之间存在细微差别（取决于我们将其指定为规则还是理论中的定理），但它们是等价的。这在[1, 第1.12.2节]中有所展示，我们在此不深入细节。我们注意到只能固定两个端点之一，因为如果我们能固定两个端点，我们就能得出任何$p:x=y$都有$p=\refl_x$的结论，这将使所有更高结构坍塌。
+\begin{mathpar}
+\inferrule* [Lab=]
+    {A : \mathcal{U} \quad 
+     C : (x : A, y : A, p : x = y) \to \mathcal{U} \quad 
+     c : (a : A) \to C(a, a, \textsf{refl}_a) \quad 
+     x : A \quad 
+     y : A \\
+     p : x = y}
+    {\textsf{J}(C, p) : C(x, y, p)}
+\end{mathpar}
+虽然我们的基于路径归纳法的规则和这个非基于路径归纳法的规则之间存在细微差别（取决于我们将其指定为规则还是理论中的定理），但它们是等价的。这在[1, 第1.12.2节]中有所展示，我们在此不深入细节。我们注意到只能固定两个端点之一，因为如果我们能固定两个端点，我们就能得出任何$x = y$都有$p=\refl_x$的结论，这将使所有更高结构坍塌。
 
 \begin{remark}
 两个元素的判断相等蕴含命题相等。这是因为判断相等与依赖类型和项兼容。因此，给定$x\equiv y$，我们有$(x=y)\equiv(x=x)\equiv(y=y)$，并且$\refl_x:x=y$以及$\refl_y:x=y$。我们还观察到两个$\refl$是相同的：$\refl_x\equiv\refl_y$。
 \end{remark}
 
 \begin{remark}
-在rzk中，语法相同，不指定类型时写$x=y$，指定类型时写$x =_{A} y$。这是唯一支持类型推断的类型。$\refl$也叫做$\refl$，并且支持推断项。如果需要指定，语法是$\refl_{x:A}$，其中$A$是$x$的类型。
+在rzk中，语法相同，不指定类型时写 \verb|x = y|，指定类型时写 \verb|x =_{A} y|。这是唯一支持类型推断的类型。$\refl$也叫做 \verb|refl|，并且支持推断项。如果需要指定，语法是 \verb|refl_{x : A}|，其中 \verb|A| 是 \verb|x| 的类型。
 \end{remark}
 
 \subsection{群胚结构}
 
-恒等类型表现出一个群胚结构，我们可以完全从消去规则推导出来。我们首先必须定义反转和连接路径的操作。这反过来证明$x=y$是一个等价关系，以及$\refl_x:x=x$这一事实。
+恒等类型表现出一个群胚结构，我们可以完全从消去规则推导出来。我们首先必须定义反转和连接路径的操作。这反过来证明$x=y$是一个等价关系，以及$\refl:x=x$这一事实。
 
 \begin{theorem}[$=$是等价关系]
 给定类型$A:\UU$及其三个元素$x,y,z:A$，存在以下两个函数：
-\[
-(-)^{-1}:(x=y)\to(y=x) \qquad -\bullet-:(x=y)\to(y=z)\to(x=z)
-\]
+\begin{align}
+(-)^{-1}&:(x=y)\to(y=x) \\
+-\bullet-&:(x=y)\to(y=z)\to(x=z)
+\end{align}
 第一个称为路径反转，第二个称为路径连接。
 \end{theorem}
 
@@ -1202,23 +1217,26 @@ J(C,p):C(x,y,p)
 这两个函数满足群胚律，这在[1, 第2.1节]中得到了证明。我们在这里引用他们的结果：
 
 \begin{theorem}[$x=y$形成一个群胚]
-在任何类型$A:\UU$中，对于$x,y,z,w:A$和$p:x=y,q:y=z,r:z=w$，我们有：
+在任何类型$A:\UU$中，对于$x,y,z,w:A$和$x \underset{A}{=} y,q:y=z,r:z=w$，我们有：
 \[
 p\bullet p^{-1} = \refl_x \quad p^{-1}\bullet p = \refl_y \quad (p^{-1})^{-1} = p \quad \refl_x^{-1}\equiv\refl_x
 \]
 \[
 p\bullet\refl_y = p \quad \refl_x\bullet p = p \quad (p\bullet q)\bullet r = p\bullet(q\bullet r) \quad \refl_x\bullet\refl_x\equiv\refl_x
 \]
-由于所有这些都只在命题上成立（除了关于$\refl$的规则），所有这些结构仅“直到更高阶一致性”成立。这正是$\infty$-群胚所期望的。因为我们可以选择$A$本身是一个恒等类型，我们也得到了递归恒等类型的所有这些结构。
 \end{theorem}
+由于所有这些都只在命题上成立（除了关于$\refl$的规则），所有这些结构仅“直到更高阶一致性”成立。这正是$\infty$-群胚所期望的。因为我们可以选择$A$本身是一个恒等类型，我们也得到了递归恒等类型的所有这些结构。
+
 在理论上定义了所有这些之后，我们给出$S^1$的例子。
 
 \begin{example}[圆]
 为了定义圆，我们使用[1, 第6章]中描述的生成元和关系。类型$S^1$由一个名为$\ast$的单点（如果有歧义则为$\ast_{S^1}$）和一条名为$\mathsf{loop}:\ast=\ast$的路径组成。
 
-生成元和关系机制先验地不会产生任何更高阶的一致性，因此$\mathsf{loop}\neq\mathsf{loop}\bullet\mathsf{loop}$且$\mathsf{loop}\neq\mathsf{loop}^{-1}$。事实上，[1]明确证明了$\mathsf{loop}\neq\refl$。此外，它没有添加$\mathbb{1}$的消去规则（证明当$x:\mathbb{1}$时$\ast_{\mathbb{1}}\equiv x$的规则），因为那将损害$\ast_{S^1}$的结构。这意味着虽然$S^1$有一个典范元素$\ast_{S^1}$，但我们不能证明它是唯一的元素。
+生成元和关系机制先验地不会产生任何更高阶的一致性，因此$\mathsf{loop}\neq\mathsf{loop}\bullet\mathsf{loop}$且$\mathsf{loop}\neq\mathsf{loop}^{-1}$。事实上，[1]明确证明了$\mathsf{loop}\neq\refl_{\ast}$。此外，它没有添加$\mathbb{1}$的消去规则（证明当$x:\mathbb{1}$时$\ast_{\mathbb{1}}\equiv x$的规则），因为那将损害$\ast\underset{S^1}{=}\ast$的结构。这意味着虽然$S^1$有一个典范元素$\ast_{S^1}$，但我们不能证明它是唯一的元素。
 
-这看起来可能令人困惑，但它完美地符合$S^1$的同伦论观点。它由一个连通分支组成，所以所有的点都是等价的，但我们不能假设一开始只有一个点。[1]证明了$(\ast_{S^1}=\ast_{S^1})\simeq\mathbb{Z}$，正如人们所期望的那样。
+这看起来可能令人困惑，但它完美地符合$S^1$的同伦论观点。它由一个连通分支组成，所以所有的点都是等价的，但我们不能假设一开始只有一个点。
+
+[1]证明了$(\ast\underset{S^1}{=}\ast)\simeq\mathbb{Z}$，正如人们所期望的那样。
 \end{example}
 
 \subsection{函子性}
@@ -1236,7 +1254,7 @@ p\bullet\refl_y = p \quad \refl_x\bullet p = p \quad (p\bullet q)\bullet r = p\b
 我们还需要证明这个操作确实是函子性的：
 
 \begin{theorem}（参见[1, 引理2.2.2]）
-对于函数$f:A\to B,g:B\to C$和路径$p:x=_A y,q:y=_A z$，以下陈述成立：
+对于函数$f:A\to B,g:B\to C$和路径$p:x\underset{A}{=} y,q:y\underset{A}{=} z$，以下陈述成立：
 \[
 \ap_f(p\bullet q) = \ap_f(p)\bullet\ap_f(q) \qquad \ap_f(p^{-1}) = \ap_f(p)^{-1}
 \]
@@ -1555,10 +1573,10 @@ C\odot B:A\to\UU,\quad a\mapsto \Sigma(b:B(a),C((a,b)))
 \frac{\Phi\vdash s:I \quad \Phi\vdash t:I}{\Phi\vdash (s\equiv t)\ \tope} \qquad \frac{\Phi\vdash s:I}{\Phi\vdash s\equiv s} \qquad \frac{\Phi\vdash s\equiv t}{\Phi\vdash t\equiv s} \qquad \frac{\Phi\vdash s\equiv t \quad \Phi\vdash t\equiv v}{\Phi\vdash s\equiv v}
 \]
 \[
-\frac{\Phi\vdash t:\mathbf{1}}{\Phi\vdash t\equiv \star} \qquad \frac{}{\Phi\vdash 0\equiv 1 \to \bot} \qquad \frac{\Phi\vdash s:I \quad \Phi\vdash t:J}{\Phi\vdash \pi_1((s,t))\equiv s} \qquad \frac{\Phi\vdash s:I \quad \Phi\vdash t:J}{\Phi\vdash \pi_2((s,t))\equiv t}
+\frac{\Phi\vdash t:\mathbf{1}}{\Phi\vdash t\equiv \star} \qquad \frac{}{\Phi\vdash 0\equiv 1 \to \bot} \qquad \frac{\Phi\vdash s:I \quad \Phi\vdash t:\mathsf{J}}{\Phi\vdash \pi_1((s,t))\equiv s} \qquad \frac{\Phi\vdash s:I \quad \Phi\vdash t:\mathsf{J}}{\Phi\vdash \pi_2((s,t))\equiv t}
 \]
 \[
-\frac{\Phi\vdash t:I\times J}{\Phi\vdash (\pi_1(t),\pi_2(t))\equiv t} \qquad \frac{\Xi,x:I\vdash \psi\ \tope \quad \Xi\mid\Phi\vdash t\equiv s \quad \Xi\mid\Phi\vdash \psi[x\mapsto s]}{\Xi\mid\Phi\vdash \psi[x\mapsto t]}
+\frac{\Phi\vdash t:I\times \mathsf{J}}{\Phi\vdash (\pi_1(t),\pi_2(t))\equiv t} \qquad \frac{\Xi,x:I\vdash \psi\ \tope \quad \Xi\mid\Phi\vdash t\equiv s \quad \Xi\mid\Phi\vdash \psi[x\mapsto s]}{\Xi\mid\Phi\vdash \psi[x\mapsto t]}
 \]
 \end{definition}
 除了相等，我们还需要通过一个比较拓扑给$\mathbf{2}$一个序。我们以方程形式而不是推理规则给出这个比较拓扑的公理，因为它们更容易理解。在立方体上下文$x:\mathbf{2},y:\mathbf{2}$中，我们声明$(x\leq y)\ \tope$，称为不等式拓扑。我们给出严格区间的公理：对于任何$x,y,z:\mathbf{2}$，我们有：
@@ -1625,18 +1643,18 @@ U. Buchholtz和J. Weinberger [5]将形状重新解释为类型，这在几个方
 从两个形状，我们可以通过在其立方体的乘积上给出一个新形状来形成它们的乘积。
 
 \begin{definition}
-给定立方体$I$和$J$上的形状$\{t:I\mid\psi\}$和$\{s:J\mid\zeta\}$，我们将它们的乘积定义为：
+给定立方体$I$和$\mathsf{J}$上的形状$\{t:I\mid\psi\}$和$\{s:\mathsf{J}\mid\zeta\}$，我们将它们的乘积定义为：
 \[
-\psi\times\zeta\coloneqq \{(t,s):I\times J\mid \psi\wedge\zeta\}
+\psi\times\zeta\coloneqq \{(t,s):I\times \mathsf{J}\mid \psi\wedge\zeta\}
 \]
 \end{definition}
 
 由于我们经常考虑子形状包含，我们还需要能够在超形状的乘积中形成两个子形状的相对乘积。这个相对乘积与两个子形状的实际乘积不同，因为当人们想在扩展类型的柯里化定理中使用它时，它没有正确的性质。
 
 \begin{definition}
-给定两个形状包含$\phi\subset\{t:I\mid\psi\}$和$\chi\subset\{s:J\mid\zeta\}$，我们定义$\phi$和$\chi$的推出积（我们也称之为子形状乘积）：
+给定两个形状包含$\phi\subset\{t:I\mid\psi\}$和$\chi\subset\{s:\mathsf{J}\mid\zeta\}$，我们定义$\phi$和$\chi$的推出积（我们也称之为子形状乘积）：
 \[
-\phi\otimes\chi \coloneqq (\phi\times\zeta)\cup(\psi\times\chi) \equiv \{(t,s):I\times J\mid (\phi\wedge\zeta)\vee(\psi\wedge\chi)\}
+\phi\otimes\chi \coloneqq (\phi\times\zeta)\cup(\psi\times\chi) \equiv \{(t,s):I\times \mathsf{J}\mid (\phi\wedge\zeta)\vee(\psi\wedge\chi)\}
 \]
 \end{definition}
 
