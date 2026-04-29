@@ -988,36 +988,90 @@ g\circ f \coloneqq \lambda a.\,g(f(a))
 宇宙是类型的类型——一个其元素本身就是类型的类型。有几个理由说明为什么人们希望在自己的理论中拥有宇宙。其中之一是Grothendieck构造，我们将在第2.8节介绍；没有类型宇宙就无法进行该构造。我们也希望拥有宇宙以充分利用依赖类型：宇宙将类型转变为类型的元素，使它们成为理论中的非特殊值。最后，宇宙允许我们减少某些类型所需的推理规则数量。
 
 \begin{example}
-考虑具有以下规则的布尔类型：
-\[
-\frac{}{\bool\ \Type} \qquad \frac{}{t:\bool} \qquad \frac{}{f:\bool}
-\]
+考虑具有以下规则的布尔类型 \texttt{bool}：
+\begin{mathpar}
+    % 形成规则与引入规则
+    \inferrule* [Lab=]
+        { }
+        {\texttt{bool} \textbf{ type}}
+    \and
+    \inferrule* [Lab=]
+        { }
+        {\texttt{t} : \texttt{bool}}
+    \and
+    \inferrule* [Lab=]
+        { }
+        {\texttt{f} : \texttt{bool}}
+
+    \\ % 换行显示消除规则
+
+    % 消除规则 (if-then-else)
+    \inferrule* [Lab=]
+        {\Gamma, b : \texttt{bool} \vdash C \textbf{ type} \\ 
+         \Gamma \vdash x : C[b \mapsto \texttt{t}] \\ 
+         \Gamma \vdash y : C[b \mapsto \texttt{f}] \\ 
+         \Gamma \vdash v : \texttt{bool}}
+        {\Gamma \vdash \texttt{if}(v, x, y) : C[b \mapsto v]}
+
+    \\ % 换行显示计算规则
+
+    % 计算规则
+    \texttt{if}(\texttt{t}, x, y) \equiv x
+    \and
+    \texttt{if}(\texttt{f}, x, y) \equiv y
+\end{mathpar}
 根据我们目前的规则，无法定义一个依赖于布尔值的类型。因此，$C$中的变量$b$基本上是无用的，从而$x$和$y$具有相同的类型。然而，如果我们引入宇宙，允许它们具有完全不同的类型是有用的，并且是非常可表达的。
+
+在这种情况下，宇宙的一种替代方案是添加类型层面的\texttt{if}-表达式：
+\begin{mathpar}
+\inferrule* [Lab=]
+    {\Gamma \vdash X \textbf{ type} \\ \Gamma \vdash Y \textbf{ type} \\ \Gamma \vdash v : \texttt{bool}}
+    {\Gamma \vdash \texttt{IF}(v, X, Y) \textbf{ type}}
+\end{mathpar}
+
+% 类型级别的计算规则
+\begin{mathpar}
+\texttt{IF}(\texttt{t}, X, Y) \equiv X
+\and
+\texttt{IF}(\texttt{f}, X, Y) \equiv Y
+\end{mathpar}
+然后我们可以使用它来定义依赖于布尔值的类型。给定$x:X$和$y:Y$，我们有\[ \texttt{if}(v, x, y) : \texttt{IF}(v, X, Y) \]这种方法称为“大消去”[19]。这种方法很笨拙，因为现在我们必须为所有这些类型添加两个构造子，而使用宇宙，我们可以简洁地表述。
 \end{example}
 
-在这种情况下，宇宙的一种替代方案是添加类型层面的if表达式：
-\[
-\frac{\Gamma\vdash X\ \Type \quad \Gamma\vdash Y\ \Type \quad \Gamma\vdash v:\bool}{\Gamma\vdash \operatorname{if}(v,X,Y)\ \Type} \qquad \operatorname{if}(t,X,Y)\equiv X \qquad \operatorname{if}(f,X,Y)\equiv Y
-\]
-然后我们可以使用它来定义依赖于布尔值的类型。给定$x:X$和$y:Y$，我们有$\operatorname{if}(v,x,y):\operatorname{if}(v,X,Y)$。这种方法称为“大消去”[19]。这种方法很笨拙，因为现在我们必须为所有这些类型添加两个构造子，而使用宇宙，我们可以简洁地表述。
-
 在我们的理论中，我们用$\UU$表示宇宙。为了将其正式引入理论，我们希望添加以下规则：
-\[
-\frac{}{\UU\ \Type} \qquad \frac{\Gamma\vdash A\ \Type}{\Gamma\vdash A:\UU}
-\]
+\begin{mathpar}
+    % 宇宙形成规则
+    \inferrule* [Lab=]
+        { }
+        {\mathcal{U} : \textbf{type}}
+    \and
+    % 宇宙包含规则
+    \inferrule* [Lab=]
+        {\Gamma \vdash A \textbf{ type}}
+        {\Gamma \vdash A : \mathcal{U}}
+\end{mathpar}
 然而，这使得判断$\UU:\UU$可推导，这将我们引向与集合论和集合的集合相同的困境：罗素悖论（参见[1, 19]）。为了避免悖论，我们使用宇宙的累积层次。$\UU_i$是“规模$i$”的类型宇宙。更高一层，$\UU_{i+1}$包含来自前一层的所有类型以及$\UU_i$本身。因此，代替上面两个不一致的规则，我们有以下规则：
-\[
-\frac{}{\UU_i:\UU_{i+1}} \qquad \frac{A:\UU_i}{A:\UU_{i+1}}
-\]
-
-然后我们需要用$A:\UU_i$替换现有规则中使用$A\ \Type$原始概念的地方（然后我们可以从理论中完全移除类型原始概念）。例如，现在$\Sigma$-类型的形成规则为：
-\[
-\frac{\Gamma\vdash A:\UU_i \quad \Gamma,x:A\vdash B:\UU_i}{\Gamma\vdash \Sigma(x:A,B):\UU_i}
-\]
+\begin{mathpar}
+    % 宇宙层级形成规则
+    \inferrule* [Right=$\mathcal{U}$-F]
+        { }
+        {\mathcal{U}_i : \mathcal{U}_{i+1}}
+    \and
+    % 宇宙累积性规则
+    \inferrule* [Right=$\mathcal{U}$-I]
+        {A : \mathcal{U}_i}
+        {A : \mathcal{U}_{i+1}}
+\end{mathpar}
+然后我们需要用$A:\UU_i$替换现有规则中使用$A\ \Type$原始概念的地方（然后我们可以从理论中完全移除 \textbf{type} 原始概念）。例如，现在$\Sigma$-类型的形成规则为：
+\begin{mathpar}
+\inferrule* [Right=$\Sigma$-F]
+    {\Gamma \vdash A : \mathcal{U}_i \\ \Gamma, x : A \vdash B : \mathcal{U}_i}
+    {\Gamma \vdash \Sigma(x : A, B) : \mathcal{U}_i}
+\end{mathpar}
 
 类似于当上下文不言自明时可以省略它，我们也可以对宇宙的层次做同样处理。事实上，可以实现一个推理算法，自动为所有涉及的宇宙选择尽可能小的层次数字。因此，我们现在通常不带下标地写作$\UU$。如果我们写$\UU:\UU$，这意味着左边宇宙的层次必须低于右边的层次。
 
-这些层次是元理论的一部分，理论内部无法访问：在理论内部无法使层次依赖于理论中的值。例如，类型$(n:\mathbb{N})\to \UU_n$不存在，将除层次之外的任何东西放入$\UU$的下标中是语法错误。这很重要，因为如果可能，那么我们将必须拥有$\UU_{\mathbb{N}_0}$以及更高的序数。
+这些层次是元理论的一部分，理论内部无法访问：在理论内部无法使层次依赖于理论中的值。例如，类型$(n:\mathbb{N})\to \UU_n$不存在，将除层次之外的任何东西放入$\UU$的下标中是语法错误。这很重要，因为如果可能，那么我们将必须拥有$\UU_{\aleph_0}$以及更高的序数。
 
 任何使用$\UU$的定义或定理都是一个模式定义/定理，因为它对于所有出现的层次下标是元通用的。在实践中这永远不会成为问题，因为我们可以将$\UU$视为一个单一类型。
 
@@ -1039,7 +1093,7 @@ g\circ f \coloneqq \lambda a.\,g(f(a))
 对于类型族$B:A\to\UU$，我们定义：
 \begin{itemize}
 \item $B$的全类型是$\Sigma(a:A,B(a))$。我们也写作$\Sigma B$。
-\item 全类型的投影是函数$\pi_B:\Sigma B\to A,\quad (a,b)\mapsto a$。
+\item 全类型的投影是函数\[\pi_B:\Sigma B\to A\qquad (a,b)\mapsto a\]
 \item $B$的依赖函数类型是$(a:A)\to B(a)$。我们也写作$\Pi B$。这也称为$B$的截面，我们将在第5节中介绍和解释。
 \end{itemize}
 \end{definition}
@@ -1048,24 +1102,30 @@ g\circ f \coloneqq \lambda a.\,g(f(a))
 
 \begin{definition}[恒等函数]
 恒等函数$\id$定义如下：
-\[
-\id:(A:\UU,a:A)\to A \qquad \id:=\lambda A:\UU.\lambda a:A.a
-\]
+\begin{align*}
+\id&:(A:\UU,a:A)\to A \\
+\id&:=\lambda A:\UU.\lambda a:A.\,a
+\end{align*}
 我们仍然继续写和使用$\id_A:A\to A$，意思是上述定义下的$\id(A)$。
 \end{definition}
 
 \begin{remark}
 在rzk中，我们实际上没有办法指定依赖类型，因为蕴涵不存在。相反，我们总是给出类型族。将变量放在定义的上下文中还是使其成为定义内部$\Pi$-类型的参数之间也没有真正的区别。因此我们之前这样定义的恒等函数：
 \begin{verbatim}
-#def id (A : U) (a : A) : A := a
+#def identity
+    ( A : U )
+    : A → A
+    := \ a → a
 \end{verbatim}
 可以等价地定义为：
 \begin{verbatim}
-#def id (A : U) : A -> A := \a -> a
+#def identity
+    : (A : U) → A → A
+    := \ _ a → a
 \end{verbatim}
 \end{remark}
 
-\subsection{同伦}
+\section{同伦}
 
 在完成了Martin-Löf类型论中最重要的概念之后，我们现在介绍HoTT中最重要的概念：命题相等，也称为恒等类型、路径类型或简称为$=$-类型。我们仍然遵循[1]和[19]。正如我们在介绍判断相等时已经讨论过的，这两个概念是不同的。判断相等是一个判断，所以它要么成立要么不成立；而命题相等是一个类型，所以我们在理论中有类型$x =_A y$的一个元素，它证明了$x$等于$y$（在类型$A$中）这一事实。然而，这个证明不是“要么存在要么不存在”的东西，而是可能附加了一些额外的数据。它存储了$x$等于$y$的方式，并且可能存在多种不同的方式使得两个值相等。
 
@@ -1121,7 +1181,7 @@ J(C,p):C(x,y,p)
 在rzk中，语法相同，不指定类型时写$x=y$，指定类型时写$x =_{A} y$。这是唯一支持类型推断的类型。$\refl$也叫做$\refl$，并且支持推断项。如果需要指定，语法是$\refl_{x:A}$，其中$A$是$x$的类型。
 \end{remark}
 
-\subsubsection{群胚结构}
+\subsection{群胚结构}
 
 恒等类型表现出一个群胚结构，我们可以完全从消去规则推导出来。我们首先必须定义反转和连接路径的操作。这反过来证明$x=y$是一个等价关系，以及$\refl_x:x=x$这一事实。
 
@@ -1161,7 +1221,7 @@ p\bullet\refl_y = p \quad \refl_x\bullet p = p \quad (p\bullet q)\bullet r = p\b
 这看起来可能令人困惑，但它完美地符合$S^1$的同伦论观点。它由一个连通分支组成，所以所有的点都是等价的，但我们不能假设一开始只有一个点。[1]证明了$(\ast_{S^1}=\ast_{S^1})\simeq\mathbb{Z}$，正如人们所期望的那样。
 \end{example}
 
-\subsubsection{函子性}
+\subsection{函子性}
 
 函数自动满足关于群胚结构的函子性。这一事实由以下定义记录：
 
@@ -1185,7 +1245,7 @@ p\bullet\refl_y = p \quad \refl_x\bullet p = p \quad (p\bullet q)\bullet r = p\b
 \]
 \end{theorem}
 
-\subsection{可缩性}
+\section{可缩性}
 
 在本节的剩余部分，我们介绍同伦类型论中将在论文后面使用的重要术语。我们从可缩性的概念开始。
 
@@ -1215,7 +1275,7 @@ p\bullet\refl_y = p \quad \refl_x\bullet p = p \quad (p\bullet q)\bullet r = p\b
 对于任何类型$A$和任何值$a:A$，$\Sigma(x:A,a=x)$是可缩的，其中心为$(a,\refl_a)$。
 \end{lemma}
 
-\subsection{命题}
+\section{命题}
 
 \begin{definition}
 称类型$A:\UU$是一个命题，如果任意两个居留者典范地相等：
@@ -1244,7 +1304,7 @@ p\bullet\refl_y = p \quad \refl_x\bullet p = p \quad (p\bullet q)\bullet r = p\b
 另外，任何可缩类型都是一个命题。
 \end{theorem}
 
-\subsection{等价}
+\section{等价}
 
 等价的概念允许我们以另一种不同于$=$和$\equiv$的概念来等同类型。它是三者中最弱的。范畴论者对这个概念非常熟悉（在高阶范畴中通常称为弱等价），因为它允许等同包含数量悬殊的元素的类型。决定因素是所比较类型的恒等类型。两个类型的连通分支是双射的，并且更高结构本身直到等价都是被认同的。
 
@@ -1283,7 +1343,7 @@ $g_1$称为$f$的截面，$g_2$称为$f$的收缩。
 给定命题$A,B:\mathbb{P}$和$f:A\to B,g:B\to A$，那么$A\simeq B$。
 \end{theorem}
 
-\subsubsection{重要的等价}
+\subsection{重要的等价}
 
 有几个重要的等价我们在后面会用到。此外，类型论中的许多公理都是用等价表述的。函数外延性公理指出逐点相等的函数在命题上相等。对于下一节中的“扩展类型”，添加了一个类似的公理。在本节的后面，我们将讨论幺半等价性，这也是一条声明等价的公理。
 
@@ -1353,7 +1413,7 @@ F \mapsto (\pi_1\circ F,\pi_2\circ F)
 
 传输满足许多有用的性质：它是一个等价，其逆是沿反向路径的传输；两个传输的复合是路径连接的传输；拉回变成与定义2.2.7的复合。有关细节，请参阅[1, 引理2.3.9-11]。
 
-\subsection{嵌入}
+\section{嵌入}
 
 嵌入是等价的一个弱化版本。嵌入不是要求连通分支上的双射以及兼容的群胚结构，而是仅在连通分支上是单射的，并且群胚结构兼容。
 
@@ -1366,7 +1426,7 @@ F \mapsto (\pi_1\circ F,\pi_2\circ F)
 
 我们稍后将引入完全嵌入的概念，它对应于范畴论中的完全忠实函子。
 
-\subsection{幺半等价性}
+\section{幺半等价性}
 
 在本小节中，我们讨论幺半等价性公理。由于E. Riehl等人[3]不假定它，并且我们所有的证明都不需要它，我们不将其作为公理添加到我们的理论中。尽管如此，它是同伦类型论的一个组成部分，并且有人尝试将幺半等价性的有向版本[24]添加到类型论中。
 
@@ -1383,7 +1443,7 @@ F \mapsto (\pi_1\circ F,\pi_2\circ F)
 
 幺半等价性与经典排中律和双重否定律不相容。后者在[1, 定理3.2.2]中展示，前者在[1, 推论3.2.7]中展示。然而，我们被允许对命题假定这两条公理。但我们再次不需要诉诸于使用它们，所以我们将它们从我们的理论中省略。
 
-\subsection{Grothendieck构造}
+\section{Grothendieck构造}
 
 现在我们讨论我们理论中笔直化和反笔直化的非常有趣的构造。对于本小节，我们需要假定幺半等价性公理。有了它，我们能够从高阶范畴论证明笔直化定理（尽管仅对群胚成立，因为我们的理论中还没有方向性）。
 
@@ -1446,7 +1506,7 @@ C\odot B:A\to\UU,\quad a\mapsto \Sigma(b:B(a),C((a,b)))
 
 在下一节中，我们将转向单纯类型论，它允许我们讨论$\infty$-范畴而不仅仅是$\infty$-群胚。
 
-\section{单纯 HoTT 与范畴论}
+\chapter{单纯 HoTT 与范畴论}
 
 在上一节中，我们介绍了同伦类型论及其核心概念。现在我们想为我们的理论添加方向性。为此，我们研究E. Riehl和M. Shulman [2]的单纯同伦类型论。这是一个多层类型论，每一层只能依赖于自身或前面的层。共有三层，前两层是立方体和拓扑。这些用于定义形状，然后形状可用于映射到经典类型中。
 
@@ -1460,7 +1520,7 @@ C\odot B:A\to\UU,\quad a\mapsto \Sigma(b:B(a),C((a,b)))
 
 虽然我们给出了理论的许多推理规则，但我们不会穷尽，而是选择更简洁但可能有歧义的记法。特别地，我们从规则中省略了$A\ \Type$判断和其他分散注意力的记法。我们这样做是为了以更简单的方式更快地介绍理论，而不让难以理解的 formalism 迷惑读者。如果出现任何问题，我们请读者参考E. Riehl和M. Shulman [2]或E. Riehl等人[3]的形式化。由于我们的工作是使用rzk [4]形式化的，我们在更宽松的表述上没有任何形式上的问题。
 
-\subsection{立方体、拓扑和形状}
+\section{立方体、拓扑和形状}
 
 该理论由三层组成：立方体、拓扑和类型。类型层与我们之前讨论的相同，但有一个新增内容：扩展类型。它们使用我们通过前两层定义的形状。
 
