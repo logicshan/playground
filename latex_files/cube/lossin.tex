@@ -585,7 +585,7 @@ X \coloneqq A\rightarrow B
     {\Gamma, A \vdash C \\ \Gamma, B \vdash C} 
     {\Gamma, A \lor B \vdash C}
 \end{mathpar}
-消除规则允许我们在给定 $A\vee B$ 的情况下，当我们能同时从 $A$ 和 $B$ 证明 $C$ 时，证明任何陈述 $C$。这里一个有趣的点是，这给我们的理论增加了一些模糊性，因为我们在调用这条规则时必须选择 $C$。当我们后面讨论乘积类型时，由于我们类型论中的证明项，这种模糊性会消失。在我们转向类型论蕴涵之前，我们给出一个关于类型论中推理规则含义的非常重要的评论。
+消除规则允许我们在给定 $A\lor B$ 的情况下，当我们能同时从 $A$ 和 $B$ 证明 $C$ 时，证明任何陈述 $C$。这里一个有趣的点是，这给我们的理论增加了一些模糊性，因为我们在调用这条规则时必须选择 $C$。当我们后面讨论乘积类型时，由于我们类型论中的证明项，这种模糊性会消失。在我们转向类型论蕴涵之前，我们给出一个关于类型论中推理规则含义的非常重要的评论。
 
 \subsection{规则与类型检查}
 
@@ -1651,7 +1651,7 @@ a &\mapsto \Sigma(b:B(a),C((a,b)))
 
 拓扑层由拓扑组成，它们本质上是“依赖于立方体的布尔值”，行为类似于“严格命题”。有假和真拓扑的常量，具有适当的消去和引入规则（真总是可以被证明，从假可以推导出任何东西）。此外，我们有合取和析取。重要的是，我们没有否定或蕴含。在这一层中，我们还添加了立方体的判断相等，这将是一个拓扑，以便下一层可以将其作为原始概念使用。
 
-拓扑上下文使用字母$\Phi$。从现在开始，当我们以局部规则形式书写规则时，需要注意推断正确的上下文。例如，拓扑声明$X\ \tope$只允许有立方体上下文，而拓扑析取$\varphi\vee\psi$既有立方体上下文又有拓扑上下文。
+拓扑上下文使用字母$\Phi$。从现在开始，当我们以局部规则形式书写规则时，需要注意推断正确的上下文。例如，拓扑声明$X\ \tope$只允许有立方体上下文，而拓扑析取$\varphi\lor\psi$既有立方体上下文又有拓扑上下文。
 
 \begin{definition}[拓扑层]
 拓扑层包含比立方体层更多的构造。它包括（依赖于立方体的）析取、合取和相等。我们从简单的常量项开始：
@@ -1756,7 +1756,7 @@ a &\mapsto \Sigma(b:B(a),C((a,b)))
 \end{mathpar}
 除了相等，我们还需要通过一个比较拓扑给$\mathbb{2}$一个序。我们以方程形式而不是推理规则给出这个比较拓扑的公理，因为它们更容易理解。在立方体上下文$x:\mathbb{2},y:\mathbb{2}$中，我们声明$(x\leq y)\ \tope$，称为不等式拓扑。我们给出严格区间的公理：对于任何$x,y,z:\mathbb{2}$，我们有：
 \[
-(x\leq x) \quad (0\leq x) \quad (x\leq 1) \quad (x\leq y),(y\leq z)\vdash(x\leq z) \quad (x\leq y),(y\leq x)\vdash(x\equiv y) \quad (x\leq y)\vee(y\leq x)
+(x\leq x) \quad (0\leq x) \quad (x\leq 1) \quad (x\leq y),(y\leq z)\vdash(x\leq z) \quad (x\leq y),(y\leq x)\vdash(x\equiv y) \quad (x\leq y)\lor(y\leq x)
 \]
 \begin{alignat*}{3}
 &(x \le x) \qquad && (0 \le x) \qquad && (x \le 1) \\
@@ -1782,7 +1782,7 @@ a &\mapsto \Sigma(b:B(a),C((a,b)))
 \]
 我们只需要$n$较小时的这种形状。
 
-除了单纯形，我们定义了子形状的概念：我们写$\phi\subset\psi$表示$\phi$是$\psi$的子形状。形式上，子形状关系声明如下：
+除了单纯形，我们定义了子形状的概念：我们写$\varphi\subset\psi$表示$\varphi$是$\psi$的子形状。形式上，子形状关系声明如下：
 \begin{mathpar}
     \inferrule* [Lab=]
         {\{t : I \mid \psi\} \textbf{ shape} \quad \{t : I \mid \varphi\} \textbf{ shape} \quad t : I \mid \varphi \vdash \psi}
@@ -1796,7 +1796,7 @@ a &\mapsto \Sigma(b:B(a),C((a,b)))
 \]
 另一个相当重要的子形状是$\Delta^1$的边界：
 \[
-\partial\Delta^1\coloneqq \{t:\mathbb{2}\mid t\equiv 0\vee t\equiv 1\}
+\partial\Delta^1\coloneqq \{t:\mathbb{2}\mid t\equiv 0\lor t\equiv 1\}
 \]
 
 \begin{remark}
@@ -1819,7 +1819,7 @@ U. Buchholtz和J. Weinberger [5]将形状重新解释为类型，这在几个方
 \begin{definition}
 给定相同立方体上的两个形状$\{t:I\mid\psi\}$和$\{t:I\mid\zeta\}$，我们可以形成它们的并集：
 \[
-\psi\cup\zeta\coloneqq \{t:I\mid\psi\vee\zeta\}
+\psi\cup\zeta\coloneqq \{t:I\mid\psi\lor\zeta\}
 \]
 \end{definition}
 
@@ -1838,14 +1838,14 @@ U. Buchholtz和J. Weinberger [5]将形状重新解释为类型，这在几个方
 给定两个形状包含$\varphi\subset\{t:I\mid\psi\}$和$\chi\subset\{s: J \mid\zeta\}$，我们定义$\varphi$和$\chi$的推出积（我们也称之为子形状乘积）：
 \begin{align*}
 \varphi\otimes\chi &\coloneqq (\varphi\times\zeta)\cup(\psi\times\chi) \\
- &\equiv \{(t,s):I\times  J \mid (\varphi\wedge\zeta)\vee(\psi\wedge\chi)\}
+ &\equiv \{(t,s):I\times  J \mid (\varphi\wedge\zeta)\lor(\psi\wedge\chi)\}
 \end{align*}
 \end{definition}
 
 \begin{example}
 一个非常常用的乘积形状是$\Delta^1\times\Delta^1$。然而，它的拓扑条件并不有趣，因为它只是$\top$。但是，如果我们考虑两种情况下的$\partial\Delta^1\subset\Delta^1$，我们得到一个有趣的子形状乘积：
 \[
-\partial\Delta^1\otimes\partial\Delta^1 \equiv \{(t,s):\mathbb{2}\times\mathbb{2}\mid t\equiv0\vee t\equiv1\vee s\equiv0\vee s\equiv1\}
+\partial\Delta^1\otimes\partial\Delta^1 \equiv \{(t,s):\mathbb{2}\times\mathbb{2}\mid t\equiv0\lor t\equiv1\lor s\equiv0\lor s\equiv1\}
 \]
 这是正方形的完整边界。
 
@@ -1863,19 +1863,39 @@ U. Buchholtz和J. Weinberger [5]将形状重新解释为类型，这在几个方
 我们的理论现在拥有我们在第2节中介绍的类型作为第三层，这意味着任何类型都可以依赖于形状。由于我们在前一节的研究中没有引入形状的概念，因此还没有任何类型构造子允许我们使用形状。E. Riehl 和 M. Shulman [2] 发明了扩展类型的概念，它利用了形状。它本质上是一个 $\Pi$-类型，其中定义域是一个形状，陪域是一个形状依赖类型。此外，我们可以在定义域的一个子形状上指定一个约束，要求函数在类型中取特定的值。另外，我们为拓扑析取和 $\perp$-拓扑添加了类型层的递归子。这些允许我们定义形状依赖类型，我们进一步用它来定义具体的扩展类型。
 
 \begin{definition}[拓扑构造的类型递归子]
-由于 $\perp$ 对应于逻辑中的假，我们添加与之前讨论的空类型 $\mathbb{0}$ 相同的递归子。唯一的区别是，我们不需要元素 $x:0$，而是在前提中有 $\perp$：
-\[
-\frac{\perp}{rec_{\perp}:A}
-\]
-拓扑析取的类型递归子有以下四条规则。$rec_{\vee}$ 本质上是一个 if 语句，附加条件是分支的两个值必须在拓扑的合取上一致。
-\[
-\frac{\phi\vee\psi \quad \phi\wedge\psi\vdash x\equiv y \quad \phi\vdash x:A \quad \psi\vdash y:A}{rec_{\vee}^{\phi,\psi}(x,y):A}
-\]
-为了缩短记法，当形状从上下文中明显时，我们也允许写 $x\vee y$ 代替 $rec_{\vee}^{\phi,\psi}(x,y)$。
+由于 $\perp$ 对应于逻辑中的假，我们添加与之前讨论的空类型 $\mathbb{0}$ 相同的递归子。唯一的区别是，我们不需要元素 $x:0$，而是在前提中有 $\bot$：
+\begin{mathpar}
+    \inferrule* [Lab=]
+        {\bot}
+        {\text{rec}_{\bot} : A}
+    \and
+    \inferrule* [Lab=]
+        {\bot \quad a : A}
+        {\text{rec}_{\bot} \equiv a}
+\end{mathpar}
+拓扑析取的类型递归子有以下四条规则。$\rec_{\lor}$ 本质上是一个 \verb|if| 语句，附加条件是分支的两个值必须在拓扑的合取上一致。
+\begin{mathpar}
+    \inferrule* [Lab=]
+        {\varphi \lor \psi \quad \varphi \vdash x : A \quad \psi \vdash y : A \quad \varphi \land \psi \vdash x \equiv y}
+        {\text{rec}_{\lor}^{\varphi, \psi}(x, y) : A}
+    \and
+    \inferrule* [Lab=]
+        {\varphi \lor \psi \quad a : A}
+        {\text{rec}_{\lor}^{\varphi, \psi}(a, a) \equiv a}
 
-由于我们经常使用 $\partial\Delta^1$ 的递归子（它分解为 $t\equiv 0\vee t\equiv 1$），并且值本身也经常是 $\vee$-递归子，我们给它一个特殊的记法：
+    \inferrule* [Lab=]
+        {\varphi \lor \psi \quad \varphi \vdash x : A \quad \psi \vdash y : A \\ \varphi \land \psi \vdash x \equiv y}
+        {\varphi \vdash \text{rec}_{\lor}^{\varphi, \psi}(x, y) \equiv x}
+    \and
+    \inferrule* [Lab=]
+        {\varphi \lor \psi \quad \varphi \vdash x : A \quad \psi \vdash y : A \\ \varphi \land \psi \vdash x \equiv y}
+        {\psi \vdash \text{rec}_{\lor}^{\varphi, \psi}(x, y) \equiv y}
+\end{mathpar}
+为了缩短记法，当形状从上下文中明显时，我们也允许写 $x\lor y$ 代替 $\rec_{\lor}^{\varphi,\psi}(x,y)$。
+
+由于我们经常使用 $\partial\Delta^1$ 的递归子（它分解为 $t\equiv 0\lor t\equiv 1$），并且值本身也经常是 $\lor$-递归子，我们给它一个特殊的记法：
 \[
-rec_{\vee}^{t\equiv0,t\equiv1}(x,y) \equiv [x,y]
+\rec_{\lor}^{t\equiv0,t\equiv1}(x,y) \equiv [x,y]
 \]
 我们也将对 $\Lambda_1^2$ 使用这种记法，稍后定义。
 \end{definition}
@@ -1883,69 +1903,74 @@ rec_{\vee}^{t\equiv0,t\equiv1}(x,y) \equiv [x,y]
 使用这些递归子，我们现在可以定义形状依赖类型和项。为了将它们完全提升到类型层，我们还需要允许将形状依赖类型转换为适当的类型。出于这个原因，我们引入扩展类型。
 
 \begin{definition}[扩展类型]
-因为在这个类型的规则中我们必须声明两个形状及其子形状关系，所以它们变得相当长，乍看之下可能有些神秘。但扩展类型的内容与 $\Pi$-类型完全相同。给定立方体 $I$ 上的两个形状 $\phi$ 和 $\psi$，满足 $\phi \subset \psi$，一个形状依赖类型 $t:I\vdash A\ \Type$，以及一个在子形状上声明的形状依赖项 $t:I\vdash a:A$，我们写
-\[
-\langle (t:\psi)\to A \mid \underline{a}^{\phi} \rangle
-\]
+因为在这个类型的规则中我们必须声明两个形状及其子形状关系，所以它们变得相当长，乍看之下可能有些神秘。但扩展类型的内容与 $\Pi$-类型完全相同。给定立方体 $I$ 上的两个形状 $\varphi$ 和 $\psi$，满足 $\varphi \subset \psi$，一个形状依赖类型 $t : I \mid \psi \vdash A\ \Type$，以及一个在子形状上声明的形状依赖项 $t : I \mid \varphi \vdash a : A$，我们写
+\[\langle (t : \psi) \to A \mid {}^\varphi_a \rangle\]
 表示扩展类型。
-\end{definition}
 
 扩展类型类似于 $\Pi$-类型，有两个主要区别。第一，定义域不是类型，而是形状。第二，扩展类型在子形状上指定了一个约束。扩展类型的所有函数在代入属于子形状的值时，都会计算为约束值。
 
 如果我们对普通的 $\Pi$-类型也有这个构造子，那么我们可以形成诸如“一个从 $\mathbb{R}$ 到 $\mathbb{R}$ 且在负数输入上为 $0$ 的函数”这样的函数。
 
 形式上，我们有下面的形成规则：
-\[
-\frac{\{t:I\mid\psi\}\ \mathsf{shape} \quad \{t:I\mid\phi\}\ \mathsf{shape} \quad t:I\mid\phi\vdash\psi \quad t:I\mid\psi\vdash A\ \Type \quad t:I\mid\phi\vdash a:A}{\langle (t:\psi)\to A \mid \underline{a}^{\phi} \rangle\ \Type}
-\]
-我们注意到，在这种情况下，不写显式上下文的规则会导致混淆。形状 $\psi$ 和 $\phi$ 不允许依赖于任何外部上下文。$A$ 和 $a$ 是允许的。由于这种行为在 rzk 中没有，并且我们也不使用它，省略上下文不会给我们带来麻烦。
+\begin{mathpar}
+    \inferrule* [Lab=]
+    { \{t : I \mid \psi\} \textbf{ shape} \\ \{t : I \mid \varphi\} \textbf{ shape} \\ t : I \mid \varphi \vdash \psi \\ t : I \mid \psi \vdash A \textbf{ type} \\ t : I \mid \varphi \vdash a : A }
+    { \langle (t : \psi) \to A \mid {}^\varphi_a \rangle \textbf{ type} }
+\end{mathpar}
+我们注意到，在这种情况下，不写显式上下文的规则会导致混淆。形状 $\psi$ 和 $\varphi$ 不允许依赖于任何外部上下文。$A$ 和 $a$ 是允许的。由于这种行为在 rzk 中没有，并且我们也不使用它，省略上下文不会给我们带来麻烦。
 
 引入规则使用几乎相同的前提，唯一的添加是在超形状 $\psi$ 上的一个依赖项，它与子形状上的约束匹配（通过判断相等严格施加）。从现在起，为了节省空间，我们也省略形状声明判断以及显式的立方体变量 $t:I$。
-\[
-\frac{\phi\subset\psi \quad \psi\vdash A\ \Type \quad \phi\vdash a:A \quad \psi\vdash b:A \quad \phi\vdash a\equiv b}{\lambda t.b : \langle (t:\psi)\to A \mid \underline{a}^{\phi} \rangle}
-\]
+\begin{mathpar}
+    \inferrule* [Lab=]
+    { \varphi \subset \psi \\ \psi \vdash A \textbf{ type} \\ \varphi \vdash a : A \\ \psi \vdash b : A \\ \varphi \vdash a \equiv b }
+    { \lambda t.\, b : \langle (t : \psi) \to A \mid {}^\varphi_a \rangle }
+\end{mathpar}
 我们也有 $\Pi$-类型通常具有的 $\beta$ 和 $\eta$ 规则：
-\[
-\frac{\phi\subset\psi \quad \psi\vdash A\ \Type \quad \phi\vdash a:A \quad f:\langle (t:\psi)\to A \mid \underline{a}^{\phi} \rangle}{f\equiv \lambda t.f(t)}
-\]
+\begin{mathpar}
+    \inferrule* [Lab=]
+    { \varphi \subset \psi \\ \psi \vdash A \textbf{ type} \\ \varphi \vdash a : A \\ f : \langle (t : \psi) \to A \mid {}^\varphi_a \rangle }
+    { f \equiv \lambda t.\, f(t) }
+\end{mathpar}
 $\eta$ 规则需要讨论输入，所以我们需要为这条规则重新引入显式的立方体变量：
-\[
-t:I\mid \phi \vdash \psi \quad t:I\mid \psi \vdash A\ \Type \quad t:I\mid \phi \vdash a:A \quad t:I\mid \psi \vdash b:A \quad t:I\mid \phi \vdash a\equiv b
-\]
-\[
-s:I \quad \psi[t\mapsto s]
-\]
-\[
-(\lambda t.b)(s)\equiv b[t\mapsto s]
-\]
+\begin{mathpar}
+\inferrule* [Lab=]
+{ t : I \mid \varphi \vdash \psi \quad t : I \mid \psi \vdash A \text{ type} \quad t : I \mid \varphi \vdash a : A \quad t : I \mid \psi \vdash b : A \quad t : I \mid \varphi \vdash a \equiv b \\
+  s : I \quad \psi[t \mapsto s] }
+{ (\lambda t. b)(s) \equiv b [t \mapsto s] }
+\end{mathpar}
 此外，我们还有一条规则展示了当我们代入来自子形状的立方体元素时扩展类型的严格性质：
-\[
-t:I\mid \phi \vdash \psi \quad t:I\mid \psi \vdash A\ \Type \quad t:I\mid \phi \vdash a:A \quad f:\langle (t:\psi)\to A \mid \underline{a}^{\phi} \rangle \quad s:I \quad \phi[t\mapsto s]
-\]
-\[
-f(s)\equiv a[t\mapsto s]
-\]
+\begin{mathpar}
+\inferrule* [Lab=]
+{ t : I \mid \varphi \vdash \psi \quad t : I \mid \psi \vdash A \text{ type} \quad t : I \mid \varphi \vdash a : A \quad f : \langle (t : \psi) \to A \mid {}^{\varphi}_{a} \rangle \quad s : I \quad \varphi[t \mapsto s] }
+{ f(s) \equiv a [t \mapsto s] }
+\end{mathpar}
 
-我们使用几个简写记法。首先，我们不仅可以在扩展类型中写拓扑，还可以写整个形状。例如，我们写 $\left\langle (t:\Delta^1)\to A \mid \underline{a}^{\partial\Delta^1} \right\rangle$。当 $a$ 和 $A$ 不依赖于 $t$ 时，我们允许省略 $t$ 变量：$\langle \psi \to A \mid \underline{a}^{\phi} \rangle$。当 $a$ 依赖于 $t$ 但 $A$ 不依赖于 $t$ 时，我们也允许 $\langle \psi \to A \mid \underline{a}^{\phi} \rangle$。
+我们使用几个简写记法。首先，我们不仅可以在扩展类型中写拓扑，还可以写整个形状。例如，我们写 $\langle (t : \Delta^1) \to A \mid {}^{\partial \Delta^1}_{a} \rangle$。当 $a$ 和 $A$ 不依赖于 $t$ 时，我们允许省略 $t$ 变量：$\langle \psi \to A \mid {}^{\varphi}_{a} \rangle$。当 $a$ 依赖于 $t$ 但 $A$ 不依赖于 $t$ 时，我们也允许 $\langle \psi \to A \mid {}^{\varphi}_{\lambda t. a} \rangle$。
 
-当 $\phi$ 是 $\perp$ 时，我们实际上没有子形状，因此允许写 $(t:\psi)\to A$ 代替 $\left\langle (t:\phi)\to A \mid \underline{rec_{\perp}}^{\perp} \right\rangle$。在 $A$ 不依赖于 $t$ 的情况下，我们也写 $\psi \to A$。
+当 $\varphi$ 是 $\perp$ 时，我们实际上没有子形状，因此允许写 $(t:\psi)\to A$ 代替 $\left\langle (t : \psi) \to A \mid {}^{\bot}_{\text{rec}_{\bot}} \right\rangle$。在 $A$ 不依赖于 $t$ 的情况下，我们也写 $\psi \to A$。
 
 除了我们的记法，我们还允许通过判断相等进行某些强制转换：
-\[
-\frac{\phi\subset\psi}{\langle \psi\to A \mid \underline{a}^{\phi} \rangle \to \psi\to A} \qquad \frac{\phi_1\subset\phi_2\subset\psi}{\langle \psi\to A \mid \underline{a}^{\phi_1} \rangle \to \langle \psi\to A \mid \underline{a}^{\phi_2} \rangle}
-\]
+\begin{mathpar}
+\inferrule* [Lab=]
+{ f : \left\langle (t : \psi) \to A(t) \mid {}^{\varphi}_{a(t)} \right\rangle }
+{ f : (t : \psi) \to A(t) }
+\and
+\inferrule* [Lab=]
+{ f : \left\langle (t : \chi) \to A(t) \mid {}^{\varphi}_{a(t)} \right\rangle }
+{ f : \left\langle (t : \psi) \to A(t) \mid {}^{\varphi}_{a(t)} \right\rangle }
+\end{mathpar}
 第一条规则允许我们忘记任何约束，第二条规则允许我们将任何函数限制到其定义域的一个子形状上。
-
+\end{definition}
 \begin{remark}
-rzk 也有这两个递归子，但对 rec$\vee$ 使用了稍微不同的语法：
+rzk 也有这两个递归子，但对 $\rec_{\lor}$ 使用了稍微不同的语法：
 \begin{verbatim}
-recOR( <tope_1> |-> <term_1>, ..., <tope_n> |-> <term_n> )
+recOR(«tope_1» ↦ «term_1», ..., «tope_n» ↦ «term_n»)
 \end{verbatim}
-当所有交集在判断上一致时，该项是良类型的。扩展类型作为 $\Pi$-类型的特例存在，通过使用限制类型构造子。使用与 recOR 相同的语法，可以写：
+当所有交集在判断上一致时，该项是良类型的。扩展类型作为 $\Pi$-类型的特例存在，通过使用限制类型构造子。使用与 \verb|recOR| 相同的语法，可以写：
 \begin{verbatim}
-<type> [ <tope_1> |-> <term_1>, ..., <tope_n> |-> <term_n> ]
+«type» [«tope_1» ↦ «term_1», ..., «tope_n» ↦ «term_n»]
 \end{verbatim}
-当所有拓扑为假时，该项对应于 $\langle \mathrm{type}\rangle$，否则对应于包含拓扑为真的元素的单例类型。虽然这与 [2] 的原始论文有出入，但有一些文献直接包含这些类型，例如 J. Sterling 和 C. Angiuli [25, 记法3] 以及 D. Gratzer, J. Sterling, C. Angiuli, T. Coquand, 和 L. Birkedal [26, 第3.1节]。这些类型显然允许更多的定义，并且它们在这个理论中的确切行为尚未被完全理解。我们不直接使用它们。
+当所有拓扑为假时，该项对应于 \verb|«type»|，否则对应于包含拓扑为真的元素的单例类型。虽然这与 [2] 的原始论文有出入，但有一些文献直接包含这些类型，例如 J. Sterling 和 C. Angiuli [25, 记法3] 以及 D. Gratzer, J. Sterling, C. Angiuli, T. Coquand, 和 L. Birkedal [26, 第3.1节]。这些类型显然允许更多的定义，并且它们在这个理论中的确切行为尚未被完全理解。我们不直接使用它们。
 \end{remark}
 
 使用扩展类型，我们可以定义类型中的态射概念，以及所有其他与范畴相关的定义。
@@ -1953,64 +1978,64 @@ recOR( <tope_1> |-> <term_1>, ..., <tope_n> |-> <term_n> )
 \begin{definition}[态射]
 $A$ 中 $x$ 和 $y$ 之间的态射类型定义为：
 \[
-\hom_A(x,y) \coloneqq \left\langle \Delta^1 \to A \mid \underline{[x,y]}^{\partial\Delta^1} \right\rangle
+\hom_A(x,y) \coloneqq \left\langle \Delta^1 \to A \mid {}^{\partial \Delta^1}_{[x, y]} \right\rangle
 \]
 我们定义箭头类型 $\arr(A) \coloneqq \Delta^1 \to A$。因此 $\hom_A(x,y)$ 正是那些起点为 $x$、终点为 $y$ 的箭头类型。
 \end{definition}
 
 在我们定义这些态射的复合如何工作之前，我们从类型论的角度研究扩展类型本身。为此，我们给出几个重要的等价。
 
-\subsubsection{扩展类型的等价}
+\subsection{扩展类型的等价}
 
 $\Pi$-类型和扩展类型的相似性也反映在它们各自的等价中。我们现在给出几个对 $\Pi$-类型也成立的命题。Riehl 和 Shulman 已经探索了其中大部分，我们只有少数几个新增内容。我们只给出新命题的证明，因为已知的等价已在 [2] 中证明。
 
-\paragraph{柯里化、交换与选择定理}
+\subsubsection{柯里化、交换与选择定理}
 
 扩展类型允许与自身以及普通 $\Pi$-类型进行柯里化。唯一的复杂之处在于，当对两个扩展类型进行柯里化时，我们使用之前定义的子形状乘积。
 
 \begin{proposition}（参见 [2, 定理4.1]）
-给定形状包含 $\phi \subset \psi$，一个依赖类型族 $B:\psi \to A \to \UU$，以及一个约束 $b:(t:\phi,a:A)\to B(t,a)$，那么存在一个等价：
+给定形状包含 $\varphi \subset \psi$，一个依赖类型族 $B:\psi \to A \to \UU$，以及一个约束 $b:(t:\varphi,a:A)\to B(t,a)$，那么存在一个等价：
 \[
-\left\langle (t:\psi)\to (a:A)\to B(t,a) \mid \underline{b(t)}^{\phi} \right\rangle \simeq (a:A)\to \left\langle (t:\psi)\to B(t,a) \mid \underline{b(t,a)}^{\phi} \right\rangle
+\left\langle (t:\psi)\to (a:A)\to B(t,a) \mid \underline{b(t)}^{\varphi} \right\rangle \simeq (a:A)\to \left\langle (t:\psi)\to B(t,a) \mid \underline{b(t,a)}^{\varphi} \right\rangle
 \]
 \end{proposition}
 
 \begin{proposition}（参见 [2, 定理4.2]）
-给定两个形状包含 $\phi \subset \psi$ 和 $\chi \subset \zeta$，一个类型族 $A:\psi \to \zeta \to \UU$，以及一个共享约束 $a:((t,s):\phi \otimes \chi)\to A(t,s)$，那么存在一个等价：
+给定两个形状包含 $\varphi \subset \psi$ 和 $\chi \subset \zeta$，一个类型族 $A:\psi \to \zeta \to \UU$，以及一个共享约束 $a:((t,s):\varphi \otimes \chi)\to A(t,s)$，那么存在一个等价：
 \[
-\left\langle (t:\psi)\to \left\langle (s:\zeta)\to A(t,s) \mid \underline{a(t,s)}^{\chi} \right\rangle \mid \underline{\chi_{s,a(t,s)}}^{\phi} \right\rangle
+\left\langle (t:\psi)\to \left\langle (s:\zeta)\to A(t,s) \mid \underline{a(t,s)}^{\chi} \right\rangle \mid \underline{\chi_{s,a(t,s)}}^{\varphi} \right\rangle
 \]
 \[
-\simeq \left\langle ((t,s):\psi \times \zeta)\to A(t,s) \mid \underline{a(t,s)}^{\phi\otimes\chi} \right\rangle
+\simeq \left\langle ((t,s):\psi \times \zeta)\to A(t,s) \mid \underline{a(t,s)}^{\varphi\otimes\chi} \right\rangle
 \]
 \[
-\simeq \left\langle (s:\zeta)\to \left\langle (t:\psi)\to A(t,s) \mid \underline{a(t,s)}^{\phi} \right\rangle \mid \underline{\chi_{t,a(t,s)}}^{\chi} \right\rangle
+\simeq \left\langle (s:\zeta)\to \left\langle (t:\psi)\to A(t,s) \mid \underline{a(t,s)}^{\varphi} \right\rangle \mid \underline{\chi_{t,a(t,s)}}^{\chi} \right\rangle
 \]
 \end{proposition}
 
 扩展类型也与 $\Sigma$-类型兼容，因此类似于关于 $\Pi$-类型的命题2.5.7，我们可以观察到扩展类型的相同等价：
 
 \begin{proposition}（参见 [2, 定理4.3]）
-给定形状包含 $\phi \subset \psi$，一个大形状上的依赖类型 $A:\psi \to \UU$，其上的族 $B:(t:\psi,a:A(t))\to \UU$，以及一个约束函数 $f:(t:\phi)\to \Sigma(a:A(t),B(t,a))$，以下映射是一个等价：
+给定形状包含 $\varphi \subset \psi$，一个大形状上的依赖类型 $A:\psi \to \UU$，其上的族 $B:(t:\psi,a:A(t))\to \UU$，以及一个约束函数 $f:(t:\varphi)\to \Sigma(a:A(t),B(t,a))$，以下映射是一个等价：
 \[
-\left\langle (t:\psi)\to \Sigma(a:A(t),B(t,a)) \mid \underline{F}^{\phi} \right\rangle
+\left\langle (t:\psi)\to \Sigma(a:A(t),B(t,a)) \mid \underline{F}^{\varphi} \right\rangle
 \]
 \[
-\to \sum \left( a:\left\langle (t:\psi)\to A(t) \mid \underline{\pi_{1,f}}^{\phi} \right\rangle, \left\langle (t:\psi)\to B(t,a(t)) \mid \underline{\pi_{2,f}}^{\phi} \right\rangle \right)
+\to \sum \left( a:\left\langle (t:\psi)\to A(t) \mid \underline{\pi_{1,f}}^{\varphi} \right\rangle, \left\langle (t:\psi)\to B(t,a(t)) \mid \underline{\pi_{2,f}}^{\varphi} \right\rangle \right)
 \]
 \[
 F \mapsto (\pi_1\circ F, \pi_2\circ F)
 \]
 \end{proposition}
 
-\paragraph{命题约束}
+\subsubsection{命题约束}
 
 现在我们观察到命题约束等价于严格约束。在陈述该命题之前，我们给出一个辅助引理，它表明无约束的扩展类型等价于子形状上的约束加上一个受约束的扩展类型。
 
 \begin{lemma}
-给定形状包含 $\phi \subset \psi$ 和一个依赖类型 $A:\psi \to \UU$，以下映射是一个等价：
+给定形状包含 $\varphi \subset \psi$ 和一个依赖类型 $A:\psi \to \UU$，以下映射是一个等价：
 \[
-\left((t:\psi)\to A(t)\right) \to \sum \left( f:(t:\phi)\to A(t), \left\langle (t:\psi)\to A(t) \mid \underline{f}^{\phi} \right\rangle \right)
+\left((t:\psi)\to A(t)\right) \to \sum \left( f:(t:\varphi)\to A(t), \left\langle (t:\psi)\to A(t) \mid \underline{f}^{\varphi} \right\rangle \right)
 \]
 \[
 F \mapsto (F,F)
@@ -2022,45 +2047,45 @@ F \mapsto (F,F)
 \end{proof}
 
 \begin{proposition}
-给定形状包含 $\phi \subset \psi$，一个依赖类型 $A:\psi \to \UU$，以及一个约束 $f:(t:\phi)\to A(t)$，以下映射是一个等价：
+给定形状包含 $\varphi \subset \psi$，一个依赖类型 $A:\psi \to \UU$，以及一个约束 $f:(t:\varphi)\to A(t)$，以下映射是一个等价：
 \[
-\left\langle (t:\psi)\to A(t) \mid \underline{f}^{\phi} \right\rangle \to \sum \left( g:\Pi A, \ g|_{(t:\phi)\to A(t)} = f \right)
+\left\langle (t:\psi)\to A(t) \mid \underline{f}^{\varphi} \right\rangle \to \sum \left( g:\Pi A, \ g|_{(t:\varphi)\to A(t)} = f \right)
 \]
 \[
 F \mapsto (F,\refl)
 \]
-我们注意到隐式地使用了 $F$、$f$ 和 $g$ 的强制转换：$F$ 失去了它的约束，$f$ 和 $g$ 失去了它们的约束并被限制到 $\phi$ 上。
+我们注意到隐式地使用了 $F$、$f$ 和 $g$ 的强制转换：$F$ 失去了它的约束，$f$ 和 $g$ 失去了它们的约束并被限制到 $\varphi$ 上。
 \end{proposition}
 
 \begin{proof}
 我们将引理3.2.8应用于函数的陪域，得到以下等价类型：
 \[
-\sum \left( f:(t:\phi)\to A(t), \left\langle (t:\psi)\to A(t) \mid \underline{f}^{\phi} \right\rangle \right)
+\sum \left( f:(t:\varphi)\to A(t), \left\langle (t:\psi)\to A(t) \mid \underline{f}^{\varphi} \right\rangle \right)
 \]
 使用命题2.5.8和命题2.5.9，我们得到该类型等价于以下类型：
 \[
-\left\langle (t:\psi)\to A(t) \mid \underline{f}^{\phi} \right\rangle \times \sum \left( f:(t:\phi)\to A(t), \ f = f \right)
+\left\langle (t:\psi)\to A(t) \mid \underline{f}^{\varphi} \right\rangle \times \sum \left( f:(t:\varphi)\to A(t), \ f = f \right)
 \]
 由于基于路径的路径类型根据引理2.3.3是可缩的，我们得到与定义域的一个等价。检查这个等价现在揭示出它正是我们声称是等价的映射。
 \end{proof}
 
-\paragraph{扩展外延性}
+\subsubsection{扩展外延性}
 
 类似于函数外延性，我们需要扩展类型的类似公理。
 
 \begin{axiom}[扩展外延性]（参见 [2, 公理4.6]）
-给定形状包含 $\phi \subset \psi$，一个类型族 $A:\psi \to \UU$，以及一个约束 $a:(t:\phi)\to A(t)$，使得每个 $A(t)$ 都是可缩的，那么以下类型是可缩的：
+给定形状包含 $\varphi \subset \psi$，一个类型族 $A:\psi \to \UU$，以及一个约束 $a:(t:\varphi)\to A(t)$，使得每个 $A(t)$ 都是可缩的，那么以下类型是可缩的：
 \[
-\langle (t:\psi)\to A(t) \mid \underline{a}^{\phi} \rangle
+\langle (t:\psi)\to A(t) \mid \underline{a}^{\varphi} \rangle
 \]
 \end{axiom}
 
 大多数时候，我们使用这个公理通过以下推导出的命题来证明扩展类型的两个元素相同：
 
 \begin{proposition}（参见 [2, 命题4.8]）
-给定形状包含 $\phi \subset \psi$，一个类型族 $A:\psi \to \UU$，以及一个约束 $a:(t:\psi)\to A(t)$。此外，设 $f,g:\langle (t:\psi)\to A(t) \mid \underline{a}^{\phi} \rangle$。那么如果我们假定公理3.2.10，以下映射是一个等价：
+给定形状包含 $\varphi \subset \psi$，一个类型族 $A:\psi \to \UU$，以及一个约束 $a:(t:\psi)\to A(t)$。此外，设 $f,g:\langle (t:\psi)\to A(t) \mid \underline{a}^{\varphi} \rangle$。那么如果我们假定公理3.2.10，以下映射是一个等价：
 \[
-(f = g) \to \langle (t:\psi)\to f(t) = g(t) \mid \underline{\refl}^{\phi} \rangle
+(f = g) \to \langle (t:\psi)\to f(t) = g(t) \mid \underline{\refl}^{\varphi} \rangle
 \]
 特别地，如果 $f$ 和 $g$ 逐点相等（且在子形状上的证明是 $\refl$），那么 $f = g$。
 \end{proposition}
@@ -2309,9 +2334,9 @@ z & \xrightarrow{f_2} & w
 \begin{proof}
 我们给出一个逆：
 \[
-\lambda(d,\tau_1,\tau_2).\rec_{\vee}^{\Delta^2,\nabla^2}(\tau_1,\lambda(t,s).\tau_2(s,t))
+\lambda(d,\tau_1,\tau_2).\\rec_{\lor}^{\Delta^2,\nabla^2}(\tau_1,\lambda(t,s).\tau_2(s,t))
 \]
-其中 $\nabla^2$ 表示 $\Delta^1\times\Delta^1$ 中的左下三角形，其形式定义为 $\nabla^2 \coloneqq \lambda(t,s):2\times2. t\leq s$。$\rec_{\vee}$ 是良定义的，因为 $\tau_1$ 和 $\tau_2$ 在对角线上一致。通过应用 $\rec_{\vee}$ 和 $\lambda$ 的计算规则，同伦再次是平凡的。
+其中 $\nabla^2$ 表示 $\Delta^1\times\Delta^1$ 中的左下三角形，其形式定义为 $\nabla^2 \coloneqq \lambda(t,s):2\times2. t\leq s$。$\\rec_{\lor}$ 是良定义的，因为 $\tau_1$ 和 $\tau_2$ 在对角线上一致。通过应用 $\\rec_{\lor}$ 和 $\lambda$ 的计算规则，同伦再次是平凡的。
 \end{proof}
 
 由于一边是恒等箭头的三角形等价于路径（在 Segal 类型中），我们可以将上述等价与这个事实结合起来，得到一边是恒等箭头的正方形等价于三角形。
@@ -2524,19 +2549,19 @@ f:A\to B, \quad g:B\to A
 \]
 \end{definition}
 
-我们仍然需要能够讨论伴随的单位和余单位，我们用等价 $\phi$ 来定义它们。
+我们仍然需要能够讨论伴随的单位和余单位，我们用等价 $\varphi$ 来定义它们。
 
 \begin{definition}[伴随的单位和余单位]
 给定一个转置伴随 $f:A\to B, g:B\to A$ 以及
 \[
-\phi : (a:A,b:B) \to \hom_B(f(a),b) \simeq \hom_A(a,g(b))
+\varphi : (a:A,b:B) \to \hom_B(f(a),b) \simeq \hom_A(a,g(b))
 \]
 我们定义单位和余单位为：
 \[
-\eta_a := \phi(a,f(a))^{-1}(\id_{f(a)}) : \hom_A(a,g(f(a)))
+\eta_a := \varphi(a,f(a))^{-1}(\id_{f(a)}) : \hom_A(a,g(f(a)))
 \]
 \[
-\epsilon_b := \phi(g(b),b)(\id_{g(b)}) : \hom_B(f(g(b)),b)
+\epsilon_b := \varphi(g(b),b)(\id_{g(b)}) : \hom_B(f(g(b)),b)
 \]
 \end{definition}
 
