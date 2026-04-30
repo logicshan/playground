@@ -1771,24 +1771,28 @@ a &\mapsto \Sigma(b:B(a),C((a,b)))
 \subsection{形状}
 
 正如我们之前解释的，形状是特定的依赖于立方体的拓扑，我们用来定义依赖于它们的项和类型。具体来说，形状是单例上下文中的一个拓扑。我们对形状使用类似集合的表示法。[2]提到我们可以通过添加以下规则来形式化这个概念：
-\[
-\frac{\Xi\vdash\psi\ \tope}{\Xi\mid\cdot\mid\cdot\vdash \{\psi\}\ \mathsf{shape}}
-\]
+\begin{mathpar}
+    \inferrule* [Lab=]
+        {I \textbf{ cube} \quad t : I \vdash \varphi \textbf{ tope}}
+        {\{t : I \mid \varphi\} \textbf{ shape}}
+\end{mathpar}
 一类非常重要的形状是单纯形：
 \[
-\Delta^n\coloneqq \{(t_1,\dots,t_n):\mathbb{2}^n \mid t_n\leq\cdots\leq t_1\}
+\Delta^n := \{(t_1, \dots, t_n) : \mathbb{2}^n \mid t_n \le \dots \le t_1\}
 \]
 我们只需要$n$较小时的这种形状。
 
 除了单纯形，我们定义了子形状的概念：我们写$\phi\subset\psi$表示$\phi$是$\psi$的子形状。形式上，子形状关系声明如下：
-\[
-\frac{\Xi\vdash \phi\ \tope \quad \Xi\vdash \psi\ \tope \quad \Xi,\phi\vdash \psi}{\Xi\mid\cdot\mid\cdot\vdash \phi\subset\psi}
-\]
+\begin{mathpar}
+    \inferrule* [Lab=]
+        {\{t : I \mid \psi\} \textbf{ shape} \quad \{t : I \mid \varphi\} \textbf{ shape} \quad t : I \mid \varphi \vdash \psi}
+        {\varphi \subset \psi}
+\end{mathpar}
 因此两个形状必须在相同的立方体上下文中声明，并且每当子形状挑选出一个点时，超形状也必须包含它。
 
 正如人们所期望的，我们可以定义单纯形的内角和外角。由于我们只需要低维的，我们只给出最重要的一个：
 \[
-\Lambda_1^2\coloneqq \{(t,s):\mathbb{2}^2 \mid t\equiv 1\vee s\equiv 0\}
+\Lambda^2_1 := \{(t, s) : \mathbb{2}^2 \mid t \equiv 1 \lor s \equiv 0\}
 \]
 另一个相当重要的子形状是$\Delta^1$的边界：
 \[
@@ -1802,7 +1806,7 @@ U. Buchholtz和J. Weinberger [5]将形状重新解释为类型，这在几个方
 \]
 在我们后面讨论Segal类型时起着重要作用。在我们不允许将形状强制转换为类型的解释中，我们无法将这个映射谈论为后复合。相反，我们必须像这样定义它：
 \[
-\lambda f:\Delta^2\to A.\lambda t:\Lambda_1^2.f(t)
+\lambda f:\Delta^2\to A.\lambda t:\Lambda_1^2.\,f(t)
 \]
 虽然这很容易定义，但还有其他更复杂的情况。
 我们保持形状和类型为不同概念的原因是因为rzk也有这种行为，我们无法形式化任何依赖于这种强制转换存在的概念。
@@ -1822,19 +1826,20 @@ U. Buchholtz和J. Weinberger [5]将形状重新解释为类型，这在几个方
 从两个形状，我们可以通过在其立方体的乘积上给出一个新形状来形成它们的乘积。
 
 \begin{definition}
-给定立方体$I$和$\mathsf{J}$上的形状$\{t:I\mid\psi\}$和$\{s:\mathsf{J}\mid\zeta\}$，我们将它们的乘积定义为：
+给定立方体$I$和$ J $上的形状$\{t:I\mid\psi\}$和$\{s: J \mid\zeta\}$，我们将它们的乘积定义为：
 \[
-\psi\times\zeta\coloneqq \{(t,s):I\times \mathsf{J}\mid \psi\wedge\zeta\}
+\psi\times\zeta\coloneqq \{(t,s):I\times  J \mid \psi\wedge\zeta\}
 \]
 \end{definition}
 
 由于我们经常考虑子形状包含，我们还需要能够在超形状的乘积中形成两个子形状的相对乘积。这个相对乘积与两个子形状的实际乘积不同，因为当人们想在扩展类型的柯里化定理中使用它时，它没有正确的性质。
 
 \begin{definition}
-给定两个形状包含$\phi\subset\{t:I\mid\psi\}$和$\chi\subset\{s:\mathsf{J}\mid\zeta\}$，我们定义$\phi$和$\chi$的推出积（我们也称之为子形状乘积）：
-\[
-\phi\otimes\chi \coloneqq (\phi\times\zeta)\cup(\psi\times\chi) \equiv \{(t,s):I\times \mathsf{J}\mid (\phi\wedge\zeta)\vee(\psi\wedge\chi)\}
-\]
+给定两个形状包含$\varphi\subset\{t:I\mid\psi\}$和$\chi\subset\{s: J \mid\zeta\}$，我们定义$\varphi$和$\chi$的推出积（我们也称之为子形状乘积）：
+\begin{align*}
+\varphi\otimes\chi &\coloneqq (\varphi\times\zeta)\cup(\psi\times\chi) \\
+ &\equiv \{(t,s):I\times  J \mid (\varphi\wedge\zeta)\vee(\psi\wedge\chi)\}
+\end{align*}
 \end{definition}
 
 \begin{example}
@@ -1843,15 +1848,17 @@ U. Buchholtz和J. Weinberger [5]将形状重新解释为类型，这在几个方
 \partial\Delta^1\otimes\partial\Delta^1 \equiv \{(t,s):\mathbb{2}\times\mathbb{2}\mid t\equiv0\vee t\equiv1\vee s\equiv0\vee s\equiv1\}
 \]
 这是正方形的完整边界。
-\end{example}
-
-\begin{center}
-\textbf{图2：$\partial \Delta^1 \otimes \Lambda_1^2$ 的分解}
-\end{center}
 
 一个更复杂的例子是图2所示的 $\partial \Delta^1 \subset \Delta^1$ 和 $\Lambda_1^2 \subset \Delta^2$。形状 $\Delta^1 \times \Delta^2$ 是整个棱柱（虚线是该形状所在立方体的其余部分）。除了棱柱对角线的“底面”之外，所有面都包含在子形状乘积中。
 
-\subsection{形状依赖项与扩展类型}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{prism}
+\caption{$\partial \Delta^1 \otimes \Lambda_1^2$ 的分解}
+\end{figure}
+\end{example}
+
+\section{形状依赖项与扩展类型}
 
 我们的理论现在拥有我们在第2节中介绍的类型作为第三层，这意味着任何类型都可以依赖于形状。由于我们在前一节的研究中没有引入形状的概念，因此还没有任何类型构造子允许我们使用形状。E. Riehl 和 M. Shulman [2] 发明了扩展类型的概念，它利用了形状。它本质上是一个 $\Pi$-类型，其中定义域是一个形状，陪域是一个形状依赖类型。此外，我们可以在定义域的一个子形状上指定一个约束，要求函数在类型中取特定的值。另外，我们为拓扑析取和 $\perp$-拓扑添加了类型层的递归子。这些允许我们定义形状依赖类型，我们进一步用它来定义具体的扩展类型。
 
@@ -2060,7 +2067,7 @@ F \mapsto (F,\refl)
 
 在 rzk 中，这个公理也像其他公理一样使用 \#assume 指令引入。所有需要它的陈述要么在使用列表中显式列出它，要么直接在其主体中列出。
 
-\subsection{范畴结构}
+\section{范畴结构}
 
 我们已经将箭头/态射定义为 $\hom_A(x,y) \equiv \left\langle (t:\Delta^1)\to A \mid \underline{[x,y]}^{\partial\Delta^1} \right\rangle$，但我们还没有展示类型 $A$ 的范畴结构。在本小节中，我们将探讨箭头的复合如何工作，以及引入相关的概念。
 
