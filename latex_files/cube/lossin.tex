@@ -212,7 +212,7 @@
 \newcommand{\isembed}{\mathsf{is\text{-}emb}}
 \newcommand{\isequiv}{\mathsf{is\text{-}equiv}}
 \newcommand{\UU}{\mathcal{U}}
-%\newcommand{\hom}{\operatorname{hom}}
+\newcommand{\homm}{\operatorname{hom}}
 \newcommand{\dhom}{\operatorname{dhom}}
 \newcommand{\iso}{\operatorname{iso}}
 \newcommand{\Iso}{\operatorname{Iso}}
@@ -229,6 +229,16 @@
 \newcommand{\Catinfty}{\mathrm{Cat}_{\infty}}
 \newcommand{\Fam}{\mathrm{Fam}}
 \newcommand{\Fib}{\mathrm{Fib}}
+\newcommand{\isiso}{\mathsf{isiso}}
+\newcommand{\isrezk}{\mathsf{is\text{-}rezk}}
+\newcommand{\isorthogonal}{\mathsf{is\text{-}orthogonal}}
+\newcommand{\isinner}{\mathsf{is\text{-}inner}}
+\newcommand{\isinitialsection}{\mathsf{is\text{-}initial\text{-}section}}
+\newcommand{\isdepinitialsection}{\mathsf{is\text{-}dependent\text{-}initial\text{-}section}}
+\newcommand{\isdepinitial}{\mathsf{is\text{-}dependent\text{-}initial}}
+\newcommand{\ctr}{\mathsf{ctr}}
+\newcommand{\hasinit}{\mathsf{has\text{-}initial}}
+\newcommand{\hasdepinit}{\mathsf{has\text{-}dependent\text{-}initial}}
 
 %\setlength{\parindent}{0pt}
 
@@ -2511,19 +2521,32 @@ f_{\#} : \hom_A(x,y) \to \hom_B(f(x),f(y))
 \end{lemma}
 
 \begin{proof}
-我们需要证明对于任意 $x,y:A$，以下映射是一个等价：
+我们需要证明对任意 $x, y : A$，以下映射是等价：
 \[
-\ap_f : (x=y) \to (f(x)=f(y))
+\ap_f : (x = y) \to (f(x) = f(y))
 \]
-考虑以下交换图：
-
-这里 $\beta:\iso_A(g) \to \iso_B(f_{\#}(g))$ 是由引理 3.3.14 定义的映射。外正方形由 [2, 引理10.8] 可交换，下正方形通过检查可交换（垂直映射只是忘记同构性质），上正方形由于其他两个正方形可交换以及 $\iso(\_)$ 是一个命题而可交换。
-
-现在剩下要证明的是 $(f_{\#},\beta)$ 是一个等价。由于 $f_{\#}$ 是一个等价，一种方法是证明 $\beta$ 也是一个等价。由于 $\iso(\_)$ 是一个命题，我们只需要在反向方向上产生一个映射。回忆 $\iso_A(g)$ 和 $\iso_B(f_{\#}(g))$ 的定义：
+考虑下图：
 \[
-\iso_A(g) \coloneqq \left(\sum (g':\hom_A(y,x), g'\circ g = \id_x)\right) \times \left(\sum (g'':\hom_A(y,x), g\circ g'' = \id_y)\right)
+\begin{array}{ccc}
+(x = y) & \xrightarrow{\ap_f} & (f(x)=f(y)) \\
+\simeq \Big\downarrow & & \Big\downarrow \simeq \\
+\Iso_A(x, y) & \xrightarrow{(f_{\#},\beta)} & \Iso_B(f(x), f(y)) \\
+\Big\downarrow & & \Big\downarrow \\
+\hom_A(x,y) & \xrightarrow[f_\#]{\simeq} & \hom_B(f(x), f(y))
+\end{array}
 \]
-引理 3.3.14 中的函数 $\beta$ 在每个 $\Sigma$ 类型的第一个分量上应用 $f_{\#}$。由于它是一个等价，要映射回去，我们可以使用它的逆。第二个分量由 $\beta$ 使用 $\ap_{f_{\#}}$ 和与函子性（定理 3.3.6）的连接来映射。由于连接是一个等价，且等价的 $\ap$ 也是一个等价，我们可以使用它们的复合逆来映射 $\Sigma$ 类型的第二个分量。最终我们得到一个映射 $\iso_B(f_{\#}(g)) \to \iso_A(g)$，从而得出 $\beta$ 是一个等价的结论。
+其中 $\bar{\beta} : \isiso_A(g) \to \isiso_B\bigl(f_\#(g)\bigr)$ 是引理 3.3.14 定义的映射。外正方形由 [2, 引理 10.8] 可交换，下正方形通过观察可交换（垂直映射只是遗忘同构性质），上正方形可交换因为另外两个正方形可交换且 $\isiso(\_)$ 是命题。
+
+现在只需证明 $(f_\#, \beta)$ 是等价。由于 $f_\#$ 是等价，一种方法是证明 $\beta$ 也是等价。由于 $\isiso(\_)$ 是命题，我们只需给出反向映射。我们回忆 $\isiso_A(g)$ 和 $\isiso_B\bigl(f_\#(g)\bigr)$ 的定义：
+\[
+\begin{array}{c}
+\displaystyle\sum\binom{h_1 : \hom_A(y,x)}{g \circ h_1 = \id_x} \times \sum\binom{h_2 : \hom_A(y,x)}{h_2 \circ g = \id_y} \\[2em]
+\displaystyle\sum\binom{h_1 : \hom_B(f(y), f(x))}{f_\#(g) \circ h_1 = \id_{f(x)}} \times \sum\binom{h_2 : \hom_B(f(y), f(x))}{h_2 \circ f_\#(g) = \id_{f(y)}}
+\end{array}
+\]
+引理 3.3.14 的函数 $\beta$ 在每个 $\Sigma$-类型的第一个分量上应用 $f_\#$。由于它是等价，要映射回去，我们可以使用其逆。第二个分量由 $\beta$ 使用 $\ap_{f_\#}$ 和与函子性（定理 3.3.6）的连接来映射。由于连接是等价且等价的 $\ap$ 也是等价，我们可以使用它们复合的逆来映射 $\Sigma$-类型的第二个分量。
+
+最后我们有映射 $\isiso_B\bigl(f_\#(g)\bigr) \to \isiso_A(g)$，从而得出 $\beta$ 是等价。
 \end{proof}
 
 任何等价自然是一个完全嵌入。
@@ -2555,33 +2578,33 @@ f_{\#} : \hom_A(x,y) \to \hom_B(f(x),f(y))
 作为本节的最后一个陈述，我们证明一个特定的映射是一个完全嵌入。我们将在后面证明 LARI 伴随等价于始截面时使用这个定理。我们使用下一个引理来证明该定理的底层机制：在一个 Rezk 类型中，如果两条对边是同构，那么该正方形已经由同构组成（当垂直切片时）。
 
 \begin{lemma}
-设 $A$ 是一个 Rezk 类型，给定 $A$ 中的一个正方形：
+设 $A$ 为 Rezk 类型且给定 $A$ 中的正方形：
 \[
-\begin{array}{ccc}
-x(0) & \xrightarrow{h} & x(1) \\
-{\scriptstyle F(0)}\downarrow & & \downarrow{\scriptstyle F(1)} \\
-y(0) & \xrightarrow{k} & y(1)
-\end{array}
+F : \mathsf{csquare}_A\left( \begin{array}{c} x_1 \xrightarrow{f} y_1 \\ {}_{h}\Big\downarrow\quad\Big\downarrow{}_{k} \\ x_2 \xrightarrow{g} y_2 \end{array} \right)
 \]
-其中 $h$ 和 $k$ 是同构。那么以下类型是可缩的：
+其中 $h$ 和 $k$ 是同构。则以下类型是可缩的：
 \[
-(t:\Delta^1) \to \iso_A(F(t))
+(t : \Delta^1) \to \isiso_A(F(t))
 \]
 \end{lemma}
 
 \begin{proof}
-我们将定理 3.3.13 应用于 $h$ 和 $k$ 得到以下情形。仍然需要证明 $(t:\Delta^1) \to \iso_A(F(t))$ 是可缩的。现在我们可以应用定理 3.4.7，通过证明 $(t:\Delta^1) \to \iso_A(\id_f(t))$ 是可缩的，但这是平凡的，因为 $\id_f(t) \equiv \id_{f(t)}$，它总是一个同构。
+我们对 $h$ 和 $k$ 应用定理 3.3.13 得到以下情形：
+\[
+F : \mathsf{csquare}_A\left( \begin{array}{c} x \xrightarrow{f} y \\ {}_{\id_x}\Big\downarrow\quad\Big\downarrow{}_{\id_y} \\ x \xrightarrow{g} y \end{array} \right)
+\]
+我们仍需证明 $(t : \Delta^1) \to \isiso_A(F(t))$ 是可缩的。现在我们可以应用定理 3.4.7，通过证明 $\bigl(t : \Delta^1\bigr) \to \isiso_A\bigl(\id_f(t)\bigr)$ 是可缩的，但这是平凡的，因为 $\id_f(t) \equiv \id_{f(t)}$ 总是同构。
 \end{proof}
 
 最后，我们可以推导出我们的定理，证明 $\Iso_A \to \hom_A$ 的包含是一个完全嵌入。我们给出的结果比仅考虑这个基本包含更一般。这在以后证明当对 $x$ 和 $y$ 求和时，这个完全嵌入也会传递时很有用。
 
 \begin{theorem}
-设 $A$ 是一个 Rezk 类型，$x,y:\Delta^1\to A$，以及 $f:\Iso_A(x(0),y(0)), g:\Iso_A(x(1),y(1))$。那么以下映射是一个等价：
+设 $A$ 为 Rezk 类型，$x, y : \Delta^1 \to A$ 以及 $f : \iso_A(x(0), y(0))$，$g : \iso_A(x(1), y(1))$。则以下映射是等价：
 \[
-\left\langle (t:\Delta^1)\to \Iso_A(x(t),y(t)) \mid \underline{[f,g]}^{\partial\Delta^1} \right\rangle \to \left\langle (t:\Delta^1)\to \hom_A(x(t),y(t)) \mid \underline{[\pi_1 f,\pi_1 g]}^{\partial\Delta^1} \right\rangle
-\]
-\[
-\sigma \mapsto \lambda t.\lambda s.\sigma(t,s)
+\begin{aligned}
+\Big\langle \big(t : \Delta^1\big) \to \iso_A(x(t), y(t)) \mathrel{\Big|} {}_{[f,g]}^{\partial\Delta^1} \Big\rangle &\to \Big\langle \big(t : \Delta^1\big) \to \hom_A(x(t), y(t)) \mathrel{\Big|} {}_{[\pi_1 f, \pi_1 g]}^{\partial\Delta^1} \Big\rangle \\
+\sigma &\mapsto \lambda t.\, \lambda s.\, \sigma(t,s)
+\end{aligned}
 \]
 \end{theorem}
 
@@ -2591,9 +2614,10 @@ y(0) & \xrightarrow{k} & y(1)
 
 \begin{corollary}
 设 $A$ 是一个 Rezk 类型，$x,y:A$，那么以下映射是一个完全嵌入：
-\[
-\Iso_A(x,y) \to \hom_A(x,y), \quad f \mapsto \pi_1(f)
-\]
+\begin{align*}
+\Iso_A(x,y) &\to \hom_A(x,y)\\
+ f &\mapsto \pi_1(f)
+\end{align*}
 \end{corollary}
 
 \section{伴随}
@@ -2618,12 +2642,10 @@ f:A\to B, \quad g:B\to A
 \varphi : (a:A,b:B) \to \hom_B(f(a),b) \simeq \hom_A(a,g(b))
 \]
 我们定义单位和余单位为：
-\[
-\eta_a := \varphi(a,f(a))^{-1}(\id_{f(a)}) : \hom_A(a,g(f(a)))
-\]
-\[
-\epsilon_b := \varphi(g(b),b)(\id_{g(b)}) : \hom_B(f(g(b)),b)
-\]
+\begin{align*}
+    \eta_{\varphi} : (a : A) &\to \text{hom}_A(a, g(f(a))) & \varepsilon_{\varphi} : (b : B) &\to \text{hom}_B(f(g(b)), b) \\
+    a &\mapsto \varphi(a, f(a))(\text{id}_{f(a)}) & b &\mapsto \varphi(g(b), b)^{-1}(\text{id}_{g(b)})
+\end{align*}
 \end{definition}
 
 \section{Cat 与范畴论 Grothendieck 构造}
@@ -2637,42 +2659,34 @@ f:A\to B, \quad g:B\to A
 \Cat \coloneqq \Sigma(C:\UU, \mathsf{is\text{-}rezk}(C))
 \]
 为了证明 $\Cat$ 是 Rezk，我们首先需要证明它是 Segal。考虑交换图：
-\[
-\begin{array}{ccc}
-\Lambda_1^2 & \to & \Cat \\
-\downarrow & \nearrow & \\
-\Delta^2 &
-\end{array}
-\]
-我们需要产生一个唯一的虚线箭头。在 HoTT 中，通过从一开始就为每个类型配备群胚结构，这个困难被规避了。我们不需要知道 $x =_A y$ 的结构，因为它已经满足 $\infty$-群胚的所有要求公理。
+\[\begin{tikzcd}
+	{\Lambda^2_1} & {\mathbf{Cat}} \\
+	{\Delta^2}
+	\arrow[from=1-1, to=1-2]
+	\arrow[hook, from=1-1, to=2-1]
+	\arrow[dashed, from=2-1, to=1-2]
+\end{tikzcd}\]
+我们需要产生一个唯一的虚线箭头。在 HoTT 中，通过从一开始就为每个类型配备群胚结构，这个困难被规避了。我们不需要知道 $x \underset{A}{=} y$ 的结构，因为它已经满足 $\infty$-群胚的所有要求公理。
 
 \begin{argument}[Cat 不是 Segal]
 在这个论证中，我们假设 $\Lambda_1^2$ 和 $\Delta^1$ 作为类型存在。考虑以下映射：
-\[
-\id_{\Lambda_1^2} : \Lambda_1^2 \to \Lambda_1^2, \quad t \mapsto t
-\]
-\[
-\id_{\Delta^2} : \Delta^2 \to \Delta^2, \quad t \mapsto t
-\]
-\[
-i_{\Lambda_1^2} : \Lambda_1^2 \to \Delta^2, \quad t \mapsto t
-\]
+\begin{align*}
+    \text{id}_{\Lambda^2_1} : \Lambda^2_1 \to \Lambda^2_1 \quad t &\mapsto t \\
+    \text{id}_{\Delta^2} : \Delta^2 \to \Delta^2 \quad t &\mapsto t \\
+    i_{\Lambda^2_1} : \Lambda^2_1 \to \Delta^2 \quad t &\mapsto t
+\end{align*}
 它们在 Grothendieck 构造下的族等价是：
-\[
-A : \Lambda_1^2 \to \UU, \quad t \mapsto \mathbb{1}
-\]
-\[
-B : \Delta^2 \to \UU, \quad t \mapsto \mathbb{1}
-\]
-\[
-C : \Delta^2 \to \UU, \quad t \mapsto \begin{cases} \mathbb{1} & \text{如果 } t \in \Lambda_1^2 \\ \mathbb{0} & \text{否则} \end{cases}
-\]
+\begin{align*}
+    A : \Lambda^2_1 \to \mathcal{U} \quad t &\mapsto \mathbb{1} \\
+    B : \Delta^2 \to \mathcal{U} \quad t &\mapsto \mathbb{1} \\
+    C : \Delta^2 \to \mathcal{U} \quad t &\mapsto \texttt{if } t \in \Lambda^2_1 \texttt{ then } \mathbb{1} \texttt{ else } \mathbb{0}
+\end{align*}
 $A,B,C$ 的陪域都在 $\Cat$ 中，因为命题是 Rezk。此外，$A,B$ 和 $C$ 在 $\Lambda_1^2$ 上一致，因此 $B$ 和 $C$ 都扩展了 $A$。然而，$B$ 和 $C$ 显然不等价。因此，由于填充物的唯一性条件被违反，$\Cat$ 甚至不是 Segal。
 \end{argument}
 
 即使我们将 is-rezk 条件替换为仍然允许命题的其他条件，这个缺陷仍然存在。
 
-我们注意到可以定义一个满足有向幺半等价性的群胚的 Rezk 类型。D. Gratzer, J. Weinberger, 和 U. Buchholtz [24] 表明，在对理论进行重大修改后，存在一个 Rezk 类型 $\mathcal{S}$，其元素是作为群胚的 Rezk 类型，即 $\hom_A(x,y) \simeq (x \equiv_A y)$。此外，它满足有向幺半等价性：
+我们注意到可以定义一个满足有向幺半等价性的群胚的 Rezk 类型。D. Gratzer, J. Weinberger, 和 U. Buchholtz [24] 表明，在对理论进行重大修改后，存在一个 Rezk 类型 $\mathcal{S}$，其元素是作为群胚的 Rezk 类型，即 $\hom_A(x,y) \simeq (x \underset{A}{=} y)$。此外，它满足有向幺半等价性：
 \[
 \hom_{\mathcal{S}}(A,B) \simeq (A \to B)
 \]
@@ -2685,12 +2699,10 @@ $A,B,C$ 的陪域都在 $\Cat$ 中，因为命题是 Rezk。此外，$A,B$ 和 $
 
 \begin{conjecture}
 对于任何 Rezk 类型 $C:\Cat$，（反）笔直化映射形成一个等价：
-\[
-\overline{\mathsf{Un}}_C : \overline{\Fam}(C) \to \overline{\Fib}(C), \quad \overline{\mathsf{St}}_C : \overline{\Fib}(C) \to \overline{\Fam}(C)
-\]
-\[
-P \mapsto (\Sigma P, \pi_P), \quad (A,f) \mapsto \fib_f
-\]
+\begin{align*}
+    \overline{\text{Un}}_C &: \overline{\text{Fam}}(C) \to \overline{\text{Fib}}(C) & \overline{\text{St}}_C &: \overline{\text{Fib}}(C) \to \overline{\text{Fam}}(C) \\
+    P &\mapsto (\Sigma P, \pi_P) & (A, f) &\mapsto \text{fib}_f
+\end{align*}
 其中 $\overline{\Fam}(C) \coloneqq C \to \Cat$，$\overline{\Fib}(C) \coloneqq \Sigma(A:\Cat, A \to C)$。我们在字母上使用上划线以区别于类型论 Grothendieck 构造中使用的族和纤维化概念。
 \end{conjecture}
 
@@ -2709,4 +2721,628 @@ P \mapsto (\Sigma P, \pi_P), \quad (A,f) \mapsto \fib_f
 \overline{\Fib}(C) \coloneqq \Sigma(p:\Fib(C), \mathsf{is\text{-}cocartesian\text{-}fib}(p))
 \]
 在我们的猜想 3.8.2 中使用这个纤维化概念现在给出了范畴论笔直化的正确版本。然而，由于以下基本限制，这个版本在我们的理论中无法被证明。
+
+\begin{argument}
+我们通过分析 $\overline{\Fam}(C)$ 开始论证。使用命题 2.5.7，我们得到：
+\[
+\overline{\Fam}(C) \simeq \Sigma (B:\Fam(C), (c:C) \to \isrezk(B(c)))
+\]
+应用类型论笔直化定理 2.8.4，我们得到等价\footnote{我们在理论中并未假设单值性（univalence），因此这在形式上并非一个等价。但我们仅意在展示一个元理论层面的论证：即使假设单值性，我们所定义的 Cat 也不具备所期望的性质。}类型：
+\[
+\Sigma (p:\Fib(C), (c:C) \to \isrezk(\fib_p(c)))
+\]
+这几乎就是 $\overline{\Fib}(B)$，但在第二个分量上有一个显著的区别：我们想要的条件是“is-cocartesian-fib”，这不能逐纤维地检查。因此，即使我们将 $\Cat$ 的定义换成其他东西，一般来说 $\Cat \equiv \Sigma(C:\UU, P(C))$ 对于某个 $P:\UU \to \mathbb{P}$，我们在这里会遇到同样的问题：
+\[
+\left((c:C) \to P(\fib_p(c))\right) \not\simeq \mathsf{is\text{-}cocartesian\text{-}fib}(p)
+\]
+\end{argument}
+尽管存在这个缺陷，该理论在描述不涉及 $(\infty,2)$-范畴的关于 $(\infty,1)$-范畴的陈述方面仍然相当强大。特别地，我们继续定义余笛卡尔纤维化。然而，如果我们采用通常的族视角，我们希望有余笛卡尔族。
+
+余笛卡尔族是那些允许我们定义有向传输的族。我们再次注意到，在 HoTT 中，传输原理对所有类型族都可用。本论文后面的章节将形式化余笛卡尔族的概念及其封闭性质。
+
+\chapter{正交族与纤维化}
+
+在本节中，我们研究正交族并观察到它们等价于正交纤维化。它们在过去已被广泛研究，是拓扑学中一个非常自然的概念。定义正交纤维化有很多不同的方式，除了正交族的概念之外，我们还研究其中三种。sHoTT 已经定义了正交纤维化，但是与 Buchholtz 和 Weinberger [5] 的方式不同。因此，本节的第一部分是证明它们的等价性。在本节的后面，我们研究内族——正交族的一个特例——这是我们研究正交纤维化的原因，因为我们后面需要它们来研究始截面。
+
+内族本质上是“依赖 Segal 类型”，因此给定一个内族 $B:A\to\UU$，我们可以复合依赖态射。为此，我们需要基 $A$ 中的一个三角形，然后是该三角形之上的一个角形，参见图 3。复合就是该角形的一个填充物（上三角形中的蓝色条纹区域和虚线），在内族中它将是可缩的——因此我们有一个唯一的复合。注意，我们不要求基 $A$ 是 Segal 的。
+
+\begin{center}
+\textbf{图 3：内族}
+\end{center}
+
+\begin{definition}[右正交族]
+我们称类型族 $B:A\to\UU$ 是关于形状包含 $Y\subset X$ 的右正交族，如果以下命题成立：
+\[
+\isorthogonal_Y(B) \coloneqq \left(f:(y:Y)\to B(a(y))\right) \to \iscontr\left( \left\langle (x:X)\to B(a(x)) \mid \underline{f}^{Y} \right\rangle \right)
+\]
+这个定义本质上说明：对于基中每个 $X$ 形状的图以及其上方 $Y$ 形状的图，存在一个唯一的扩展为 $X$ 形状的图位于基之上。
+\end{definition}
+
+纤维化版本预计更为复杂：
+
+\begin{definition}[右正交纤维化]（参见 [5, 第3节]）
+映射 $f:E\to B$ 称为关于形状包含 $Y\subset X$ 的右正交纤维化，如果对于任意两个满足交换图的映射 $p:Y\to E$ 和 $q:X\to B$：
+\[
+\begin{array}{ccc}
+Y & \xrightarrow{p} & E \\
+\downarrow & & \downarrow{f} \\
+X & \xrightarrow{q} & B
+\end{array}
+\]
+存在唯一的提升 $h:X\to E$。在类型论中，这可以表述为以下命题：
+\[
+\mathsf{is\text{-}right\text{-}orthogonal}_Y(f) \coloneqq \left(p:Y\to E,\ q:\left\langle X\to B \mid \underline{f\circ p}^{Y} \right\rangle\right)
+\]
+\[
+\to \iscontr\left( \Sigma \left(p':\left\langle X\to E \mid \underline{p}^{Y} \right\rangle,\ \left\langle (x:X)\to f(p'(x)) = q(x) \mid \underline{\lambda-.\refl}^{Y} \right\rangle \right) \right)
+\]
+给定两个与 $f$ 和形状包含交换的映射 $p,q$，该映射及其交换证明是唯一的。这里我们直接将交换性编码在扩展类型中（我们也可以使用命题相等，但命题 3.2.9 告诉我们这是等价的。然而，那会使这个定义更长）。
+\end{definition}
+
+自然地，当我们考虑一个类型族及其典范纤维化时，族的概念和纤维化的概念是一致的。
+
+\begin{lemma}
+类型族 $B:A\to\UU$ 是右正交的当且仅当 $\pi_B$ 是右正交的。
+\end{lemma}
+
+\begin{proof}
+我们通过给出两个概念中应该可缩的两个类型之间的一个等价来一步证明充分必要性。将族代入纤维化定义得到：
+\[
+Y \xrightarrow{p} \Sigma B,\quad X \xrightarrow{q} A
+\]
+现在考虑以下等价：
+\[
+\Sigma \left(p':\left\langle X\to \Sigma B \mid \underline{p}^{Y} \right\rangle,\ \left\langle (x:X)\to \pi_B(p'(x)) = q(x) \mid \underline{\lambda-.\refl}^{Y} \right\rangle\right)
+\]
+\[
+\simeq \left\langle (x:X)\to \Sigma(e:\Sigma B,\ \pi_B(e)=q(x)) \mid \underline{\lambda y.(p(y),\refl)}^{Y} \right\rangle
+\]
+\[
+\equiv \left\langle (x:X)\to \fib_{\pi_B}(q(x)) \mid \underline{\lambda y.(p(y),\refl)}^{Y} \right\rangle
+\]
+\[
+\simeq \left\langle (x:X)\to B(q(x)) \mid \underline{\pi_2\circ p}^{Y} \right\rangle
+\]
+第一个等价来自命题 2.5.7，第二个来自引理 2.8.2。等价的最终类型正是右正交族定义中要求为可缩的类型。
+\end{proof}
+
+sHoTT 对右正交纤维化使用了不同的定义：
+
+\begin{definition}[右正交纤维化 (2)]
+映射 $f:E\to B$ 称为关于形状包含 $Y\subset X$ 的右正交纤维化，如果以下方块是 homotopy-cartesian 的：
+\[
+\begin{array}{ccc}
+\Sigma(y:Y\to E,\ \langle X\to E \mid \underline{y}^{Y} \rangle) & \xrightarrow{f_*} & \Sigma(y:Y\to B,\ \langle X\to B \mid \underline{y}^{Y} \rangle) \\
+\downarrow & & \downarrow \\
+(Y\to E) & \xrightarrow{f_*} & (Y\to B)
+\end{array}
+\]
+是 homotopy-cartesian 意味着：对于任意 $y:Y\to E$，诱导的纤维上的映射是一个等价：
+\[
+f_* : \langle X\to E \mid \underline{y}^{Y} \rangle \to \langle X\to B \mid \underline{f_*(y)}^{Y} \rangle
+\]
+\end{definition}
+
+通过以下引理，这个概念等价于我们的其他两个定义。
+
+\begin{lemma}（参见 [3, has-contr-relative-extension-types-iff-is-right-orthogonal]）
+映射 $f:E\to B$ 是右正交纤维化（sHoTT 定义 4.0.4）当且仅当以下成立：
+\[
+\mathsf{has\text{-}contr\text{-}relative\text{-}extension\text{-}types}(f) \quad\text{即}\quad
+\left(p:Y\to E,\ q:\langle X\to B \mid \underline{f\circ p}^{Y} \rangle\right) \to \iscontr\left(\langle X\to E \mid \underline{p}^{Y} \rangle \times_{q} \cdots\right)
+\]
+这正是 Buchholtz 和 Weinberger [5] 上面给出的右正交纤维化定义。
+\end{lemma}
+
+\begin{remark}
+关于右正交纤维化/族的整个理论是对偶的，通过相同的交换方块定义左纤维化——只需要求它是左映射。这里唯一的问题是，我们要求左映射是形状包含，而右映射不是。因此我们也必须翻转这两个。这是形状和类型的区分给我们带来麻烦的又一个地方。
+
+由于我们不使用对偶——左正交族——我们称右正交族/纤维化为正交族/纤维化。
+\end{remark}
+
+\section{Leibniz 余张量映射}
+
+正交纤维化的另一个替代表述是通过 leibniz 余张量映射。它被 Buchholtz 和 Weinberger [5] 广泛使用，因为它是最自然地推广到 LARI 族的定义。
+
+\begin{definition}[Leibniz 余张量映射]（参见 [5, 定义 2.4.3]）
+给定一个形状包含 $Y\subset X$ 和一个映射 $f:E\to B$，我们称从 $E^X$ 到下面拉回泛映射为 leibniz 余张量映射：
+\[
+\begin{array}{ccc}
+E^X & \to & B^X \\
+\downarrow & & \downarrow \\
+E^Y & \to & B^Y
+\end{array}
+\]
+我们将映射 $E^X \to B^X \times_{B^Y} E^Y$ 记为 $\widehat{n}_Y f$。
+\end{definition}
+
+由于 Buchholtz 和 Weinberger 允许将形状解释为类型，他们必须在 leibniz 余张量映射中记录一个映射 $j:Y\to X$，并将其记为 $\widehat{n} f$。
+
+如果 $f$ 是一个正交纤维化（正交于 $Y\subset X$），那么 leibniz 余张量映射是一个等价。
+
+\begin{lemma}（参见 [5, 命题 3.1.1]）
+映射 $f:E\to B$ 是关于 $Y\subset X$ 的正交纤维化当且仅当 leibniz 余张量映射 $\widehat{n}_Y f$ 是一个等价。
+\end{lemma}
+
+\section{封闭性质}
+
+Buchholtz 和 Weinberger [5] 展示了正交纤维化的几个封闭性质。这些也在 [3] 中用不同的定义证明了。我们在这里只引用它们，以便稍后与 LARI 伴随的封闭性质进行比较。
+
+\begin{theorem}[正交纤维化的封闭性质]
+设 $Y\subset X$ 是一个形状包含。那么：
+\begin{itemize}
+\item \textbf{等价：} 任何等价 $f:B'\simeq B$ 都是一个正交纤维化（[5, 命题 3.1.3]）。
+\item \textbf{乘积：} 给定一个正交族族：$B:I\to\UU$ 和 $P:(i:I)\to B(i)\to\UU$，其中每个 $P(i)$ 是正交族，那么 $(i:I)\to P(i)$ 是正交族（[5, 命题 3.1.4]）。
+\item \textbf{复合与左消去：} 给定两个族 $P:B\to\UU$ 和 $Q:\Sigma P\to\UU$。如果 $P$ 是正交的，那么复合 $Q\odot P:B\to\UU$ 是正交的当且仅当 $Q$ 是正交的。
+\item \textbf{拉回：} 正交纤维化 $f:E\to B$ 沿任意映射 $k:A\to B$ 的拉回是一个正交纤维化（[5, 定理 3.1.8]）。
+\end{itemize}
+\end{theorem}
+
+\section{内族}
+
+\begin{definition}[内族]
+类型族 $B:A\to\UU$ 称为内族，如果它关于内角形到 2-单形的形状包含 $\Lambda_1^2 \subset \Delta^2$ 是正交的。
+\end{definition}
+
+\begin{lemma}
+设 $B:A\to\UU$ 是一个内族，那么对任意 $a:A$，$B(a)$ 是 Segal 类型。
+\end{lemma}
+
+\begin{proof}
+固定 $a:A$ 和 $x,y,z:B(a)$ 以及 $f:\hom_{B(a)}(x,y), g:\hom_{B(a)}(y,z)$。现在我们需要证明以下类型是可缩的：
+\[
+\tri\left( \begin{array}{c} x \xrightarrow{f} y \xrightarrow{g} z \\ \downarrow \\ x \xrightarrow{\cdot} z \end{array} \right)
+\]
+由于 $B$ 是内族，我们可以将内条件应用于以下数据：$A$ 中的下三角形是常值映射 $\lambda t.a: \Delta^2 \to A$，上方的角形是 $[f,g]$。因此，我们得到以下类型是可缩的：
+\[
+\left\langle \Delta^2 \to B(a) \mid \underline{[f,g]}^{\Lambda_1^2} \right\rangle
+\]
+检查该类型可知，它等价于上面给出的 hom 类型。
+\end{proof}
+
+与 Segal 类型完全类似，我们可以给出依赖态射的路径与依赖态射的同伦之间的等价。为此，我们首先需要定义“依赖态射之间的同伦”：
+
+\begin{definition}
+给定 $B:A\to\UU$ 和 $\tau:\Delta^2\to A$，以及提升 $x:B(\tau(0,0)), y:B(\tau(1,0)), z:B(\tau(1,1))$，以及
+\[
+f:\dhom_B^{\lambda t.\tau(t,0)}(x,y),\quad g:\dhom_B^{\lambda t.\tau(1,t)}(y,z),\quad h:\dhom_B^{\lambda t.\tau(t,t)}(x,z)
+\]
+我们定义：
+\[
+\dhom_B^{2,\tau}\left( \begin{array}{c}
+x \xrightarrow{f} y \\
+{\scriptstyle h}\downarrow \ \swarrow {\scriptstyle g} \\
+z
+\end{array} \right) \coloneqq \left\langle (t:\Delta^2) \to B(\tau(t)) \mid \underline{[f,g,h]}^{\partial\Delta^2} \right\rangle
+\]
+\end{definition}
+
+\begin{lemma}
+设 $B:A\to\UU$ 是一个内族，$f:\hom_A(x,y)$ 以及 $g,h:\dhom_B^f(x',y')$。那么以下自然映射是一个等价：
+\[
+(g = h) \to \dhom_B^{2,\sigma}\left( \begin{array}{c}
+x' \xrightarrow{g} y' \\
+\| \ \swarrow {\scriptstyle h} \\
+y'
+\end{array} \right)
+\]
+其中 $\sigma:\Delta^2\to A$ 是由 $f$ 确定的退化三角形。
+\end{lemma}
+
+\begin{proof}
+证明与 Segal 类型中相同陈述的引理 3.3.4（在 [2, 命题 5.10] 中证明）类似。我们有以下两种类型是可缩的，因此等价：
+\[
+(g = h) \quad \text{和} \quad \dhom_B^{2,\sigma}\left( \begin{array}{c}
+x' \xrightarrow{g} y' \\
+\| \ \swarrow {\scriptstyle h} \\
+y'
+\end{array} \right)
+\]
+前者由引理 2.3.3 可缩，后者因 $B$ 是内族而可缩。因此，在第一个分量为恒等、第二个分量为自然路径归纳法的映射是一个等价。由于第一个分量的映射是恒等，因此第二个映射在纤维-wise 也必须是等价。
+\end{proof}
+
+\section{依赖正方形}
+
+现在我们给出第 3.4 节中某些陈述的依赖版本。证明和思想非常自然地转化，事实上我们省略了证明，因为它们除了依赖之外完全相同。幸运的是，我们不需要依赖正方形的归纳原理，因此我们省略它。我们首先需要定义依赖正方形：
+
+\begin{definition}[依赖正方形]
+给定 $B:A\to\UU$，$\sigma:\Delta^1\times\Delta^1\to A$，以及边界上的提升：
+\[
+x:B(\sigma(0,0)),\ y:B(\sigma(1,0)),\ z:B(\sigma(0,1)),\ w:B(\sigma(1,1))
+\]
+\[
+f_1:\dhom_B^{\lambda t.\sigma(t,0)}(x,y),\quad g_1:\dhom_B^{\lambda t.\sigma(0,t)}(x,z)
+\]
+\[
+f_2:\dhom_B^{\lambda t.\sigma(t,1)}(z,w),\quad g_2:\dhom_B^{\lambda t.\sigma(1,t)}(y,w)
+\]
+我们定义依赖正方形的类型。
+\end{definition}
+
+\begin{lemma}
+以下映射是一个等价：
+\[
+\square_B\left( \begin{array}{ccc}
+x & \xrightarrow{f_1} & y \\
+g_1\downarrow & & \downarrow g_2 \\
+z & \xrightarrow{f_2} & w
+\end{array} \right) \to \sum \left( d:\dhom_B^{\sigma_{\text{diag}}}(x,w), \cdots \right)
+\]
+\end{lemma}
+
+\begin{lemma}
+设 $B:A\to\UU$ 是一个内族，那么存在一个等价。
+\end{lemma}
+
+\chapter{始截面}
+
+在本节中，我们研究始截面。它们等价于 LARI 伴随，我们将在下一节中证明这一点。我们使用它们，因为它们比 LARI 伴随简单得多，并且允许我们更容易地证明 LARI 族的封闭性质。为了证明始截面和 LARI 伴随的等价性，我们引入了依赖始截面。这是一个先验更强的概念，我们将在族是内的假设下证明它等价于始截面。
+
+\begin{remark}
+“截面”这个名称来源于范畴论：映射 $f:A\to B$ 的一个截面是一个反向映射 $s:B\to A$，满足 $f\circ s = \id_B$。为了将这个情形转换到类型论中，我们只需要以同伦 $p:(b:B)\to f(s(b)) = b$ 的形式为等式请求额外的数据。
+
+然后我们可以通过使用 Grothendieck 构造将其转换成一个更好的情形：考虑从 $f$ 导出的族 $\fib_f:B\to\UU$。我们可以使用 $s$ 构造这个族的一个依赖映射：
+\[
+s':(b:B)\to \fib_f(b) \equiv \Sigma(a:A, f(a)=b), \quad b\mapsto (s(b),p(b))
+\]
+我们称这样的映射为族 $\fib_f$ 的一个截面。我们现在已经产生了一个具有严格截面的情形：
+\[
+\pi_{\fib_f}:\Sigma\fib_f\to B,\ (b,(a,q))\mapsto b, \quad \overline{s'}:B\to\Sigma\fib_f,\ b\mapsto (b,s'(b))
+\]
+这个截面被称为“严格的”，因为 $\pi_{\fib_f}\circ\overline{s'}\equiv\id_B$，因此我们可以选择同伦为 $\refl$。我们还注意到，由于引理 2.8.3，$\Sigma\fib_f\simeq A$。
+
+由于这个观察，从现在起我们只考虑严格截面，因为它们不需要同伦的额外数据，使我们的工作变得更容易。
+\end{remark}
+
+\begin{definition}[族的截面]
+给定一个类型族 $B:A\to\UU$，我们称依赖映射 $s:(a:A)\to B(a)$ 为类型族 $B$ 的一个截面。
+\end{definition}
+
+始截面的定义非常简单。它是一个只取始值的截面：
+
+\begin{definition}[始截面]
+给定一个类型族 $B:A\to\UU$。我们称截面 $s:(a:A)\to B(a)$ 是始的，当且仅当以下成立：
+\[
+\isinitialsection(s) \coloneqq (a:A) \to \isinitial_{B(a)}(s(a))
+\]
+\end{definition}
+
+为了定义依赖始截面，我们首先展开常规始截面的定义：
+\[
+\isinitialsection(s) \equiv (a:A,\ b:B(a)) \to \iscontr\big(\hom_{B(a)}(s(a),b)\big)
+\]
+对于依赖始截面，我们希望要求依赖箭头是可缩的。因此，我们引入“依赖始对象”的概念：
+
+\begin{definition}
+给定一个类型族 $B:A\to\UU$ 和 $b:B(a)$，其中 $a:A$，我们定义：
+\[
+\isdepinitial_B(b) \coloneqq (x:A,\ f:\hom_A(a,x),\ y:B(x)) \to \iscontr\big(\dhom_B^f(b,y)\big)
+\]
+\end{definition}
+
+\begin{definition}[依赖始截面]
+我们称截面 $s$ 为依赖始截面，当且仅当以下成立：
+\[
+\isdepinitialsection(s) \coloneqq (a:A) \to \isdepinitial_B(s(a))
+\]
+\end{definition}
+
+由于依赖箭头推广了常规箭头，我们可以轻松证明以下引理：
+
+\begin{lemma}
+依赖始截面是始截面。
+\end{lemma}
+
+\begin{proof}
+给定 $\mathsf{prf}:\isdepinitialsection(s)$，我们构造：
+\[
+(a:A) \to \isinitial_{B(a)}(s(a)), \quad \lambda a.\lambda b.\mathsf{prf}(a,a,\id_a,b)
+\]
+由引理 3.3.8，我们有 $\dhom_B^{\id_a}(s(a),b) \equiv \hom_{B(a)}(s(a),b)$，因此该项是良类型的。
+\end{proof}
+
+\subsection{封闭性质}
+
+（依赖）始截面的封闭性质相当容易证明。它们在以下运算下封闭：$\Pi$-类型、拉回和复合。所有证明都可以很容易地在 rzk 中写出来。
+
+由于依赖始截面和始截面只有在族是内的情况下才等价，我们为两种概念都给出定理和证明。
+
+\begin{theorem}[（依赖）始截面在 $\Pi$-类型下封闭]
+给定一个截面族 $s:(i:I,\ a:A(i)) \to B(i,a)$，其中指标类型 $I:\UU$，基 $A:I\to\UU$，陪域 $B:(i:I,\ a:A(i))\to\UU$。如果所有 $s(i)$ 都是（依赖）始截面，那么以下映射也是一个（依赖）始截面：
+\[
+(a:\Pi A) \to ((i:I) \to B(i,a(i))), \quad a \mapsto \lambda i.s(i,a(i))
+\]
+\end{theorem}
+
+\begin{proof}
+固定 $a:\Pi A$ 和 $x:(i:I)\to B(i,a(i))$。我们需要证明以下类型是可缩的：
+\[
+\hom_{(i:I)\to B(i,a(i))}(\lambda i.s(i,a(i)), x)
+\]
+我们可以将 hom 的立方体坐标与 $(i:I)$ 参数交换，并等价地证明以下类型是可缩的：
+\[
+(i:I) \to \hom_{B(i,a(i))}(s(i,a(i)), x(i))
+\]
+由函数外延性，只需证明每个 hom 是可缩的。而由于 $s(i)$ 是始截面的假设，我们有 $\isinitial_{B(i,a(i))}(s(i,a(i)))$，因此成立。
+
+依赖版本的证明：固定 $x,y:(i:I)\to A(i)$，$f:\hom_{(i:I)\to A(i)}(x,y)$，以及 $\overline{y}:(i:I)\to B(i,y(i))$。我们还引入简写 $Q \coloneqq \lambda a.(i:I)\to B(i,a(i))$，将 $B$ 的依赖函数族表示为 $A$ 的依赖函数上的一个族。我们需要证明以下类型是可缩的：
+\[
+\dhom_Q^f(\lambda i.s(i,x(i)), \overline{y})
+\]
+我们可以将 dhom 的立方体坐标与 $(i:I)$ 参数交换，并等价地证明以下类型是可缩的：
+\[
+(i:I) \to \dhom_{B(i)}^{f(i,i)}(s(i,x(i)), \overline{y}(i))
+\]
+由函数外延性，只需证明每个 dhom 是可缩的。而由于 $s(i)$ 是依赖始截面的假设，我们有 $\isdepinitial_{B(i)}(s(i,x(i)))$，因此成立。
+\end{proof}
+
+\begin{theorem}[（依赖）始截面在拉回下封闭]
+给定一个（依赖）始截面 $s:(a:A)\to B(a)$ 和一个映射 $k:A'\to A$，$s$ 沿 $k$ 的拉回
+\[
+k\circ s:(a':A')\to B(k(a'))
+\]
+是一个（依赖）始截面。
+\end{theorem}
+
+\begin{proof}
+平凡的：我们需要证明对于任意 $a':A'$，$s(k(a'))$ 在 $B(k(a'))$ 中是始的。但由于 $s$ 是一个始截面，这显然成立。依赖版本类似。
+\end{proof}
+
+对于复合下的封闭性，我们需要一个关于 $\Sigma$-类型中始对象的辅助引理：
+
+\begin{lemma}[$\Sigma$-类型中的始对象]
+给定一个类型族 $B:A\to\UU$，一个始对象 $a:A$，以及一个依赖始对象 $b:B(a)$，那么 $(a,b)$ 在 $\Sigma B$ 中是始的。
+\end{lemma}
+
+\begin{proof}
+要证明 $\isinitial_{\Sigma B}(a,b)$，我们必须证明对于任意 $(a',b'):\Sigma B$，以下类型是可缩的：
+\[
+\hom_{\Sigma B}((a,b),(a',b'))
+\]
+由命题 2.5.7，该类型等价于：
+\[
+\Sigma\big(f:\hom_A(a,a'),\ \dhom_B^f(b,b')\big)
+\]
+这个类型是可缩的，因为两个分量都是可缩的：第一个由于 $a$ 是始的，第二个由于 $b$ 是依赖始的。
+\end{proof}
+
+\begin{theorem}[（依赖）始截面在复合下封闭]
+给定两个可复合的类型族 $B:A\to\UU$ 和 $C:\Sigma B\to\UU$，以及各自的截面 $s:(a:A)\to B(a)$ 和 $s':(x:\Sigma B)\to C(x)$。如果 $s$ 是一个（依赖）始截面且 $s'$ 是一个依赖始截面，那么它们的复合是一个（依赖）始截面：
+\[
+(a:A) \to \Sigma(b:B(a),C(a,b)), \quad a \mapsto (s(a), s'(a,s(a)))
+\]
+\end{theorem}
+
+\begin{proof}
+我们需要证明以下命题成立：
+\[
+\isinitial_{\Sigma(b:B(a),C(a,b))}(s(a), s'(a,s(a)))
+\]
+为此，我们使用引理 5.1.3，因此需要证明 $s(a)$ 在 $B(a)$ 中是始的，且 $s'(a,s(a))$ 是依赖始的。这两者都由假设成立。
+
+依赖版本的证明：固定 $x,y:A$，$f:\hom_A(x,y)$，以及 $(b',c'):\Sigma(b:B(y),C(y,b))$。现在我们需要证明以下类型是可缩的：
+\[
+\dhom_{\lambda a.\Sigma(b:B(a),C(a,b))}^f((s(a),s'(a,s(a))),(b',c'))
+\]
+通过命题 2.5.7，该类型等价于：
+\[
+\sum\left(F:\dhom_B^f(s(a),b'),\ \dhom_C^{\lambda t.(f(t),F(t))}(s'(a,s(a)),c')\right)
+\]
+由假设，$s'$ 是一个依赖始截面，因此第二个分量是可缩的。同样由假设，$s$ 也是一个依赖始截面，因此第一个分量也是可缩的，从而整个类型是可缩的。
+\end{proof}
+
+在下一小节中，我们将证明如果族是内的，那么始截面就是依赖始截面。利用这个结果，我们得到始截面在内族中在复合下封闭：
+
+\begin{corollary}
+给定两个可复合的类型族 $B:A\to\UU$ 和 $C:\Sigma B\to\UU$，其中 $C$ 是内的，以及各自的截面 $s:(a:A)\to B(a)$ 和 $s':(x:\Sigma B)\to C(x)$。如果 $s$ 和 $s'$ 是始截面，那么它们的复合也是始截面：
+\[
+(a:A) \to \Sigma(b:B(a),C(a,b)), \quad a \mapsto (s(a), s'(a,s(a)))
+\]
+\end{corollary}
+
+\subsection{始截面是依赖始截面}
+
+对于本节的最后一个定理，我们转向一个非常有趣的结果：给定类型族是内的，一个始截面已经是一个依赖始截面。这个结果起初令人惊讶，因为依赖始截面是一个强得多的陈述。解释这一事实的一种方式是 $\Pi$-类型具有某种类似于拓扑学中连续性的性质。它们的值不允许任意变化，而只能以某种一致的方式变化。如果我们再次考虑始截面的展开定义，我们得到类型：
+\[
+(a:A,\ b:B(a)) \to \iscontr\big(\hom_{B(a)}(s(a),b)\big)
+\]
+现在，正是在这两个输入变量上我们可以观察到这种连续性：将依赖同伦 $\gamma$ 代入第二个变量（以及它在第一个变量上所依赖的同伦 $f$），我们得到：
+\[
+(t:\Delta^1) \to \iscontr\big(\hom_{B(f(t))}(s(f(t)), \gamma(t))\big)
+\]
+如果我们现在将其分解为收缩的中心和同伦（通过命题 2.5.7），我们得到：
+\[
+\sum\left(c:(t:\Delta^1)\to \hom_{B(f(t))}(s(f(t)), \gamma(t)),\ \text{同伦数据}\right)
+\]
+更仔细地检查第一个分量，我们观察到它是一个依赖柯里化正方形。垂直映射由 $C(t)$ 给出，因此是唯一的（由 $s$ 的始性）。通过同伦，我们有左边的映射必须是 $\id_x$（因为 $\hom_{B(x)}(s(x),s(x))$ 是可缩的），而右边的映射只是一些唯一的态射。要完成证明，只需推导出所有 $\gamma$ 都等于上面两个映射的复合。当 $B$ 是内族时，情况如此（否则就没有复合可谈）。
+
+\begin{theorem}
+如果 $B:A\to\UU$ 是一个内族，那么始截面 $s:(a:A)\to B(a)$ 是一个依赖始截面。
+\end{theorem}
+
+\begin{proof}
+固定 $x,y:A$ 和 $f:\hom_A(x,y)$ 以及 $\overline{y}:B(y)$。现在，我们需要证明 $\dhom_B^f(s(x),\overline{y})$ 是可缩的。为此，我们直接构造一个中心 $c:\dhom_B^f(s(x),\overline{y})$ 和一个收缩：对于任意 $\overline{f}:\dhom_B^f(s(x),\overline{y})$，存在一个从 $c$ 到 $\overline{f}$ 的路径。
+\end{proof}
+
+\[
+D \coloneqq \lambda (t,\_):\Delta^2. f(t), \quad \overline{D} \coloneqq [s(f), \ctr(\overline{y})]
+\]
+其中 $\ctr(\overline{y})$ 是 $\hom_{B(y)}(s(y),\overline{y})$ 的收缩中心，由 $s$ 是始截面这一事实得到。
+
+为了定义 $\dhom_B^f(s(x),\overline{y})$ 的收缩的同伦，我们固定一个 $\overline{f}:\dhom_B^f(s(x),\overline{y})$，并注意到：
+\[
+\beta \coloneqq \lambda t.\pi_1\big(\isinitialsection(s)(f(t),\overline{f}(t))\big), \quad \beta:(t:\Delta^1)\to \hom_{B(f(t))}(s(f(t)),\overline{f}(t))
+\]
+这是一个具有可缩垂直切片的柯里化正方形。由于 $\overline{f}(0) \equiv s(x)$，我们有 $\beta(0) \equiv \id_{s(x)}$，因此得到：
+\[
+\square_B\left(\begin{array}{ccc}
+s(x) & \xrightarrow{\beta} & s(y) \\
+\id\downarrow & & \downarrow \overline{y} \\
+s(x) & \xrightarrow{\overline{f}} & \overline{y}
+\end{array}\right)
+\]
+应用引理 4.4.3，我们得到：
+\[
+c = \overline{f}
+\]
+从而完成证明。
+
+\subsection{始截面的柯里化}
+
+柯里化对始截面也适用，但一个特别有用的陈述是我们可以将始性的证明包含在函数的值中。因此，我们不使用以下数据：
+\[
+\Sigma(s:(a:A)\to B(a),\ \isinitialsection(s))
+\]
+而是可以反向使用命题 2.5.7 得到一个等价类型：
+\[
+(a:A) \to \hasinit(B(a)), \quad \hasinit(T:\UU) \coloneqq \Sigma(t:T,\ \isinitial_T(t))
+\]
+这种观点允许我们更容易地支持多个参数：
+\[
+(a:A,\ b:B(a)) \to \hasinit(C(a,b))
+\]
+在应用命题 2.5.7 之前，我们需要对其进行反柯里化，但最终它等价于：
+\[
+\Sigma(s:(a,b):\Sigma B) \to C(a,b),\ \isinitialsection(s))
+\]
+我们更喜欢使用 has-init 的柯里化版本。
+
+同样的情况也适用于依赖始截面。然而，has-dependent-initial 的定义稍微复杂一些：
+\[
+\Sigma(s:(a:A)\to B(a),\ \isdepinitialsection(s)) \simeq (a:A) \to \hasdepinit_a(B)
+\]
+其中 $\hasdepinit(R:T\to\UU) \coloneqq \Sigma(r:R(t),\ \isdepinitial_R(r))$。
+
+\section{LARI 伴随}
+
+在本节中，我们定义 LARI 伴随并证明它们等价于始截面。LARI 伴随是 LARI 族的骨干，而 LARI 族推广了正交族。最终，我们想要描述作为 LARI 族特例的余笛卡尔族。从引理 4.1.2 我们知道，一个映射是正交的当且仅当 Leibniz 余张量映射是一个等价。将这个要求弱化为仅一个 LARI 伴随，稍后将成为 LARI 族的定义——因此我们现在研究 LARI 伴随。
+
+我们遵循 Buchholtz 和 Weinberger [5] 的工作，但有一个重要区别：我们通过我们在前一节中介绍的始截面的替代表述来研究 LARI 伴随。这是因为 LARI 伴随是一个相对复杂的概念——一个转置伴随加上一个额外性质。我们选择这种方式主要是为了简化形式化工作。这种迂回的一个好的副作用是整体上提高了我们证明的可读性。此外，通过这条迂回路径，我们证明了几个有趣的结果。
+
+为了证明 LARI 伴随和始截面之间的等价性，我们使用了上一节中引入的依赖始截面。图 4 显示了哪些陈述对应哪些定理。
+
+\begin{center}
+\textbf{图 4：证明始截面与 LARI 伴随等价的结构}
+\end{center}
+
+LARI 代表左伴随右逆（left adjoint right inverse）；一个 LARI 伴随是一个伴随，其中右伴随是左伴随的逆，且与伴随兼容——换句话说，伴随的单位是同构。
+
+\begin{definition}[LARI 伴随]（参见 [5, 定义 B.1.1]）
+我们称转置伴随 $f:A\to B,\ u:B\to A$ 以及
+\[
+\phi:(a:A,b:B) \to \hom_B(f(a),b) \simeq \hom_A(a,u(b))
+\]
+为转置左伴随右逆伴随（通常缩写为 LARI 伴随），当且仅当
+\[
+(a:A) \to \isiso_A(\eta_\phi(a))
+\]
+成立（其中 $\eta_\phi$ 是伴随 $\phi$ 的单位）。
+\end{definition}
+
+\begin{remark}
+\begin{itemize}
+\item 给定一个转置 LARI 伴随，其中 $A$ 是 Rezk 类型，我们得到一个同伦 $H:\id_A \sim u\circ f$，它见证了伴随的 LARI 性质。
+\item 对于转置伴随，成为转置 LARI 伴随只是一个性质，因为 is-iso-arrow 是一个命题，而 $\Pi$-类型构造保持命题。
+\end{itemize}
+\end{remark}
+
+我们将要证明的第一个方向是最容易的。依赖始截面平凡地产生一个 LARI 伴随。
+
+\begin{theorem}
+一个依赖始截面 $s$ 产生一个 LARI 伴随：
+
+其中 $\overline{s}(a) \coloneqq (a,s(a))$。
+\end{theorem}
+
+\begin{proof}
+我们首先证明 $\overline{s}$ 和 $\pi_B$ 形成一个伴随：给定 $x:A$ 和 $(y,\overline{y}):\Sigma B$，我们有：
+\[
+\hom_{\Sigma B}(\overline{s}(a), (y,\overline{y})) \xrightarrow{\sim} \left(f:\hom_A(a,y),\ \dhom_B^f(s(a),\overline{y})\right) \xrightarrow{\sim} \hom_A(a,y)
+\]
+第一个映射是引理 3.3.9 中的等价。第二个映射是一个等价，因为 $s$ 是依赖始截面，因此所有这些依赖角形都是可缩的。要看到这个伴随是 LARI 的，只需注意到根据构造，$\id_{\overline{s}(a)}$ 在这个等价下被映射到 $\id_a$。
+\end{proof}
+
+现在我们可以将其与前一节的结果结合起来：
+
+\begin{corollary}
+一个内族 $B:A\to\UU$ 的始截面 $s:(a:A)\to B(a)$ 产生一个 LARI 伴随：
+
+其中 $\overline{s}(a) \coloneqq (a,s(a))$。
+\end{corollary}
+
+\subsection{LARI 伴随是始截面}
+
+接下来我们将证明一个 LARI 伴随产生一个始截面，并且如果一个截面具有其典范伴随，那么它是一个始截面。
+
+\begin{theorem}
+一个从 Rezk 类型 $A$ 到 Segal 类型 $B$ 的转置 LARI 伴随：
+
+产生一个始截面：
+\[
+\overline{f}:(a:A) \to \fib_u(a), \quad a \mapsto \left(f(a),\ \eta_\phi(a)^{-1}:u(f(a)) = a\right)
+\]
+\end{theorem}
+
+\begin{proof}
+我们不直接证明 $\overline{f}$ 是始截面，而是考虑图 5 中的复合。右侧的波浪箭头表示函数取的值仅命题等于打印出来的值。例如，第一个波浪箭头包含从 $\mathrm{rev}_A(\mathrm{rev}_A(p)) = p$ 的同伦。由于我们只关心证明 $\overline{f}$ 是始的，我们只关心这个函数在相等意义下的性质（否则需要包含的路径只会分散对陈述的注意力）。
+
+我们首先注意到这个复合是始的，因为 $B$ 是 Segal 类型，并且由引理 3.5.2，$(f(a),\id_{f(a)})$ 在余弦中是始的。此外，我们观察到排除 $\overline{f}$ 的复合是一个完全嵌入：由引理 3.6.3，所有等价都是完全嵌入；定理 3.6.7 表明 $(\id,\pi_1)$ 是一个完全嵌入。由于完全嵌入由引理 3.6.4 可以复合，我们可以应用引理 3.6.5 并得出结论：$\overline{f}$ 是一个始截面。
+\end{proof}
+
+\begin{center}
+\textbf{图 5：定理 6.1.1 证明中的复合}
+\end{center}
+
+我们遇到的一个有趣且更常见的情况是，右伴随是一个类型族投影 $\pi_C$，且 $B\equiv\Sigma C$ 对于某个 $C:A\to\UU$。在这种情况下，我们可以严格地将 $f$ 作为一个截面，并直接观察到上述定理导致该截面是始的。更有用的是，这个截面最终是一个依赖始截面。
+
+\begin{proposition}
+给定一个 Rezk 类型 $A$ 上的内类型族 $C:A\to\UU$，其中投影映射 $\pi_C$ 是一个 LARI 伴随的一部分：
+
+那么存在一个依赖始截面 $g:\Pi C$。
+\end{proposition}
+
+\begin{proof}
+我们现在将 $f$ 转换成一个严格的截面，同时保持伴随。由于 $\eta_\phi(a)$ 是同构且 $A$ 是 Rezk，我们得到一条路径 $p_a:a = \pi_C(f(a))$。将其与分解 $f(a) \equiv (\pi_C(f(a)), \pi_2(f(a)))$ 结合，我们得到：
+\[
+p_a': \left(a,\ \tr_C^{p_a^{-1}}(\pi_2(f(a)))\right) = (\pi_C(f(a)),\pi_2(f(a))) \equiv f(a)
+\]
+因此我们设 $f'(a) \coloneqq \left(a,\ \tr_C^{p_a^{-1}}(\pi_2(f(a)))\right)$，并通过传输应用到 $p_a'$，得到：
+\[
+\phi_{a,c}': \hom_{\Sigma C}(f'(a),c) \xrightarrow{\simeq} \hom_A(a,\pi_C(c))
+\]
+\[
+\phi_{a,c}' \coloneqq \phi_{a,c} \circ \tr_{\hom_{\Sigma C}(-,c)}^{p_a'}
+\]
+这个伴随也是 LARI 的，特别地，我们有
+\[
+\eta_{\phi'}(a) \equiv \phi_{a,f'(a)}'(\id_{f'(a)}) \equiv \phi_{a,f'(a)}\left(\tr_{\hom_{\Sigma C}(-,c)}^{p_a'}(\id_{f'(a)})\right)
+\]
+由于 $\tr_{\hom_{\Sigma C}(-,c)}^{p_a'}$ 是与 $(p_a')^{-1}$ 的前复合，我们进一步有：
+\[
+\phi_{a,f'(a)}\left(\tr_{\hom_{\Sigma C}(-,c)}^{p_a'}(\id_{f'(a)})\right) \equiv \phi_{a,f'(a)}\left((p_a')^{-1}\right)
+\]
+由于伴随是首先将右伴随应用于 hom-类型，然后与单位前复合，我们有：
+\[
+\phi_{a,f'(a)}\left((p_a')^{-1}\right) \equiv \eta_\phi(a) \circ (\pi_C)_{\#}\left((p_a')^{-1}\right) \equiv p_a \circ p_a^{-1} \equiv \refl_a
+\]
+因此我们现在拥有的伴随是一个严格伴随。我们现在应用定理 6.1.1，从而得到 $\overline{f'}:(a:A) \to \fib_{\pi_C}(a)$，通过引理 2.8.2 和我们刚刚进行的计算，它得到映射 $g \coloneqq \overline{f'}:\Pi C$。
+\end{proof}
+
+\begin{remark}
+事实上，我们可以使用以下来自范畴论的引理证明一个更强的陈述：
+\begin{lemma}[参见 [27, 引理 3.3.1]]
+设 $F:\mathcal{C}\mathcal{D}:G$ 是一个伴随，且 $GF$ 是一个等价，那么 $F$ 是完全忠实的。或者等价地，单位 $\eta:1\to GF$ 是同构。
+\end{lemma}
+由于伴随的等价分解为以下复合：
+\[
+\hom_{\mathcal{D}}(Fx,y) \xrightarrow{G} \hom_{\mathcal{C}}(GFx,Gy) \xrightarrow{(\eta_x)^*} \hom_{\mathcal{C}}(x,Gy)
+\]
+并且我们知道 $\eta$ 是同构，因此与 $\eta_x$ 的前复合也是同构，由此可得 $\hom_{\mathcal{D}}(Fx,y) \xrightarrow{G} \hom_{\mathcal{C}}(GFx,Gy)$ 也必须是同构。
+
+在 $\mathcal{D}$ 是族 $B:A\to\UU$ 的 $\Sigma B$，$\mathcal{C}$ 是 $A$，$G\equiv \pi_B$，$F\equiv (\id,f)$ 的具体情况下，这意味着以下映射是一个等价：
+\[
+\hom_{\Sigma B}((a,f(a)), (a',b')) \xrightarrow{(\pi_B)_{\#}} \hom_A(a,a')
+\]
+从这个等价，我们可以推断出 $f$ 是一个依赖始截面，因为反向映射和同伦提供了 $\dhom_B^g(f(a),b')$ 的一个收缩。
+\end{remark}
 \end{document}
