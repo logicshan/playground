@@ -1,0 +1,474 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}{定理}[section]
+\newtheorem{lemma}{引理}[section]
+\newtheorem{proposition}{命题}[section]
+\newtheorem{remark}{注}[section]
+
+\theoremstyle{definition}
+\newtheorem{axiom}[theorem]{公理}
+
+\title{形式化 $\infty$-范畴论中的 Yoneda 引理}
+\author{Nikolai Kudasov \and Emily Riehl \and Jonathan Weinberger}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+形式化的1-范畴论构成了各种数学证明库的核心组成部分。然而，从代数拓扑到理论物理等领域中更复杂的结果——其中对象具有``高阶结构"——依赖于无限维范畴而非1维范畴，而 $\infty$-范畴论迄今为止已被证明难以用计算机形式化。
+
+使用一种名为 Rzk 的新型证明辅助工具——该工具旨在支持 Riehl--Shulman 的同伦类型论的单纯形扩展，用于综合(synthetic) $\infty$-范畴论——我们提供了 $\infty$-范畴论结果的首次形式化。这特别包括 Yoneda 引理的形式化，Yoneda 引理常被视为范畴论的基本定理，该定理大致陈述为：给定范畴中的一个对象由该对象与范畴中所有其他对象的关系所确定。我们框架的一个关键特征是，由于综合理论，许多构造自动具有自然性或函子性。我们计划使用 Rzk 进一步形式化 $\infty$-范畴论的结果，例如极限与余极限的理论。
+\end{abstract}
+
+\section{引言}
+
+计算机证明辅助工具是形式化验证数学证明逻辑推理的计算机程序。存在多种此类程序——包括 Agda、Coq、HOL Light、Isabelle 和 Lean 等——它们在近几十年取得了显著的成功。著名成就包括：
+\begin{itemize}
+    \item 2003--2014年在 HOL Light 中进行的一个项目，形式化验证了 Ferguson--Hales 关于 Kepler 猜想的证明，此前该证明的审稿人声明他们只有99\%的把握确认其正确性。
+    \item 2006--2012年在 Coq 中进行的一个项目，形式化验证了 Feit--Thompson 奇数阶定理，这是有限单群分类中的一个基础性结果。
+    \item 2020--2022年在 Lean 中进行的一个被称为``液态张量实验"的项目，形式化验证了凝聚数学中的一个结果，此前 Peter Scholze 表达了对其自身证明正确性的担忧。
+\end{itemize}
+
+形式化前沿数学结果的部分任务是开发其所依赖的背景数学的伴随库。例如，液态张量实验需要形式化研究生水平同调代数的标准结果以及许多其他背景主题。
+
+除了同调代数，Lean 的数学库 mathlib 还包含数论、表示论、一般拓扑学、线性代数（包括 Banach 空间和 Hilbert 空间）、测度与积分、随机变量、基础代数几何、模型论和范畴论等主题的标准结果。尽管取得了所有这些成就，截至本文撰写时，Lean 的 mathlib 不包含任何 $\infty$-范畴论，因此来自代数 $K$-理论、导出和谱代数几何、Langlands 纲领和辛几何的无数近期结果对形式化而言都是不可触及的。
+
+构建这样一个库的难度可能不会大于上述提到的成功，但由于传统集合论基础对于 $\infty$-范畴推理并非最优，这一努力将受到阻碍。为了给出 $\infty$-范畴的精确定义——粗略地说，这是一个具有弱复合律的无限维范畴，其中高于1维的所有态射都是弱可逆的——必须选择一个``模型"，即呈现 $\infty$-范畴数据的 Bourbaki 风格数学结构。文献中使用了多种模型——如拟范畴(quasi-categories)、完备 Segal 空间和 Segal 范畴——定理通常``分析地"证明，即参照特定模型的``坐标"。因此，计算机形式化者面临一个不太吸引人的选择：要么
+\begin{itemize}
+    \item 选择一个模型，该模型随后必须用于所有后续结果的整个库，或者
+    \item 形式化多个模型以及它们之间的比较，这显著增加了工作量。
+\end{itemize}
+
+\subsection{重构 $\infty$-范畴论的基础}
+
+一个听起来激进的替代方案——我们认为值得认真对待——是改变基础系统。文章``$\infty$-范畴论能否教给本科生？"论证说，通过用同伦类型论的定向扩展来替代传统基础，可以缩小 $\infty$-范畴论与普通1-范畴论之间的差距。这一论断的基础是论文（以及后续工作），该文在其中建立的替代基础框架中发展了 $\infty$-范畴的基本理论。单纯形类型论是一个形式框架，允许将以下直观定义严格化：
+\begin{itemize}
+    \item 一个类型是预-$\infty$-范畴（又称 Segal 类型），如果每一对可复合的箭头都有唯一的复合。
+    \item 预-$\infty$-范畴是 $\infty$-范畴（又称 Rezk 类型），如果相等性等价于同构。
+    \item 一个类型是 $\infty$-群胚（又称离散类型），如果相等性等价于箭头。
+    \item 一个类型族是协变纤维化（又称协变类型族），如果基类型中的每个箭头都有具有指定终点的唯一提升。
+\end{itemize}
+
+该形式系统的预期模型是在单纯形空间范畴（又称双单纯形集范畴）中，Shulman 已证明该范畴提供了同伦论的模型，其中类型被解释为 Reedy 纤维化的单纯形空间。在此模型中，预-$\infty$-范畴对应于 Segal 空间，$\infty$-范畴对应于完备 Segal 空间，协变纤维化对应于左纤维化。``对所有...存在...唯一"这些短语是在同伦类型论的标准意义上理解的。特别是，遵循 Curry--Howard 对应的同伦扩展，唯一性意味着可缩性——这正是 $\infty$-范畴中复合运算在语义上为真的内容。这个模型验证了我们综合 $\infty$-范畴理论中使用的术语。通过这种解释函子，在单纯形类型论中关于 $\infty$-范畴的定理证明确实证明了关于 $\infty$-范畴的定理，如传统数学中完备 Segal 空间模型所实例化的那样。
+
+更一般地，Shulman 已证明同伦类型论在任何 $\infty$-拓扑斯中都有语义，而 Weinberger 已证明的单纯形类型论可以在任何 $\infty$-拓扑斯中的单纯形对象中解释。因此，在单纯形类型论中关于综合 $\infty$-范畴证明的定理也适用于 Martini、Rasekh、Stenzel 和 Wolf 等人研究的内部 $\infty$-范畴。
+
+\subsection{形式化 $\infty$-范畴论}
+
+在同伦类型论中，形式化结果同时撰写相应的纸质证明是相对标准的做法。在 Riehl 和 Shulman 撰写关于综合 $\infty$-范畴论的第一篇论文时，不可能形式化其任何结果，因为该工作是在传统同伦类型论的扩展中完成的，具有多层上下文和一种新的类型形成运算，提供扩展类型。
+
+多层上下文包括立方体和拓扑层，最终类型层可以依赖于它们。立方体和拓扑层结合起来提供定向形状，参数化箭头、可复合的箭头对及其复合，以及其他单纯形及其子形状。这些层的规则在文献中有详细说明。扩展类型具体化了沿子形状包含的给定部分定义数据的所有可能全化或扩展，并满足文献中列举的规则。
+
+扩展类型在单纯形和立方类型论、其元理论以及各种编程语言理论应用中都发挥着重要作用。在这项工作中，我们至少需要单纯形扩展类型——其中形容词``单纯形"指的是子形状包含的几何——而立方证明器，如 Cubical Agda、red* 家族证明助手、Aya 和 Arend 都只支持立方扩展类型。一个合理的替代方案是在 Agda 中假设扩展类型，使用用户定义的重写规则。然而，据我们所知，这种方法未能捕获扩展类型变量应用于参数的重写，导致计算规则不完整，并需要用户定义证明中的额外簿记来进一步推进计算。
+
+Kudasov 开发的新证明辅助工具 Rzk 支持单纯形扩展类型，因此，终于可以形式化验证文章中的论断。这就是我们工作的内容。
+
+本文的贡献包括一个为新的 Rzk 证明辅助工具从头开发的综合 $\infty$-范畴论库。该库包含文献中先前没有任何证明辅助工具支持的形式化综合 $\infty$-范畴论的大部分内容。结果范围从扩展类型的性质，到综合 $\infty$-范畴及其纤维化的形式性质，再到 Yoneda 引理。我们还形式化了作为基础所需的标准/书籍 HoTT 的许多结果。最后，我们贡献了对其他系统和证明辅助工具中 Yoneda 引理其他形式化的比较，特别是我们贡献给 agda-unimath 库的关于预范畴 Yoneda 引理的形式化。
+
+此外，形式化过程使我们发现了论文中的一个错误：发表的 Proposition 8.13 的``仅当"方向的证明使用了循环推理。幸运的是，陈述的结果仍然成立。我们新的形式化证明现在出现在文献中。与本文提交同时，我们邀请其他研究人员为形式化综合 $\infty$-范畴论的更广泛项目做出贡献。为此，我们创建了我们仓库的一个克隆，迄今为止已有十多名贡献者，除了我们自己。在该仓库中，与我们的新合作者一起，我们已经在追求我们在未来工作中描述的一些项目。
+
+\section{单纯形类型论}
+
+在文献中，Riehl--Shulman 开发了一种类型论来综合地推理 $\infty$-范畴。他们理论的关键特征是 $\infty$-范畴可以用相对简单的术语描述，并且所有结果在同伦等价下不变——这是 $\infty$-范畴等价的正确概念。这与更传统和熟悉的集合论中 $\infty$-范畴论的发展形成鲜明对比。
+
+我们将概述单纯形类型论的结构和特征，重点强调其在综合 $\infty$-范畴论中的使用。
+
+单纯形类型论与立方类型论共享一些概念。确实，Weaver--Licata 在（双）立方定向类型论中发展了论文中的概念。
+
+该理论建立在 Martin-L\"of 内涵类型论（MLTT）之上，其内涵恒等类型具有同伦良好行为的路径对象作为模型。这种同伦解释，加上 Voevodsky 的泛等公理（允许将同伦等价的类型视为（内涵地）相等），被称为同伦类型论（HoTT）或泛等基础。同伦类型论可以被视为 $\infty$-群胚（又称同伦类型）的综合理论，从而为单纯形类型论提供了肥沃的基础。
+
+\subsection{基础理论：Martin-L\"of 内涵类型论}
+
+\textbf{概述。}基础理论是内涵 Martin-L\"of 类型论，具有 $\Sigma$-类型、$\Pi$-类型和恒等类型。尽管 Rzk 使用宇宙类型来实现依赖类型，但这个假设并非必要。为了与文献的记号保持一致，我们也将依赖类型 $x:A \vdash C(x)$ 记为类型族 $C:A \to \mathcal{U}$，假装 $\mathcal{U}$ 是一个宇宙类型（而不明确说明宇宙层次或不同的大小级别）。
+
+\textbf{$\Sigma$-类型。}类型构造子 $\Sigma$ 和 $\Pi$ 分别概括了存在和全称量词。对于 $C:A \to \mathcal{U}$，依赖和 $\sum_{x:A} C(x)$ 是由依赖对 $(a,c)$ 组成的类型，其中 $a:A$ 且 $c:C(a)$。这也被称为族 $C$ 的全类型。$\Sigma$-类型带有通常的形成、引入（通过形成依赖对）和消去（通过投影到因子）规则集。我们还假设满足 $\beta$ 和 $\eta$ 计算规则，意味着引入和消去在最严格的意义上互为逆，即直到判断相等。
+
+族 $C:A \to \mathcal{U}$ 也可以编码为映射 $p_C:\widetilde{C} \to A$，其中全类型 $\widetilde{C}:\equiv \sum_{x:A} C(x)$，投影为 $p_C(a,c):\equiv a$。全类型然后是 $C$ 的所有纤维的``和"，由 $A$ 标准索引。如果 $C$ 是常值族，即对所有 $a:A$ 和某个类型 $B$ 有 $C(a) \equiv B$，则 $\Sigma$-类型变为笛卡尔积 $A \times B$。
+
+\textbf{$\Pi$-类型。}特别令人感兴趣的是依赖函数或族 $C:A \to \mathcal{U}$ 的截面的概念，这是对每个元素 $x:A$ 在其对应纤维中分配某个元素 $\sigma(x):C(x)$ 的赋值。这被具体化为依赖积类型 $\prod_{x:A} C(x)$，引入规则由 $\lambda$-抽象给出，消去规则由函数应用给出。同样，我们要求 $\beta$ 和 $\eta$-规则判断地成立。当类型族 $C$ 以某个类型 $B$ 为常值时，依赖函数类型简化为普通函数类型，记为 $A \to B$。
+
+\textbf{恒等类型。}Martin-L\"of 恒等类型 $(a =_A b)$ 对于类型 $A$ 和元素 $a,b:A$ 捕获了类型中项之间的相等性由项 $p:a =_A b$ 证明相关地见证的想法。在同伦模型中，恒等类型被解释为同伦代数意义中的路径对象，因此元素 $p:(a =_A b)$ 可以被视为 $A$ 中从 $a$ 到 $b$ 的路径。引入规则由规范的自反性项 $\mathsf{refl}_a:(a =_A a)$ 给出，见证自恒等。消去由路径归纳原理给出。
+
+\textbf{类型的同伦理论。}以下概念归功于 Voevodsky。根据项 $p:(a =_A b)$ 编码类型中路径的想法，我们想要表达一个类型何时是同伦平凡的，即可缩的。这由以下类型见证：
+\[
+\mathsf{isContr}(A) :\equiv \sum_{x:A} \prod_{y:A} (x =_A y)
+\]
+可缩类型 $A$ 配备了一个典范居民，收缩中心 $c_A:A$ 和同伦 $H_A:\prod_{y:A} (c_A =_A y)$。可缩类型等价于点或终类型 $1$。
+
+传统同伦理论涉及在同伦等价下不变的拓扑空间上的构造，这是两个空间之间相反方向的一对映射，其复合同伦于恒等。将此翻译为类型论，当存在以下类型的居民时，类型之间的映射 $f:A \to B$ 是一个（同伦）等价：
+\[
+\mathsf{isEquiv}(f) :\equiv \sum_{g:B \to A} (g \circ f =_{A \to A} \mathsf{id}_A) \times \sum_{h:B \to A} (f \circ h =_{B \to B} \mathsf{id}_B)
+\]
+这个类型是一个命题，在这个意义上，如果它被居住，则它是可缩的。这可以等价地由以下类型捕获：
+\[
+\mathsf{isProp}(A) :\equiv \prod_{x,y:A} \mathsf{isContr}(x =_A y)
+\]
+当类型 $A$ 是一个命题（即 $\mathsf{isProp}(A)$ 被居住）时，它可以被视为一个纯性质（直到同伦，即数据的可缩从而平凡的选择），而不是额外的结构。$\mathsf{isEquiv}(f)$ 总是一个命题的事实意味着作为一个等价实际上是一个映射的性质，非常符合预期的直觉。
+
+\textbf{函数外延性(FunExt)。}虽然我们在形式化中不需要泛等公理，但我们确实使用了函数外延性，这是它的一个推论：我们假设映射
+\[
+\mathsf{htpy\text{-}eq} : \prod_{X:\mathcal{U}} \prod_{A:X \to \mathcal{U}} \prod_{f,g:\prod_x A} (f = g) \to \prod_{x:X} (fx = gx)
+\]
+由路径归纳定义为 $\mathsf{htpy\text{-}eq}(X,A,f,f,\mathsf{refl}_f,x) :\equiv \mathsf{refl}_{fx}$ 是一个等价。
+
+\textbf{类型上的 $\infty$-群胚结构。}通过（迭代的）路径归纳，可以证明以下函数的存在：
+\[
+\prod_{x,y:A} (x =_A y) \to (y =_A x), \quad \prod_{x,y,z:A} (x =_A y) \to (y =_A z) \to (x =_A z)
+\]
+用于反转路径以及连接它们。可以证明这些满足预期的群胚律，但只直到命题相等，赋予每个类型典范地一个（弱）$\infty$-群胚的结构。
+
+虽然 $\infty$-群胚是 $\infty$-范畴的特殊情况，但在一般的 $\infty$-范畴中，我们需要不一定是可逆的定向``箭头"。这暗示了底层类型论的以下扩展。
+
+\subsection{扩展1：立方体和拓扑层}
+
+直观地说，综合 $\infty$-范畴是一个类型，其中定向箭头可以同伦地复合。为了推理定向箭头、它们的复合以及由此产生的其他形状，想法是将适当的形状理论引入类型论。形状将是上下文的一部分，以便类型族和截面可以依赖于它们。
+
+每个形状被视为嵌入到更高维（定向）立方体中的子形状。这让人想起立方类型论的基本设置。
+
+对于立方体层，考虑一个新的预类型 $\mathbf{2}$，配备两个不同的元素 $0,1:\mathbf{2}$，以及一个二元关系 $\leq$ 使 $\mathbf{2}$ 成为具有底元素 $0$ 和顶元素 $1$ 的严格偏序。由 $\mathbf{2}$ 生成的 Lawvere 理论构成了立方体层，即立方体恰好是有限幂 $\mathbf{2}^n$，其中 $\mathbf{2}^0$ 是终对象。偏序由一种新的判断形式捕获，称为拓扑(top)：
+\[
+x,y:\mathbf{2} \vdash x \leq y \quad \mathsf{tope}
+\]
+拓扑层是立方体层上的有限直觉主义逻辑。意图是通过立方体变量上的公式来刻画立方体 $\mathbf{I}$ 的子形状 $\Phi \subseteq \mathbf{I}$。一般来说：如果 $\mathbf{I}$ 是一个立方体，$\phi$ 是上下文 $t:\mathbf{I}$ 中的拓扑，写为判断 $t:\mathbf{I} \vdash \phi \; \mathsf{tope}$，则 $\Phi :\equiv \{t:\mathbf{I} \mid \phi\}$ 是对应于 $\phi$ 的形状。这样，可以定义重要的形状，如 $n$-单纯形 $\Delta^n$（$n \in \mathbb{N}$）、其边界 $\partial\Delta^n$、$(n,k)$-角 $\Lambda^n_k$（$k \leq n$）等。
+
+例如，我们有以下公式：
+\begin{align*}
+\Delta^1 &:\equiv \{t:\mathbf{2} \mid \top\} \subseteq \mathbf{2} \\
+\partial\Delta^1 &:\equiv \{t:\mathbf{2} \mid (t \equiv 0) \lor (t \equiv 1)\} \subseteq \mathbf{2} \\
+\Delta^2 &:\equiv \{(t,s):\mathbf{2}^2 \mid s \leq t\} \subseteq \mathbf{2}^2 \\
+\partial\Delta^2 &:\equiv \{(t,s):\mathbf{2}^2 \mid (s \equiv 0) \lor (s \equiv t) \lor (t \equiv 1)\} \subseteq \mathbf{2}^2 \\
+\Lambda^2_1 &:\equiv \{(t,s):\mathbf{2}^2 \mid (s \equiv 0) \lor (t \equiv 1)\} \subseteq \mathbf{2}^2
+\end{align*}
+
+与立方类型论一样，我们通过三部分上下文连接标准类型层与立方体和拓扑层，这允许类型族 $A$ 依赖于立方体上下文 $\Xi$、拓扑上下文 $\Phi$ 和类型上下文 $\Gamma$，写为 $\Xi \mid \Phi \mid \Gamma \vdash A$。
+
+类型中的定向箭头现在使用我们的区间形状 $\Delta^1$ 和另一个待引入的特征——扩展类型来定义。
+
+\subsection{扩展2：扩展类型}
+
+设 $\Phi \subseteq \Psi$ 是立方体上下文 $\mathbf{I}$ 中的子形状包含。如文献中引入的扩展类型（最初源于 Lumsdaine 和 Shulman 的未发表工作）捕获了在较小形状 $\Phi$ 上定义的部分截面到较大形状 $\Psi$ 的严格扩展。具体地，假设给定类型族 $\mathbf{I} \mid \Psi \mid \Gamma \vdash A$ 以及部分截面 $t:\mathbf{I} \mid \Phi \mid \Gamma \vdash a(t):A(t)$ 在子形状 $\Phi \subseteq \Psi$ 上。那么，相应的扩展类型的元素是严格扩展 $t:\mathbf{I} \mid \Psi \mid \Gamma \vdash b(t):A(t)$ 使得 $b|_\Phi \equiv a$。我们用以下记号表示扩展类型：
+\[
+\left\langle \prod_{t:\Psi} A(t) \; \middle| \; \prod_{t:\Phi} a \right\rangle
+\]
+
+如果 $A$ 是常值类型，则产生的扩展类型将写为 $\langle \Psi \to A \mid_\Phi^a \rangle$。
+
+类似于普通类型到类型的函数类型，我们可以通过用``空拓扑"$\phi:\equiv \bot$ 和典范项 $\mathsf{rec}_\bot$ 实例化扩展类型来模拟形状到类型的函数类型，允许我们将形状 $\Psi$ 到类型 $A$ 的函数定义为 $\Psi \to A :\equiv \langle \Psi \to A \mid_\bot^{\mathsf{rec}_\bot} \rangle$，类似地处理依赖情况。
+
+\textbf{扩展外延性(ExtExt)。}正如文献中一样，为了使扩展类型同伦良好行为，我们还假设扩展类型的函数外延性版本。在 Rzk 中，我们假设一个公理，允许我们扩展给定部分截面的扩展之间的相对同伦。
+
+\begin{axiom}[扩展外延性]
+对于任何 $A, a, f, g$ 如上所述，映射 $\mathsf{ext\text{-}htpy\text{-}eq}$ 是一个等价，即存在项
+\[
+\mathsf{extext} : \prod_{A,a,f,g} \mathsf{isEquiv}(\mathsf{ext\text{-}htpy\text{-}eq}_{A,a,f,g})
+\]
+\end{axiom}
+
+在原始论文中，公理2.1是从扩展外延性公理的另一个版本推导出来的。这个版本类似于函数外延性的版本，该版本陈述：给定族 $B:A \to \mathcal{U}$，如果每个纤维 $B_x$ 是可缩的，则类型 $\prod_{x:A} B_x$ 也是可缩的。
+
+\section{综合 $\infty$-范畴}
+
+单纯形类型论是同伦类型论的 Martin-L\"of 解释与严格形状和扩展类型的结合。如文献所证明的，这个框架强大到足以在真正的同伦框架内综合地发展 $\infty$-范畴论。
+
+范畴是一个由点和可复合的箭头组成的结构。为了产生综合的 $\infty$-范畴概念，我们希望在同伦类型论中使用单纯形形状来实现这个想法。
+
+\subsection{预-$\infty$-范畴和 $\infty$-范畴}
+
+\textbf{同伦类型(hom)。}首先，我们需要获得类型 $A$ 中（定向）箭头的概念，我们将其定义为从1-单纯形出发的映射 $f:\Delta^1 \to A$。箭头的源和目标分别由项 $f(0), f(1):A$ 给出。
+
+使用扩展类型，我们可以定义具有固定源和目标的箭头类型。对于具有元素 $a,b:A$ 的类型 $A$，从 $a$ 到 $b$ 的箭头或同态类型是扩展类型：
+\[
+\mathsf{hom}_A(a,b) :\equiv \left\langle \Delta^1 \to A \; \middle| \; _{[a,b]}^{\partial\Delta^1} \right\rangle
+\]
+其中 $t:\partial\Delta^1 \vdash [a,b](t):A$ 是满足 $[a,b](0) \equiv a$ 和 $[a,b](1) \equiv b$ 的项。
+
+\textbf{恒等箭头(id-hom)。}通过扩展类型的引入规则，任何元素 $x:A$ 诱导一个恒等箭头 $\mathsf{id}_x:\mathsf{hom}_A(x,x)$，定义为 $\mathsf{id}_x :\equiv \lambda t.x$。
+
+\textbf{预-$\infty$-范畴(Segal 类型)。}任何类型都具有任意复杂的单纯形结构。毕竟，我们可以用任意高维 $n$ 的 $n$-单纯形来探测任何类型。箭头的复合，即1-单纯形，何时被定义？我们想将其陈述为一个同伦有意义的条件：任何一对可复合的箭头都应该有一个复合箭头，界定一个2-单纯形，见证新箭头确实是给定对的复合。这在经典上被称为 Segal 条件。
+
+在我们的系统中，我们可以使用扩展类型和可缩性来表达它。
+
+\begin{definition}[预-$\infty$-范畴]
+一个类型是预-$\infty$-范畴或 Segal 类型，如果任何可复合的箭头对都有唯一的复合，即给定箭头对 $f:\mathsf{hom}_A(x,y)$ 和 $g:\mathsf{hom}_A(y,z)$，填充子的类型
+\[
+\sum_{h:\mathsf{hom}_A(x,z)} \mathsf{hom}_A^2(f,g;h)
+\]
+是可缩的，其中
+\[
+\mathsf{hom}_A^2(f,g;h) :\equiv \left\langle \Delta^2 \to A \; \middle| \; _{[f,g;h]}^{\partial\Delta^2} \right\rangle
+\]
+是由固定的1-单纯形选择界定的2-单纯形类型：
+\[
+\mathsf{is\text{-}pre\text{-}\infty\text{-}category}(A) :\equiv \prod_{x,y,z:A} \prod_{f:\mathsf{hom}_A(x,y)} \prod_{g:\mathsf{hom}_A(y,z)} \mathsf{isContr}\left(\sum_{h:\mathsf{hom}_A(x,z)} \mathsf{hom}_A^2(f,g;h)\right)
+\]
+\end{definition}
+
+综合预-$\infty$-范畴是一个允许箭头唯一复合（直到可缩性）的类型。
+
+详细地说，这意味着存在一个箭头 $g \circ f:\mathsf{hom}_A(x,z)$ 作为 $g$ 和 $f$ 的复合，以及一个2-细胞 $\mathsf{comp}_{A,f,g}:\mathsf{hom}_A^2(f,g;g \circ f)$ 见证由 $f$、$g$ 和 $g \circ f$ 界定的2-单纯形被填充。此外，数据对 $g \circ f$ 和 $\mathsf{comp}_{A,f,g}$ 直到同伦被唯一确定。
+
+\begin{theorem}
+一个类型 $A$ 是预-$\infty$-范畴当且仅当沿形状包含 $\Lambda_1^2 \subseteq \Delta^2$ 的限制是一个等价：
+\[
+\mathsf{isEquiv}\left(\mathsf{res}_A : A^{\Delta^2} \to A^{\Lambda_1^2}\right)
+\]
+\end{theorem}
+
+\textbf{预-$\infty$-范畴中的同构。}在预-$\infty$-范畴 $A$ 中，我们可以通过以下方式定义同构类型：
+\[
+\mathsf{iso}_A(x,y) :\equiv \sum_{f:\mathsf{hom}_A(x,y)} \mathsf{isIso}(f)
+\]
+其中
+\[
+\mathsf{isIso}(f) :\equiv \sum_{g:\mathsf{hom}_A(y,x)} (g \circ f = \mathsf{id}_x) \times \sum_{h:\mathsf{hom}_A(y,x)} (f \circ h = \mathsf{id}_y)
+\]
+这类似于等价性的定义，当环境类型 $A$ 是预-$\infty$-范畴时，$\mathsf{isIso}(f)$ 是一个命题。
+
+\textbf{$\infty$-范畴(Rezk 类型)。}综合预-$\infty$-范畴有两种竞争的相同性概念，由恒等类型和由同构类型定义。如果刚刚定义的同构概念与类型中的路径概念一致，则预-$\infty$-范畴是 $\infty$-范畴。这个要求捕获了 Rezk 完备性或局部泛等的既定概念。
+
+通过路径归纳，我们可以定义比较映射的族：
+\[
+\mathsf{isoeq}_A : \prod_{x,y:A} (x =_A y) \to \mathsf{iso}_A(x,y)
+\]
+通过路径归纳定义为 $\mathsf{isoeq}_A(x,x,\mathsf{refl}_x) :\equiv (\mathsf{id}_x, \mathsf{id}_x, \mathsf{refl}_{\mathsf{id}_x}, \mathsf{id}_x, \mathsf{refl}_{\mathsf{id}_x})$。
+
+\begin{definition}[$\infty$-范畴]
+一个类型 $A$ 是 $\infty$-范畴或 Rezk 类型，如果它是预-$\infty$-范畴且 Rezk 完备：
+\[
+\mathsf{is\text{-}\infty\text{-}category}(A) :\equiv \mathsf{is\text{-}pre\text{-}\infty\text{-}category}(A) \times \prod_{x,y:A} \mathsf{isEquiv}(\mathsf{isoeq}_{A,x,y})
+\]
+\end{definition}
+
+这个综合定义在语义上翻译为众所周知的完备 Segal 或 Rezk 空间概念，即 $\infty$-范畴的模型。
+
+而且从内部观点来看，随之而来的理论相当丰富。人们获得了函子、自然变换、函子范畴、伴随函子、(余)极限和纤维化的概念，与 Riehl--Verity 的 $\infty$-宇宙理论（一种模型无关的 $\infty$-范畴论方法）有许多相似之处。
+
+\textbf{自动的自然性。}综合理论的一个有用特征是各种函子性和自然性性质自动满足。与集合论基础相比，这节省了大量工作。例如，给定预-$\infty$-范畴 $A$ 和 $B$，任何类型论函数 $f:A \to B$ 结果都是函子，即保持复合和恒等（直到命题相等）。特别地，我们不需要分别指定对象部分和态射部分。类似地，给定函子 $f,g:A \to B$，可以使用扩展类型将自然变换定义为类型 $A \to B$ 中的箭头，即 $\varphi:\mathsf{hom}_{A \to B}(f,g)$。这个定义自动产生预期的自然性方块，无需指定它们。
+
+\subsection{$\infty$-群胚的协变族}
+
+\textbf{$\infty$-群胚。}我们还对综合 $\infty$-群胚感兴趣，即每个箭头都可逆的 $\infty$-范畴。例如，可以证明对于任何预-$\infty$-范畴 $A$，同伦类型 $\mathsf{hom}_A(x,y)$ 必然是 $\infty$-群胚。这与传统理论和 $\infty$-范畴被（弱丰富）在由 $\infty$-群胚建模的空间中的直觉相匹配。
+
+群胚条件可以被理解为一种离散性条件。为了使其精确，我们需要路径与箭头的比较，类似于我们对 Rezk 完备性的处理。
+
+\begin{definition}[$\infty$-群胚]
+一个类型 $A$ 是 $\infty$-群胚或离散的，如果
+\[
+\mathsf{is\text{-}\infty\text{-}groupoid}(A) :\equiv \prod_{x,y:A} \mathsf{isEquiv}(\mathsf{arreq}_{A,x,y})
+\]
+\end{definition}
+
+\textbf{协变族。}$\infty$-范畴 Yoneda 引理处理由（预-）$\infty$-范畴索引的 $\infty$-群胚族或纤维化。这些族 $C:A \to \mathcal{U}$ 应该是函子性的，在这个意义上，基 $A$ 中的箭头 $f:\mathsf{hom}_A(x,y)$ 应该给出纤维之间的函子 $f_* := \mathsf{trans}_{C,f}:C(x) \to C(y)$。
+
+这通过协变族的概念实现，语义上通常称为左纤维化。
+
+为了定义它，我们必须引入同伦类型的依赖版本，捕获全类型 $\sum_{x:A} C(x)$ 中被映射到基中预定箭头的箭头。这可以再次方便地使用扩展类型来表述。
+
+\begin{definition}[依赖同伦(dhom)]
+设 $C:A \to \mathcal{U}$ 是一个类型族。对于元素 $x,y:A$，设 $f:\mathsf{hom}_A(x,y)$ 是一个箭头。对于纤维中的元素 $u:C(x)$ 和 $v:C(y)$，从 $u$ 到 $v$ 的相应依赖同伦类型由扩展类型给出：
+\[
+\mathsf{dhom}_C(f)(u,v) :\equiv \left\langle \prod_{t:\Delta^1} C(f(t)) \; \middle| \; _{[u,v]}^{\partial\Delta^1} \right\rangle
+\]
+\end{definition}
+
+协变族 $C:A \to \mathcal{U}$ 的定义性质说，给定其源上方纤维中的点 $u:C(x)$，我们可以提升基中的箭头 $f:\mathsf{hom}_A(x,y)$ 到依赖箭头 $\mathsf{lift}_{C,f,u}:\mathsf{dhom}_C(f)(u,f_*u)$ 位于 $f$ 上方，而且，直到同伦是唯一的。
+
+\begin{definition}[协变族]
+设 $C:A \to \mathcal{U}$ 是一个类型族。如果以下命题被居住，我们说 $C$ 是协变的：
+\[
+\prod_{x,y:A} \prod_{f:\mathsf{hom}_A(x,y)} \prod_{u:C(x)} \mathsf{isContr}\left(\sum_{v:C(y)} \mathsf{dhom}_C(f)(u,v)\right)
+\]
+\end{definition}
+
+如文献所示，在预-$\infty$-范畴 $A$ 上，协变族 $C:A \to \mathcal{U}$ 以预期的方式表现。即，纤维都是 $\infty$-群胚，并且它们是函子性的：对于元素 $x,y,z:A$，态射 $f:\mathsf{hom}_A(x,y)$、$g:\mathsf{hom}_A(y,z)$ 和纤维中的元素 $u:C(x)$，我们得到等同
+\[
+g_*(f_*u) = (g \circ f)_*u \quad \text{和} \quad (\mathsf{id}_x)_*u = u
+\]
+
+一个基本的例子是当 $A$ 是预-$\infty$-范畴时，对于 $x:A$ 的可表示协变族 $\mathsf{hom}_A(x,-):A \to \mathcal{U}$。
+
+此外，在协变族 $C,D:A \to \mathcal{U}$ 之间，纤维映射 $\varphi:\prod_{x:A} C(x) \to D(x)$ 自动是自然的：对于任何箭头 $f:\mathsf{hom}_A(x,y)$ 和元素 $u:C(x)$，我们有等同
+\[
+f_*(\varphi_x(u)) = \varphi_y(f_*u)
+\]
+
+\section{Rzk 证明辅助工具概述}
+
+Kudasov 实现了 Rzk，第一个支持单纯形类型论的证明辅助工具。自2023年春季以来，我们一直在为 Rzk 开发一个库，形式化文献中 Riehl--Shulman 工作的一系列结果，此外还包括标准同伦类型论所需的结果。
+
+\subsection{Rzk 的关键特性}
+
+Rzk 的核心提供以下原始概念和能力。
+
+\textbf{宇宙。}有三个固定的宇宙：立方体的 CUBE、拓扑的 TOPE 和类型的 U。在 Rzk 中，U 包含 CUBE、TOPE 和它自身，意味着一个不健全的``类型在类型中"。我们认为这种简化目前是可以接受的，并希望 Rzk 将来会发展出适当的宇宙。
+
+\textbf{拓扑逻辑。}这包括立方体和拓扑。Rzk 有内置的单位立方体 $1$ 和定向区间立方体 $\mathbf{2}$（分别对应点 $*_1:1$ 和 $0_2:\mathbf{2}$、$1_2:\mathbf{2}$）、标准拓扑，以及单纯形类型论所需的不等式拓扑 $s \leq t$。
+
+\textbf{依赖类型。}Rzk 提供对依赖函数 $(x:A) \to B\,x$、依赖对 $\Sigma\,(x:A),\,B\,x$ 和恒等类型 $x =_A y$ 的支持。虽然目前在撰写时没有对用户定义隐式参数的支持，但恒等类型允许索引是隐式的，使用项 $x = y$ 和 $\mathsf{refl}$ 而不是 $x =_A y$ 和 $\mathsf{refl}_{x:A}$。Rzk 中缺乏隐式参数和完整类型推断导致更明确和冗长的证明项。
+
+\textbf{扩展类型。}Rzk 提供两个独立的概念，结果支持扩展类型。首先，Rzk 允许依赖函数具有立方体或形状（由拓扑限制的立方体）参数。这些对应于在空拓扑 $\bot$ 处限制为 $\mathsf{rec}_\bot$ 的扩展类型。
+
+其次，任何类型都可以有``细化"，为任意拓扑约束指定值。例如，类型 $A\,[\phi \mapsto x, \psi \mapsto y]$ 是类型 $A$ 的细化，使得当 $\phi$ 成立时，此类型的值计算上等于 $x$，当 $\psi$ 成立时等于 $y$。当然，当 $(\phi \land \psi)$ 成立时，$x$ 和 $y$ 必须一致。类型的细化是其子类型，$A$ 被认为等价于 $A\,[\bot \mapsto \mathsf{rec}_\bot]$。子类型由 Rzk 处理，消除了显式类型强制的需要。
+
+将依赖于形状的函数与这种细化结合产生扩展类型。例如，$\mathsf{hom}_A(a,b) :\equiv \langle \Delta^1 \to A \mid_{[a,b]}^{\partial\Delta^1} \rangle$ 定义如下：
+\begin{verbatim}
+#def hom (A : U) (a b : A) : U := 
+  (t : Delta^1) -> A [ t === 0_2 |-> a , t === 1_2 |-> b ]
+\end{verbatim}
+
+\textbf{截面和变量。}Rzk 支持 Coq 风格的截面，允许局部定义的假设（变量），这些假设自动作为参数添加到使用它们的定义中。重要的是，Rzk 具有检测隐式使用假设的机制，以避免定义中的意外循环推理。为了确保这种隐式假设不是偶然的，Rzk 有 \texttt{uses} 语法。例如，Yoneda 引理本身以明确使用函数外延性(\texttt{funext})的方式指定。
+
+\begin{verbatim}
+#def yoneda-lemma uses (funext)
+  (A : U)
+  (is-pre-infinity-category-A : is-pre-infinity-category A)
+  (a : A)
+  (C : A -> U)
+  (is-covariant-C : is-covariant A C)
+  : is-equiv
+    ((z : A) -> hom A a z -> C z)
+    (C a)
+    (evid A a C)
+  := ...
+\end{verbatim}
+
+我们发现这对于可读性特别有用，突出了公理或其他假设的使用（例如，某个类型是预-$\infty$-范畴）。
+
+\section{Rzk 中的 $\infty$-范畴 Yoneda 引理}
+
+\subsection{陈述}
+
+在1-范畴论中，Yoneda 引理陈述如下。给定范畴 $\mathbb{A}$ 和 $\mathbb{A}$ 上的余预层，即函子 $C:\mathbb{A} \to \mathcal{Set}$，对于任何 $a \in \mathsf{ob}(\mathbb{A})$，存在双射
+\[
+\mathsf{hom}_{[\mathbb{A},\mathcal{Set}]}\left(\mathsf{hom}_{\mathbb{A}}(a,-), C\right) \cong C(a)
+\]
+将自然变换 $\alpha$ 映射到 $\alpha(a, \mathsf{id}_a) \in C(a)$，在 $C$ 和 $a$ 中都是自然的。
+
+在 $\infty$-范畴设置中，集合被 $\infty$-群胚替代。余预层由左纤维化（又称协变族）建模。相应地，综合 $\infty$-范畴 Yoneda 引理如下所述。
+
+\begin{theorem}[Yoneda 引理]
+设 $C:A \to \mathcal{U}$ 是预-$\infty$-范畴 $A$ 上的协变族。则对于任何 $a:A$，映射
+\[
+\mathsf{evid}_{A,a,C} : \left(\prod_{z:A} \mathsf{hom}_A(a,z) \to C(z)\right) \to C(a)
+\]
+定义为
+\[
+\mathsf{evid}_{A,a,C}(\varphi) :\equiv \varphi\,a\,(a, \mathsf{id}_a)
+\]
+是一个等价。
+\end{theorem}
+
+注意这个结果对预-$\infty$-范畴成立，而不仅仅是 $\infty$-范畴。
+
+\subsection{证明}
+
+使用 $C$ 的协变输运构造一个逆映射。即，我们定义
+\[
+\mathsf{yon}_{A,a,C} : C(a) \to \left(\prod_{z:A} \mathsf{hom}_A(a,z) \to C(z)\right)
+\]
+\[
+\mathsf{yon}_{A,a,C}(u) :\equiv \lambda x.\lambda f. f_*u
+\]
+
+在1-范畴 Yoneda 引理中，工作的一个关键部分是证明由逆映射定义的项 $\mathsf{yon}_{A,a,C}(u)$ 实际上是预层的态射，即自然变换。在我们的设置中，这实际上是 $C$ 和 $\mathsf{hom}_A(a,-)$ 都是协变的自动后果。在形式化中，相当多的工作用于证明类型 $A$ 是预-$\infty$-范畴当且仅当类型族 $\mathsf{hom}_A(a,-)$ 是协变的。
+
+更详细地说，如果 $A$ 是预-$\infty$-范畴，$a:A$，且 $C:A \to \mathcal{U}$ 是协变族，设 $\varphi:\prod_{z:A} \mathsf{hom}_A(a,z) \to C(z)$ 是一族映射。则对于任何 $x,y:A$ 和箭头 $f:\mathsf{hom}_A(a,x)$ 和 $g:\mathsf{hom}_A(x,y)$，我们有
+\[
+g_*\big(\varphi(x,f)\big) = \varphi(y, g \circ f)
+\]
+作为自然性的特殊情况。
+
+对于 Yoneda 引理，必须证明 $\mathsf{evid}_{A,a,C}$ 和 $\mathsf{yon}_{A,a,C}$ 的两个复合产生恒等。方向 $\mathsf{evid}_{A,a,C} \circ \mathsf{yon}_{A,a,C} = \mathsf{id}$ 相当容易看出。使用函数外延性，我们可以逐点检查这一点。对于 $u:C(a)$，我们必须产生一个等同
+\[
+\big(\lambda x.\lambda f. f_*u\big)(a, \mathsf{id}_a) = u
+\]
+但左边求值为 $(\lambda x.\lambda f. f_*u)(a, \mathsf{id}_a) = (\mathsf{id}_a)_*(u)$，并且该论断由协变恒等输运给出恒等函子的路径得出。
+
+对于另一个方向，主要工作是给出同伦
+\[
+\mathsf{yon}_{A,a,C}(\mathsf{evid}_{A,a,C}(\varphi))(x,f) = \varphi(x,f)
+\]
+对于所有 $\varphi:\prod_{z:A} \mathsf{hom}_A(a,z) \to C(z)$、$x:A$ 和 $f:\mathsf{hom}_A(a,x)$。
+
+我们首先通过自然性得到路径 $f_*(\varphi(a, \mathsf{id}_a)) = \varphi(x, f \circ \mathsf{id}_a)$。然后，在典范等同 $f \circ \mathsf{id}_a = f$ 上使用路径的作用给出 $\varphi(x, f \circ \mathsf{id}_a) = \varphi(x,f)$，我们就完成了。
+
+我们现在必须使用函数外延性两次来抽象评估 $x$ 和 $f$，这最终产生类型 $\prod_{z:A} \mathsf{hom}_A(a,z) \to C(z)$ 的纤维映射之间所需的等同 $(\mathsf{yon}_{A,a,C} \circ \mathsf{evid}_{A,a,C})(\varphi) = \varphi$。这完成了 Yoneda 引理的证明。
+
+\subsection{依赖 Yoneda 引理}
+
+定理5.1中的 Yoneda 引理是某种``箭头归纳"原理，但不是以完全依赖的形式表达的。这激发了文献作者寻找依赖推广，证明了一个先前对 $\infty$-范畴未知的定理。
+
+从依赖 Yoneda 引理，可以推导出``绝对"版本。
+
+\begin{theorem}[依赖 Yoneda 引理]
+设 $A$ 是预-$\infty$-范畴，$a:A$，且 $C:\left(\sum_{x:A} \mathsf{hom}_A(a,x)\right) \to \mathcal{U}$ 是协变族。则映射
+\[
+\mathsf{devid}_{A,a,C} : \left\langle \prod_{z:A} \prod_{f:\mathsf{hom}_A(a,z)} C(z,f) \right\rangle \to C(a, \mathsf{id}_a)
+\]
+定义为
+\[
+\mathsf{devid}_{A,a,C}(\varphi) :\equiv \varphi(a, \mathsf{id}_a)
+\]
+是一个等价。
+\end{theorem}
+
+注意定理5.3让人想起路径归纳原理，因此它可以被视为定向箭头归纳原理。
+
+\section{比较 $\infty$-范畴与1-范畴的 Yoneda 引理}
+
+综合 $\infty$-范畴框架的一个根本优势是，通过将同伦相干数学中固有的复杂性移入背景基础系统，它缩小了 $\infty$-范畴论与1-范畴论之间的差距。我们可以通过比较 Rzk 中 $\infty$-范畴 Yoneda 引理的形式化与其他证明辅助工具中1-范畴 Yoneda 引理的形式化来看出这一点。
+
+\subsection{agda-unimath 中的1-范畴 Yoneda 引理}
+
+作为本项目的一部分，我们向 agda-unimath 库贡献了预范畴 Yoneda 引理的形式化，该库描述自己为``旨在从泛等观点形式化数学的社区驱动努力"。该库包含预范畴和范畴的概念，它们平行于我们的预-$\infty$-范畴和 $\infty$-范畴，除了它们的同伦类型是集合，这适用于1-范畴论。两个证明遵循相同的轮廓，通过构造双边逆来证明 (evid) 是等价。agda-unimath 证明的一个不同点是逆的数据涉及函数 (yon) 及其自然性的证明。与我们在 Rzk 中的证明一样，其中一个复合直接与恒等可识别，而另一个需要计算以及函数外延性的两个实例。
+
+其他差异源于 Rzk 与 agda-unimath 中范畴数据编码方式的不同。在那里，预范畴是具有额外结构的类型，而这里预-$\infty$-范畴是满足性质的类型。在那里，可表示对象被编码为在集合预范畴中取值的函子，而这里可表示对象被编码为协变类型族。这些差异对证明的语法影响大于其结构内容。
+
+\subsection{Lean 中的1-范畴 Yoneda 引理}
+
+应我们的要求，Sina Hazratpour 写了1-范畴 Yoneda 引理的 Lean 形式化，首先在 Lean 3 中作为自包含的形式化，后来将 Yoneda 引理的证明更新到 Lean 4。Lean 中的形式证明与 Rzk 或 Agda 中的形式证明相当不同，因为在交互式定理证明模式中使用了自动化策略，允许用户沿已知等同重写或使用已知引理``简化"目标。此外，Lean 使用类型类和自动实例推断简化了 Yoneda 引理陈述中的语法，与 agda-unimath 证明相比。
+
+在 Lean 3 证明中，(yon) 的自然性必须再次通过展开可表示函子的定义并使用函子保持复合的事实来显式检查。证明的其余部分如前所述进行。有趣的是，在 Lean 4 证明中，Hazratpour 证明了一个引理——在 $f$ 为 $\mathsf{id}_a$ 的情况下的 (5.2)——然后将其提供给策略 \texttt{aesop\_cat}，该策略然后自动验证 (yon) 的自然性并检查 Yoneda 映射是互逆的。
+
+\section{结论与未来工作}
+
+我们希望 Rzk 证明辅助工具将提供一个可能使 $\infty$-范畴论更容易学习的工具。为此，我们邀请新的合作者帮助我们形式化 $\infty$-范畴论的其他结果。确实，其中一些工作已经在新的仓库中进行，该仓库起源于我们 Yoneda 仓库的克隆。
+
+\subsection{伴随函子}
+
+依赖 Yoneda 引理的一个应用是 $\infty$-范畴之间伴随函子的理论。伴随函子的标准逻辑等价定义由定义转置伴随、半伴随图表伴随或双图表伴随的各种类型编码。这些定义已被形式化，我们已经开始正式证明文献中建立的等价性的漫长任务。
+
+\subsection{极限与余极限}
+
+在文献中，Bardomiano Martinez 介绍了在预-$\infty$-范畴中取值的图表的极限和余极限，并证明了 Segal 类型之间的右伴随保持极限。Bardomiano Martinez 已形式化这些定义，并计划与我们合作形式化他的结果。一旦完成，我们希望探索极限和余极限理论的进一步发展。
+
+\subsection{余笛卡尔 $\infty$-范畴 Yoneda 引理}
+
+作为未来的努力，将现有的纤维化理论从 $\infty$-群胚值函子族扩展到 $\infty$-范畴值函子族是可取的。基于（余）笛卡尔纤维化的语义理论，这些所谓的（余）笛卡尔族已在文献中的单纯形类型论综合设置中研究。余笛卡尔纤维化在计算 $\infty$-范畴的极限、研究几何中的模空间以及高阶代数对象（如对称幺半 $\infty$-范畴）中起着关键作用。一个中心定理是（余）笛卡尔 Yoneda 引理。它的读法类似于我们在第5节中讨论的离散 Yoneda 引理的版本：给定余笛卡尔族 $C:A \to \mathcal{U}$ 在 $\infty$-范畴 $A$ 上（其所有纤维也是 $\infty$-范畴），我们想要对函数族 $\prod_{x:A} \mathsf{hom}_A(a,x) \to C(x)$ 进行分类，对于固定元素 $a:A$。然而，我们将不得不限制到余笛卡尔截面的类型，即对于每个 $(x,f):\sum_{y:A} \mathsf{hom}_A(a,y)$，$x':A$，$f':\mathsf{hom}_A(a,x')$ 和 $g:\mathsf{hom}_A(x,x')$ 且 $g \circ f = f'$，依赖态射 $\sigma(g)$ 是所谓的余笛卡尔箭头，即满足某种初始性性质。
+
+余笛卡尔 Yoneda 引理然后陈述评估映射
+\[
+\mathsf{evid}^C_a : \prod^{\mathsf{cocart}}_{(x,f):\sum_{y:A}\mathsf{hom}_A(a,y)} C(x) \to C(a)
+\]
+是一个等价。这个定理的依赖版本，由 Riehl--Verity 在语义上建立，可以再次被视为（单侧）定向箭头归纳原理，类似于标准 Martin-L\"of 类型论中恒等类型的众所周知的路径归纳原理。
+
+在 Rzk 中形式化 Buchholtz--Weinberger 的余笛卡尔 Yoneda 引理证明的努力正在进行中，但将需要形式化（如果不是全部）至少一些来自文献的初步结构性质和余笛卡尔族的操作。
+
+\subsection{Rzk 的改进}
+
+我们注意到一些对 Rzk 的改进将积极影响这个和未来的形式化项目。首先，支持项推断和隐式参数将有助于减少形式化的大小，从而有助于可读性。其次，当前实现缺乏增量类型检查和适当的模块支持，这使得对更改的反馈不那么即时。最后，虽然与 IDE 的最小集成存在，但它仍然需要获得适当的语言服务器支持。我们还注意到 Rzk 的实验性图表渲染功能（在小例子上有用）可以进一步扩展，以协助单纯形类型论中陈述和构造的可视化（甚至交互能力）。
+
+\subsection{单纯形类型论的扩展}
+
+单纯形类型论不足以证明例如文献中包含的所有 $\infty$-范畴论结果。一个更长远的目标是通过包括定向高阶归纳类型来进一步扩展这个综合框架，以自由生成 $\infty$-范畴，宇宙来分类协变纤维化和余笛卡尔纤维化，以及模态来生成相反 $\infty$-范畴和 $\infty$-群胚核心。如果这些理论发展与 Rzk 的实验性扩展相结合，那将大大有助于探索扩展的形式化。
+
+\end{document}

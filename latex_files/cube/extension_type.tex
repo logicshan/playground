@@ -1,0 +1,124 @@
+%\documentclass{beamer}
+%\usepacakge[UTF8]{ctex}
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{mathpartir}
+
+\usepackage{tikz-cd}
+
+\usepackage{comment}
+
+\usepackage{fontspec}
+\setmonofont{JuliaMono}
+
+\newcommand\calV{\mathcal{V}}
+\newcommand\bbD{\mathbb{D}}
+\newcommand\bbI{\mathbb{I}}
+\newcommand\bbF{\mathbb{F}}
+\newcommand\JEq{\mathtt{JEq}}
+\newcommand\FTy{\mathtt{FTy}}
+\newcommand\comp{\mathtt{comp}}
+\newcommand\fst{\mathtt{fst}}
+\newcommand\snd{\mathtt{snd}}
+\newcommand\Ty{\mathtt{Ty}}
+\newcommand\Ter{\mathtt{Ter}}
+\newcommand\Path{\mathtt{Path}}
+\newcommand\dM{\mathsf{dM}}
+\newcommand\ttp{\mathtt{p}}
+\newcommand\ttq{\mathtt{q}}
+\newcommand\bfone{\mathbf{1}}
+\newcommand\Set{\mathbf{Set}}
+\newcommand\DM{\mathbf{DM}}
+\newcommand\Id{\mathtt{Id}}
+\newcommand\refl{\mathtt{refl}}
+\newcommand\C{\mathbf{C}}
+\newcommand\psC{\widehat{\mathbf{C}}}
+\newcommand\extop{{\scalebox{0.4}[1]{\_}}.{\scalebox{0.8}[1]{\_}}}
+\newcommand{\shortminus}{\raisebox{0.3ex}{\scalebox{0.8}[1.0]{-}}}
+\newcommand{\mathshortminus}{\mathbin{\text{\normalfont\shortminus}}}
+\newcommand{\ul}{{\scalebox{0.4}[1.0]{\_}}}
+
+\DeclareMathOperator\FreeDeMorgan{FreeDeMorgan}
+\DeclareMathOperator\obj{obj}
+\DeclareMathOperator\y{\mathbf{y}}
+
+\usepackage{unicode-math}
+\setmathfont{STIX Two Math} 
+%\setmathfont{Latin Modern Math}
+%\setmathfont{XITS Math}[range=cal]
+%\setmathfont{Euler Math}[range=cal]
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\newcommand\cubicalsets{\widehat{□}}
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{扩展类型(extension type)}
+%\subtitle{Subtitle}
+
+%\author{Pin-Yen Huang}
+
+%\institute
+%{
+%    Department of Computer Science and Information Engineering \\
+%    National Taiwan University % Your institution for the title page
+%}
+%\date{\today} % Date, can be changed to a custom date
+\date{}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{背景}
+\begin{itemize}
+  \item $I \mid \Phi \subseteq \Psi$
+  \item $I \mid \Psi \mid \Gamma \vdash A$
+  \item $t : I \mid \Phi \mid \Gamma \vdash a(t) : A(t)$
+  \item $t : I \mid \Psi \mid \Gamma \vdash b(t) : A(t)$, 满足 $b|_{\Phi}\equiv a$
+  \item 上面的 $b$ 就是扩展类型 $\left\langle \prod_{t:\Psi} A(t) \middle|_{a}^{\Phi}\right\rangle$ 的一个项(term)
+  \item 如果 $A$ 是一个常量类型, 扩展类型可简写为 $\left\langle\Psi \to A\middle|_{a}^{\Phi}\right\rangle$
+  \item 类比从类型到类型的函数类型, 我们可以如下定义从形状(shape)到类型的函数类型: 可以取 $\Phi:\equiv\bot$, 我们有 $\mathtt{rec}_{\bot}$. 从 $\Psi$ 到 $A$ 的函数类型为 $\Psi \to A:\equiv\left\langle\Psi\to A\middle|_{\mathtt{rec}_{\bot}}^{\bot}\right\rangle$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{rzk 中的 extension type}
+rzk 中有两个不同的概念, 结合起来可以支持扩展类型
+\begin{itemize}
+  \item rzk 允许依赖于 cube 或 shape 的函数, 就是上面讨论的 $\Psi \to A:\equiv\left\langle\Psi\to A\middle|_{\mathtt{rec}_{\bot}}^{\bot}\right\rangle$
+  \item 任何类型都允许“细化”(refinement), 也就是指定在 tope 限制下的值: 比如 $A\ [𝜙 ↦  x,\ 𝜓 ↦  y]$, 当 $𝜙$ 成立时, 求值为 $x$, 当 $𝜓$ 成立时, 求值为 $y$, 当然有一个前提, $x$ 和 $y$ 在 $(𝜙 \land 𝜓)$ 成立时要一样. $A$ 和 $A\ [\bot ↦ \mathtt{recBOT}]$ 是等价的.
+\end{itemize}
+
+例:\[\hom_A(a,b) :\equiv \left\langle\Delta^{1} \to A\middle|_{[a,b]}^{\partial\Delta^1}\right\rangle\]
+在 rzk 中定义为
+
+\begin{verbatim}
+    #def hom (A : U) (a b : A) : U
+        := (t : Δ¹) → A [t ≡ 0₂ ↦ a , t ≡ 1₂ ↦ b]
+\end{verbatim}
+
+\end{frame}
+
+
+\end{document}
