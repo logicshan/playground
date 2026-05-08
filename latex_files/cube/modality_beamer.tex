@@ -1,0 +1,126 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+\setmathfont{Fira Math}
+
+%%%%%%%% FONT TIMESAVES %%%%%%%
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bI}{\mathbb{I}}
+
+\newcommand{\cC}{\mathcal{C}}
+
+%%%%%%%% CATEGORY THEORY %%%%%%%
+\newcommand{\id}{\mathrm{id}}
+\DeclareMathOperator{\Hom}{Hom}
+
+\newcommand{\cat}[1]{\mathrm{#1}}
+\newcommand{\Set}{\cat{Set}}
+
+\DeclareFontFamily{U}{dmjhira}{}
+\DeclareFontShape{U}{dmjhira}{m}{n}{ <-> dmjhira }{}
+
+\DeclareRobustCommand{\yo}{\text{\usefont{U}{dmjhira}{m}{n}\symbol{"48}}}
+
+\DeclareMathOperator*{\colim}{colim}
+
+\newcommand{\inl}{\operatorname{inl}}
+\newcommand{\inr}{\operatorname{inr}}
+
+%%%%%%%%% GEOMTERY %%%%%%%%%%%%%%
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Zar}{\mathrm{Zar}}
+
+%%%%%%%%% TYPE THEORY %%%%%%%%%%%
+\newcommand{\OO}{\bigcirc}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\isEquiv}{\bibopenparen{isEquiv}}
+\newcommand{\hlevel}{\mathrm{hlevel}}
+\newcommand{\isContr}{\operatorname{isContr}}
+\newcommand{\isProp}{\operatorname{isProp}}
+\newcommand{\Prop}{\mathrm{Prop}}
+\newcommand{\refl}{\mathrm{refl}}
+\newcommand{\isModal}{\operatorname{isModal}}
+\newcommand{\ap}{\operatorname{ap}}
+\newcommand{\fib}{\operatorname{fib}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tot}{\mathrm{tot}}
+\newcommand{\pt}{\mathrm{pt}}
+
+\title{Modality}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{Motivation\cite{williams2025}}
+Modalities in homotopy type theory are used to create and access subuniverses of a given type universe. These have significant applications throughout mathematics and computer science, and in particular can be used to create universes in which certain logical principles are true.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{reflective subuniverse(反射·子宇宙)}
+\begin{itemize}
+  \item a subuniverse $\UU_\OO$ of $\UU$
+  \item a reflector $\OO : \UU \to \UU_\OO$
+  \item a unit $\eta : \prod_{X:\UU}X \to \OO X$
+\end{itemize}
+满足 \textbf{modal recursion}: for all $X:\UU$, $Y:\UU_\OO$, the map
+\[
+-\circ\eta_{X} : (\OO X \to Y) \to (X \to Y)
+\]
+is an equivalence. 这相当于, 对任何 $f: A \to B$, 其中 $B: \UU_\OO$, 存在唯一的 $\bar{f} : \OO A \to B$, 使得 $f = \bar{f}\circ\eta_A$
+\[
+\begin{tikzcd}
+A \arrow[d,"\eta_A"']\arrow[r,"f"] & B \\
+\OO A \arrow[ur,dashed,"{\exists !\bar{f}}"']
+\end{tikzcd}
+\]
+\end{frame}
+
+\begin{frame}{reflective subuniverse 的特点}
+Reflective subuniverses can be shown to have many stability properties. 
+In particular, they are closed under $\Pi$, $+$, $\times$, and taking equality types.
+However, they do not quite constitute logical subuniverses as they are not necessarily stable under $\Sigma$.
+\end{frame}
+
+\begin{frame}{modality}
+   A \textbf{modality} is a reflective subuniverse $(\UU_\OO, \OO, \eta)$ satisfying one of the following equivalent conditions:
+    \begin{enumerate}
+        \item $\UU_\OO$ is closed under $\Sigma$.
+        \item $\OO$ satisfies \textbf{modal induction}. That is for all $B : \OO A \to \UU_\OO$, the natural map 
+              \[ \prod_{x : \OO A} B(x) \to \prod_{x : A} B(\eta(x))  \]
+              is an equivalence.
+    \end{enumerate}
+
+We call a type $\textbf{modal}$ if the map $\eta_X$ is an equivalence.
+\end{frame}
+
+\begin{frame}{lex modality}
+    A \textbf{lex modality} is a modality $\OO$ which preserves pullbacks.
+
+\vspace{6mm}
+
+    Even modalities don't correspond to the external notion of subtopos. Lex modalities really do correspond to the external notion of subtopos and as such they behave well with respect to many of the structures in HoTT.
+\end{frame}
+
+% 参考文献帧，长列表自动分页
+\begin{frame}[allowframebreaks]{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{williams2025}
+Mark Damuni Williams. Projective Presentations of Lex Modalities.
+
+\end{thebibliography}
+\end{frame}
+
+\end{document}

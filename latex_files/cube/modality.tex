@@ -1,0 +1,296 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{array}
+\usepackage{tikz-cd}
+
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[section]
+\newtheorem{lemma}{引理}[section]
+\newtheorem{theorem}{定理}[section]
+
+\newcommand{\U}{\mathsf{U}}
+\newcommand{\Prop}{\mathsf{Prop}}
+\newcommand{\modal}{\bigcirc}
+
+\begin{document}
+
+\title{模态性引论}
+\author{}
+\date{2022年8月26日}
+\maketitle
+
+\section{模态性}
+
+\textbf{动机：}
+\begin{itemize}
+    \item 模态逻辑 $\mathbf{S4}$ 通过\emph{模态算子} $\Diamond$（``可能性''）和 $\Box$（``必然性''）扩展了经典命题逻辑，
+    其公理和规则表明 $\Diamond$ 的行为类似于范畴论中的\emph{单子}（monad），而其德摩根对偶 $\Box$ 的行为类似于\emph{余单子}（comonad），
+    即对于所有公式 $A$，下列公式都是 $\mathbf{S4}$ 的定理：
+    \[
+    \Box A \to A \qquad \Box A \to \Box\Box A \qquad A \to \Diamond A \qquad \Diamond\Diamond A \to \Diamond A
+    \]
+
+    \item Moggi 的\emph{单子 $\lambda$-演算} \cite{Mog91} 通过一元类型构造子 $T$ 和项形成规则扩展了简单类型 $\lambda$-演算：
+    \[
+    \frac{\Gamma \vdash t : A}{\Gamma \vdash \eta(t) : TA}
+    \qquad\qquad
+    \frac{\Gamma \vdash s : TA \quad \Gamma, x:A \vdash t : TB}{\Gamma \vdash \mathsf{let}\; x := s \;\mathsf{in}\; t : TB}
+    \]
+    这表明 $T$ 的行为类似于一个单子。
+
+    \item 
+\end{itemize}
+
+类型论的\emph{模态性}可以视为单子可能性模态 $\Diamond$ 的类型论版本，或者视为 Moggi 单子的幂等版本\footnote{严格来说，对应于可能性的模态性是单子模态性。类型论中也有对应于模态逻辑中必然性的余单子模态性，但如果我们只说``模态性''，通常指的是单子类型，且第一节专门讨论这些。余单子模态性将在第二节中出现。}。
+在类型论中，将模态性定义为特定的\emph{反射子全类}（reflective subuniverses）最为简便。
+遵循 \cite{RSS20,Uni13}，我们对类型论模态性使用符号 $\modal$ 而非 $\Diamond$。
+
+\subsection{子全类}
+
+设 $\U$ 为一个类型论全类。给定 $\U$ 上的谓词 $P_{\modal} : \U \to \Prop$，
+我们可以构造 $\U$ 的\emph{子类型}
+\[
+\U_{\modal} = \{A : \U \mid P_{\modal}(A)\} \hookrightarrow \U
+\]
+我们将谓词 $P_{\modal}$ 和子类型 $\U_{\modal}$ 都称为 $\U$ 的一个\emph{子全类}。
+
+\subsection{定义}
+
+一个子全类被称为\emph{反射的}，如果对于 $\U$ 中的每个类型 $A$，都存在一个类型 $\modal A$ 和一个函数 $\eta_A : A \to \modal A$，使得
+\[
+\forall(B:\U_{\modal})(f : A \to B)\; \exists!(\bar{f} : \modal A \to B)\;.\; \bar{f} \circ \eta_A = f.
+\]
+即：
+\[
+\begin{tikzcd}[row sep=large]
+A \arrow[r, "f"] \arrow[d, "\eta_A"'] & B \\
+\modal A \arrow[ur, "\bar{f}"', dashed] &
+\end{tikzcd}
+\]
+
+\subsection{引理}
+
+如果 $\U_{\modal} \hookrightarrow \U$ 是一个反射子全类，且 $A$ 是 $\U$ 中的一个类型，那么类型 $\modal A$ 连同映射 $\eta_A$ 由性质 (1.1) 唯一确定到等价——因此由单一性（univalence）唯一确定到等同。
+
+\subsection{术语}
+
+我们将 $\modal : \U \to \U$ 称为\emph{模态算子}，将 $\eta$ 称为\emph{模态单位}（modal unit）。
+
+类型 $A$ 被称为：
+\begin{itemize}
+    \item \emph{$\modal$-连通的}，如果 $\modal A = 1$（单元类型）；
+    \item \emph{$\modal$-模态的}，如果 $\eta_A$ 是一个等价。
+\end{itemize}
+因此，$\U_{\modal}$ 就是模态类型的子全类。
+
+\subsection{引理}
+
+设 $\U_{\modal} \hookrightarrow \U$ 是一个反射子全类。
+\begin{enumerate}
+    \item 给定类型 $A:\U$ 和 $B:\U_{\modal}$ 以及函数 $f, g : \modal A \to B$，我们有 $f = g$ 当且仅当 $f \circ \eta = g \circ \eta$（更精确地说，我们在等同类型之间有等价 $(f=g) \simeq (f\circ\eta = g\circ\eta)$）。
+    
+    \item 类型 $B$ 是模态的，当且仅当 $\forall(A:\U)(f:A\to B)\; \exists!(\bar{f}:\modal A \to B)\;.\; \bar{f}\circ\eta = f$。
+\end{enumerate}
+
+\subsection{定理}
+
+对于反射子全类 $\U_{\modal} \hookrightarrow \U$，以下条件等价（TFAE）：
+\begin{enumerate}
+    \item $\Sigma$-封闭，即如果 $A:\U$ 且 $B : A \to \U_{\modal}$，则 $\sum_{(a:A)} B(a)$ 在 $\U_{\modal}$ 中；
+    
+    \item 允许唯一的依赖消去，即给定 $A:\U$ 和 $B : \modal A \to \U_{\modal}$ 以及 $f : \prod_{(a:A)} B(\eta(a))$，存在唯一的 $\tilde{f} : \prod_{(a:\modal A)} B(a)$ 使得 $\tilde{f} \circ \eta = f$。
+\end{enumerate}
+
+\begin{center}
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+& \sum_{(a:\bigcirc A)} B(a) \arrow[d, "{\mathsf{pr}_1}", bend left=40] \\
+A \arrow[ru, "{\langle \eta, f \rangle}"] \arrow[r, "\eta"'] & \bigcirc A \arrow[u, "{\langle 1, \tilde{f} \rangle}", dashed, bend left=40]
+\end{tikzcd}
+\]
+\end{center}
+
+\noindent\textbf{证明。} 首先假设 1，设 $A, B$ 和 $f$ 如 2 中所述，并定义 $g := \langle\eta, f\rangle : A \to \sum_{(a:\modal A)} B(a)$，即 $g(a) = (\eta(a), f(a))$。类型 $\sum_{(a:\modal A)} B(a)$ 在 $\U_{\modal}$ 中，因此存在唯一的 $\bar{g} : \modal A \to \sum_{(a:\modal A)} B(a)$ 使得 $\bar{g} \circ \eta = g$。我们可以论证 $\mathsf{pr}_1 \circ \bar{g} \circ \eta = \mathsf{pr}_1 \circ g = \eta$，因此由 $\eta$ 的泛性质得 $\mathsf{pr}_1 \circ \bar{g} = 1$。
+\begin{center}
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+& \sum_{(a:\bigcirc A)} B(a) \arrow[d, "{\mathsf{pr}_1}", bend left=40] \\
+A \arrow[ru, "{g=\langle \eta, f \rangle}"] \arrow[r, "\eta"'] & \bigcirc A \arrow[u, "{\tilde{g}}", dashed, bend left=40]
+\end{tikzcd}
+\]
+\end{center}
+这意味着 $\bar{g} = \langle 1, \tilde{f}\rangle$，其中 $\tilde{f} : \prod_{(a:\modal A)} B(a)$。我们有 $\tilde{f} \circ \eta = \mathsf{pr}_2 \circ \bar{g} \circ \eta = \mathsf{pr}_2 \circ g = f$。$\tilde{f}$ 的唯一性由 $\bar{g}$ 的唯一性得出。
+
+反之，假设 2，设 $A:\U$ 且 $B : A \to \U_{\modal}$。我们必须证明对于每个 $C:\U_{\modal}$ 和 $f : C \to \sum_{(a:A)} B(a)$，存在唯一的 $\bar{f} : \modal C \to \sum_{(a:A)} B(a)$ 使得 $\bar{f} \circ \eta = f$。将 $f = \langle g, h\rangle$ 写出，我们得到 $\bar{f} = \langle \bar{g}, \tilde{h}\rangle$。 \hfill $\blacksquare$
+
+\subsection{定义}
+
+一个\emph{模态性}（modality）是满足上述定理等价条件的反射子全类。
+
+``官方''定义略有不同：
+
+\subsection{定义 \cite[定义 7.7.5]{Uni13}}
+
+一个模态性是一个运算 $\modal : \U \to \U$，对于它存在：
+\begin{enumerate}
+    \item 对于每个类型 $A:\U$，函数 $\eta_A : A \to \modal(A)$；
+    \item 对于每个 $A:\U$ 和每个类型族 $B : \modal(A) \to \U$，函数
+    \[
+    \mathsf{ind}_{\modal} : \left(\prod_{a:A} \modal(B(\eta_A(a)))\right) \to \prod_{z:\modal(A)} \modal(B(z))；
+    \]
+    \item 对于每个 $f : \prod_{(a:A)} \modal(B(\eta_A(a)))$，路径 $\mathsf{ind}_{\modal}(f)(\eta_A(a)) = f(a)$；
+    \item 对于所有 $z, z' : \modal(A)$，映射 $\eta_{z=z'} : (z=z') \to \modal(z=z')$ 是一个等价。
+\end{enumerate}
+
+给定这种表述下的模态性，反射子全类可以通过设置
+\[
+P_{\modal}(A) = \mathsf{isequiv}(\eta_A) \quad\text{从而}\quad \U_{\modal} = \{A:\U \mid \mathsf{isequiv}(\eta_A : A \to \modal A)\}
+\]
+来恢复。
+
+\section{模态性的例子}
+
+\subsection{截断}
+
+模态性的一些最重要例子由截断给出。回顾 Emily 课程中截断层次的定义：
+\begin{align*}
+\mathsf{istrunc}_n &: \U \to \Prop \qquad \text{对于 } n \geq -2 \\
+\mathsf{istrunc}_{-2}(A) &:= \mathsf{isContr}(A) \\
+\mathsf{istrunc}_{n+1}(A) &:= \forall(x,y:A)\;.\; \mathsf{istrunc}_n(x=y)
+\end{align*}
+
+\begin{theorem}
+对于所有 $n \geq -2$，子全类
+\[
+n\mathsf{\text{-}Type} := \{A:\U \mid \mathsf{istrunc}_n(A)\}
+\]
+是反射的且 $\Sigma$-封闭的，即一个模态性。
+\end{theorem}
+
+\noindent\textbf{证明。} $\Sigma$ 的封闭性容易通过对 $n$ 归纳证明。$-2$ 的情形是平凡的。假设 $n$-Type 对 $\Sigma$ 封闭，设 $A \in (n+1)\text{-Type}$ 且 $B : A \to (n+1)\text{-Type}$，以及 $x, y : \sum_{(a:A)} B(a)$。我们必须证明类型 $(x=y)$ 是 $n$-截断的。通过 $\Sigma$-归纳，我们可以假设 $x \equiv (a_1, b_1)$ 且 $y \equiv (a_2, b_2)$，我们有
+\[
+(x=y) \simeq \sum_{p:(a_1=a_2)} p_*(b_1) = b_2.
+\]
+右边的类型由假设是 $n$-截断的，且由于 $n$-类型对 $\Sigma$ 封闭，结论得证。
+
+为了证明子全类 $n\text{-Type} \hookrightarrow \U$ 是反射的，我们必须构造 $\U$ 中类型 $A$ 的 $n$-截断，即类型 $\|A\|_n$ 连同函数 $|-|_n : A \to \|A\|_n$，使得对于所有 $n$-截断类型 $B$ 和函数 $f : A \to B$，存在唯一的 $\bar{f} : \|A\|_n \to B$ 使得 $\bar{f} \circ |-|_n = f$。存在多种 $n$-截断的构造方法。HoTT 书给出了一种涉及高阶归纳类型的构造，特别是``轮毂和辐条''构造 \cite[第 7.3 节]{Uni13}。Egbert Rijke 的书中给出了一个更优雅的证明：$-2$ 的情形是平凡的。对于 $n=-1$，我们谈论命题截断，它可以``非直谓地''（使用命题调整）构造为
+\[
+\|A\|_{-1} = \forall(Q:\Prop)\; (A \to Q) \to Q，
+\]
+或者``直谓地''——但依赖于 $\U$ 中的推出——使用 Rijke 的连结构造 \cite{Rij17}。
+
+对于归纳步骤，假设 $\U$ 允许 $n \geq -1$ 的 $n$-截断。为了构造 $A:\U$ 的 $(n+1)$-截断，定义
+\[
+R_n : A \to n\mathsf{\text{-}Type}^A, \qquad R_n(a) = \lambda b\,.\, \|a=b\|_n.
+\]
+$A$ 的一个 $(n+1)$-截断由 $R_n$ 的像给出，即子类型
+\[
+\|A\|_{n+1} := \mathsf{im}(R_n) := \left\{P : A \to n\mathsf{\text{-}Type} \mid \exists(a:A)\; R_n(a) = P\right\} \hookrightarrow n\mathsf{\text{-}Type}. \tag*{$\blacksquare$}
+\]
+
+\subsection{开和闭模态性}
+
+对于每个 $Q:\Prop$，我们可以定义开和闭模态性
+\[
+\mathsf{Op}_Q, \mathsf{Cl}_Q : \U \to \U \qquad \mathsf{Op}_Q(A) = A^Q \qquad \mathsf{Cl}_Q(A) = A * Q
+\]
+其中 $A * Q$ 是 $A$ 和 $Q$ 的连结（join），由推出定义：
+\[
+\begin{tikzcd}
+A \times Q \arrow[r, "\mathsf{pr}_2"] \arrow[d, "\mathsf{pr}_1"'] & Q \arrow[d] \\
+A \arrow[r] & A * Q
+\end{tikzcd}
+\]
+
+这些模态性是 1-拓扑斯理论中已知的开和闭 Lawvere-Tierney 拓扑的高阶类似物。
+
+\subsection{局部化和零化}
+
+给定函数 $f : Y \to X$，如果预复合函数
+\[
+A^f : A^X \to A^Y \qquad A^f(g) = g \circ f
+\]
+是一个等价，则称对象 $A:\U$ 为\emph{$f$-局部的}。使用高阶归纳类型，可以证明 $f$-局部对象的子全类是反射的 \cite[定理 2.16]{RSS20}，且当 $f$ 的余域 $X$ 是可缩的时是一个模态性 \cite[定理 2.17]{RSS20}。在后一种情况下，也称为在 $X$ 处的\emph{零化}。例如，$n$-截断可以定义为在 $S^{n+1}$ 处的零化。
+
+\section{因子分解}
+
+\begin{definition}
+一个\emph{正交因子分解系统}（orthogonal factorization system）是一对谓词
+\[
+\mathcal{L}, \mathcal{R} : \prod_{A,B:\U} (A \to B) \to \Prop
+\]
+使得：
+\begin{enumerate}
+    \item $\mathcal{L}$ 和 $\mathcal{R}$ 都对复合封闭且包含所有恒同映射；
+    \item 每个函数 $f : A \to B$ 唯一地分解为
+    \[
+    f = (A \xrightarrow{f_{\mathcal{L}}} E(f) \xrightarrow{f_{\mathcal{R}}} B)
+    \]
+    即分解空间是可缩的。
+\end{enumerate}
+如果左类对拉回封闭，则该因子分解系统被称为\emph{稳定的}。
+\end{definition}
+
+结果表明，稳定的因子分解系统等价于模态性！
+
+具体而言，给定一个模态反射子全类 $\U_{\modal} \hookrightarrow \U$，我们通过设置
+\begin{align*}
+\mathcal{L} &= \{\text{具有模态纤维的函数}\} \\
+\mathcal{R} &= \{\text{具有连通纤维的函数}\}
+\end{align*}
+来获得一个稳定因子分解系统。
+
+函数 $f : B \to A$ 的因子分解通过``逐纤维应用模态性''得到：
+\[
+B \simeq \sum_{(a:A)} \mathsf{fib}_f(a) \longrightarrow \sum_{(a:A)} \modal(\mathsf{fib}_f(a)) \longrightarrow A
+\]
+
+反之，我们从稳定因子分解系统 $(\mathcal{L}, \mathcal{R})$ 通过设置 $\U_{\modal} = \{A:\U \mid (A \to 1) \in \mathcal{R}\}$ 得到一个模态性。
+
+\section{形式平展映射}
+
+令人惊讶的是，还有另一种从模态性构造 OFS 的方法。这里，右映射是那些 $f : A \to B$，使得下图
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+A \arrow[r, "f"] \arrow[d, "\eta_A"'] & B \arrow[d, "\eta_B"] \\
+\modal A \arrow[r, "\modal f:=\overline{\eta_B\circ f}"'] & \modal B
+\end{tikzcd}
+\]
+是一个拉回。这些映射在 \cite{CR21} 中被称为\emph{形式平展的}。
+
+当模态性是 lex 时，两种 OFS 构造一致，这直观上意味着模态性作为 $\U$ 上的函子保持有限极限，可以用多种不同方式刻画 \cite[定理 3.1]{RSS20}。
+
+\begin{thebibliography}{9}
+
+\bibitem[CR21]{CR21}
+F. Cherubini and E. Rijke.
+Modal descent.
+\textit{MSCS. Mathematical Structures in Computer Science}, 31(4):363--391, 2021.
+
+\bibitem[Mog91]{Mog91}
+E. Moggi.
+Notions of computation and monads.
+volume 93, pages 55--92. 1991.
+Selections from the 1989 IEEE Symposium on Logic in Computer Science.
+
+\bibitem[Rij17]{Rij17}
+E. Rijke.
+The join construction.
+January 2017.
+
+\bibitem[RSS20]{RSS20}
+E. Rijke, M. Shulman, and B. Spitters.
+Modalities in homotopy type theory.
+\textit{Logical Methods in Computer Science}, 16(1):Paper No. 2, 79, 2020.
+
+\bibitem[Uni13]{Uni13}
+The Univalent Foundations Program.
+\textit{Homotopy Type Theory: Univalent Foundations of Mathematics}.
+\url{https://homotopytypetheory.org/book},
+Institute for Advanced Study, 2013.
+
+\end{thebibliography}
+
+\end{document}
