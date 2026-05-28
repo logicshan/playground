@@ -1,0 +1,95 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+%%%%%%%% FONT TIMESAVES %%%%%%%
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bI}{\mathbb{I}}
+
+\newcommand{\cC}{\mathcal{C}}
+
+%%%%%%%% CATEGORY THEORY %%%%%%%
+\newcommand{\id}{\mathrm{id}}
+\DeclareMathOperator{\Hom}{Hom}
+
+\newcommand{\cat}[1]{\mathrm{#1}}
+\newcommand{\Set}{\cat{Set}}
+
+\DeclareFontFamily{U}{dmjhira}{}
+\DeclareFontShape{U}{dmjhira}{m}{n}{ <-> dmjhira }{}
+
+\DeclareRobustCommand{\yo}{\text{\usefont{U}{dmjhira}{m}{n}\symbol{"48}}}
+
+\DeclareMathOperator*{\colim}{colim}
+
+\newcommand{\inl}{\operatorname{inl}}
+\newcommand{\inr}{\operatorname{inr}}
+
+%%%%%%%%% GEOMTERY %%%%%%%%%%%%%%
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Zar}{\mathrm{Zar}}
+
+%%%%%%%%% TYPE THEORY %%%%%%%%%%%
+\newcommand{\OO}{\bigcirc}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\isEquiv}{\bibopenparen{isEquiv}}
+\newcommand{\hlevel}{\mathrm{hlevel}}
+\newcommand{\isContr}{\operatorname{isContr}}
+\newcommand{\isProp}{\operatorname{isProp}}
+\newcommand{\Prop}{\mathrm{Prop}}
+\newcommand{\refl}{\mathrm{refl}}
+\newcommand{\isModal}{\operatorname{isModal}}
+\newcommand{\ap}{\operatorname{ap}}
+\newcommand{\fib}{\operatorname{fib}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tot}{\mathrm{tot}}
+\newcommand{\pt}{\mathrm{pt}}
+
+\title{半单纯集(Semi-simplicial set)}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}
+对 $n:\bN$, 记
+\[
+[n] := \{ k : \bN \mid k < n \}
+\]
+\end{frame}
+
+\begin{frame}{半单纯范畴}
+半单纯范畴 $\Delta_{+}$, 其对象为自然数, 给定 $n, m : \Delta_{+}$, $n$ 与 $m$ 之间的态射是从 $[n]$ 到 $[m]$ 的严格单调递增函数.
+\end{frame}
+
+\begin{frame}{直范畴(direct category)}
+
+$ω$ 是自然数偏序 $(\mathbb{N},≤)$ 对应的范畴
+
+\vspace{6mm}
+
+称一个范畴 $C$ 是直的(direct), 如果存在一个秩函子(rank functor) $\varphi : C \to \omega$, 它反射恒等态射(reflects identities), 即: 对任意 $x,y:C$, 若存在态射 $f : x \to y$ 使得 $\varphi(x) = \varphi(y)$, 则 $f$ 必为恒等态射, 即 $(y,f) = (x,id_x)$. 对于 $x:C$, 我们称 $\varphi(x)$ 为 $x$ 的秩(rank).
+
+\vspace{6mm}
+
+对于 $n : \mathbb{N}$，记 $C^{<n}$ 为由所有秩小于 $n$ 的对象构成的满子范畴；记 $C^{=n}$ 为秩恰好等于 $n$ 的对象的类型。它同样是 $C$ 的一个满子范畴，但由于它同时也是一个离散范畴，其范畴结构并不特别有趣。
+
+\vspace{6mm}
+
+几何上看，Direct Category（直范畴）可以理解成一个“只能向上生长的有向分层图（layered directed graph）”。
+\end{frame}
+
+\end{document}
