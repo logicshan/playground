@@ -1,0 +1,146 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+% MACROS
+
+\newcommand{\NN}{\mathbb{N}} % natural numbers
+\newcommand{\RR}{\mathbb{R}} % real numbers
+\newcommand{\ZZ}{\mathbb{Z}} % integers
+
+\newcommand{\theory}[1]{\mathsf{#1}} % A named theory
+\newcommand{\signature}[1]{\Sigma_{\theory{#1}}} % The signature of a theory
+\newcommand{\equations}[1]{\mathcal{E}_{\theory{#1}}} % Equations of a theory
+
+\newcommand{\Mod}[1]{\text{\textbf{Mod}}(\theory{#1})} % Models of a theory in Set
+\newcommand{\ModC}[2]{\text{\textbf{Mod}}_{#1}(\theory{#2})} % Models of a theory in a category
+\newcommand{\ComodC}[2]{\text{\textbf{Comod}}_{#1}(\theory{#2})} % Comodels of a theory in a category
+
+\newcommand{\category}[1]{\text{\textbf{#1}}} % A named category
+\newcommand{\Set}{\category{Set}} % The category of sets
+\newcommand{\opcat}[1]{{#1}^{\mathsf{op}}} % Opposite category
+
+\newcommand{\carrier}[1]{|#1|} % carrier of a model
+\newcommand{\Free}[2]{F_{\theory{#1}}(#2)} % free model
+\newcommand{\FreeFun}[1]{F_{\theory{#1}}} % free model functor
+
+\newcommand{\all}[1]{\forall #1 \,.\,} % universal quantifier
+\newcommand{\some}[1]{\exists #1 \,.\,} % existential quantifier
+\newcommand{\set}[1]{\{#1\}} % set description
+\newcommand{\such}{\mid}
+
+\newcommand{\lam}[1]{\lambda #1 \,.\,}
+
+\newcommand{\family}[2]{\{#1\}_{#2}} % a family
+
+\newcommand{\finpow}[1]{\mathcal{P}_{{<}\omega}(#1)} % finite powerset
+
+\newcommand{\Tree}[2]{\mathsf{Tree}_{#1}(#2)} % trees over a signature
+\newcommand{\leaf}[1]{\return{#1}} % the embedding of generators into trees
+
+\newcommand{\op}[1]{\mathsf{op}_{#1}} % an operation symbol
+\newcommand{\arity}[1]{\mathsf{ar}_{#1}} % arity of a symbol
+\newcommand{\opdecl}[3]{#1 : #2 \leadsto #3} % operation declaration
+
+\newcommand{\one}{\mathsf{1}} % the terminal object
+\newcommand{\unit}{{\text{\small$()$}}} % the sole element of the singleton
+
+\newcommand{\lift}[1]{#1^\dagger} % monad lift
+
+\newcommand{\Cinfty}{\mathcal{C}^\infty}
+
+\newcommand{\sem}[1]{[\![#1]\!]} % semantic bracket
+
+\newcommand{\bool}{\mathsf{bool}} % booleans
+\newcommand{\true}{\mathsf{true}}
+\newcommand{\false}{\mathsf{false}}
+\newcommand{\cond}[3]{\mathsf{if}\;#1\;\mathsf{then}\;#2\;\mathsf{else}\;#3}
+
+\newcommand{\hto}{\Rightarrow} % Handler arrow
+
+\newcommand{\defeq}{\mathbin{{:}{=}}} % definitional equality
+
+\newcommand{\tensor}[2]{#1 \otimes #2} % tensor of a model and a comodel
+\newcommand{\opair}[2]{\langle #1, #2 \rangle} % the tensor of a progrqm and a world
+
+\newcommand{\ct}[1]{\underline{#1}} % computation type symbol
+\newcommand{\dirt}[2]{#1 \mathbin{!} #2} % type with dirt
+
+%%% Macros for the programming language
+
+% General syntactic constructs
+\newcommand{\kode}[1]{\mathsf{#1}}
+
+% Core syntax
+\newcommand{\seq}[2]{\kode{do}\; #1 \leftarrow #2 \;\kode{in}\;}
+\newcommand{\handler}{\kode{handler}\;}
+\newcommand{\xopgen}[2]{\overline{#1}(#2)}
+\newcommand{\opgen}[2]{\xopgen{\kode{#1}}{#2}}
+\newcommand{\opcall}[3]{\kode{#1}(#2, #3)}
+\newcommand{\opclause}[3]{#1(#2; #3) \mapsto}
+\newcommand{\return}[1]{\kode{return}\;#1}
+\newcommand{\retclause}[1]{\return{#1} \mapsto}
+\newcommand{\withhandle}[2]{\kode{with}\; #1\; \kode{handle}\; #2}
+
+\title{Algebraic effects}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{签名 $\Sigma$}
+  $\family{(\op{i}, \arity{i})}{i}$
+
+  \vspace{6mm}
+
+  幺半群(monoid)对应的签名为 $\{(\mathsf{u}, 0), (\mathsf{m}, 2)\}$
+\end{frame}
+
+\begin{frame}{$\Sigma$-项(term)}
+ 不同变量$x_1, \ldots, x_k$的一个列表(可能为空)被称为上下文(context)
+
+ \vspace{6mm}
+
+ 在上下文$x_1, \ldots, x_k$中的$\Sigma$-项根据以下规则归纳定义
+ \begin{enumerate}
+  \item 在上下文$x_1, \ldots, x_k$中, 每一个变量 $x_i$ 都是一个 $\Sigma$-项
+  \item 如果$t_1, \ldots, t_{\arity{i}}$是上下文$x_1, \ldots, x_k$中的$\Sigma$-项， 那么 $\op{i}(t_1, \ldots, t_{\arity{i}})$ 是上下文 $x_1, \ldots, x_k$中的一个$\Sigma$-项
+ \end{enumerate}
+
+ \vspace{6mm}
+
+ 我们用
+ \begin{equation*}
+  x_1, \ldots, x_k \mid t
+\end{equation*}
+表示$t$是上下文$x_1, \ldots, x_k$中的一个$\Sigma$-项
+
+\vspace{6mm}
+
+空上下文中的$\Sigma$-项被称为闭(closed)$\Sigma$-项. 显然, 闭$\Sigma$-项中不含变量
+\end{frame}
+
+\begin{frame}{$\Sigma$-等式}
+  一个$\Sigma$-等式就是上下文$x_1, \ldots, x_k$中的一对$\Sigma$-项$\ell$和$r$. 一般记为
+\begin{equation*}
+  x_1, \ldots, x_k \mid \ell = r
+\end{equation*}
+\end{frame}
+
+\begin{frame}{代数理论(Algebraic theories)}
+  一个代数理论 $\theory{T} = (\signature{T}, \equations{T})$, 也被叫作一个等式理论(equational theory), 其中$\signature{T}$是一个签名, $\equations{T}$ 是一组 $\signature{T}$-等式.
+\end{frame}
+
+\end{document}
