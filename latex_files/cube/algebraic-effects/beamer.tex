@@ -2,6 +2,7 @@
 \usepackage{ctex}
 \usepackage{tikz}
 \usepackage{tikz-cd}
+\usepackage{xypic}
 
 \usepackage{unicode-math}
 %\setmathfont{STIX Two Math}
@@ -141,6 +142,51 @@
 
 \begin{frame}{代数理论(Algebraic theories)}
   一个代数理论 $\theory{T} = (\signature{T}, \equations{T})$, 也被叫作一个等式理论(equational theory), 其中$\signature{T}$是一个签名, $\equations{T}$ 是一组 $\signature{T}$-等式.
+\end{frame}
+
+\begin{frame}{签名的解释}
+给定一个签名 $\Sigma$. $\Sigma$ 的一个解释 $I$ 由以下数据构成:
+\begin{enumerate}
+  \item 一个集合 $\carrier{I}$, 叫作承载集(carrier).
+  \item 对每一个操作符 $\op{i}$, 有一个映射
+    \begin{equation*}
+    \sem{\op{i}}_I : \underbrace{\carrier{I} \times \cdots \times \carrier{I}}_{\arity{i}} \to \carrier{I},
+  \end{equation*}
+  称为运算.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{$\Sigma$-项的解释}
+  签名 $\Sigma$ 的一个解释 $I$ 可以被扩展到 $\Sigma$-项. 上下文中的一个 $\Sigma$-项
+\begin{equation*}
+  x_1, \ldots, x_k \mid t
+\end{equation*}
+由一个映射
+\begin{equation*}
+  \sem{x_1, \ldots, x_k \mid t}_I : \carrier{I}^k \to \carrier{I},
+\end{equation*}
+来解释. 定义如下:
+\begin{enumerate}
+  \item 变量$x_i$被解释为第$i$个投影
+    \begin{equation*}
+    \sem{x_1, \ldots, x_k \mid  x_i}_I = \pi_i : \carrier{I}^k \to \carrier{I},
+  \end{equation*}
+  \item 上下文中的一个复合项
+  \begin{equation*}
+    x_1, \ldots, x_k \mid \op{i}(t_1, \ldots, t_{\arity{i}})
+  \end{equation*}
+  被解释为映射的复合
+    \begin{equation*}
+    \xymatrix@+6em{
+      {\carrier{I}^k} \ar[r]^{(\sem{t_1}_I, \ldots, \sem{t_{\arity{i}}}_I)}
+      &
+      {\carrier{I}^{\arity{i}}} \ar[r]^{\sem{\op{i}}_I}
+      &
+      {\carrier{I}}
+    }
+  \end{equation*}
+  (为了简单起见, 我们在合适的地方省略了上下文$x_1, \ldots, x_k$)
+\end{enumerate}
 \end{frame}
 
 \end{document}
