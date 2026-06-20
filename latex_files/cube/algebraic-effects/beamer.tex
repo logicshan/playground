@@ -35,7 +35,7 @@
 \newcommand{\all}[1]{\forall #1 \,.\,} % universal quantifier
 \newcommand{\some}[1]{\exists #1 \,.\,} % existential quantifier
 \newcommand{\set}[1]{\{#1\}} % set description
-\newcommand{\such}{\mid}
+\newcommand{\such}{∣}
 
 \newcommand{\lam}[1]{\lambda #1 \,.\,}
 
@@ -110,23 +110,23 @@
 \end{frame}
 
 \begin{frame}{$\Sigma$-项(term)}
- 不同变量$x_1, \ldots, x_k$的一个列表(可能为空)被称为上下文(context)
+ 不同变量$x_1, …, x_k$的一个列表(可能为空)被称为上下文(context)
 
  \vspace{6mm}
 
- 在上下文$x_1, \ldots, x_k$中的$\Sigma$-项根据以下规则归纳定义
+ 在上下文$x_1, …, x_k$中的$\Sigma$-项根据以下规则归纳定义
  \begin{enumerate}
-  \item 在上下文$x_1, \ldots, x_k$中, 每一个变量 $x_i$ 都是一个 $\Sigma$-项
-  \item 如果$t_1, \ldots, t_{\arity{i}}$是上下文$x_1, \ldots, x_k$中的$\Sigma$-项， 那么 $\op{i}(t_1, \ldots, t_{\arity{i}})$ 是上下文 $x_1, \ldots, x_k$中的一个$\Sigma$-项
+  \item 在上下文$x_1, …, x_k$中, 每一个变量 $x_i$ 都是一个 $\Sigma$-项
+  \item 如果$t_1, …, t_{\arity{i}}$是上下文$x_1, …, x_k$中的$\Sigma$-项， 那么 $\op{i}(t_1, …, t_{\arity{i}})$ 是上下文 $x_1, …, x_k$中的一个$\Sigma$-项
  \end{enumerate}
 
  \vspace{6mm}
 
  我们用
  \begin{equation*}
-  x_1, \ldots, x_k \mid t
+  x_1, …, x_k ∣ t
 \end{equation*}
-表示$t$是上下文$x_1, \ldots, x_k$中的一个$\Sigma$-项
+表示$t$是上下文$x_1, …, x_k$中的一个$\Sigma$-项
 
 \vspace{6mm}
 
@@ -134,9 +134,9 @@
 \end{frame}
 
 \begin{frame}{$\Sigma$-等式}
-  一个$\Sigma$-等式就是上下文$x_1, \ldots, x_k$中的一对$\Sigma$-项$\ell$和$r$. 一般记为
+  一个$\Sigma$-等式就是上下文$x_1, …, x_k$中的一对$\Sigma$-项$\ell$和$r$. 一般记为
 \begin{equation*}
-  x_1, \ldots, x_k \mid \ell = r
+  x_1, …, x_k ∣ ℓ = r
 \end{equation*}
 \end{frame}
 
@@ -150,7 +150,7 @@
   \item 一个集合 $\carrier{I}$, 叫作承载集(carrier).
   \item 对每一个操作符 $\op{i}$, 有一个映射
     \begin{equation*}
-    \sem{\op{i}}_I : \underbrace{\carrier{I} \times \cdots \times \carrier{I}}_{\arity{i}} \to \carrier{I},
+    \sem{\op{i}}_I : \underbrace{\carrier{I} × ⋯ × \carrier{I}}_{\arity{i}} → \carrier{I},
   \end{equation*}
   称为运算.
 \end{enumerate}
@@ -159,34 +159,69 @@
 \begin{frame}{$\Sigma$-项的解释}
   签名 $\Sigma$ 的一个解释 $I$ 可以被扩展到 $\Sigma$-项. 上下文中的一个 $\Sigma$-项
 \begin{equation*}
-  x_1, \ldots, x_k \mid t
+  x_1, …, x_k ∣ t
 \end{equation*}
 由一个映射
 \begin{equation*}
-  \sem{x_1, \ldots, x_k \mid t}_I : \carrier{I}^k \to \carrier{I},
+  \sem{x_1, …, x_k ∣ t}_I : \carrier{I}^k → \carrier{I},
 \end{equation*}
 来解释. 定义如下:
 \begin{enumerate}
   \item 变量$x_i$被解释为第$i$个投影
     \begin{equation*}
-    \sem{x_1, \ldots, x_k \mid  x_i}_I = \pi_i : \carrier{I}^k \to \carrier{I},
+    \sem{x_1, …, x_k ∣  x_i}_I = \pi_i : \carrier{I}^k → \carrier{I},
   \end{equation*}
   \item 上下文中的一个复合项
   \begin{equation*}
-    x_1, \ldots, x_k \mid \op{i}(t_1, \ldots, t_{\arity{i}})
+    x_1, …, x_k ∣ \op{i}(t_1, …, t_{\arity{i}})
   \end{equation*}
   被解释为映射的复合
     \begin{equation*}
     \xymatrix@+6em{
-      {\carrier{I}^k} \ar[r]^{(\sem{t_1}_I, \ldots, \sem{t_{\arity{i}}}_I)}
+      {\carrier{I}^k} \ar[r]^{(\sem{t_1}_I, …, \sem{t_{\arity{i}}}_I)}
       &
       {\carrier{I}^{\arity{i}}} \ar[r]^{\sem{\op{i}}_I}
       &
       {\carrier{I}}
     }
   \end{equation*}
-  (为了简单起见, 我们在合适的地方省略了上下文$x_1, \ldots, x_k$)
+  (为了简单起见, 我们在合适的地方省略了上下文$x_1, …, x_k$)
 \end{enumerate}
+\end{frame}
+
+\begin{frame}{代数理论的模型}
+  代数理论$\theory{T}$的一个模型$M$, 是签名$\signature{T}$的一个解释, 并且这个解释使得$\equations{T}$中的所有等式成立. 也就是说, 对$\equations{T}$中的任意等式
+  \begin{equation*}
+  x_1, …, x_k ∣ ℓ = r
+\end{equation*}
+映射
+\begin{equation*}
+  \sem{x_1, …, x_k ∣ \ell}_M : \carrier{M}^k → \carrier{M}
+  \quad\text{和}\quad
+  \sem{x_1, …, x_k ∣ r}_M : \carrier{M}^k → \carrier{M}
+\end{equation*}
+相等. 我们把$\theory{T}$的模型称为$\theory{T}$-模型或$\theory{T}$-代数.
+
+\end{frame}
+
+\begin{frame}{例}
+  每一个代数理论都有一个平凡模型, 它的承载集是单点集$\one$, 它的操作被解释为唯一的映射$\one^k → \one$. 所有等式成立, 因为任意两个映射$\one^k → \one$是相等的.
+
+  \vspace{6mm}
+
+  这就解释了为什么对一个环(ring)来说, 我们不应该要求 $0 ≠ 1$. 因为如果这样, 环的理论就不是一个代数理论.
+\end{frame}
+
+\begin{frame}{模型的积}
+  假设$L$和$M$是理论$\theory{T}$的两个模型. 我们可以定义模型的积$L× M$如下: 承载集为模型承载集的笛卡尔积
+  \begin{equation*}
+  \carrier{L × M} = \carrier{L} × \carrier{M},
+  \end{equation*}
+操作逐点计算
+\begin{equation*}
+  \sem{\op{i}}_{M × L}(a, b) = (\sem{\op{i}}_M(a), \sem{\op{i}}_L(b)).
+\end{equation*}
+等式$\equations{T}$在$L× M$上成立, 因为它们在每个坐标分量处分别成立. 此处的积操作可以扩展为任意个数模型的积, 以至于无穷个模型的积.
 \end{frame}
 
 \end{document}
