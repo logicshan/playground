@@ -224,4 +224,71 @@
 等式$\equations{T}$在$L× M$上成立, 因为它们在每个坐标分量处分别成立. 此处的积操作可以扩展为任意个数模型的积, 以至于无穷个模型的积.
 \end{frame}
 
+\begin{frame}{模型之间的同态}
+  令 $L$ 和 $M$ 是代数理论 $\theory{T}$ 的模型. 从 $L$ 到 $M$ 的一个 $\theory{T}$-同态是承载集之间的一个映射 $\phi : \carrier{L} → \carrier{M}$, 并且它和 $\theory{T}$ 的每一个操作符 $\op{i}$ 都是交换的
+  \begin{equation*}
+  ϕ ∘ \sem{\op{i}}_L = \sem{\op{i}}_M ∘ \underbrace{(\phi, …, \phi)}_{\arity{i}}.
+  \end{equation*}
+
+  \vspace{10mm}
+
+  我们可以把代数理论 $\theory{T}$ 的模型组织为一个范畴 $\Mod{T}$: 它的对象是 $\theory{T}$ 的模型, 态射是模型之间的同态.
+\end{frame}
+
+\begin{frame}{范畴中的模型}
+前面我们考虑的是代数理论在集合上的模型. 更一般地, 我们可以考虑具有有限积的范畴 $\category{C}$ 中的模型. 前面关于解释和模型的定义可以直接转写到 $\category{C}$ 上. $\category{C}$ 中的一个解释 $I$ 定义为
+\begin{enumerate}
+  \item $\category{C}$ 中的一个对象 $\carrier{I}$, 叫作承载对象(carrier)
+  \item 对每一个操作符 $\op{i}$, 有一个$\category{C}$中的态射
+    \begin{equation*}
+    \sem{\op{i}}_I : \underbrace{\carrier{I} × ⋯ × \carrier{I}}_{\arity{i}} → \carrier{I}.
+  \end{equation*}
+\end{enumerate}
+
+解释 $I$ 可以扩展到上下文中的 $\Sigma$-项:
+\begin{enumerate}
+  \item 变量 $x_1, …, x_k ∣ x_i$ 被解释为第 $i$-个投影
+    \begin{equation*}
+    \sem{x_1, …, x_k ∣  x_i}_I = \pi_i : \carrier{I}^k → \carrier{I},
+    \end{equation*}
+  \item 上下文中的一个复合项
+  \begin{equation*}
+    x_1, …, x_k ∣ \op{i}(t_1, …, t_{\arity{i}})
+  \end{equation*}
+  被解释为态射的复合
+  \begin{equation*}
+    \xymatrix@+6em{
+      {\carrier{I}^k} \ar[r]^{(\sem{t_1}_I, …, \sem{t_{\arity{i}}}_I)}
+      &
+      {\carrier{I}^{\arity{i}}} \ar[r]^{\sem{\op{i}}_I}
+      &
+      {\carrier{I}}
+    }
+  \end{equation*}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+  代数理论$\theory{T}$在范畴$\category{C}$中的一个模型, 是签名$\signature{T}$的一个解释$M$, 并且这个解释使得$\equations{T}$中的所有等式成立. 也就是说, 对$\equations{T}$中的任意等式
+  \begin{equation*}
+  x_1, …, x_k ∣ ℓ = r
+\end{equation*}
+态射
+\begin{equation*}
+  \sem{x_1, …, x_k ∣ \ell}_M : \carrier{M}^k → \carrier{M}
+  \quad\text{和}\quad
+  \sem{x_1, …, x_k ∣ r}_M : \carrier{M}^k → \carrier{M}
+\end{equation*}
+相等.
+\end{frame}
+
+\begin{frame}
+同态的定义同样可以扩展到范畴中的模型. 范畴$\category{C}$中的$\theory{T}$-模型 $L$和$M$之间的一个$\theory{T}$-同态是 $\category{C}$ 中的一个态射 $\phi : \carrier{L} \to \carrier{M}$, 使得对$\theory{T}$中的每一个操作符$\op{i}$, $\phi$ 和 $\op{i}$ 的解释交换
+\begin{equation*}
+  ϕ ∘ \sem{\op{i}}_L = \sem{\op{i}}_M ∘  \underbrace{(\phi, …, \phi)}_{\arity{i}}.
+\end{equation*}
+
+范畴$\category{C}$中的$\theory{T}$-模型和$\theory{T}$-同态构成一个范畴$\ModC{\category{C}}{T}$.
+\end{frame}
+
 \end{document}
