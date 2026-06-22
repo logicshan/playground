@@ -291,4 +291,23 @@
 范畴$\category{C}$中的$\theory{T}$-模型和$\theory{T}$-同态构成一个范畴$\ModC{\category{C}}{T}$.
 \end{frame}
 
+\begin{frame}{自由模型}
+给定一个代数理论$\theory{T}$ 和一个集合 $X$, 由$X$生成的自由$\theory{T}$-模型(也可称为自由$\theory{T}$-代数), 是一个模型 $M$ 和一个映射 $\eta : X \to \carrier{M}$, 使得对任意的$\theory{T}$-模型$L$和任意的映射$f:X\to\carrier{L}$, 存在唯一的$\theory{T}$-同态 $\overline{f} : M \to L$, 使得下图交换:
+\begin{equation*}
+  \xymatrix{
+    {X}
+    \ar[r]^{\eta}
+    \ar[rd]_{f}
+    &
+    {\carrier{M}}
+    \ar[d]^{\overline{f}}
+    \\
+    &
+     \carrier{L}
+  }
+\end{equation*}
+
+这个定义有点拗口, 但可以这样理解: 由 $X$ 生成的自由 $\theory{T}$-模型是从集合 $X$ 构造出 $\theory{T}$-模型的``最经济"的方式.
+\end{frame}
+
 \end{document}
