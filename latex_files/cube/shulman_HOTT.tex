@@ -1,0 +1,217 @@
+\documentclass{beamer}
+
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{ctex}
+\usepackage{lmodern}
+%\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+
+\makeatletter
+% 文字上方的可伸缩双线右箭头
+\newcommand{\overRightarrow}[1]{%
+  \mathpalette{\overarrow@\Rightarrowfill@}{#1}%
+}
+% 文字上方的可伸缩双线左箭头（附赠）
+\newcommand{\overLeftarrow}[1]{%
+  \mathpalette{\overarrow@\Leftarrowfill@}{#1}%
+}
+% 文字上方的可伸缩双线双向箭头（附赠）
+\newcommand{\overLeftrightarrow}[1]{%
+  \mathpalette{\overarrow@\Leftrightarrowfill@}{#1}%
+}
+\makeatother
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\usepackage{hyperref}
+
+%\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+%%%%%%%% FONT TIMESAVES %%%%%%%
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bI}{\mathbb{I}}
+
+\newcommand{\cC}{\mathcal{C}}
+
+%%%%%%%% CATEGORY THEORY %%%%%%%
+\newcommand{\id}{\mathrm{id}}
+\DeclareMathOperator{\Hom}{Hom}
+
+\newcommand{\cat}[1]{\mathrm{#1}}
+\newcommand{\Set}{\cat{Set}}
+
+\newcommand{\Id}{\text{Id}}
+\newcommand{\refl}{\text{refl}}
+
+\DeclareFontFamily{U}{dmjhira}{}
+\DeclareFontShape{U}{dmjhira}{m}{n}{ <-> dmjhira }{}
+
+\DeclareRobustCommand{\yo}{\text{\usefont{U}{dmjhira}{m}{n}\symbol{"48}}}
+
+\DeclareMathOperator*{\colim}{colim}
+
+\newcommand{\inl}{\operatorname{inl}}
+\newcommand{\inr}{\operatorname{inr}}
+
+%%%%%%%%% GEOMTERY %%%%%%%%%%%%%%
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Zar}{\mathrm{Zar}}
+
+%%%%%%%%% TYPE THEORY %%%%%%%%%%%
+\newcommand{\OO}{\bigcirc}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\isEquiv}{\bibopenparen{isEquiv}}
+\newcommand{\hlevel}{\mathrm{hlevel}}
+\newcommand{\isContr}{\operatorname{isContr}}
+\newcommand{\isProp}{\operatorname{isProp}}
+\newcommand{\Prop}{\mathrm{Prop}}
+%\newcommand{\refl}{\mathrm{refl}}
+\newcommand{\isModal}{\operatorname{isModal}}
+\newcommand{\ap}{\operatorname{ap}}
+\newcommand{\fib}{\operatorname{fib}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tot}{\mathrm{tot}}
+\newcommand{\pt}{\mathrm{pt}}
+
+\title{Higher Observational Type Theory}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{相等性的第一原则}
+对于任何类型 $A$ 和任何 $x, y : A$，存在一个恒等类型 $\Id_A(x, y)$。也就是说，$\Id_A : A \times A \to \UU$。我们为每个 $A$ 分别定义 $\Id_A$。
+\end{frame}
+
+\begin{frame}{相等性的第二原则}
+对于任何类型 $A$ 和任何元素 $x : A$，存在一个自反性元素 $\refl_x : \Id_A(x, x)$。我们为每个 $x$ 分别定义 $\refl_x$。
+\end{frame}
+
+\begin{frame}{相等性的第三原则}
+所有构造都尊重相等性：如果它们的输入全部被替换为相等的东西，输出也将相等。我们为每个构造分别证明/定义这一点。
+\end{frame}
+
+\begin{frame}{相等性的第四原则}
+任何 $E : \Id_{\UU}(A, B)$ 产生：
+\begin{itemize}
+\item 一个函数 $E : A \times B \to \UU$。
+\item 对于任何 $a : A$，一个元素 $\overrightarrow{E}(a) : B$。
+\item 对于任何 $a : A$，一个元素 $\overRightarrow{E}(a) : E(a, \overrightarrow{E}(a))$。
+\item 对于任何 $b : B$，一个元素 $\overleftarrow{E}(b) : A$。
+\item 对于任何 $b : B$，一个元素 $\overLeftarrow{E}(b) : E(\overleftarrow{E}(b), b)$。
+\end{itemize}
+此外，对于 $A : \UU$，我们有 $\refl_A(a_0, a_1) = \Id_A(a_0, a_1)$。
+\end{frame}
+
+\begin{frame}[fragile]{相等性的第五原则}
+每个方块都有一个关联的对称/转置方块：
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+a_{10} \arrow[r, "a_{12}"] & a_{11}  \\
+a_{00} \arrow[u, "a_{20}"] \arrow[r, "a_{02}"'] \arrow[ur, phantom, "a_{22}"] & a_{01} \arrow[u, "a_{21}"']
+\end{tikzcd}
+\quad\rightsquigarrow\quad
+\begin{tikzcd}[row sep=large, column sep=large]
+a_{01} \arrow[r, "a_{21}"] & a_{11}  \\
+a_{00} \arrow[u, "a_{02}"] \arrow[r, "a_{20}"'] \arrow[ur, phantom, "\text{sym}(a_{22})"] & a_{10} \arrow[u, "a_{12}"']
+\end{tikzcd}
+\]
+我们为方块的每个构造分别定义这些。
+\end{frame}
+
+\begin{frame}[fragile]{第五原则的分析}
+\begin{enumerate}
+  \item $\Id_{A \to B}(f_0, f_1) = \prod_{a_0, a_1 : A} \left( \Id_A(a_0, a_1) \to \Id_B(f_0(a_0), f_1(a_1)) \right).$
+  \item $f : A \to B$
+  \item $\refl_f : \Id_{A\to B}(f, f)$
+  \item $\refl_f : \prod_{a_0, a_1 : A} \left( \Id_A(a_0, a_1) \to \Id_B(f(a_0), f(a_1)) \right).$
+  \item $\Id_A : A \times A \to \UU$
+  \item $\refl_{\Id_A} : \Id_{A\times A\to\UU}(\Id_A,\Id_A)$
+  \item $\refl_{\Id_A} : \prod_{(x_0,y_0),(x_1,y_1):A\times A}(\Id_{A\times A}((x_0,y_0),(x_1,y_1)) \to \Id_{\UU}(\Id_A(x_0,y_0),\Id_A(x_1,y_1)))$
+  \item $\Id_{A\times A}((x_0,y_0),(x_1,y_1)) = \Id_A(x_0,x_1)\times\Id_A(y_0,y_1)$
+  \item 把 $\refl_{\Id_A}$ 应用到 $(a_{00},a_{10})$和$(a_{01},a_{11})$上
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \begin{enumerate}
+    \setcounter{enumi}{9}
+    \item $\refl_{\Id_A}(a_{00},a_{10})(a_{01},a_{11}) : (\Id_A(a_{00},a_{01})\times\Id_A(a_{10},a_{11}))\to\Id_{\UU}(\Id_A(a_{00},a_{10}),\Id_A(a_{01},a_{11}))$
+    \item 取 $a_{02}:\Id_A(a_{00},a_{01})$ 和 $a_{12} : \Id_A(a_{10},a_{11})$
+    \item 把 $\refl_{\Id_A}(a_{00},a_{10})(a_{01},a_{11})(a_{02},a_{12}) : \Id_{\UU}(\Id_A(a_{00},a_{10}),\Id_A(a_{01},a_{11}))$
+    \item 把 $\refl_{\Id_A}(a_{00},a_{10})(a_{01},a_{11})(a_{02},a_{12})$ 简写为 $\refl_{\Id_A}(a_{02},a_{12})$
+    \item 根据第四原则, 存在 $\refl_{\Id_A}(a_{02},a_{12}) : \Id_A(a_{00},a_{10})\times\Id_A(a_{01},a_{11}) \to \UU$
+    \item 取 $a_{20} : \Id_A(a_{00},a_{10})$ 和 $a_{21} : \Id_A(a_{01},a_{11})$
+    \item $\refl_{\Id_A}(a_{02},a_{12})(a_{20},a_{21}) : \UU$
+    \item \[
+    \begin{tikzcd}[row sep=large, column sep=large]
+a_{10} \arrow[r, "a_{12}"] & a_{11}  \\
+a_{00} \arrow[u, "a_{20}"] \arrow[r, "a_{02}"'] \arrow[ur, phantom, "a_{22}"] & a_{01} \arrow[u, "a_{21}"']
+\end{tikzcd}
+    \]
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{依赖函数的相等}
+对 $f,g : \prod_{x:A}B(x)$, 定义
+\[
+\Id_{\prod_{x:A}B(x)}(f,g) = \prod_{x_0,x_1:A}\prod_{p:\Id(x_0,x_1)}\refl_B(p)(f(x_0),g(x_1))
+\]
+下面分析这个定义
+\begin{enumerate}
+  \item $B : A \to \UU$
+  \item $\refl_B : \Id_{A\to\UU}(B,B)$
+  \item $\refl_B : \prod_{x_0,x_1:A}(\Id_A(x_0,x_1)\to \Id_{\UU}(B(x_0),B(x_1)))$
+  \item $\refl_B(p) := \refl_B(x_0,x_1,p) : \Id_{\UU}(B(x_0),B(x_1))$
+  \item 根据第四原则, 存在 $\refl_B(p) : B(x_0) \times B(x_1) \to \UU$
+  \item $f(x_0) : B(x_0)$, $g(x_1) : B(x_1)$
+  \item $\refl_B(p)(f(x_0),g(x_1)) : \UU$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{$x\mapsto\refl_x$}
+  若 $x : A$, 那么 $\refl_x : \Id_A(x,x)$, 所以
+  \[
+    x \mapsto \refl_x : \prod_{x:A}\Id_A(x,x)
+  \]
+  在上面依赖函数的定义中, 令 $f := x\mapsto \refl_x$, $B(x) := \Id_A(x,x)$
+  \begin{enumerate}
+    \item $\refl_{x\mapsto\refl_x} : \Id_{\prod_{x:A}\Id_A(x,x)}(x\mapsto\refl_x,x\mapsto\refl_x)$
+    \item $\refl_f : \Id_{\prod_{x:A}B(x)}(f,f)$
+    \item $\Id_{\prod_{x:A}B(x)}(f,f) = \prod_{x_0,x_1:A}\prod_{p:\Id(x_0,x_1)}\refl_B(p)(f(x_0),f(x_1)) = \prod_{x_0,x_1:A}\prod_{p:\Id(x_0,x_1)}\refl_{\Id_A}(p,p)(\refl_{x_0},\refl_{x_1})$
+    \item $\refl_{x\mapsto\refl_x}(a_0,a_1,a_2) : \refl_{\Id_A}(a_2,a_2)(\refl_{a_0},\refl_{a_1})$
+    \item 把 $\refl_{x\mapsto\refl_x}(a_0,a_1,a_2)$ 简写为 $\refl_{x\mapsto\refl_x}(a_2)$, 完全符合 square 的定义
+    \item \[
+    \begin{tikzcd}[row sep=large, column sep=huge]
+a_{0} \arrow[r, "a_{2}"] & a_{1}  \\
+a_{0} \arrow[u, "{\refl_{a_0}}"] \arrow[r, "a_{2}"'] \arrow[ur, phantom, "{\refl_{x\mapsto\refl_x}(a_2)}"] & a_{1} \arrow[u, "{\refl_{a_1}}"']
+\end{tikzcd}
+    \]
+  \end{enumerate}
+
+\end{frame}
+
+
+% 参考文献帧，长列表自动分页
+\begin{frame}[allowframebreaks]{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{txst-seminar}
+\url{https://home.sandiego.edu/~shulman/papers/txst-seminar.df}
+
+\end{thebibliography}
+\end{frame}
+
+\end{document}
