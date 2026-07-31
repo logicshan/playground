@@ -438,7 +438,7 @@ that `A` implies `B`.
 ```
 isProp-→ : isProp B → isProp (A → B)
 -- Exercise:
-isProp-→ p f g i a = {!!}
+isProp-→ p f g i a = p (f a) (g a) i
 ```
 
 As a special case of implication, we find that type negation `¬ A` is
@@ -456,7 +456,8 @@ contractible as soon as `B` is contractible.
 ```
 isContr→ : isContr B → isContr (A → B)
 -- Exercise:
-isContr→ c = {!!}
+isContr→ c .center = λ a → c .center
+isContr→ c .contraction f i = λ a → c .contraction (f a) i
 ```
 
 The "and" of two propositions `A` and `B` is the type of pairs `A × B`.
@@ -464,7 +465,7 @@ The "and" of two propositions `A` and `B` is the type of pairs `A × B`.
 ```
 isProp-× : isProp A → isProp B → isProp (A × B)
 -- Exercise:
-isProp-× pA pB = {!!}
+isProp-× pA pB (a , b) (a' , b') = ap-bin _,_ (pA a a') (pB b b')
 ```
 
 And if `A` and `B` are both true, then `A × B` should also be true.
@@ -472,7 +473,9 @@ And if `A` and `B` are both true, then `A × B` should also be true.
 ```
 isContr-× : isContr A → isContr B → isContr (A × B)
 -- Exercise:
-isContr-× cA cB = {!!}
+isContr-× cA cB .center = cA .center , cB .center
+isContr-× cA cB .contraction (a , b) =
+  ap-bin _,_ (cA .contraction a) (cB .contraction b)
 ```
 
 For contractibility, the converse of ``isContr-×`` holds: if the product
@@ -481,7 +484,12 @@ is contractible then the inputs must have been.
 ```
 isContr-×-conv : isContr (A × B) → isContr A × isContr B
 -- Exercise:
-isContr-×-conv cAB = {!!}
+isContr-×-conv cAB .fst .center = cAB .center .fst
+isContr-×-conv cAB .fst .contraction a =
+  ap fst (cAB .contraction (a , cAB .center .snd))
+isContr-×-conv cAB .snd .center = cAB .center .snd
+isContr-×-conv cAB .snd .contraction b =
+  ap snd (cAB .contraction (cAB .center .fst , b))
 ```
 
 The same is not true for propositions: a product of types being a
@@ -490,7 +498,8 @@ proposition does not imply that the two components are.
 ```
 ¬isProp-×-conv : ¬ ((A B : Type) → isProp (A × B) → isProp A × isProp B)
 -- Exercise: (Hint: ``∅×≃∅``)
-¬isProp-×-conv = {!!}
+¬isProp-×-conv h =
+  ¬isProp-Bool (h ∅ Bool ((isProp-equiv (∅×≃∅ Bool)) isProp-∅) .snd)
 ```
 
 Propositions and contractible types are also closed under forming path
@@ -534,7 +543,12 @@ isProp→Square : isProp A
   → (t : a ≡ b) (u : c ≡ d)
   → Square t u r s
 -- Exercise: (Hint: Use `pA` to create each side.)
-isProp→Square pA {a = a} r s t u i j = {!!}
+isProp→Square pA {a} r s t u i j = hcomp (∂ i ∨ ∂ j)
+  λ k → λ { (i = i0) → pA a (t j) k
+          ; (i = i1) → pA a (u j) k
+          ; (j = i0) → pA a (r i) k
+          ; (j = i1) → pA a (s i) k
+          ; (k = i0) → a }
 ```
 
 An important special case of ``isProp→Square`` is when we fix two
@@ -545,7 +559,7 @@ elements of a proposition, `x ≡ y` is also a proposition.
 ```
 isProp→isProp≡ : isProp A → (x y : A) → isProp (x ≡ y)
 -- Exercise:
-isProp→isProp≡ = {!!}
+isProp→isProp≡ pA x y = isProp→Square pA refl refl
 ```
 
 And from this we get that the types of paths in any proposition are
@@ -554,7 +568,8 @@ always contractible.
 ```
 isProp→isContr≡ : isProp A → (x y : A) → isContr (x ≡ y)
 -- Exercise: 
-isProp→isContr≡ p x y = {!!}
+isProp→isContr≡ p x y =
+  isProp-with-point→isContr (isProp→isProp≡ p x y) (p x y)
 ```
 
 We could have used this as an alternative definition of what it means
@@ -563,7 +578,7 @@ to be a proposition, because it's trivial to go the other way:
 ```
 isContr≡→isProp : ((x y : A) → isContr (x ≡ y)) → isProp A
 -- Exercise: 
-isContr≡→isProp f x y = {!!}
+isContr≡→isProp f x y = f x y .center
 ```
 
 There's a another way we can generalise ``isProp``. If we have a path
@@ -576,14 +591,15 @@ isProp→any-PathP : {A : I → Type ℓ}
   → (a0 : A i0) (a1 : A i1)
   → PathP A a0 a1
 -- Exercise: (Hint: `toPathP`)
-isProp→any-PathP {A = A} hB a0 a1 = {!!}
+isProp→any-PathP {A = A} hB a0 a1 = toPathP (hB i1 (transport (λ i → A i) a0) a1)
 
 isProp→isProp-PathP : {A : I → Type ℓ}
   → ((i : I) → isProp (A i))
   → (a0 : A i0) (a1 : A i1)
   → isProp (PathP A a0 a1)
 -- Exercise: (Hint: Piggyback on `isProp→isProp≡`)
-isProp→isProp-PathP pA x y = isProp-equiv {!!} {!!}
+isProp→isProp-PathP pA x y =
+  isProp-equiv (PathP≃Path _) (isProp→isProp≡ (pA i1) _ _)
 ```
 
 We can use what we've proven so far to bootstrap the process of
@@ -602,7 +618,8 @@ isProp→any-SquareP : {A : I → I → Type ℓ}
 
   → SquareP A t u r s
 -- Exercise:
-isProp→any-SquareP pA r s t u = {!!}
+isProp→any-SquareP pA r s t u =
+  isProp→any-PathP (λ i → isProp→isProp-PathP (λ j → pA i j) (r i) (s i)) t u
 ```
 
 We can prove similar facts for contractibility. These can be done
@@ -611,7 +628,11 @@ entirely by gluing together results we've already seen.
 ```
 isContr→isContr≡ : isContr A → (a b : A) → isContr (a ≡ b)
 -- Exercise: (Hint: `isProp-with-point→isContr`)
-isContr→isContr≡ c a b = {!!}
+isContr→isContr≡ {A = A} c a b =
+  isProp-with-point→isContr (isProp→isProp≡ pA a b) (pA a b)
+  where
+    pA : isProp A
+    pA = isContr→isProp c
 
 isContr→isContr-PathP : {A : I → Type ℓ} (c : isContr (A i1)) → (a : A i0) → (b : A i1) → isContr (PathP A a b)
 isContr→isContr-PathP {A = A} isc a b = isContr-equiv (PathP≃Path A) (isContr→isContr≡ isc _ _)
@@ -624,7 +645,7 @@ that `A`... is a proposition.
 ```
 isProp-isProp : isProp (isProp A)
 -- Exercise:
-isProp-isProp pA₀ pA₁ = {!!}
+isProp-isProp pA₀ pA₁ i x y = isProp→isProp≡ pA₀ x y (pA₀ x y) (pA₁ x y) i
 ```
 
 And `isContr A` is always a proposition; the proposition that `A` has
@@ -633,7 +654,21 @@ a unique element.
 ```
 isProp-isContr : isProp (isContr A)
 -- Exercise:
-isProp-isContr cA₀ cA₁ = {!!}
+isProp-isContr cA₀ cA₁ i .center = cA₀ .contraction (cA₁ .center) i
+isProp-isContr cA₀ cA₁ i .contraction a =
+  isProp→Square (isContr→isProp cA₀)
+                (cA₀ .contraction (cA₁ .center))
+                refl
+                (cA₀ .contraction a)
+                (cA₁ .contraction a) i
+{-
+isProp-isContr cA₀ cA₁ i .contraction a = 
+  isProp→any-PathP 
+    (λ j → isProp→isProp≡ (isContr→isProp cA₀) (cA₀ .contraction (cA₁ .center) j) a) 
+    (cA₀ .contraction a) 
+    (cA₁ .contraction a) 
+    i
+-}
 ```
 
 There's another important type that is a proposition: the fact that a
@@ -671,15 +706,15 @@ equivalent to `a1 ≡ a2` whenever `B` is a family of propositions.
   where
     to : x .fst ≡ y .fst → x ≡ y
     -- Exercise: (Hint: `isProp→any-PathP`)
-    to e = {!!}
+    to e i = e i , isProp→any-PathP (λ j → pB (e j)) (x .snd) (y .snd) i
 
     to-fro : isSection to (ap fst)
     -- Exercise: (Hint: `isProp→any-SquareP`)
-    to-fro e = {!!}
+    to-fro e i j = e j .fst , isProp→any-SquareP (λ _ k → pB (e k .fst)) (λ _ → x .snd) (λ _ → y .snd) (λ k → to (ap fst e) k .snd) (λ k → e k .snd) i j
 
     fro-to : isRetract to (ap fst)
     -- Exercise:
-    fro-to p = {!!}
+    fro-to p = refl
 ```
 
 To foreshadow Lecture 3-1, this is extremely useful when we start
@@ -707,7 +742,8 @@ isProp-Σ : {A : Type ℓ} {P : A → Type ℓ'}
   → ((a : A) → isProp (P a))
   → isProp (Σ[ a ∈ A ] P a)
 -- Exercise: (Hint: use ``isProp→any-PathP``.)
-isProp-Σ pA pP (a₀ , b₀) (a₁ , b₁) i = {!!}
+isProp-Σ pA pP (a₀ , b₀) (a₁ , b₁) i =
+  pA a₀ a₁ i , isProp→any-PathP (λ j → pP (pA a₀ a₁ j)) b₀ b₁ i
 ```
 
 And similarly for contractibility. If `A` is contractible and `P : A →
@@ -734,7 +770,7 @@ isProp-Π : {A : Type ℓ} → {P : A → Type ℓ'}
   → (p : (a : A) → isProp (P a))
   → isProp ((a : A) → P a)
 -- Exercise:
-isProp-Π p f g = {!!}
+isProp-Π p f g i a = p a (f a) (g a) i
 ```
 
 And if in fact every `P a` does hold, then the "for all" proposition
@@ -745,7 +781,8 @@ isContr-Π : {A : Type ℓ} → {P : A → Type ℓ'}
   → ((a : A) → isContr (P a))
   → isContr ((a : A) → P a)
 -- Exercise:
-isContr-Π c = {!!}
+isContr-Π c .center a = c a .center
+isContr-Π c .contraction f i a = c a .contraction (f a) i
 ```
 
 
@@ -762,7 +799,7 @@ two propositions is not necessarily a proposition. We checked in
 ```
 ¬isProp-⊤⊎⊤ : ¬ isProp (⊤ ⊎ ⊤)
 -- Exercise:
-¬isProp-⊤⊎⊤ = {!!}
+¬isProp-⊤⊎⊤ = ¬isProp-Bool ∘ (isProp-equiv Bool≃⊤⊎⊤)
 ```
 
 ::: Aside:
@@ -772,7 +809,10 @@ their disjoint union is still a proposition.
 ```
 isPropExclusive⊎ : isProp A → isProp B → ¬ (A × B) → isProp (A ⊎ B)
 -- Exercise:
-isPropExclusive⊎ pA pB dis x y = {!!}
+isPropExclusive⊎ pA pB dis (inl a) (inl a') = ap inl (pA a a')
+isPropExclusive⊎ pA pB dis (inl a) (inr b) = ∅-rec (dis (a , b))
+isPropExclusive⊎ pA pB dis (inr b) (inl a) = ∅-rec (dis (a , b))
+isPropExclusive⊎ pA pB dis (inr b) (inr b') = ap inr (pB b b')
 ```
 :::
 
@@ -827,7 +867,8 @@ we can get an implication `∃ A → P` whenever `P` is a proposition.
       → (A → P)
       → (∃ A → P)
 -- Exercise: (Case-split, then use `pP` in the `squash` case.)
-∃-rec pP f e = {!!}
+∃-rec pP f (in-∃ a) = f a
+∃-rec pP f (squash x y i) = pP (∃-rec pP f x) (∃-rec pP f y) i
 ```
 
 ::: Aside:
@@ -849,7 +890,9 @@ types, each of which is a proposition.
       → ((a : A) → P (in-∃ a))
       → ((e : ∃ A) → P e)
 -- Exercise: (Hint: `isProp→any-PathP`)
-∃-ind pP f e = {!!}
+∃-ind pP f (in-∃ x) = f x
+∃-ind pP f (squash x y i) =
+  isProp→any-PathP (λ j → pP (squash x y j)) (∃-ind pP f x) (∃-ind pP f y) i
 ```
 
 In fact, all maps into a proposition are of this form, that is,
@@ -861,7 +904,10 @@ In fact, all maps into a proposition are of this form, that is,
       → ((a : A) → P (in-∃ a))
       ≃ ((e : ∃ A) → P e)
 -- Exercise:
-∃-ump-≃ pP = propExt {!!} {!!} {!!} {!!}
+∃-ump-≃ pP = propExt (isProp-Π (λ a → pP (in-∃ a)))
+                     (isProp-Π (λ e → pP e))
+                     (λ f → ∃-ind pP f)
+                     (λ f a → f (in-∃ a))
 ```
 
 ``∃`` is functorial, that is, if we have a function from `A` to
@@ -870,7 +916,8 @@ In fact, all maps into a proposition are of this form, that is,
 ```
 ∃-map : (A → B) → (∃ A → ∃ B)
 -- Exercise:
-∃-map f = {!!}
+∃-map f (in-∃ x) = in-∃ (f x)
+∃-map f (squash x y i) = squash (∃-map f x) (∃-map f y) i
 ```
 
 If `P` is already a proposition, truncating it should do nothing:
@@ -878,7 +925,10 @@ If `P` is already a proposition, truncating it should do nothing:
 ```
 isProp→≃∃ : isProp P → P ≃ (∃ P)
 -- Exercise: (Hint: use ``propExt``)
-isProp→≃∃ isPropP = {!!}
+isProp→≃∃ isPropP = propExt isPropP
+                            isProp-∃
+                            in-∃
+                            (∃-rec isPropP idfun)
 ```
 
 In particular, truncating twice is the same as truncating once.
@@ -909,7 +959,12 @@ orP-ump-≃ : {P Q R : Type ℓ}
   → isProp P → isProp Q → isProp R
   → (P → R) × (Q → R) ≃ (P orP Q → R)
 -- Exercise:
-orP-ump-≃ pP pQ pR = {!!}
+orP-ump-≃ pP pQ pR = propExt 
+  (isProp-× (isProp-→ pR) (isProp-→ pR)) 
+  (isProp-→ pR) 
+  (λ (f , g) → ∃-rec pR (λ { (inl p) → f p 
+                           ; (inr q) → g q })) 
+  (λ h → (λ p → h (in-∃ (inl p))) , (λ q → h (in-∃ (inr q))))
 ```
   
 
