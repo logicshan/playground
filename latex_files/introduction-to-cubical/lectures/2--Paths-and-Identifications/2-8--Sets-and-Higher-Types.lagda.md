@@ -52,15 +52,15 @@ these types are sets.
 ```
 isSet-⊤ : isSet ⊤
 -- Exercise: (Hint: `≡≃≡⊤`)
-isSet-⊤ x y = isProp-equiv {!!} {!!}
+isSet-⊤ x y = isProp-equiv (≡≃≡⊤ x y) isProp-⊤
 
 isSet-Bool : isSet Bool
 -- Exercise:
-isSet-Bool x y = {!!}
+isSet-Bool x y = isProp-equiv (≡≃≡Bool x y) (isProp-≡Bool x y)
 
 isSet-ℕ : isSet ℕ
 -- Exercise:
-isSet-ℕ x y = {!!}
+isSet-ℕ x y = isProp-equiv (≡≃≡ℕ x y) (isProp-≡ℕ x y)
 ```
 
 The empty type ``∅`` is the set with no elements.
@@ -68,7 +68,7 @@ The empty type ``∅`` is the set with no elements.
 ```
 isSet-∅ : isSet ∅
 -- Exercise:
-isSet-∅ = {!!}
+isSet-∅ ()
 ```
 
 For ``⊎``, we will need a helper that relates paths in the two sides
@@ -77,11 +77,14 @@ to the characterisation ``≡⊎`` from back in Lecture 2-3.
 ```
 isProp-≡⊎ : {A B : Type} → isSet A → isSet B → (a b : A ⊎ B) → isProp (a ≡⊎ b)
 -- Exercise:
-isProp-≡⊎ sA sB a b = {!!}
+isProp-≡⊎ sA sB (inl a) (inl a') = sA a a'
+isProp-≡⊎ sA sB (inl a) (inr b) = isProp-∅
+isProp-≡⊎ sA sB (inr b) (inl a) = isProp-∅
+isProp-≡⊎ sA sB (inr b) (inr b') = sB b b'
 
 isSet-⊎ : {A B : Type} → isSet A → isSet B → isSet (A ⊎ B)
 -- Exercise:
-isSet-⊎ pA pB = {!!}
+isSet-⊎ sA sB x y = isProp-equiv (≡≃≡⊎ x y) (isProp-≡⊎ sA sB x y)
 ```
 
 Every proposition is a set. This may sound like an odd claim,
@@ -92,7 +95,7 @@ is a set that has at most one element.
 ```
 isProp→isSet : isProp A → isSet A
 -- Exercise:
-isProp→isSet pA x y = {!!}
+isProp→isSet pA x y = isProp→Square pA refl refl
 ```
 
 Again, not all types are sets. The type ``S¹`` should not be a set
@@ -102,7 +105,7 @@ since we have a path ``loop`` that we know is not the same as
 ```
 ¬isSet-S¹ : ¬ isSet S¹
 -- Exercise:
-¬isSet-S¹ isSet = {!!}
+¬isSet-S¹ isSet = refl≢loop (isSet base base refl loop)
 ```
 
 The type ``Type`` is not a set either. If all paths in ``Type`` were
@@ -112,7 +115,8 @@ Bool`, and this quickly leads to a contradiction.
 ```
 ¬isSet-Type : ¬ isSet Type
 -- Exercise: (Hint: `true≢false`)
-¬isSet-Type s = {!!}
+¬isSet-Type s = true≢false (ap (λ p → transport p true)
+                           (s Bool Bool refl not-Path))
 ```
 
 One way of thinking of ``isSet`` is that for any paths `p : x ≡ y` and
@@ -141,7 +145,12 @@ isSet→Square : isSet A
   → (t : a ≡ b) (u : c ≡ d)
   → Square t u r s
 -- Exercise: (Hint: `toPathP`)
-isSet→Square sA r s t u = {!!}
+--isSet→Square sA r s t u = toPathP (sA _ _ _ _)
+isSet→Square sA r s t u = toPathP (sA (r i1)
+                                      (s i1)
+                                      (transport (λ i → r i ≡ s i) t)
+                                      u)
+
 ```
 
 Because being a set means that asking that a certain family of types
@@ -150,7 +159,7 @@ is all propositions, ``isSet`` is a proposition about a type.
 ```
 isProp-isSet : isProp (isSet A)
 -- Exercise: (Use `isProp-Π`)
-isProp-isSet = {!!}
+isProp-isSet = isProp-Π (λ x → isProp-Π (λ y → isProp-isProp))
 ```
 
 
@@ -165,11 +174,13 @@ it is sufficient for just `B` to be a set.
 ```
 isSet-× : isSet A → isSet B → isSet (A × B)
 -- Exercise:
-isSet-× pA pB = {!!}
+isSet-× pA pB (a , b) (a' , b') p q i j =
+  ( pA a a' (λ k → fst (p k)) (λ k → fst (q k)) i j
+  , pB b b' (λ k → snd (p k)) (λ k → snd (q k)) i j )
 
 isSet-→ : isSet B → isSet (A → B)
 -- Exercise:
-isSet-→ pB = {!!}
+isSet-→ pB f g p q i j = λ a → pB (f a) (g a) (λ k → p k a) (λ k → q k a) i j
 ```
 
 Similarly to contractible types and propositions, any retract of a set
@@ -201,7 +212,12 @@ homotopy-Square : {f g : A → B}
   → Square (ap f t) (ap f u) (ap f r) (ap f s)
   → Square (ap g t) (ap g u) (ap g r) (ap g s)
 -- Exercise: (Hint: Use an `hcomp` with `sq` as the base and `homotopy-Square` on all sides.)
-homotopy-Square {B = B} H {r = r} {s} {t} {u} sq i j = {!!}
+homotopy-Square {B = B} H {r = r} {s} {t} {u} sq i j = hcomp (∂ i ∨ ∂ j)
+  λ k → λ { (i = i0) → homotopy-Path H t j k
+          ; (i = i1) → homotopy-Path H u j k
+          ; (j = i0) → homotopy-Path H r i k
+          ; (j = i1) → homotopy-Path H s i k
+          ; (k = i0) → sq i j }
 ```
 
 ::: Aside:
@@ -228,7 +244,7 @@ about with defining an observational equality type `≡ℤ`:
 ```
 isSet-ℤ : isSet ℤ
 -- Exercise: (Hint: Find a useful equivalence in Lecture 2-2)
-isSet-ℤ = isSet-equiv {!!} {!!}
+isSet-ℤ = isSet-equiv ℤ≃ℕ⊎ℕ (isSet-⊎ isSet-ℕ isSet-ℕ)
 ```
 
 
@@ -259,7 +275,7 @@ are equal, the answer is always ``yes``!
 ```
 isProp→Dec≡ : isProp A → Dec≡ A
 -- Exercise:
-isProp→Dec≡ pA = {!!}
+isProp→Dec≡ pA = λ x → yes ∘ (pA x)
 ```
 
 Inductive types often have decidable equality. The proofs are much
@@ -270,11 +286,19 @@ path types.
 ```
 Dec≡-Bool : Dec≡ Bool
 -- Exercise:
-Dec≡-Bool = {!!}
+Dec≡-Bool true true = yes refl
+Dec≡-Bool true false = no true≢false
+Dec≡-Bool false true = no (λ p → true≢false (sym p))
+Dec≡-Bool false false = yes refl
 
 Dec≡-ℕ : Dec≡ ℕ
 -- Exercise:
-Dec≡-ℕ = {!!}
+Dec≡-ℕ zero zero = yes refl
+Dec≡-ℕ zero (suc y) = no zero≢suc
+Dec≡-ℕ (suc x) zero = no (λ p → zero≢suc (sym p))
+Dec≡-ℕ (suc x) (suc y) with Dec≡-ℕ x y
+... | yes p = yes (ap suc p)
+... | no ¬p = no (λ q → ¬p (suc-inj q))
 ```
 
 We will prove Hedberg's Theorem using a slick argument that we learned
@@ -295,7 +319,8 @@ from `Dec (x ≡ y)` or derives a contradiction.
 ```
 Dec≡-bad-replacement : {x y : A} → Dec (x ≡ y) → x ≡ y → x ≡ y
 -- Exercise:
-Dec≡-bad-replacement d p = {!!}
+Dec≡-bad-replacement (yes q) p = q
+Dec≡-bad-replacement (no ¬p) p = ∅-rec (¬p p)
 ```
 
 Next, we want to show that this replacement is equal to the path that
@@ -312,11 +337,13 @@ path, by composing the old definition with the inverse of the path
 ```
 Dec≡-good-replacement : Dec≡ A → {x y : A} → x ≡ y → x ≡ y
 -- Exercise:
-Dec≡-good-replacement dec {x} {y} p = {!!}
+Dec≡-good-replacement dec {x} {y} p =
+  sym (Dec≡-bad-replacement (dec x x) refl) ∙ Dec≡-bad-replacement (dec x y) p
 
 Dec≡-replacement-undo : (dec : Dec≡ A) → {x y : A} → (p : x ≡ y) → Dec≡-good-replacement dec p ≡ p
 -- Exercise:
-Dec≡-replacement-undo dec {x} {y} p = J (λ y p → Dec≡-good-replacement dec p ≡ p) {!!} {!!}
+Dec≡-replacement-undo dec {x} {y} p =
+  J (λ y p → Dec≡-good-replacement dec p ≡ p) (∙-invl (Dec≡-bad-replacement (dec x x) refl)) p
 ```
 
 The final lemma is that these good replacements are all equal to each
@@ -327,13 +354,14 @@ pattern matching on `Dec (x ≡ y)`.
 Dec≡-replacement-same : (dec : Dec≡ A) → {x y : A} → (p₁ p₂ : x ≡ y)
   → Dec≡-good-replacement dec p₁ ≡ Dec≡-good-replacement dec p₂
 -- Exercise:
-Dec≡-replacement-same dec {x} {y} p₁ p₂ = {!!}
+Dec≡-replacement-same dec {x} {y} p₁ p₂ = helper (dec x y)
 
   where helper : (w : Dec (x ≡ y)) →
             sym (Dec≡-bad-replacement (dec x x) refl) ∙ Dec≡-bad-replacement w p₁
           ≡ sym (Dec≡-bad-replacement (dec x x) refl) ∙ Dec≡-bad-replacement w p₂
 --      Exercise:
-        helper d = {!!}
+        helper (yes p) = refl
+        helper (no ¬p) = ∅-rec (¬p p₁)
 ```
 
 Now glue these pieces together to finish the proof.
@@ -342,9 +370,9 @@ Now glue these pieces together to finish the proof.
 hedberg : Dec≡ A → isSet A
 hedberg dec x y p₁ p₂ =
 -- Exercise:
-     p₁                           ≡⟨ {!!} ⟩
-     Dec≡-good-replacement dec p₁ ≡⟨ {!!} ⟩
-     Dec≡-good-replacement dec p₂ ≡⟨ {!!} ⟩
+     p₁                           ≡⟨ sym (Dec≡-replacement-undo dec p₁) ⟩
+     Dec≡-good-replacement dec p₁ ≡⟨ Dec≡-replacement-same dec p₁ p₂ ⟩
+     Dec≡-good-replacement dec p₂ ≡⟨ Dec≡-replacement-undo dec p₂ ⟩
      p₂ ∎
 ```
 
@@ -431,7 +459,8 @@ the previous. First up, ``isContr→isProp`` and ``isProp→isSet``:
 ```
 isHLevel-suc : (n : ℕ) → isHLevel n A → isHLevel (suc n) A
 -- Exercise:
-isHLevel-suc n = {!!}
+isHLevel-suc zero = isContr→isContr≡
+isHLevel-suc (suc n) h x y = isHLevel-suc n (h x y)
 ```
 
 Next, ``isProp-isContr``, ``isProp-isProp`` and ``isProp-isSet``:
@@ -439,7 +468,8 @@ Next, ``isProp-isContr``, ``isProp-isProp`` and ``isProp-isSet``:
 ```
 isProp-isHLevel : (n : ℕ) → isProp (isHLevel n A)
 -- Exercise:
-isProp-isHLevel n = {!!}
+isProp-isHLevel zero = isProp-isContr
+isProp-isHLevel (suc n) = isProp-Π (λ x → isProp-Π (λ y → isProp-isHLevel n))
 ```
 
 Finally, the many closure properties we've seen so far. You'll find
@@ -450,11 +480,14 @@ isHLevel-≡ : (n : ℕ)
   → isHLevel n A
   → (x y : A) → isHLevel n (x ≡ y)
 -- Exercise: (This one is easier than it sounds!)
-isHLevel-≡ n = {!!}
+isHLevel-≡ = isHLevel-suc
 
 isHLevel-retract : (n : ℕ) → B RetractOnto A → isHLevel n B → isHLevel n A
 -- Exercise:
-isHLevel-retract n = {!!}
+isHLevel-retract zero = isContr-retract
+isHLevel-retract (suc n) r hB a a' = isHLevel-retract n
+  (retract-≡ r)
+  (hB (r .section .map a) (r .section .map a'))
 
 isHLevel-equiv : (n : ℕ) → (A ≃ B) → isHLevel n B → isHLevel n A
 isHLevel-equiv n = isHLevel-retract n ∘ equiv→retract
@@ -465,14 +498,23 @@ isHLevel-Σ : {A : Type ℓ} → {B : A → Type ℓ'}
   → ((x : A) → isHLevel n (B x))
   → isHLevel n (Σ[ x ∈ A ] B x)
 -- Exercise:
-isHLevel-Σ n = {!!}
+isHLevel-Σ zero = isContr-Σ
+isHLevel-Σ {B = B} (suc n) hA hB (a , b) (a' , b') = isHLevel-equiv n
+  (invEquiv (ΣPath≃PathΣ {x = (a , b)} {y = (a' , b')}))
+  (isHLevel-Σ n (hA a a')
+                (λ p → isHLevel-equiv n (PathP≃Path (λ i → B (p i)))
+                  (hB a' (transport (λ i → B (p i)) b) b')))
+
 
 isHLevel-Π : {B : A → Type ℓ}  
   → (n : ℕ)
   → ((x : A) → isHLevel n (B x))
   → isHLevel n ((x : A) → B x)
 -- Exercise:
-isHLevel-Π n = {!!}
+isHLevel-Π zero = isContr-Π
+isHLevel-Π (suc n) hB f g = isHLevel-equiv n
+  (invEquiv funext-≃)
+  (isHLevel-Π n (λ a → hB a (f a) (g a)))
 ```
 
 This is all well and good, but do we have concrete examples of types
@@ -491,7 +533,7 @@ isHLevel3-S¹' = isHLevel-2-x≡y
   where
   isHLevel-2-base≡base : isHLevel 2 (base ≡ base)
   -- Exercise:
-  isHLevel-2-base≡base = {!!}
+  isHLevel-2-base≡base = isHLevel-equiv 2 ΩS¹≃ℤ (isSet→isHLevel2 isSet-ℤ)
 
   isHLevel-2-base≡y : (y : S¹) → isHLevel 2 (base ≡ y)
   isHLevel-2-base≡y = S¹-ind isHLevel-2-base≡base (isProp→any-PathP (λ _ → isProp-isHLevel 2) _ _)
