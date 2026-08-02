@@ -109,7 +109,7 @@ already see this for the simplest higher type, ``S¹``.
 ```
 refl≢rotate-loop : ¬ ((λ _ → refl) ≡ rotate-loop)
 -- Exercise:
-refl≢rotate-loop p = {!!}
+refl≢rotate-loop p = refl≢loop (λ i → p i base)
 ```
 
 But now, here are two ways of showing that the identity function on
@@ -132,9 +132,24 @@ these. This would imply that `(λ _ → refl) ≡ rotate-loop`, which we've
 just shown cannot be.
 
 ```
+-- https://share.gemini.google/y2S10Rn8AENq
 ¬isProp-isIso : ¬ isProp (isIso (idfun {A = S¹}))
 -- Exercise:
-¬isProp-isIso p = refl≢rotate-loop {!!}
+¬isProp-isIso p = refl≢rotate-loop final-path
+  where
+    -- 证明左单位律：sym refl ∙ q ≡ q
+    my-lUnit : {A : Type ℓ} {x y : A} (q : x ≡ y) → sym refl ∙ q ≡ q
+    my-lUnit {x = x} = sym ∘ ∙-idl
+
+    -- 原始的带 hcomp 偏差的路径
+    mid-path : isIso→center S¹-refl-iso ≡ isIso→center S¹-rotate-loop-iso
+    mid-path i x = isIso→center (p S¹-refl-iso S¹-rotate-loop-iso i) x
+
+    -- 修正起点和终点，拼接成期望的最终路径
+    final-path : (λ _ → refl) ≡ rotate-loop
+    final-path = (λ i x → ∙-idl refl i)
+               ∙ mid-path
+               ∙ (λ i x → ∙-idl (rotate-loop x) (~ i))
 ```
 
 
@@ -199,7 +214,7 @@ contractible is also a proposition.
 ```
 isProp-isContractibleMap : (f : A → B) → isProp (isContractibleMap f)
 -- Exercise:
-isProp-isContractibleMap f = {!!}
+isProp-isContractibleMap f p q i y = isProp-isContr (p y) (q y) i
 ```
 
 
@@ -216,15 +231,15 @@ isContractibleMap→isEquiv {A = A} {B = B} {f = f} cf
   where
     inv : B → A
 --  Exercise:
-    inv b = {!!}
+    inv b = cf b .center .fst
 
     to-fro : isSection f inv
 --  Exercise: (Hint: Use the path provided by the ``fiber``.)
-    to-fro = {!!}
+    to-fro b = sym (cf b .center .snd)
 
     fro-to : isRetract f inv
 --  Exercise: (Hint: Use the path provided by ``isContr``.)
-    fro-to = {!!}
+    fro-to a = ap fst (cf (f a) .contraction (a , refl))
 ```
 
 We can also show that any equivalence is a contractible map, but the
@@ -278,15 +293,15 @@ of `f`.
 ```
   path₀ : f y ≡ x₀
   -- Exercise:
-  path₀ = {!!}
+  path₀ = ap f p₀ ∙  s x₀
 
   path₁ : f y ≡ x₁
   -- Exercise:
-  path₁ = {!!}
+  path₁ = ap f p₁ ∙ s x₁
 
   path : x₀ ≡ x₁
   -- Exercise:
-  path₂ = {!!} ∙∙ refl ∙∙ {!!}
+  path = sym path₀ ∙∙ refl ∙∙ path₁
 ```
 
 You'll see very shortly why defining `path` in this symmetrical way
@@ -323,7 +338,11 @@ what we want:
   square-f i j = hcomp (∂ i ∨ ∂ j) faces
     where faces : (k : I) → Partial (∂ i ∨ ∂ j ∨ ~ k) B
           -- Exercise:
-          faces k = {!!}
+          faces k = λ { (i = i0) → f y
+                      ; (i = i1) → s (path j) (~ k)
+                      ; (j = i0) → ∙-filler (ap f p₀) (s x₀) (~ k) i
+                      ; (j = i1) → ∙-filler (ap f p₁) (s x₁) (~ k) i
+                      ; (k = i0) → ∙∙-filler (sym path₀) refl path₁ i j }
 ```
 
 We just need to kill the extra `ap f` on all the sides of this square.
@@ -333,7 +352,7 @@ extra `g'`, then use `r` to cancel both `g'` and `f` out.
 ```
   square : Square refl (ap g path) p₀ p₁
   -- Exercise: (Hint: `homotopy-Square` is nice here.)
-  square = {!!}
+  square = homotopy-Square r (λ i j → g' (square-f i j))
 ```
 
 So combining `path` and `square`, we get the path of between pairs
@@ -342,7 +361,7 @@ that we wanted.
 ```
   lemEquiv : (x₀ , p₀) ≡ (x₁ , p₁)
   -- Exercise:
-  lemEquiv i = {!!}
+  lemEquiv = ΣPathP→PathPΣ (path , flip-square square)
 ```
 
 The hard work is now done: every fiber of the section map is a
@@ -352,7 +371,14 @@ fiber is contractible.
 ```
 isEquiv→secIsContractibleMap : (e : A ≃ B) → isContractibleMap (e .proof .section .map)
 -- Exercise:
-isEquiv→secIsContractibleMap e y = isProp-with-point→isContr {!!} {!!}
+isEquiv→secIsContractibleMap e y = isProp-with-point→isContr
+  (λ (x₀ , p₀) (x₁ , p₁) → lemEquiv e y x₀ p₀ x₁ p₁)
+  (f y , sym (sym (r (g (f y))) ∙ (ap g' (s (f y))) ∙ r y))
+  where f = e .map
+        g' = e .proof .retract .map
+        g = e .proof .section .map
+        r = e .proof .retract .proof
+        s = e .proof .section .proof
 ```
 
 We usually want to know that the actual map underlying an equivalence
@@ -381,7 +407,10 @@ by defining an equivalence directly.
 ```
 isEquiv→isEquiv-postComp : {f : A → B} → isEquiv f → isEquiv (λ (d : C → A) → f ∘ d)
 -- Exercise:
-isEquiv→isEquiv-postComp e = {!!}
+isEquiv→isEquiv-postComp e .section .map =  e .section .map ∘_
+isEquiv→isEquiv-postComp e .section .proof d = ap (_∘ d) (funext (e .section .proof))
+isEquiv→isEquiv-postComp e .retract .map = e .retract .map ∘_
+isEquiv→isEquiv-postComp e .retract .proof d = ap (_∘ d) (funext (e .retract .proof))
 
 sectionOf≃fiber : (f : A → B) → SectionOf f ≃ (fiber (λ (d : B → A) → f ∘ d) idfun)
 sectionOf≃fiber {A = A} {B = B} f = inv→equiv fun inv (λ _ → refl) (λ _ → refl)
@@ -402,7 +431,9 @@ contractible map, that fiber is contractible. Put it together:
 ```
 isEquiv→isContrSectionOf : {f : A → B} → isEquiv f → isContr (SectionOf f)
 -- Exercise:
-isEquiv→isContrSectionOf {f = f} isE = {!!}
+isEquiv→isContrSectionOf {f = f} isE =
+  isContr-equiv (sectionOf≃fiber f)
+                (isEquiv→isContractibleMap (isEquiv→isEquiv-postComp isE) idfun)
 ```
 
 ::: Caution:
@@ -417,7 +448,14 @@ as appropriate.
 ```
 isEquiv→isEquiv-preComp  : {f : A → B} → isEquiv f → isEquiv (λ (d : B → C) → d ∘ f)
 -- Exercise:
-isEquiv→isEquiv-preComp e = {!!}
+isEquiv→isEquiv-preComp e .section .map = _∘ e .retract .map
+isEquiv→isEquiv-preComp {f = f} e .section .proof d =
+  (∘-assoc d (e .retract .map) f) ∙
+  ap (d ∘_) (funext (e .retract .proof))
+isEquiv→isEquiv-preComp e .retract .map = _∘ e .section .map
+isEquiv→isEquiv-preComp {f = f} e .retract .proof d =
+  ∘-assoc d f (e .section .map) ∙
+  ap (d ∘_) (funext (e .section .proof))
 
 retractOf≃fiber : (f : A → B) → RetractOf f ≃ (fiber (λ (d : B → A) → d ∘ f) idfun)
 retractOf≃fiber {A = A} {B = B} f = inv→equiv fun inv (λ _ → refl) (λ _ → refl)
@@ -432,7 +470,9 @@ retractOf≃fiber {A = A} {B = B} f = inv→equiv fun inv (λ _ → refl) (λ _ 
 
 isEquiv→isContrRetractOf : {f : A → B} → isEquiv f → isContr (RetractOf f)
 -- Exercise:
-isEquiv→isContrRetractOf {f = f} isE = {!!}
+isEquiv→isContrRetractOf {f = f} isE =
+  isContr-equiv (retractOf≃fiber f)
+                (isEquiv→isContractibleMap (isEquiv→isEquiv-preComp isE) idfun)
 ```
 
 Now just glue them together! (Using ``explode-isEquiv`` to pull it
@@ -441,7 +481,10 @@ apart will be helpful here).
 ```
 isProp-isEquiv : (f : A → B) → isProp (isEquiv f)
 -- Exercise:
-isProp-isEquiv f = with-point-isContr→isProp {!!}
+isProp-isEquiv f = with-point-isContr→isProp λ e →
+  isContr-equiv explode-isEquiv
+                (isContr-× (isEquiv→isContrSectionOf e)
+                           (isEquiv→isContrRetractOf e))
 ```
 
 As we showed in ``≡-in-subtype`` at the end of Lecture 2-7, paths in
@@ -453,7 +496,9 @@ compute paths between equivalences on their underlying functions.
 ```
 equiv≡ : {e f : A ≃ B} → (h : e .map ≡ f .map) → e ≡ f
 -- Exercise:
-equiv≡ {e = e} {f = f} h = {!!}
+equiv≡ {e = e} {f = f} h i .map = h i
+equiv≡ {e = e} {f = f} h i .proof = 
+  isProp→any-PathP (λ j → isProp-isEquiv (h j)) (e .proof) (f .proof) i
 ```
 
 We knew already that univalence ``ua`` has a retract ``au``. But we
@@ -463,7 +508,7 @@ can now use ``equiv≡`` to show that ``au`` is also a section, and so
 ```
 au-ua : (e : A ≃ B) → au (ua e) ≡ e
 -- Exercise: (Hint: ``ua-comp``)
-au-ua e = {!!}
+au-ua e = equiv≡ (λ i x → ua-comp e x i)
 ```
 
 And finally prove univalence in all its glory:
