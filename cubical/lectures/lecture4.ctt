@@ -43,12 +43,39 @@ idEquiv (A : U) : equiv A A = (idfun A,idIsEquiv A)
 invEquiv (A B : U) (e : equiv A B) (y : B) : A = (e.2 y).1.1
 
 -- Exercises (easy): the inverse is really the inverse
-retEq (A B : U) (e : equiv A B) (y : B) : Path B (e.1 (invEquiv A B e y)) y = undefined
-secEq (A B : U) (e : equiv A B) (x : A) : Path A (invEquiv A B e (e.1 x)) x = undefined
+retEq (A B : U) (e : equiv A B) (y : B) : Path B (e.1 (invEquiv A B e y)) y =
+  <i> (e.2 y).1.2 @ -i
+secEq (A B : U) (e : equiv A B) (x : A) : Path A (invEquiv A B e (e.1 x)) x =
+  <i> (((e.2 (e.1 x)).2 (x , <_> (e.1 x))) @ i).1
 
 -- Exercise (hard): prove that being contractible is a proposition.
 -- (hint: use a composition)
-isPropIsContr (A : U) : isProp (isContr A) = undefined
+isProptoSquare   (A : U)
+	       	 (pA : isProp A)
+		 (a b c d : A)
+		 (t : Path A a b)
+		 (u : Path A c d)
+		 (r : Path A a c)
+		 (s : Path A b d)
+		 : Square A a b c d t u r s = <i j>
+  comp (<_> A) a [ (i = 0) -> pA a (r @ j)
+                 , (i = 1) -> pA a (s @ j)
+		 , (j = 0) -> pA a (t @ i)
+		 , (j = 1) -> pA a (u @ i) ]
+
+isPropIsContr (A : U) : isProp (isContr A) =
+  \(cA1 cA2 : isContr A) ->
+    <i> (cA1.2 cA2.1 @ i ,
+         \(a : A) -> isProptoSquare A
+	                            (isContrProp A cA1)
+				    cA1.1
+				    cA2.1
+				    a
+				    a
+				    (cA1.2 cA2.1)
+				    (<_> a)
+				    (cA1.2 a)
+				    (cA2.2 a)             @ i)
 
 -- So the property of being an equivalence is a proposition. Note that
 -- propositions in HoTT are different from Prop in Coq as we cannot
@@ -318,7 +345,11 @@ cyril : eats bool = substEquiv eats bool bool notEquiv anders
 
 -- Exercise: prove the computation rule for ua
 -- (hint: use fill with the empty system)
-uabeta (A B : U) (e : equiv A B) : Path (A -> B) (trans A B (ua A B e)) e.1 = undefined
+--uabeta (A B : U) (e : equiv A B) : Path (A -> B) (trans A B (ua A B e)) e.1 =
+--  <i> \(a : A) -> unglue (fill (ua A B e) a [] @ -i)
+
+uabeta (A B : U) (e : equiv A B) : Path (A -> B) (trans A B (ua A B e)) e.1 =
+  <i> \(a : A) -> fill (<_> B) (fill (<_> B) (e.1 a) [] @ -i) [] @ -i
 
 -- One could imagine this computation rule to hold judgmentally, but
 -- it doesn't as the algorithm for computation in the universe adds
@@ -345,23 +376,64 @@ data Unit = tt
 
 -- Exercises: prove these 3 axioms (hint: Glue might be useful)
 
-unit (A : U) : Path U A ((a : A) * Unit) = undefined
+-- 辅助引理：证明 Unit 类型的所有元素都等于 tt
+lemUnit : (u : Unit) -> Path Unit tt u = split
+  tt -> <i> tt
+
+unit (A : U) : Path U A ((a : A) * Unit) =
+  <i> Glue ((a : A) * Unit)
+    [ (i = 0) -> (A, e)
+    , (i = 1) -> (((a : A) * Unit), idEquiv ((a : A) * Unit)) ]
+  where
+    f (a : A) : (x : A) * Unit = (a, tt)
+    g (p : (x : A) * Unit) : A = p.1
+    s (p : (x : A) * Unit) : Path ((x : A) * Unit) (f (g p)) p = 
+      <i> (p.1, lemUnit p.2 @ i)
+    t (a : A) : Path A (g (f a)) a = <i> a
+    e : equiv A ((a : A) * Unit) = (f, isoToEquiv A ((a : A) * Unit) f g s t)
+
 
 flip (A B : U) (C : A -> B -> U) :
   Path U ((a : A) * (b : B) * C a b)
-         ((b : B) * (a : A) * C a b) = undefined
+         ((b : B) * (a : A) * C a b) =
+  <i> Glue Y
+    [ (i = 0) -> (X, e)
+    , (i = 1) -> (Y, idEquiv Y) ]
+  where
+    X : U = ((a : A) * (b : B) * C a b)
+    Y : U = ((b : B) * (a : A) * C a b)
+    f (p : X) : Y = (p.2.1, (p.1, p.2.2))
+    g (q : Y) : X = (q.2.1, (q.1, q.2.2))
+    s (q : Y) : Path Y (f (g q)) q = <i> q
+    t (p : X) : Path X (g (f p)) p = <i> p
+    e : equiv X Y = (f, isoToEquiv X Y f g s t)
 
-contract (A : U) : isContr A -> Path U A Unit = undefined
+
+contract (A : U) (h : isContr A) : Path U A Unit =
+  <i> Glue Unit
+    [ (i = 0) -> (A, e)
+    , (i = 1) -> (Unit, idEquiv Unit) ]
+  where
+    f (a : A) : Unit = tt
+    g (u : Unit) : A = h.1
+    s (u : Unit) : Path Unit (f (g u)) u = lemUnit u
+    t (a : A) : Path A (g (f a)) a = h.2 a
+    e : equiv A Unit = (f, isoToEquiv A Unit f g s t)
 
 -- Exercises: prove these 2 computation rules for the above axioms
 
 unitbeta (A : U) (a : A) :
-  Path ((a : A) * Unit) (transport (unit A) a) (a,tt) = undefined
+  Path ((a : A) * Unit) (transport (unit A) a) (a,tt) =
+  <i> comp (<_> (a : A) * Unit)
+           (comp (<_> (a : A) * Unit) (a, tt) [ (i = 1) -> <_> (a, tt) ])
+           [ (i = 1) -> <_> (a, tt) ]
 
 flipbeta (A B : U) (C : A -> B -> U) (a : A) (b : B) (c : C a b) :
   Path ((b : B) * (a : A) * C a b)
-       (transport (flip A B C) (a,b,c)) (b,a,c) = undefined
-
+       (transport (flip A B C) (a,b,c)) (b,a,c) =
+  <i> comp (<_> (b : B) * (a : A) * C a b)
+           (comp (<_> (b : B) * (a : A) * C a b) (b, a, c) [ (i = 1) -> <_> (b, a, c) ])
+           [ (i = 1) -> <_> (b, a, c) ]
 
 
 --------------------------------------------------------------------------

@@ -28,6 +28,7 @@
 !*.otf
 !*.ipynb
 !*.pl
+!*.agda-lib
 
 # ... even if they are in subdirectories
 

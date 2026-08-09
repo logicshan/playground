@@ -227,8 +227,8 @@ propSet (A : U) (h : isProp A) : isSet A =
 
 -- Exercise: Prove that being a proposition is a proposition.
 -- (hint: use propSet and function extensionality for binary functions)
-propIsProp (A : U) : isProp (isProp A) = \(p q : isProp A) -> ?
-
+propIsProp (A : U) : isProp (isProp A) = \(p q : isProp A) ->
+  <i> \(x y : A) -> propSet A p x y (p x y) (q x y) @ i
 
 -- There is a uniform way of defining these h-levels by induction on a
 -- natural number n. This starts by defining "contractible types":
@@ -241,8 +241,9 @@ isContr (A : U) : U = (x : A) * ((y : A) -> Path A x y)
 -- a proposition:
 and (A B : U) : U = (_ : A) * B
 
-inhPropToIsContr (A : U) (p : and A (isProp A)) : isContr A = undefined
-isContrToInhProp (A : U) (p : isContr A) : and A (isProp A) = undefined
+inhPropToIsContr (A : U) (p : and A (isProp A)) : isContr A = (p.1 , p.2 p.1)
+isContrToInhProp (A : U) (p : isContr A) : and A (isProp A) =
+  (p.1 , \(x y : A) -> compPath A x p.1 y (<i> (p.2 x) @ -i) (p.2 y))
 
 -- We can now define when a type is of h-level n:
 isofhlevel (A : U) : nat -> U = split
@@ -250,16 +251,26 @@ isofhlevel (A : U) : nat -> U = split
   suc n -> (a b : A) -> isofhlevel (Path A a b) n
 
 -- Exercise: Prove that a type is of h-level 1 iff it is a proposition
-isofhlevel1ToProp (A : U) : isofhlevel A (suc zero) -> isProp A = undefined
-propToIsofhlevel1 (A : U) : isProp A -> isofhlevel A (suc zero) = undefined
+isofhlevel1ToProp (A : U) : isofhlevel A (suc zero) -> isProp A =
+  \(h : isofhlevel A (suc zero)) ->
+  \(x y : A) -> (h x y).1
+  
+propToIsofhlevel1 (A : U) : isProp A -> isofhlevel A (suc zero) =
+  \(h : isProp A) ->
+  \(x y : A) -> (h x y , propSet A h x y (h x y))
 
 -- Exercise: Prove that a type is of h-level 2 iff it is a set
-isofhlevel2ToSet (A : U) : isofhlevel A (suc (suc zero)) -> isSet A = undefined
-setToIsofhlevel2 (A : U) : isSet A -> isofhlevel A (suc (suc zero)) = undefined
+isofhlevel2ToSet (A : U) : isofhlevel A (suc (suc zero)) -> isSet A =
+  \(h : isofhlevel A (suc (suc zero))) ->
+  \(x y : A) -> isofhlevel1ToProp (Path A x y) (h x y)
+setToIsofhlevel2 (A : U) : isSet A -> isofhlevel A (suc (suc zero)) =
+  \(h : isSet A) ->
+  \(x y : A) -> propToIsofhlevel1 (Path A x y) (h x y)
 
 -- Exercise: Prove that if a type is contractible then it is a
 -- proposition.
-isContrProp (A : U) (h : isContr A) : isProp A = undefined
+isContrProp (A : U) (h : isContr A) : isProp A =
+  \(x y : A) -> compPath A x h.1 y (<i> h.2 x @ -i) (h.2 y)
 
 -- The first three h-levels are contractible types, propositions and
 -- sets. The next level is called groupoids, we then have 2-groupoids,
