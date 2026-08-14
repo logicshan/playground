@@ -1,0 +1,320 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage[
+  hybrid,                            % 允许在 Markdown 中混用 LaTeX 命令
+  texMathDollars                     % 启用 $...$ 和 $$...$$ 数学公式
+]{markdown}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+%%%%%%%% FONT TIMESAVES %%%%%%%
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bI}{\mathbb{I}}
+
+\newcommand{\CC}{\mathcal{C}}
+
+%%%%%%%% CATEGORY THEORY %%%%%%%
+\newcommand{\id}{\mathrm{id}}
+\DeclareMathOperator{\Hom}{Hom}
+
+\newcommand{\cat}[1]{\mathrm{#1}}
+\newcommand{\Set}{\cat{Set}}
+
+\DeclareFontFamily{U}{dmjhira}{}
+\DeclareFontShape{U}{dmjhira}{m}{n}{ <-> dmjhira }{}
+
+\DeclareRobustCommand{\yo}{\text{\usefont{U}{dmjhira}{m}{n}\symbol{"48}}}
+
+\DeclareMathOperator*{\colim}{colim}
+
+\newcommand{\inl}{\operatorname{inl}}
+\newcommand{\inr}{\operatorname{inr}}
+
+%%%%%%%%% GEOMTERY %%%%%%%%%%%%%%
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Zar}{\mathrm{Zar}}
+
+%%%%%%%%% TYPE THEORY %%%%%%%%%%%
+\newcommand{\OO}{\bigcirc}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\isEquiv}{\bibopenparen{isEquiv}}
+\newcommand{\hlevel}{\mathrm{hlevel}}
+\newcommand{\isContr}{\operatorname{isContr}}
+\newcommand{\isProp}{\operatorname{isProp}}
+\newcommand{\Prop}{\mathrm{Prop}}
+\newcommand{\refl}{\mathrm{refl}}
+\newcommand{\isModal}{\operatorname{isModal}}
+\newcommand{\ap}{\operatorname{ap}}
+\newcommand{\fib}{\operatorname{fib}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tot}{\mathrm{tot}}
+\newcommand{\pt}{\mathrm{pt}}
+
+\title{cardinal(基数)}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{严格全序 (Strict Total Order)}
+\begin{markdown}
+设 $A$ 为一个集合，$<$ 是 $A$ 上的二元关系。若 $<$ 满足以下三个性质，则称 $<$ 为 $A$ 上的**严格全序**（或严格线序）：
+
+1. **非自反性 (Irreflexivity)**：对任意 $a \in A$，均有 $a \nless a$（即 $\neg(a < a)$）。
+2. **传递性 (Transitivity)**：对任意 $a, b, c \in A$，若 $a < b$ 且 $b < c$，则 $a < c$。
+3. **三歧性 (Trichotomy)**：对任意 $a, b \in A$，$a < b$、$a = b$、$b < a$ **恰有其一**成立。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{严格良序 (Strict Well-ordering)}
+\begin{markdown}
+设 $A$ 为一个集合，$<$ 是 $A$ 上的二元关系。称 $(A, <)$ 为一个**严格良序集**（或 $<$ 是 $A$ 上的**严格良序**），当且仅当满足以下两条：
+
+1. **关系 $<$ 是 $A$ 上的严格全序**。
+2. **良基性 / 最小元原理 (Well-foundedness)**：$A$ 的**每一个非空子集**都有关于 $<$ 的最小元。
+* 精确逻辑表达为：
+
+$$\forall S \subseteq A \; (S \neq \emptyset \implies \exists m \in S \; \forall x \in S \setminus \{m\}, \; m < x)$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}{传递集 (Transitive Set)}
+集合 $x$ 称为传递集，如果对任意 $y \in x$，都有 $y \subseteq x$（即 $x$ 的元素也是 $x$ 的子集）。
+\end{frame}
+
+\begin{frame}[fragile]{序数 (Ordinal)}
+\begin{markdown}
+按照冯·诺伊曼（von Neumann）的定义，一个集合 $\alpha$ 称为**序数**，当且仅当 $\alpha$ 是一个传递集，且在其上的属于关系 $\in$ 是严格良序的。
+* 所有序数的类记作 $\mathbf{ON}$。
+* 序数的大小关系定义为：$\alpha < \beta \iff \alpha \in \beta$。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{极限序数（Limit Ordinal）}
+\begin{markdown}
+在集合论中，**极限序数（Limit Ordinal）** 是序数（Ordinal）分类中的一种特殊序数。直观地说，它是一个**无法通过对其紧前趋加 1 得到，而是由所有比它小的序数“取极限（并集）”拼凑而成**的无穷序数。
+
+设 $\lambda$ 为一个序数（按照冯·诺伊曼定义，即一个传递集且在属于关系 $\in$ 下为严格良序集）。
+
+$\lambda$ 称为**极限序数**，当且仅当它满足以下**任一等价条件**：
+
+1. 标准定义（非零且非后继）
+$$\lambda \neq 0 \quad \text{且} \quad \forall \alpha \, (\lambda \neq \alpha + 1)$$
+
+
+即：$\lambda$ 既不是零序数 $0$（空集 $\emptyset$），也不能表示为任何序数 $\alpha$ 的后继序数 $\alpha + 1 = \alpha \cup \{\alpha\}$。
+
+2. 局部最大元条件（无最大元）
+$$\lambda \neq 0 \quad \text{且} \quad \forall \alpha < \lambda, \; \exists \beta < \lambda \text{ 使得 } \alpha < \beta$$
+
+
+即：$\lambda$ 是非零的，且在比 $\lambda$ 小的所有序数组成的集合中，**没有最大元素**。
+
+3. 并集/上确界条件（等于小序数的并）
+$$\lambda \neq 0 \quad \text{且} \quad \lambda = \bigcup \lambda = \sup_{\alpha < \lambda} \alpha$$
+
+
+即：$\lambda$ 恰好等于所有严格小于它的序数的并集（上确界）。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{共尾数（Cofinality）}
+\begin{markdown}
+共尾数是衡量一个序数（或基数）“可以被多快逼近”的概念，是研究正则基数、奇异基数的核心工具。
+
+1. 定义（最常用的形式）
+
+设 $\alpha$ 是一个极限序数（或任意无限序数）。  
+$\alpha$ 的**共尾数** $\operatorname{cf}(\alpha)$ 定义为：
+
+> 最小的序数 $\beta$，使得存在一个函数  
+> $f:\beta\to\alpha$，  
+> 满足：$f$ 的值域在 $\alpha$ 中是**共尾的**（cofinal），  
+> 即对任意 $\xi<\alpha$，都存在 $\eta<\beta$ 使得 $f(\eta)\ge\xi$。
+
+换句话说，可以用长度为 $\beta$ 的递增序列“爬到” $\alpha$ 的顶端。
+
+2. 等价刻画（更方便使用）
+
+以下条件等价：
+1. $\operatorname{cf}(\alpha)=\beta$
+2. $\beta$ 是最小的序数，使得存在一个**严格递增**的函数 $f:\beta\to\alpha$，其值域在 $\alpha$ 中无上界。
+3. $\beta$ 是最小的序数，使得 $\alpha$ 可以写成 $\beta$ 个比 $\alpha$ 小的序数的并：
+   $$
+   \alpha=\bigcup_{\xi<\beta}\alpha_\xi,\quad\text{其中每个 }\alpha_\xi<\alpha.
+   $$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{等势 (Equinumerosity)}
+\begin{markdown}
+* 设 $A, B$ 为两个集合。若存在一个从 $A$ 到 $B$ 的**双射**（一一对应） $f: A \to B$，则称 $A$ 与 $B$ **等势**，记作 $A \approx B$。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{基数 (Cardinal Number)}
+\begin{markdown}
+在选择公理 (AC) 成立的条件下，任何集合都可以被良序化，因此可以将基数定义为一种特殊的序数。
+
+\smallskip
+序数 $\kappa$ 称为**基数 (Cardinal Number)**，当且仅当它**不能与任何比它小的序数等势**：
+$$\kappa \text{ 是基数 } \iff \forall \alpha < \kappa, \; \alpha \not\approx \kappa$$
+
+* **有限基数**：自然数 $0, 1, 2, \dots$
+* **无限基数**：通常按序数下标表示为阿列夫数（$\aleph_0, \aleph_1, \aleph_2, \dots, \aleph_\omega, \dots$）。
+* 每个集合 $A$ 的势 $\vert{}A\vert{}$ 即为与 $A$ 等势的唯一那个基数序数。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{阿列夫序列 (Aleph Sequence)}
+\begin{markdown}
+在选择公理 (AC) 下，所有的无限基数都可以按照大小关系构成一个在序数（Ordinal）上索引的严密序列，称为**阿列夫序列**：
+$$\aleph_0 < \aleph_1 < \aleph_2 < \dots < \aleph_\omega < \aleph_{\omega+1} < \dots$$
+
+其中，每个阿列夫数 $\aleph_\alpha$ 的下标 $\alpha$ 都是一个序数。基数的类型（后继还是极限），**完全取决于其下标序数 $\alpha$ 的类型**。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{ 后继基数 (Successor Cardinal)}
+\begin{markdown}
+1. 精确定义
+
+一个无限基数 $\kappa$ 称为**后继基数**，当且仅当存在一个基数 $\mu < \kappa$，使得 $\kappa$ 是**严格大于 $\mu$ 的最小基数**。
+
+* 通常记作：$\kappa = \mu^+$（读作 $\mu$ 的后继基数）。
+* 若用阿列夫序列表示：若下标序数是后继序数（即 $\alpha = \beta + 1$），则 $\aleph_\alpha = \aleph_{\beta+1}$ 是后继基数。
+
+2. 典型例子
+
+* **$\aleph_1$**：$\aleph_0$（可数无穷）的直接下一个基数，即 $\aleph_1 = \aleph_0^+$（首个不可数基数）。
+* **$\aleph_2, \aleph_3, \dots, \aleph_{100}$**：自然数下标的基数全部是后继基数。
+* **$\aleph_{\omega+1}$**：极限序数 $\omega$ 的下一个后继序数对应的基数。
+
+3. 核心性质
+
+* **绝对正则性**：在 ZFC 集合论中，**所有后继基数都是正则基数 (Regular Cardinal)**。
+也就是说，你不可能用少于 $\mu^+$ 个、且每个集合大小都严格小于 $\mu^+$ 的小集合通过并集拼凑出 $\mu^+$。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{极限基数 (Limit Cardinal)}
+\begin{markdown}
+极限基数进一步分为**普通极限基数**（或简称极限基数）与**强极限基数**。
+
+1. (普通) 极限基数 (Limit Cardinal)
+
+一个无限基数 $\kappa$ 称为**极限基数**，当且仅当它满足以下两个条件：
+
+1. $\kappa$ 不是有限基数，也不是 $\aleph_0$（即 $\kappa > \aleph_0$）；
+2. $\kappa$ **不是任何基数的后继基数**（即对任意 $\mu < \kappa$，都有 $\mu^+ < \kappa$）。
+
+若用阿列夫序列表示：若下标序数 $\alpha$ 是一个**极限序数**（如 $\omega, \omega\cdot 2, \omega_1$），则 $\aleph_\alpha$ 就是极限基数。
+
+精确表达（上确界条件）
+
+极限基数也可以表示为所有严格小于它的基数的上确界（并集）：
+$$\kappa = \sup \{ \mu \mid \mu < \kappa \text{ 且 } \mu \text{ 是基数} \} = \bigcup \{ \mu \mid \mu < \kappa \text{ 且 } \mu \text{ 是基数} \}$$
+
+典型例子
+
+* **$\aleph_\omega$**：阿列夫序列中首个极限基数，它是 $\aleph_0, \aleph_1, \aleph_2, \dots$ 的上确界。
+* **$\aleph_{\omega+\omega}$**（或 $\aleph_{\omega\cdot 2}$）、**$\aleph_{\omega_1}$**（下标为首个不可数序数）。
+
+**核心性质**
+
+* **多为奇异基数**：许多常见的极限基数（如 $\aleph_\omega$）都是**奇异基数 (Singular Cardinal)**，因为它们可以被严格小于自身的序列拼凑而成（例如 $\text{cf}(\aleph_\omega) = \aleph_0 < \aleph_\omega$）。（若兼具正则性则升级为弱不可达基数）
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+\begin{markdown}
+2. 强极限基数 (Strong Limit Cardinal)
+
+在涉及幂集运算时，还有一个更强烈的极限概念：
+
+无限基数 $\kappa$ 称为**强极限基数**，当且仅当对任意基数 $\mu < \kappa$，其幂集基数均满足：
+$$2^\mu < \kappa$$
+
+与普通极限基数的区别
+
+* **强极限条件更严苛**：不仅要求“后继运算” $\mu^+$ 跨不出 $\kappa$，还要求极具膨胀性的“幂集运算” $2^\mu$ 也**无法跨出 $\kappa$**。
+* **关系**：因为在 ZFC 中总是成立 $\mu^+ \le 2^\mu$，所以**任意强极限基数必然是极限基数**；反之不一定（除非连续统假设 GCH 成立）。
+* **典型代表**：
+* **$\aleph_0$**：通常也被视为强极限（因为对有限数 $n$，有 $2^n < \aleph_0$）。
+* **不可达基数**：强不可达基数的核心条件之一就是要求其为一个“强极限基数”。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{正则基数 (Regular Cardinal)}
+\begin{markdown}
+正则基数用来刻画那些“无法被更小规模的运算从下方充填达到”的基数。
+
+一个无限基数 $\kappa$ 称为**正则基数 (Regular Cardinal)**，当且仅当它的共尾性等于它自身：
+$$\text{cf}(\kappa) = \kappa$$
+
+若无限基数满足 $\text{cf}(\kappa) < \kappa$，则称其为**奇异基数 (Singular Cardinal)**。
+
+\medskip
+**直观等价性质**
+
+$\kappa$ 是正则基数等价于以下判定：
+
+> 不能将 $\kappa$ 表示为少于 $\kappa$ 个集合的并集，且其中每个集合的基数都严格小于 $\kappa$。
+> 即：若 $\lambda < \kappa$，且对每个 $\alpha < \lambda$ 有 $\vert{}A_\alpha\vert{} < \kappa$，则 $\left\vert{} \bigcup_{\alpha < \lambda} A_\alpha \right\vert{} < \kappa$。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{不可达基数 (Inaccessible Cardinal)}
+\begin{markdown}
+“不可达”意味着该基数极其庞大，以至于通过 ZFC 中标准的构造性操作（如取幂集、取小于该规模的并集）都无法从比它小的基数到达它。
+
+数学界通常将不可达基数分为**弱不可达**和**强不可达**。如果不加特殊说明，学术界所说的“不可达基数”默认指**强不可达基数**。
+
+* 弱不可达基数 (Weakly Inaccessible Cardinal)
+
+无限基数 $\kappa$ 称为**弱不可达基数**，当且仅当它满足以下三个条件：
+
+1. $\kappa > \aleph_0$（不可数）；
+2. $\kappa$ 是**正则基数**；
+3. $\kappa$ 是**极限基数**（即不是后继基数）。
+
+* 强不可达基数 (Strongly Inaccessible Cardinal / 不可达基数)
+
+无限基数 $\kappa$ 称为**强不可达基数**（通常直接称为**不可达基数**），当且仅当它满足以下三个条件：
+
+1. $\kappa > \aleph_0$（不可数）；
+2. $\kappa$ 是**正则基数**；
+3. $\kappa$ 是**强极限基数**（即对任意 $\mu < \kappa$，都有 $2^\mu < \kappa$）。
+
+\end{markdown}
+\end{frame}
+
+
+% 参考文献帧，长列表自动分页
+\begin{frame}[allowframebreaks]{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{gemini}
+\url{https://share.gemini.google/dYwMrvRcaywO}
+
+\end{thebibliography}
+\end{frame}
+
+\end{document}
