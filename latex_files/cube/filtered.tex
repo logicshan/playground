@@ -1,0 +1,109 @@
+\documentclass{ctexart}
+
+\usepackage{amsmath,amsthm,extarrows,color,enumitem,framed,amscd}
+\usepackage[a4paper, left = 1cm, right = 1cm]{geometry}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage[texMathDollars]{markdown}
+
+% 取消首行缩进
+\ctexset{autoindent=false}   % 先关闭 ctex 的自动调整功能
+\setlength{\parindent}{0pt}  % 再把段首缩进设为 0
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+%%%%%%%% FONT TIMESAVES %%%%%%%
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bI}{\mathbb{I}}
+
+\newcommand{\CC}{\mathcal{C}}
+
+%%%%%%%% CATEGORY THEORY %%%%%%%
+\newcommand{\id}{\mathrm{id}}
+\DeclareMathOperator{\Hom}{Hom}
+
+\newcommand{\cat}[1]{\mathrm{#1}}
+\newcommand{\Set}{\cat{Set}}
+
+\DeclareFontFamily{U}{dmjhira}{}
+\DeclareFontShape{U}{dmjhira}{m}{n}{ <-> dmjhira }{}
+
+\DeclareRobustCommand{\yo}{\text{\usefont{U}{dmjhira}{m}{n}\symbol{"48}}}
+
+\DeclareMathOperator*{\colim}{colim}
+
+\newcommand{\inl}{\operatorname{inl}}
+\newcommand{\inr}{\operatorname{inr}}
+
+%%%%%%%%% GEOMTERY %%%%%%%%%%%%%%
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Zar}{\mathrm{Zar}}
+
+%%%%%%%%% TYPE THEORY %%%%%%%%%%%
+\newcommand{\OO}{\bigcirc}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\isEquiv}{\bibopenparen{isEquiv}}
+\newcommand{\hlevel}{\mathrm{hlevel}}
+\newcommand{\isContr}{\operatorname{isContr}}
+\newcommand{\isProp}{\operatorname{isProp}}
+\newcommand{\Prop}{\mathrm{Prop}}
+\newcommand{\refl}{\mathrm{refl}}
+\newcommand{\isModal}{\operatorname{isModal}}
+\newcommand{\ap}{\operatorname{ap}}
+\newcommand{\fib}{\operatorname{fib}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tot}{\mathrm{tot}}
+\newcommand{\pt}{\mathrm{pt}}
+
+\begin{document}
+\begin{markdown}
+设 $\kappa$ 为一个**正则基数**（regular cardinal），**$\kappa$-滤过余极限**（$\kappa$-filtered colimit）是指定义在 **$\kappa$-滤过范畴**（$\kappa$-filtered category）上的图表的余极限（colimit）。
+
+**1. $\kappa$-滤过范畴的精确定义**
+
+一个小范畴（或局部小范畴） $\mathcal{I}$ 称为 **$\kappa$-滤过范畴**，如果它满足以下条件之一（两种经典等价定义）：
+
+**定义 A（元素与态射有界性）**：
+
+* **对象有上界**：对于任意势严格小于 $\kappa$ 的对象集合 $S \subseteq \text{Ob}(\mathcal{I})$（即 $\vert{}S\vert{} < \kappa$），存在一个对象 $j \in \mathcal{I}$ 及一族态射 $\{f_i: i \to j\}_{i \in S}$。
+* **平行态射可均衡**：对于任意两个对象 $i, j \in \mathcal{I}$ 以及任意势严格小于 $\kappa$ 的平行态射集合 $R \subseteq \text{Hom}_{\mathcal{I}}(i, j)$（即 $\vert{}R\vert{} < \kappa$），存在对象 $k \in \mathcal{I}$ 及态射 $g: j \to k$，使得对任意 $f_1, f_2 \in R$，均有：
+
+$$g \circ f_1 = g \circ f_2$$
+
+
+
+**定义 B（范畴图表余锥性）**：
+对于任意态射集势严格小于 $\kappa$ 的小范畴 $\mathcal{D}$（即 $\vert{}\text{Mor}(\mathcal{D})\vert{} < \kappa$），任何函子 $F: \mathcal{D} \to \mathcal{I}$ 在 $\mathcal{I}$ 中都存在一个余锥（cocone）。
+
+---
+
+**2. $\kappa$-滤过余极限的定义**
+
+给定范畴 $\mathcal{C}$ 与函子 $D: \mathcal{I} \to \mathcal{C}$：
+
+* 当索引范畴 $\mathcal{I}$ 为 $\kappa$-滤过范畴时，图表 $D$ 的余极限 $\varinjlim_{\mathcal{I}} D$（或记作 $\text{colim}_{i \in \mathcal{I}} D(i)$）即被称为 **$\kappa$-滤过余极限**。
+
+---
+
+**3. 特例与经典表达**
+
+* **$\aleph_0$-滤过余极限**：当 $\kappa = \aleph_0$ 时，$\aleph_0$-滤过范畴即为标准的**滤过范畴**（filtered category），其余极限即为传统的**滤过余极限**（如环的定向极限、模的有向并等）。
+* **集合范畴 $\mathbf{Set}$ 中的具体构造**：若 $D: \mathcal{I} \to \mathbf{Set}$ 为 $\kappa$-滤过图表，其余极限由不相交并的等价类给出：
+
+$$\varinjlim_{i \in \mathcal{I}} D(i) = \left( \bigsqcup_{i \in \text{Ob}(\mathcal{I})} D(i) \right) \Big/ \sim$$
+
+
+
+其中等价关系 $\sim$ 定义为：对 $x \in D(i)$ 与 $y \in D(j)$，$x \sim y$ 当且仅当存在 $k \in \mathcal{I}$ 以及态射 $f: i \to k, g: j \to k$，使得在 $D(k)$ 中满足：
+
+$$D(f)(x) = D(g)(y)$$
+\end{markdown}
+\end{document}
