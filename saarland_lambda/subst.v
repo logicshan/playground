@@ -39,7 +39,7 @@ Definition upr ξ := 0 .: (ξ ⊚ S).
 Definition ren ξ := fun x => var (ξ x).
 
 Reserved Notation "s '.⟨' σ ⟩"
-  (at level 2, σ at level 200, left associativity,
+  (at level 1, σ at level 200, left associativity,
    format "s '.⟨' σ ⟩" ).
 
 Fixpoint rename ξ s : term :=
@@ -55,7 +55,7 @@ Arguments up σ x /.
 Notation "⇑" := up.
 
 Reserved Notation "s .[ σ ]" 
-  (at level 2, σ at level 200, left associativity,
+  (at level 1, σ at level 200, left associativity,
    format "s .[ σ ]" ).
 
 Fixpoint inst σ s :=
@@ -71,7 +71,7 @@ Arguments scomp σ τ x /.
 Notation "σ ∘ τ" := (scomp σ τ) (at level 56).
 
 Notation "s .[ σ ]" := (inst σ s)
-  (at level 2, σ at level 200, left associativity,
+  (at level 1, σ at level 200, left associativity,
    format "s .[ σ ]" ).
 
 (** Renaming is a special case of institution *)
@@ -235,6 +235,8 @@ Proof. apply funext;intros [];cbn. all:reflexivity. Qed.
 (** Now we have shown all basic equations, thus we disable automatic reduction *)
 Arguments inst : simpl never.
 Arguments up : simpl never.
+
+Create Rewrite HintDb basic_equations.
 
 (* We do not add beta_def up_def to keep the abstraction layer it provides *)
 Hint Rewrite inst_app inst_lam inst_0_cons inst_I inst_comp cons_0_S comp_I_l comp_I_r comp_assoc cons_comp comp_S_cons head_cons_tail: basic_equations.

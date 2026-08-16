@@ -44,7 +44,7 @@ Section ALB.
   Definition compatible := 
     forall s s' t t', s >> s' -> t >> t' -> beta s t >> beta s' t'.
 
-  Hint Constructors step pstep.
+  Hint Constructors step pstep : core.
 
   Fact star_app_comp s s' t t':
     s ≻* s' -> t ≻* t' -> s t ≻* s' t'.

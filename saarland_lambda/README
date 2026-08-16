@@ -1,1 +1,5 @@
 https://courses.ps.uni-saarland.de/sem_ws1920/3/Resources
+
+$ rocq compile confluence.v
+$ rocq compile abstractLambdaBeta.v
+$ rocq compile subst.v

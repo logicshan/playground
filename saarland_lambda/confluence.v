@@ -2,11 +2,12 @@
 
 Set Implicit Arguments.
 Unset Strict Implicit.
-From Coq Require Import Lia Morphisms.
+
+From Stdlib Require Import Lia Morphisms.
 Ltac inv H := inversion H; subst; clear H.
 
-Notation "R <<= S" := (forall x y, R x y -> S x y) (at level 70).
-Notation "R === S" := (R <<= S /\ S <<= R) (at level 70).
+Notation "R <<= S" := (forall x y, R x y -> S x y) (at level 70, no associativity).
+Notation "R === S" := (R <<= S /\ S <<= R) (at level 70, no associativity).
 Implicit Types m n k l: nat.
 
 Section Sec1.
@@ -54,8 +55,8 @@ Section Sec1.
 
 End Sec1.
 
-Hint Constructors star.
-Hint Resolve star_exp star_trans.
+Hint Constructors star : core.
+Hint Resolve star_exp star_trans : core.
 
 Section Sec2.
   Variable X: Type.
@@ -187,11 +188,11 @@ End Iter.
 Section Eval.
   Variables (X: Type)  (R: X -> X -> Prop).
   Implicit Types x y z : X.
-  Notation "x ≻ y" := (R x y) (at level 70).
-  Notation "x ≻* y" := (star R x y) (at level 70).
+  Notation "x ≻ y" := (R x y) (at level 70, no associativity).
+  Notation "x ≻* y" := (star R x y) (at level 70, no associativity).
   Definition normal x := ~ exists y, x ≻ y.
   Definition eval x y := x ≻* y /\ normal y.
-  Notation "x ⊳ y" := (eval x y) (at level 70).
+  Notation "x ⊳ y" := (eval x y) (at level 70, no associativity).
 
   Fact star_normal x y:
     x ≻* y -> normal x -> x = y.
@@ -249,7 +250,7 @@ Section Eval.
         + rewrite IH at 1. apply H1.
     Qed.
     
-    Variable (delta: forall x, normal x + ~ normal x).
+    Variable (delta: forall x, normal x + (~ normal x)).
 
     Fixpoint E n x : option X :=
       match n with
@@ -397,7 +398,7 @@ End MorphismLemma.
 Section Exercise.
   Variables (X: Type) (R: X -> X -> Prop).
   Implicit Types (x y z : X).
-  Notation "x ≻ y" := (R x y) (at level 70).
+  Notation "x ≻ y" := (R x y) (at level 70, no associativity).
 
   Variables (app: X -> X -> X)
             (comp: forall x x' y, x ≻ x' -> app x y ≻ app x' y).
@@ -416,8 +417,8 @@ End Exercise.
 Section Takahashi.
   Variables (X: Type)  (R: X -> X -> Prop).
   Implicit Types (x y z : X).
-  Notation "x ≻ y" := (R x y) (at level 70).
-  Notation "x ≻* y" := (star R x y) (at level 70).
+  Notation "x ≻ y" := (R x y) (at level 70, no associativity).
+  Notation "x ≻* y" := (star R x y) (at level 70, no associativity).
 
   Definition tak_fun rho := forall x y, x ≻ y -> y ≻ rho x.
 
@@ -502,8 +503,8 @@ End TMT.
 Section UniformConfluence.
   Variables (X: Type)  (R: X -> X -> Prop).
   Implicit Types (x y z : X).
-  Notation "x ≻ y" := (R x y) (at level 70).
-  Notation "x ≻* y" := (star R x y) (at level 70).
+  Notation "x ≻ y" := (R x y) (at level 70, no associativity).
+  Notation "x ≻* y" := (star R x y) (at level 70, no associativity).
 
   Definition uniform_confluent :=
     forall x y z, x ≻ y -> x ≻ z -> y = z \/ joinable R y z.
@@ -522,7 +523,7 @@ Section UniformConfluence.
   | stariRefl x        : stari 0 x x
   | stariStep x x' y n : R x x' -> stari n x' y -> stari (S n) x y.
 
-  Notation "x '≻^' n y" := (stari n x y) (at level 70, n at level 5).
+  Notation "x '≻^' n y" := (stari n x y) (at level 70, n at level 5, no associativity).
 
   Fact stari0 x y :
     x ≻^0 y -> x = y.
@@ -566,8 +567,8 @@ Section UniformConfluence.
     - econstructor. exact H1. apply IH, H2.
   Qed.
 
-  Hint Constructors stari.
-  Hint Resolve stari_trans.
+  Hint Constructors stari : core.
+  Hint Resolve stari_trans : core.
 
   Definition uni_joinable x y m n :=
     exists k l z, k <= n /\ l <= m /\ x ≻^k z /\ y ≻^l z /\ m + k = n + l.
@@ -577,8 +578,8 @@ Section UniformConfluence.
   
   Definition uni_full :=
     forall x y1 y2 m n, x ≻^m y1 -> x ≻^n y2 -> uni_joinable y1 y2 m n.
-  
-  Fact uni2semi :
+
+Fact uni2semi :
     uniform_confluent -> uni_semi.
   Proof.
     intros H x y n z H1 H2. revert y H1.
@@ -589,13 +590,16 @@ Section UniformConfluence.
       + exists n, 0, z. cbn. intuition. 
       + assert (uni_joinable v z 1 n) as (k'&l'&u&H6&H7&H8&H9&H10).
         { apply IH; auto. }
-        exists (S k'), l', u. intuition. eauto.
-        rewrite (plus_Sn_m n l').
-        rewrite (PeanoNat.Nat.add_succ_r 1 k').
-        rewrite H10. reflexivity.
+        exists (S k'), l', u.
+        (* 手动拆解 uni_joinable 的 5 个条件，分别击破 *)
+        split; [lia |].                             (* 证明 S k' <= S n *)
+        split; [assumption |].                      (* 证明 l' <= 1 *)
+        split; [econstructor; eauto |].             (* 证明 y ≻^ (S k') u *)
+        split; [assumption |].                      (* 证明 z ≻^ l' u *)
+        lia.                                        (* 证明 1 + S k' = S n + l' *)
   Qed.
  
-  Fact uni_semi2full :
+Fact uni_semi2full :
     uni_semi -> uni_full.
   Proof.
     intros H x y z m n H1 H2. revert n z H2.
@@ -605,12 +609,14 @@ Section UniformConfluence.
       { eapply H; eauto. }
       assert (uni_joinable y v m k') as (k''&l''&u&H9&H10&H11&H12&H13).
       { apply IH; auto. }
-      exists k'', (l'+l''), u. intuition. eauto.
-      exact (PeanoNat.Nat.le_trans k'' k' n H9 H4).
-      exact (PeanoNat.Nat.add_le_mono l' 1 l'' m H5 H10). eauto.
-      rewrite (plus_Sn_m m k'').
-      rewrite H13. rewrite <- (plus_Sn_m k' l'').
-      rewrite <- (PeanoNat.Nat.add_1_l k'). rewrite H8. intuition.
+      exists k'', (l'+l''), u.
+      
+      (* 依次拆解 uni_joinable 的 5 个条件 *)
+      split; [lia |].                       (* 1. 证明 k'' <= n (利用 H9 和 H4) *)
+      split; [lia |].                       (* 2. 证明 l'+l'' <= S m (利用 H5 和 H10) *)
+      split; [assumption |].                (* 3. 证明 y ≻^ k'' u (即 H11) *)
+      split; [eauto |].                     (* 4. 证明 z ≻^(l'+l'') u (eauto 自动调用 stari_trans 拼接 H7 和 H12) *)
+      lia.                                  (* 5. 证明 S m + k'' = n + (l' + l'') *)
   Qed.
 
   Fact uni_full_uni1 :
@@ -652,7 +658,7 @@ Section UniformConfluence.
     exact H6.
   Qed.
 
-  Notation "x ⊳ y" := (eval R x y) (at level 70).
+  Notation "x ⊳ y" := (eval R x y) (at level 70, no associativity).
     
   Fact uni_SN x y :
     uniform_confluent -> x ⊳ y -> SN R x.
@@ -677,9 +683,9 @@ Section EquivalenceClosure.
   Implicit Types (x y z: X) (R S: X -> X -> Prop).
 
   Definition sym R x y := R x y \/ R y x.
-  Notation starsym R := (star (sym R)).
+  Abbreviation starsym R := (star (sym R)).
   Definition CR R := forall x y, starsym R x y -> joinable (star R) x y.
-  Hint Unfold sym.
+  Hint Unfold sym : core.
   
   Instance sym_sym R:
     Symmetric (sym R).
@@ -754,5 +760,3 @@ Section EquivalenceClosure.
   Qed.
 
 End EquivalenceClosure.
-
-

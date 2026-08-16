@@ -1,6 +1,6 @@
 (** De Bruijn terms as retract of preterms *)
 
-From Coq Require Import Arith Lia List.
+From Stdlib Require Import Arith Lia List.
 Import ListNotations.
 Ltac inv H := (inversion H; subst; clear H).
 
