@@ -1,0 +1,569 @@
+\documentclass{ctexart}
+
+\usepackage{amsmath,amssymb,mathtools,amsthm,extarrows,color,enumitem,framed,amscd}
+\usepackage[a4paper, left = 1cm, right = 1cm]{geometry}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage[texMathDollars]{markdown}
+
+\newcommand{\normal}{\mathrm{normal}}
+
+% 取消首行缩进
+\ctexset{autoindent=false}   % 先关闭 ctex 的自动调整功能
+\setlength{\parindent}{0pt}  % 再把段首缩进设为 0
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+\begin{document}
+\begin{markdown}
+This conversation was generated with Duck.ai (https://duck.ai) using OpenAI's GPT-5.6 Luna Model. AI chats may display inaccurate or offensive information (see https://duckduckgo.com/duckai/privacy-terms for more info).
+
+====================
+
+User prompt 1 of 2 - 8/28/2026, 1:49:16 PM:
+范畴论中的 equalizer, coequalizer 的定义是什么. 它们的直观是什么, 给出例子解释
+
+GPT-5.6 Luna:
+<!-- **Explaining Chinese definitions**
+
+I need to provide an answer in Chinese while keeping it stable and not relying on the web. I should explain concepts with definitions, diagrams, intuition, and examples. Including the universal property sounds essential. I might discuss equalizer set functions and coequalizer quotients. It’s important to mention the idea of category duality, ensuring proper notation throughout. This way, I'll create a comprehensive and clear response! -->
+在范畴论中，**equalizer（等化子）**和 **coequalizer（余等化子）**都是用来描述“使两个态射相等”的对象，但方式相反：
+
+- equalizer：找出一个最大的子对象，使两个映射在其上相等；
+- coequalizer：把源对象中的元素进行最小的商化，使两个映射在商对象上相等。
+
+设有两个平行态射
+
+$$
+f,g:X\rightrightarrows Y.
+$$
+
+也就是 $f:X\to Y$ 和 $g:X\to Y$。
+
+---
+
+## 1. Equalizer：等化子
+
+### 定义
+
+如果有态射
+
+$$
+e:E\to X
+$$
+
+满足
+
+$$
+f\circ e=g\circ e,
+$$
+
+并且对任意态射 $h:Z\to X$，只要
+
+$$
+f\circ h=g\circ h,
+$$
+
+就存在唯一的态射
+
+$$
+u:Z\to E
+$$
+
+使得
+
+$$
+h=e\circ u,
+$$
+
+那么称 $e:E\to X$ 是 $f,g$ 的 **equalizer**。
+
+图示为：
+\end{markdown}
+\[
+\begin{tikzcd}
+& E \arrow[d,"e"] \\
+Z \arrow[ur,"u",dashed] \arrow[r,"h"] & X
+\end{tikzcd}
+\]
+\begin{markdown}
+其中要求存在唯一 $u:Z\to E$，使得 $h=e\circ u$。
+
+更完整地说：
+\end{markdown}
+\[
+\begin{tikzcd}
+E \arrow[r,"e"] & X \arrow[r,shift left, "f"] \arrow[r,shift right,"g"'] & Y \\
+Z \arrow[u,"u",dashed] \arrow[ur,"h"'] & &
+\end{tikzcd}
+\]
+\begin{markdown}
+并且 $E$ 满足
+
+$$
+f\circ e=g\circ e.
+$$
+
+### 直观理解
+
+equalizer 是 $X$ 中那些“被 $f$ 和 $g$ 区分不出来”的部分。
+
+在集合范畴 $\mathbf{Set}$ 中：
+
+$$
+E=\{x\in X\mid f(x)=g(x)\}.
+$$
+
+而 $e:E\hookrightarrow X$ 就是这个集合到 $X$ 的包含映射。
+
+“泛”的意思是：任何落在 $X$ 中、并且使 $f$ 和 $g$ 相等的映射，都必须唯一地经过 $E$。
+
+因此，equalizer 可以理解为：
+
+> $X$ 中使 $f$ 与 $g$ 相等的最大部分。
+
+这里的“最大”不是说元素数量最多，而是指具有泛性质，能够唯一接收所有其他满足条件的对象。
+
+---
+
+## 2. 集合中的例子
+
+设
+
+$$
+X=\mathbb{R},\qquad Y=\mathbb{R},
+$$
+
+定义
+
+$$
+f(x)=x^2,\qquad g(x)=|x|.
+$$
+
+我们寻找满足
+
+$$
+x^2=|x|
+$$
+
+的实数 $x$。
+
+解为：
+
+$$
+x=0,\quad x=1,\quad x=-1.
+$$
+
+所以 equalizer 是集合
+
+$$
+E=\{-1,0,1\},
+$$
+
+以及包含映射
+
+$$
+e:E\hookrightarrow \mathbb{R}.
+$$
+
+因为对于每个 $x\in E$，都有
+
+$$
+f(x)=g(x).
+$$
+
+如果另一个集合 $Z$ 有映射 $h:Z\to\mathbb{R}$，并且
+
+$$
+f\circ h=g\circ h,
+$$
+
+那么对每个 $z\in Z$，必有
+
+$$
+h(z)\in\{-1,0,1\}.
+$$
+
+因此 $h$ 唯一地分解为
+
+$$
+Z\xrightarrow{u}E\xrightarrow{e}\mathbb{R}.
+$$
+
+---
+
+## 3. 群中的 equalizer
+
+在群范畴 $\mathbf{Grp}$ 中，设有群同态
+
+$$
+f,g:G\to H.
+$$
+
+那么它们的 equalizer 是子群
+
+$$
+E=\{x\in G\mid f(x)=g(x)\}.
+$$
+
+特别地，如果 $g$ 是平凡映射，或者我们考虑
+
+$$
+f:G\to H,\qquad 0:G\to H,
+$$
+
+那么 equalizer 就是 $f$ 的核：
+
+$$
+\ker f=\{x\in G\mid f(x)=e_H\}.
+$$
+
+所以：
+
+> 群同态的 kernel 是某个 equalizer 的特殊情形。
+
+---
+
+## 4. Coequalizer：余等化子
+
+### 定义
+
+如果有态射
+
+$$
+q:Y\to Q
+$$
+
+满足
+
+$$
+q\circ f=q\circ g,
+$$
+
+并且对任意态射 $h:Y\to Z$，只要
+
+$$
+h\circ f=h\circ g,
+$$
+
+就存在唯一的态射
+
+$$
+u:Q\to Z
+$$
+
+使得
+
+$$
+h=u\circ q,
+$$
+
+那么称 $q:Y\to Q$ 是 $f,g$ 的 **coequalizer**。
+
+图示为：
+\end{markdown}
+\[
+\begin{tikzcd}
+X \arrow[r,shift left,"f"] \arrow[r,shift right,"g"'] & Y \arrow[r,"q"] \arrow[dr,"h"] & Q \arrow[d,"u",dashed]\\
+& & Z
+\end{tikzcd}
+\]
+\begin{markdown}
+其中
+
+$$
+q\circ f=q\circ g,
+$$
+
+并且任何满足
+
+$$
+h\circ f=h\circ g
+$$
+
+的 $h:Y\to Z$，都唯一地经过 $q$。
+
+### 直观理解
+
+coequalizer 不再从 $X$ 中挑出一部分，而是把 $Y$ 中某些元素识别起来，使得 $f$ 和 $g$ 的结果变得相同。
+
+在集合范畴中，coequalizer 大致是：
+
+$$
+Q=Y/{\sim},
+$$
+
+其中 $\sim$ 是由关系
+
+$$
+f(x)\sim g(x)\qquad (x\in X)
+$$
+
+生成的最小等价关系。
+
+所以 coequalizer 可以理解为：
+
+> 把 $f(x)$ 和 $g(x)$ 强制视为相同，从而得到的最一般商对象。
+
+---
+
+## 5. 集合中的 coequalizer 例子
+
+设
+
+$$
+X=\{a,b\},\qquad Y=\{1,2,3,4\}.
+$$
+
+定义
+
+$$
+f(a)=1,\quad f(b)=2,
+$$
+
+以及
+
+$$
+g(a)=2,\quad g(b)=3.
+$$
+
+要求一个映射
+
+$$
+q:Y\to Q
+$$
+
+满足
+
+$$
+q\circ f=q\circ g.
+$$
+
+由 $a$ 得到：
+
+$$
+q(1)=q(2).
+$$
+
+由 $b$ 得到：
+
+$$
+q(2)=q(3).
+$$
+
+因此必须有
+
+$$
+q(1)=q(2)=q(3).
+$$
+
+元素 $4$ 不受任何关系约束，可以单独保留。
+
+于是 coequalizer 可以取为
+
+$$
+Q=\{[1],[4]\},
+$$
+
+其中
+
+$$
+[1]=\{1,2,3\},\qquad [4]=\{4\}.
+$$
+
+商映射为
+
+$$
+q:Y\to Q,
+$$
+
+满足
+
+$$
+q(1)=q(2)=q(3)=[1],\qquad q(4)=[4].
+$$
+
+这就是把由 $f(x)$ 和 $g(x)$ 产生的元素强行合并。
+
+---
+
+## 6. 群中的 coequalizer
+
+在群范畴中，设有两个群同态
+
+$$
+f,g:G\to H.
+$$
+
+那么 coequalizer 是一个商群
+
+$$
+q:H\to Q
+$$
+
+使得
+
+$$
+qf=qg.
+$$
+
+要求 $q(f(x))=q(g(x))$，等价于要求
+
+$$
+q\bigl(f(x)g(x)^{-1}\bigr)=e_Q.
+$$
+
+因此，应该把所有元素
+
+$$
+f(x)g(x)^{-1}
+$$
+
+都变成单位元，并且为了保持正规子群结构，需要取它们生成的正规闭包：
+
+$$
+N=\left\langle f(x)g(x)^{-1}\mid x\in G\right\rangle^{\normal}.
+$$
+
+于是 coequalizer 是自然商映射
+
+$$
+q:H\to H/N.
+$$
+
+特别地，如果 $g$ 是平凡同态，那么
+
+$$
+N=\langle f(G)\rangle^{\normal}.
+$$
+
+若 $f(G)$ 本身是正规子群，则 coequalizer 就是
+
+$$
+H/f(G).
+$$
+
+这说明：
+
+> 在群范畴中，余等化子通常表现为“除以某个正规子群”。
+
+---
+
+## 7. Equalizer 与 coequalizer 的对偶性
+
+它们是完全对偶的概念。
+
+equalizer 的形式是：
+
+$$
+E\longrightarrow X\rightrightarrows Y,
+$$
+
+也就是先有一个对象 $E\to X$，使得两条路径相等。
+
+coequalizer 的形式是：
+
+$$
+X\rightrightarrows Y\longrightarrow Q,
+$$
+
+也就是先有两条平行箭头，再从 $Y$ 出发把它们等化。
+
+如果把范畴中的所有箭头反向：
+
+- equalizer 会变成 coequalizer；
+- coequalizer 会变成 equalizer。
+
+因此：
+
+$$\operatorname{Coeq}_{\mathcal C}(f,g) = \operatorname{Eq}_{\mathcal C^{op}}(f^{op},g^{op}).
+$$
+
+---
+
+## 8. 与 kernel、cokernel 的关系
+
+在有零对象的范畴中：
+
+- kernel 是某种 equalizer；
+- cokernel 是某种 coequalizer。
+
+对于群或阿贝尔群：
+
+$$
+\ker(f)=\operatorname{Eq}(f,0),
+$$
+
+而在阿贝尔群范畴中：
+
+$$
+\operatorname{coker}(f)=\operatorname{Coeq}(f,0).
+$$
+
+具体地，对于群同态
+
+$$
+f:G\to H,
+$$
+
+kernel 是
+
+$$
+\ker f=\{x\in G\mid f(x)=e_H\},
+$$
+
+而 cokernel 是
+
+$$
+\operatorname{coker}(f)=H/\operatorname{im}(f)
+$$
+
+在阿贝尔群中成立；在一般群中需要取正规闭包。
+
+---
+
+## 9. 一句话总结
+
+对于平行态射
+
+$$
+f,g:X\rightrightarrows Y,
+$$
+
+- **Equalizer**：
+
+$$
+E\to X
+$$
+
+是 $X$ 中使 $f$ 和 $g$ 相等的部分；在集合中就是
+
+$$
+\{x\in X\mid f(x)=g(x)\}.
+$$
+
+- **Coequalizer**：
+
+$$
+Y\to Q
+$$
+
+是把 $f(x)$ 和 $g(x)$ 识别为相同之后得到的商对象；在集合中就是
+
+$$
+Y/\bigl(f(x)\sim g(x)\bigr).
+$$
+
+可以记成：
+
+> equalizer 是“取满足相等条件的子对象”，  
+> coequalizer 是“施加相等关系得到商对象”。
+\end{markdown}
+\end{document}
