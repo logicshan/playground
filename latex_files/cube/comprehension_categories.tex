@@ -1,0 +1,295 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage{xcolor}
+
+\definecolor{myblue}{RGB}{40,40,150}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+\usepackage[
+  hybrid,                            % 允许在 Markdown 中混用 LaTeX 命令
+  texMathDollars                     % 启用 $...$ 和 $$...$$ 数学公式
+]{markdown}
+
+\usepackage{graphicx} % Allows including images
+\graphicspath{{./images/}}
+
+\title{comprehension categories 相关概念}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{cartesian morphism\cite{ncatlab_grothendieck_fibration}}
+Given a functor $P \colon \mathcal{E} \to \mathcal{B}$, a morphism $f \colon x \to y$ in its domain category $\mathcal{E}$ is called \textit{cartesian} if for any morphism $g \colon z \to y$ in $\mathcal{E}$ and $w \colon P(z) \to P(x)$ in $\mathcal{B}$ such that $P(f) \circ w = P(g)$, there exists a \textit{unique} $\widehat{w} \colon z \to x$ such that $g = f \circ \widehat{w}$ and $P(\widehat{w}) = w$:
+
+$$
+\begin{tikzcd}[row sep=large, column sep=large]
+ & z \arrow[dr, dashed, "\exists! \, \widehat{w}"'] \arrow[drr, bend left=15, "\forall g"] & & \\
+\mathcal{E} \arrow[dd, "P"'] & & x \arrow[r, "f", "\text{cartesian}"'] & y \\
+ & P(z) \arrow[dr, "\forall w"'] \arrow[drr, bend left=15, "P(g)"] & & \\
+\mathcal{B} & & P(x) \arrow[r, "P(f)"] & P(y)
+\end{tikzcd}
+$$
+\end{frame}
+
+\begin{frame}[fragile]{Cartesian morphism 的直觉}
+\begin{markdown}
+- $f$ 是沿底空间 $P(f)$ 在总空间中的 **“主拉回”**
+- cartesian morphism 是 category-theoretic version of substitution/reindexing。
+\end{markdown}
+\end{frame}
+
+\begin{frame}{Grothendieck fibration}
+A functor $P \colon \mathcal{E} \to \mathcal{B}$ is a \textit{fibration} if for all objects $y \in \mathcal{E}$ and morphisms $f_0 \colon x_0 \to P(y)$, there is a cartesian morphism $f \colon x \to y$ such that $P(f) = f_0$.
+
+Such $f$ is also called a ``cartesian lifting'' of $P(f)$ to $y$, and a choice of cartesian lifting for every $y$ and $P(f)$ is called a \textit{cleavage}.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Grothendieck 纤维化}
+\begin{markdown}
+函子
+$$
+p:\mathcal E\to\mathcal B
+$$
+
+称为一个 **Grothendieck fibration**，如果满足：
+
+对于任意对象 $Y\in\mathcal E$ 和任意基底态射
+$$
+u:I\to pY
+$$
+
+都存在一个笛卡尔态射
+$$
+\overline u:X\to Y
+$$
+
+使得
+$$
+p(\overline u)=u.
+$$
+
+也就是说，每个对象 $Y$ 都可以沿着任意基底态射 $u:I\to pY$ 被“反向运输”到纤维 $\mathcal E_I$。
+
+常把 $\overline u$ 写成：
+$$
+u^*Y\longrightarrow Y.
+$$
+
+其中 $u^*Y\in\mathcal E_I$。
+
+这个 $u^*Y$ 可以理解为 $Y$ 沿 $u$ 的拉回、重索引或替换。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{笛卡尔提升不要求唯一选择}
+\begin{markdown}
+Grothendieck fibration 只要求：
+
+> 这样的笛卡尔提升存在。
+
+但它不要求我们为每个 $(u,Y)$ 指定一个具体的提升。
+
+事实上，两个不同的笛卡尔提升之间存在唯一的垂直同构。也就是说，如果
+$$
+X\to Y
+\quad\text{和}\quad
+X'\to Y
+$$
+
+都是 $u:I\to pY$ 的笛卡尔提升，那么存在唯一的同构
+$$
+X\cong X'
+$$
+
+位于纤维 $\mathcal E_I$ 中，并且与到 $Y$ 的两个态射相容。
+
+因此，反向拉回 $u^*Y$ 通常只在“唯一同构”的意义下确定，而不是严格唯一。
+
+这正是为什么一般得到的是伪函子，而不是严格函子。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Cleavage：劈分、笛卡尔提升的选择}
+\begin{markdown}
+设 $p:\mathcal E\to\mathcal B$ 是一个 fibration。
+
+一个 **cleavage** 是对每一个：
+
+- 对象 $Y\in\mathcal E$；
+- 基底态射 $u:I\to pY$；
+
+选择一个笛卡尔态射
+$$
+\overline u_Y:u^*Y\to Y
+$$
+
+满足
+$$
+p(\overline u_Y)=u.
+$$
+换句话说，cleavage 就是：
+
+> 为所有需要的笛卡尔提升，选定一个代表。
+
+通常要求恒等态射对应于恒等笛卡尔态射：
+$$
+(1_{pY})^*Y=Y,
+\qquad
+\overline{1_{pY}}_Y=1_Y.
+$$
+但不同文献对 cleavage 是否自动包含单位条件，约定略有不同。
+
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{为什么需要 cleavage？}
+\begin{markdown}
+没有 cleavage 时，对每个 $u:I\to J$ 和 $Y\in\mathcal E_J$，只能说存在一个对象 $u^*Y$，并且它在同构意义下唯一。
+
+有了 cleavage 后，才可以写出一个具体的操作：
+$$
+u^*:\mathcal E_J\to\mathcal E_I.
+$$
+
+对纤维内态射 $f:Y\to Y'$，笛卡尔泛性质给出一个唯一的态射
+$$
+u^*f:u^*Y\to u^*Y'.
+$$
+
+于是得到反变的“重索引函子”：
+$$
+u^*:\mathcal E_J\to\mathcal E_I.
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Cloven fibration：带劈分的纤维化}
+\begin{markdown}
+一个 **cloven fibration** 就是：
+$$
+p:\mathcal E\to\mathcal B
+$$
+
+再加上一个 cleavage。
+
+所以：
+$$
+\boxed{\text{cloven fibration} = \text{fibration} + \text{一个指定的 cleavage}}
+$$
+
+必须注意：
+
+- fibration 只要求笛卡尔提升存在；
+- cloven fibration 还指定了具体选择；
+- 同一个 fibration 可以有很多不同的 cleavage；
+- cleavage 通常不唯一，也不一定严格地与复合相容。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Split fibration：严格可复合的劈分}
+\begin{markdown}
+一个 cleavage 称为 **split cleavage**，如果满足严格的：
+$$
+(1_I)^*=\operatorname{id}_{\mathcal E_I}
+$$
+
+以及对于
+$$
+I\xrightarrow{u}J\xrightarrow{v}K,
+$$
+
+有
+$$
+(vu)^*=u^*v^*
+$$
+
+严格成立，而不只是自然同构。
+
+因此：
+$$
+\boxed{\text{split fibration} = \text{cloven fibration} + \text{严格满足单位和复合}}
+$$
+
+一般 cleavage 只给出自然同构：
+$$
+u^*v^*Y\cong (vu)^*Y.
+$$
+
+所以一般 cloven fibration 对应的是伪函子，而 split fibration 对应严格函子。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Comprehension Categories\cite{jacobs_comprehension}}
+\begin{enumerate}
+  \item a category $\mathcal{C}$,
+  \item a (cloven) fibration $p \colon \mathcal{T} \to \mathcal{C}$,
+  \item a functor $\chi \colon \mathcal{T} \to \mathcal{C}^\to$ preserving cartesian arrows,
+\end{enumerate}
+\noindent such that the following diagram commutes.
+
+\[
+\begin{tikzcd}[column sep=large, row sep=large]
+\mathcal{T} \arrow[rr, "\chi"] \arrow[dr, "p"'] & & \mathcal{C}^\to \arrow[dl, "\text{cod}"] \\
+& \mathcal{C} & 
+\end{tikzcd}
+\]
+
+\noindent A comprehension category is
+\begin{itemize}
+  \item[\textbf{full}] if $\chi$ is full and faithful;
+  \item[\textbf{split}] if $p$ is a split fibration.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Interpreting MLTT in a Comprehension Category}
+\[
+\begin{tikzcd}[column sep=large, row sep=large]
+\mathcal{T} \arrow[rr, "\chi"] \arrow[dr, "p"'] & & \mathcal{C}^\to \arrow[dl, "\text{cod}"] \\
+& \mathcal{C} & 
+\end{tikzcd}
+\]
+
+\vspace{1em}
+
+\begin{tabular}{rl}
+\textcolor{myblue}{Category $\mathcal{C}$} & models contexts \\
+\textcolor{myblue}{Fibre $\mathcal{T}_\Gamma$} & models types in context $\Gamma$ \\
+\textcolor{myblue}{Reindexing} & models substitution \\
+\textcolor{myblue}{Comprehension $\chi$} & models context extension $(\Gamma, A) \mapsto (\Gamma.A \xrightarrow{\chi(A)} \Gamma)$ \\
+\textcolor{myblue}{Sections of $\chi(A)$} & model terms $\Gamma \vdash t : A$ \\
+\end{tabular}
+\end{frame}
+
+
+% 参考文献帧，长列表自动分页
+\begin{frame}[allowframebreaks]{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{ncatlab_grothendieck_fibration}
+\url{https://ncatlab.org/nlab/show/Grothendieck+fibration}
+
+\bibitem{jacobs_comprehension}
+Bart Jacobs. “Comprehension Categories and the Semantics of Type Dependency”. In: Theor. Comput. Sci. 107.2 (1993), pp. 169–207.
+
+\end{thebibliography}
+\end{frame}
+\end{document}
