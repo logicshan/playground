@@ -1,0 +1,402 @@
+\documentclass[12pt,a4paper]{article}
+
+% Compile with: lualatex sheafification_sieve.tex
+% or xelatex sheafification_sieve.tex
+% Requires a system CJK font (Noto Serif CJK SC, Source Han Serif SC, etc.)
+
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{microtype}
+
+\geometry{margin=2.5cm}
+
+\IfFontExistsTF{Noto Serif CJK SC}{
+  \setmainfont{Noto Serif CJK SC}
+}{
+  \IfFontExistsTF{Source Han Serif SC}{
+    \setmainfont{Source Han Serif SC}
+  }{
+    \IfFontExistsTF{Droid Sans Fallback}{
+      \setmainfont{Droid Sans Fallback}
+    }{
+      \PackageWarning{sheaf}{No suitable CJK font found. Chinese may not render correctly.}
+    }
+  }
+}
+
+\title{用 sieve 构造 sheafification}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+设 \((\mathcal{C},J)\) 是一个 site，其中 \(J\) 是定义在 \(\mathcal{C}\) 上的 Grothendieck topology。我们完全用 sieve 来构造 sheafification。
+
+\section{\(J\)-覆盖 sieve}
+
+对 \(U\in\mathcal{C}\)，记
+\[
+yU=\mathcal{C}(-,U)
+\]
+为 representable presheaf。\(U\) 上的一个 sieve 是 \(yU\) 的子预层：
+\[
+S\hookrightarrow yU.
+\]
+等价地，对每个对象 \(V\)，有一个集合
+\[
+S(V)\subseteq \mathcal{C}(V,U),
+\]
+并且满足拉回封闭性：
+\[
+f\in S(V),\quad g:W\to V
+\quad\Longrightarrow\quad
+f\circ g\in S(W).
+\]
+Grothendieck topology \(J\) 给每个 \(U\) 指定一族覆盖 sieve：
+\[
+J(U)\subseteq \operatorname{Sieve}(U).
+\]
+我们写
+\[
+\operatorname{Cov}_J(U):=J(U).
+\]
+这里完全不需要引入覆盖态射族。
+
+\section{sieve 上的 matching family}
+
+设
+\[
+F:\mathcal{C}^{op}\to\mathbf{Set}
+\]
+是一个 presheaf，\(S\) 是 \(U\) 上的 sieve。
+
+一个定义在 \(S\) 上的 \(F\)-matching family，就是一个自然变换
+\[
+\alpha:S\to F.
+\]
+把它逐点写出来，就是对每个
+\[
+f:V\to U\in S(V)
+\]
+指定一个元素
+\[
+\alpha_f\in F(V),
+\]
+并且满足对任意 \(g:W\to V\)：
+\[
+\alpha_{f\circ g}=F(g)(\alpha_f).
+\]
+因此所有 matching families 构成集合
+\[
+\operatorname{Match}_F(S)
+:=
+\operatorname{Nat}(S,F).
+\]
+注意，这里 \(S\) 本身已经包含了所有复合箭头，所以相容性完全由自然变换条件表达。
+
+\section{对覆盖 sieve 取 filtered colimit}
+
+若 \(S,T\in J(U)\)，且
+\[
+S\subseteq T,
+\]
+则有 restriction map
+\[
+\operatorname{Nat}(T,F)
+\longrightarrow
+\operatorname{Nat}(S,F),
+\qquad
+\alpha\longmapsto\alpha|_S.
+\]
+所以得到一个函子
+\[
+J(U)^{op}\longrightarrow\mathbf{Set},
+\qquad
+S\longmapsto\operatorname{Nat}(S,F).
+\]
+定义第一次 plus construction：
+\[
+F^+(U)
+:=
+\varinjlim_{S\in J(U)^{op}}
+\operatorname{Nat}(S,F).
+\]
+为什么使用 \(J(U)^{op}\)？因为 sieve 的包含关系给出的是限制：
+\[
+S\subseteq T
+\quad\Rightarrow\quad
+\operatorname{Nat}(T,F)\to\operatorname{Nat}(S,F).
+\]
+
+\section{这个 colimit 的具体等价关系}
+
+\(F^+(U)\) 的元素可以写成等价类
+\[
+[S,\alpha],
+\]
+其中
+\[
+S\in J(U),\qquad \alpha:S\to F.
+\]
+两个代表
+\[
+[S,\alpha],
+\qquad
+[T,\beta]
+\]
+相等，当且仅当它们在某个共同的覆盖 refinement 上相等。
+
+具体地说，存在
+\[
+R\in J(U)
+\]
+满足
+\[
+R\subseteq S\cap T
+\]
+并且
+\[
+\alpha|_R=\beta|_R.
+\]
+这里 \(S\cap T\) 仍然是覆盖 sieve，这是 Grothendieck topology 的有限交性质：
+\[
+S,T\in J(U)
+\quad\Longrightarrow\quad
+S\cap T\in J(U).
+\]
+所以 \(J(U)^{op}\) 是 filtered 的：任意两个覆盖 sieve \(S,T\) 在反向包含关系下都有共同上界 \(S\cap T\)。
+
+因此 \(F^+(U)\) 的含义是：
+\begin{quote}
+在某个覆盖 sieve 上定义的 matching family，模掉在更细覆盖 sieve 上相等的关系。
+\end{quote}
+
+\section{\(F^+\) 的 presheaf 结构}
+
+给定箭头
+\[
+u:V\to U
+\]
+和 \(U\) 上的 sieve \(S\)，定义其拉回 sieve
+\[
+u^*S
+\]
+为
+\[
+(u^*S)(W)
+=
+\{g:W\to V\mid u\circ g\in S(W)\}.
+\]
+Grothendieck topology 的拉回公理保证：
+\[
+S\in J(U)
+\quad\Longrightarrow\quad
+u^*S\in J(V).
+\]
+若 \(\alpha:S\to F\)，定义
+\[
+u^*\alpha:u^*S\to F
+\]
+为
+\[
+(u^*\alpha)_g
+=
+\alpha_{u\circ g}.
+\]
+于是定义
+\[
+F^+(u):F^+(U)\to F^+(V)
+\]
+为
+\[
+[S,\alpha]
+\longmapsto
+[u^*S,u^*\alpha].
+\]
+因此 \(F^+\) 是一个 presheaf。
+
+\section{自然映射 \(F\to F^+\)}
+
+对 \(x\in F(U)\)，可以在最大 sieve
+\[
+yU=\mathcal{C}(-,U)
+\]
+上定义 matching family
+\[
+\alpha^x:yU\to F
+\]
+如下：
+\[
+\alpha^x_f=F(f)(x),
+\qquad f:V\to U.
+\]
+于是有自然映射
+\[
+\eta_F:F\to F^+
+\]
+定义为
+\[
+\eta_{F,U}(x)
+=
+[yU,\alpha^x].
+\]
+这一步把一个真正定义在 \(U\) 上的截面，视为最大 sieve 上的 matching family。
+
+\section{第一次 plus 后得到 separated presheaf}
+
+一个 presheaf \(P\) 称为 \(J\)-separated，如果对每个覆盖 sieve \(S\in J(U)\)，限制映射
+\[
+P(U)\longrightarrow \operatorname{Nat}(S,P)
+\]
+都是单射。
+
+也就是说，如果 \(x,y\in P(U)\) 在覆盖 sieve \(S\) 上的限制相同，那么
+\[
+x=y.
+\]
+重要事实是：
+\[
+F^+\text{ 总是 }J\text{-separated}.
+\]
+直观原因是，\(F^+(U)\) 中的元素本来就是“局部 matching family 的等价类”。如果两个元素在一个覆盖 sieve 上相等，就把它们代表的 sieve、这个覆盖 sieve，以及它们相等的部分取交，得到一个共同的覆盖 refinement；于是两个等价类本身相等。
+
+但是 \(F^+\) 一般不一定已经是 sheaf。它具有唯一性，但不一定具有存在性。
+
+\section{第二次 plus：sheafification}
+
+再次应用同一个构造：
+\[
+aF:=(F^+)^+.
+\]
+即对每个 \(U\)：
+\[
+aF(U)
+=
+\varinjlim_{S\in J(U)^{op}}
+\operatorname{Nat}(S,F^+).
+\]
+因此 \(aF(U)\) 的元素是：
+\[
+[S,\alpha],
+\]
+其中
+\[
+S\in J(U),\qquad
+\alpha:S\to F^+.
+\]
+也就是说，对每个
+\[
+f:V\to U\in S(V),
+\]
+\(\alpha\) 给出一个元素
+\[
+\alpha_f\in F^+(V),
+\]
+并且这些元素满足 sieve 意义下的自然性条件：
+\[
+\alpha_{f\circ g}=F^+(g)(\alpha_f).
+\]
+最后再模掉在某个更细覆盖 sieve 上相等的 matching families。
+
+结论是：
+\[
+\boxed{aF=(F^+)^+}
+\]
+是一个 \(J\)-sheaf。
+
+\section{为什么第二次 plus 后是 sheaf}
+
+第一次 plus 得到的 \(F^+\) 已经是 separated 的。
+
+现在取 \(U\) 上的覆盖 sieve \(S\in J(U)\)，以及一个 matching family
+\[
+\alpha:S\to (F^+)^+.
+\]
+对每个
+\[
+f:V\to U\in S(V),
+\]
+\(\alpha_f\) 是 \((F^+)^+(V)\) 中的元素，因此它可以由某个 \(V\) 上的覆盖 sieve
+\[
+R_f\in J(V)
+\]
+以及 matching family
+\[
+\beta_f:R_f\to F^+
+\]
+表示。
+
+利用：
+\begin{enumerate}[label=\arabic*.]
+\item \(J\) 的拉回稳定性；
+\item \(J\) 的传递性；
+\item \(F^+\) 的 separated 性；
+\end{enumerate}
+可以把这些局部代表放到一个共同的覆盖 sieve 上，并且把它们拼成一个 \(F^+\)-值 matching family。这个 matching family 给出一个元素
+\[
+x\in (F^+)^+(U).
+\]
+它限制到 \(S\) 后正好等于原来的 \(\alpha\)，因此存在性成立。
+
+唯一性来自 \(F^+\) 的 separated 性：两个可能的粘合如果在 \(S\) 上相等，那么它们在某个覆盖 refinement 上相等，因而在 colimit 中代表同一个元素。
+
+所以 \((F^+)^+\) 同时满足：
+\begin{itemize}
+\item matching family 存在粘合；
+\item 粘合唯一。
+\end{itemize}
+因此它是 sheaf。
+
+\section{Sheafification 的泛性质}
+
+自然映射
+\[
+F\longrightarrow F^+\longrightarrow (F^+)^+
+\]
+给出
+\[
+\eta:F\to aF.
+\]
+对任意 \(J\)-sheaf \(G\)，复合 \(\eta\) 给出双射
+\[
+\operatorname{Hom}_{\operatorname{Sh}(\mathcal{C},J)}(aF,G)
+\cong
+\operatorname{Hom}_{\operatorname{PSh}(\mathcal{C})}(F,G).
+\]
+因此 \(aF\) 是 \(F\) 到 sheaf 范畴中的反射：
+\[
+\operatorname{PSh}(\mathcal{C})
+\;\underset{\text{inclusion}}{\overset{a}{\rightleftarrows}}\;
+\operatorname{Sh}(\mathcal{C},J).
+\]
+完全用 sieve 表述，sheafification 的核心公式就是：
+\[
+\boxed{
+F^+(U)
+=
+\varinjlim_{S\in J(U)^{op}}
+\operatorname{Nat}(S,F)
+}
+\]
+以及
+\[
+\boxed{
+aF=(F^+)^+
+}.
+\]
+其中：
+\begin{itemize}
+\item \(S\in J(U)\) 是 \(U\) 上的覆盖 sieve；
+\item \(\operatorname{Nat}(S,F)\) 是 \(S\) 上的 \(F\)-值 matching families；
+\item \(J(U)^{op}\) 是 filtered category；
+\item colimit 把在更细覆盖 sieve 上相等的 matching families 识别；
+\item 第一次 plus 强制唯一性；
+\item 第二次 plus 补上存在性；
+\item 最终得到 sheafification。
+\end{itemize}
+
+\end{document}

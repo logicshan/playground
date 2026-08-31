@@ -1,0 +1,1955 @@
+\documentclass[12pt,a4paper]{article}
+
+% 编译建议：使用 XeLaTeX 或 LuaLaTeX，并安装完整 TeX Live（含 ctex）
+% 若无 ctex，可改为 fontspec + 系统中文字体
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\geometry{margin=2.5cm}
+
+\title{Grothendieck 构造、纤维化及相关概念}
+\author{}
+\date{}
+
+\begin{document}
+
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section*{说明}
+本文档由对话内容整理而成，统一采用一个常见约定：
+\begin{itemize}
+  \item 基底范畴记为 \(\mathcal{B}\)；
+  \item 总范畴记为 \(\mathcal{E}\)；
+  \item 函子 \(p:\mathcal{E}\to\mathcal{B}\) 称为一个纤维化；
+  \item 对 \(I\in\mathcal{B}\)，纤维记为
+  \[
+  \mathcal{E}_I=\{X\in\mathcal{E}\mid pX=I\},
+  \]
+  其中态射是满足 \(pf=1_I\) 的态射；
+  \item “纤维化”通常指 Grothendieck fibration。
+\end{itemize}
+
+这些概念的关系可以先概括为：
+\[
+\boxed{
+\text{indexed categories}
+\;\longleftrightarrow\;
+\text{Grothendieck construction}
+\;\longleftrightarrow\;
+\text{fibrations}
+}
+\]
+而
+\[
+\boxed{
+\text{cleavage}
+\;\Rightarrow\;
+\text{cloven fibration}
+}
+\]
+是在一个 fibration 上选取一套“指定的笛卡尔提升”；若这套选择满足严格的复合与单位条件，就得到 split fibration。
+
+Comprehension category 则是在 fibration 之上，再加入“上下文扩张”或“类型依赖于上下文”的额外结构。
+
+\section{Cartesian morphism：笛卡尔态射}
+
+设 \(p:\mathcal{E}\to\mathcal{B}\) 是一个函子。令
+\[
+f:X\to Y
+\]
+是 \(\mathcal{E}\) 中的态射，并且
+\[
+p(f):pX\to pY
+\]
+是 \(\mathcal{B}\) 中的态射。
+
+称 \(f\) 是关于 \(p\) 的 \textbf{笛卡尔态射}，如果满足如下泛性质：
+
+对于任意对象 \(Z\in\mathcal{E}\)、任意态射
+\[
+h:Z\to Y
+\]
+以及任意态射
+\[
+u:pZ\to pX
+\]
+只要满足
+\[
+p(h)=p(f)\circ u,
+\]
+就存在唯一的态射
+\[
+\bar{h}:Z\to X
+\]
+使得
+\[
+f\circ \bar{h}=h,
+\qquad
+p(\bar{h})=u.
+\]
+
+图示为：
+\[
+\begin{array}{ccc}
+Z & \xrightarrow{\bar{h}} & X\\
+& \searrow h & \downarrow f\\
+&&Y
+\end{array}
+\]
+并且在基底中：
+\[
+pZ\xrightarrow{u}pX\xrightarrow{p(f)}pY
+=
+pZ\xrightarrow{p(h)}pY.
+\]
+
+也就是说，\(f:X\to Y\) 对所有“从某个对象到 \(Y\) 的态射”具有一个唯一分解性质，而且这个分解在基底上必须指定为 \(u\)。
+
+\subsection{直观理解}
+
+设 \(p(f)=u:I\to J\)。那么 \(f\) 可以看成：
+\[
+f:X\to Y,
+\qquad
+pX=I,\quad pY=J.
+\]
+如果 \(f\) 是笛卡尔态射，那么 \(X\) 是 \(Y\) 沿着 \(u:I\to J\) 的“最佳拉回对象”或“逆向替换”。
+
+因此，笛卡尔态射可以抽象地理解为：
+\begin{quote}
+在总范畴中实现基底态射 \(u\) 的、具有普遍性的反向运输。
+\end{quote}
+
+\subsection{纤维内态射是特殊情况}
+
+如果 \(p(f)=1_I\)，也就是说 \(f:X\to Y\) 位于同一个纤维 \(\mathcal{E}_I\) 中，那么 \(f\) 笛卡尔的条件变成：
+
+对任意 \(h:Z\to Y\)，如果 \(pZ=I\)，则 \(h\) 唯一地经由 \(f\) 分解。
+
+特别地，在同一纤维中，笛卡尔态射通常只能是同构。
+
+更准确地说：
+\begin{quote}
+若 \(f:X\to Y\) 是笛卡尔态射且 \(p(f)=1_{pX}\)，那么 \(f\) 是同构。
+\end{quote}
+
+因此，真正有内容的笛卡尔态射通常位于不同纤维之间。
+
+\section{Grothendieck fibration：Grothendieck 纤维化}
+
+函子
+\[
+p:\mathcal{E}\to\mathcal{B}
+\]
+称为一个 \textbf{Grothendieck fibration}，如果满足：
+
+对于任意对象 \(Y\in\mathcal{E}\) 和任意基底态射
+\[
+u:I\to pY
+\]
+都存在一个笛卡尔态射
+\[
+\overline{u}:X\to Y
+\]
+使得
+\[
+p(\overline{u})=u.
+\]
+
+也就是说，每个对象 \(Y\) 都可以沿着任意基底态射 \(u:I\to pY\) 被“反向运输”到纤维 \(\mathcal{E}_I\)。
+
+常把 \(\overline{u}\) 写成：
+\[
+u^*Y\longrightarrow Y.
+\]
+其中 \(u^*Y\in\mathcal{E}_I\)。
+
+这个 \(u^*Y\) 可以理解为 \(Y\) 沿 \(u\) 的拉回、重索引或替换。
+
+\subsection{笛卡尔提升不要求唯一选择}
+
+Grothendieck fibration 只要求：
+\begin{quote}
+这样的笛卡尔提升存在。
+\end{quote}
+但它不要求我们为每个 \((u,Y)\) 指定一个具体的提升。
+
+事实上，两个不同的笛卡尔提升之间存在唯一的垂直同构。也就是说，如果
+\[
+X\to Y
+\quad\text{和}\quad
+X'\to Y
+\]
+都是 \(u:I\to pY\) 的笛卡尔提升，那么存在唯一的同构
+\[
+X\cong X'
+\]
+位于纤维 \(\mathcal{E}_I\) 中，并且与到 \(Y\) 的两个态射相容。
+
+因此，反向拉回 \(u^*Y\) 通常只在“唯一同构”的意义下确定，而不是严格唯一。
+
+这正是为什么一般得到的是伪函子，而不是严格函子。
+
+\section{Cleavage：劈分、笛卡尔提升的选择}
+
+设 \(p:\mathcal{E}\to\mathcal{B}\) 是一个 fibration。
+
+一个 \textbf{cleavage} 是对每一个：
+\begin{itemize}
+  \item 对象 \(Y\in\mathcal{E}\)；
+  \item 基底态射 \(u:I\to pY\)；
+\end{itemize}
+选择一个笛卡尔态射
+\[
+\overline{u}_Y:u^*Y\to Y
+\]
+满足
+\[
+p(\overline{u}_Y)=u.
+\]
+
+换句话说，cleavage 就是：
+\begin{quote}
+为所有需要的笛卡尔提升，选定一个代表。
+\end{quote}
+
+通常要求恒等态射对应于恒等笛卡尔态射：
+\[
+(1_{pY})^*Y=Y,
+\qquad
+\overline{1_{pY}}_Y=1_Y.
+\]
+但不同文献对 cleavage 是否自动包含单位条件，约定略有不同。
+
+\subsection{为什么需要 cleavage？}
+
+没有 cleavage 时，对每个 \(u:I\to J\) 和 \(Y\in\mathcal{E}_J\)，只能说存在一个对象 \(u^*Y\)，并且它在同构意义下唯一。
+
+有了 cleavage 后，才可以写出一个具体的操作：
+\[
+u^*:\mathcal{E}_J\to\mathcal{E}_I.
+\]
+对纤维内态射 \(f:Y\to Y'\)，笛卡尔泛性质给出一个唯一的态射
+\[
+u^*f:u^*Y\to u^*Y'.
+\]
+于是得到反变的“重索引函子”：
+\[
+u^*:\mathcal{E}_J\to\mathcal{E}_I.
+\]
+
+\section{Cloven fibration：带劈分的纤维化}
+
+一个 \textbf{cloven fibration} 就是：
+\[
+p:\mathcal{E}\to\mathcal{B}
+\]
+再加上一个 cleavage。
+
+所以：
+\[
+\boxed{
+\text{cloven fibration}
+=
+\text{fibration}
++
+\text{一个指定的 cleavage}
+}
+\]
+
+必须注意：
+\begin{itemize}
+  \item fibration 只要求笛卡尔提升存在；
+  \item cloven fibration 还指定了具体选择；
+  \item 同一个 fibration 可以有很多不同的 cleavage；
+  \item cleavage 通常不唯一，也不一定严格地与复合相容。
+\end{itemize}
+
+\section{Split fibration：严格可复合的劈分}
+
+虽然用户没有单独问 split fibration，但它是理解这些概念的关键。
+
+一个 cleavage 称为 \textbf{split cleavage}，如果满足严格的：
+\[
+(1_I)^*=\operatorname{id}_{\mathcal{E}_I}
+\]
+以及对于
+\[
+I\xrightarrow{u}J\xrightarrow{v}K,
+\]
+有
+\[
+(vu)^*=u^*v^*
+\]
+严格成立，而不只是自然同构。
+
+因此：
+\[
+\boxed{
+\text{split fibration}
+=
+\text{cloven fibration}
++
+\text{严格满足单位和复合}
+}
+\]
+
+一般 cleavage 只给出自然同构：
+\[
+u^*v^*Y\cong (vu)^*Y.
+\]
+所以一般 cloven fibration 对应的是伪函子，而 split fibration 对应严格函子。
+
+\section{Grothendieck construction}
+
+Grothendieck construction 把一个从基底范畴反变到 \(\mathbf{Cat}\) 的函子或伪函子构造成一个总范畴。
+
+先考虑严格函子：
+\[
+F:\mathcal{B}^{op}\to\mathbf{Cat}.
+\]
+它把：
+\begin{itemize}
+  \item 每个 \(I\in\mathcal{B}\) 映到一个范畴 \(F(I)\)；
+  \item 每个 \(u:I\to J\) 映到一个函子
+  \[
+  F(u):F(J)\to F(I).
+  \]
+\end{itemize}
+注意方向是反的，所以常写作
+\[
+u^*=F(u):F(J)\to F(I).
+\]
+
+\subsection{Grothendieck 构造出的总范畴}
+
+记作
+\[
+\int_{\mathcal{B}}F.
+\]
+其定义如下。
+
+\subsubsection{对象}
+对象是一个二元组
+\[
+(I,X),
+\]
+其中
+\[
+I\in\mathcal{B},
+\qquad
+X\in F(I).
+\]
+
+\subsubsection{态射}
+从 \((I,X)\) 到 \((J,Y)\) 的态射由：
+\begin{enumerate}
+  \item 一个基底态射
+  \[
+  u:I\to J;
+  \]
+  \item 一个 \(F(I)\) 中的态射
+  \[
+  f:X\to F(u)(Y)
+  \]
+\end{enumerate}
+组成。
+
+记为
+\[
+(u,f):(I,X)\to(J,Y).
+\]
+也可以把第二部分写成：
+\[
+f:X\to u^*Y.
+\]
+
+\subsubsection{复合}
+设
+\[
+(u,f):(I,X)\to(J,Y),
+\]
+以及
+\[
+(v,g):(J,Y)\to(K,Z).
+\]
+那么复合为
+\[
+(v,g)\circ(u,f)
+=
+\bigl(vu,\;F(u)(g)\circ f\bigr).
+\]
+具体地：
+\[
+X\xrightarrow{f}F(u)(Y)
+\xrightarrow{F(u)(g)}F(u)F(v)(Z)
+=
+F(vu)(Z).
+\]
+
+\subsubsection{投影函子}
+有一个自然的投影：
+\[
+\pi:\int_{\mathcal{B}}F\to\mathcal{B},
+\qquad
+\pi(I,X)=I,
+\qquad
+\pi(u,f)=u.
+\]
+这个投影是一个 fibration，而且由于 \(F\) 是严格函子，它自然带有一个 split cleavage。
+
+\subsection{指定的笛卡尔态射}
+
+给定
+\[
+u:I\to J
+\]
+和对象 \(Y\in F(J)\)，有态射
+\[
+(u,1_{u^*Y}):(I,u^*Y)\to(J,Y).
+\]
+这里
+\[
+u^*Y=F(u)(Y).
+\]
+这是一个笛卡尔态射。
+
+所以 Grothendieck construction 中的笛卡尔提升直接由：
+\[
+(u,1):(I,F(u)Y)\to(J,Y)
+\]
+给出。
+
+\section{Grothendieck construction 与 fibration 的对应关系}
+
+核心定理是：
+\[
+\boxed{
+\text{严格反变函子 }F:\mathcal{B}^{op}\to\mathbf{Cat}
+\quad\Longleftrightarrow\quad
+\text{split fibration }p:\mathcal{E}\to\mathcal{B}
+}
+\]
+更准确地说，这是一个适当意义下的等价，甚至可以构成相应的 2-范畴等价。
+
+而如果不要求严格性，则：
+\[
+\boxed{
+\text{伪函子 }\mathcal{B}^{op}\rightsquigarrow\mathbf{Cat}
+\quad\Longleftrightarrow\quad
+\text{一般 fibration}
+}
+\]
+其中：
+\begin{itemize}
+  \item 严格函子对应 split fibration；
+  \item 伪函子对应一般 fibration；
+  \item 选取 cleavage 后得到一个伪函子；
+  \item 伪函子中的结合律同构对应于不同拉回次序之间的笛卡尔同构。
+\end{itemize}
+
+\subsection{从 fibration 得到纤维化伪函子}
+
+给定 fibration
+\[
+p:\mathcal{E}\to\mathcal{B},
+\]
+每个对象 \(I\in\mathcal{B}\) 对应一个纤维范畴：
+\[
+I\longmapsto\mathcal{E}_I.
+\]
+对基底态射
+\[
+u:I\to J,
+\]
+利用 cleavage 定义：
+\[
+u^*:\mathcal{E}_J\to\mathcal{E}_I.
+\]
+但是一般来说：
+\[
+(1_I)^*\cong \operatorname{id}_{\mathcal{E}_I},
+\]
+以及
+\[
+u^*v^*\cong(vu)^*,
+\]
+这些只是自然同构，而不是严格相等。
+
+因此得到一个伪函子：
+\[
+\mathcal{B}^{op}\rightsquigarrow\mathbf{Cat}.
+\]
+
+\subsection{从伪函子得到 fibration}
+
+反过来，给定一个伪函子
+\[
+F:\mathcal{B}^{op}\rightsquigarrow\mathbf{Cat},
+\]
+也可以做类似的 Grothendieck construction：
+\begin{itemize}
+  \item 对象仍为 \((I,X)\)；
+  \item 态射仍包含基底态射 \(u:I\to J\)；
+  \item 但复合时使用伪函子的结合律同构。
+\end{itemize}
+所得投影
+\[
+\int_{\mathcal{B}}F\to\mathcal{B}
+\]
+是一个 fibration。
+
+因此，Grothendieck construction 是“纤维化”和“索引范畴族”之间的桥梁。
+
+\section{一个典型例子：切片范畴}
+
+取范畴 \(\mathcal{C}\)，考虑对象函子
+\[
+\mathcal{C}^{op}\to\mathbf{Cat},
+\qquad
+I\longmapsto \mathcal{C}/I.
+\]
+对态射
+\[
+u:I\to J,
+\]
+定义拉回函子
+\[
+u^*:\mathcal{C}/J\to\mathcal{C}/I.
+\]
+如果 \(\mathcal{C}\) 有适当的拉回，这个函子把
+\[
+(X\to J)
+\]
+送到拉回：
+\[
+X\times_J I\to I.
+\]
+Grothendieck construction 的总范畴对象是：
+\[
+(I,X\to I).
+\]
+这实际上可以识别为箭头范畴
+\[
+\mathcal{C}^{\to}.
+\]
+投影
+\[
+\operatorname{cod}:\mathcal{C}^{\to}\to\mathcal{C}
+\]
+把一个箭头送到它的余域：
+\[
+(X\to I)\longmapsto I.
+\]
+这个投影是一个 fibration；笛卡尔态射正是拉回方块：
+\[
+\begin{array}{ccc}
+X' &\to& X\\
+\downarrow &&\downarrow\\
+I&\xrightarrow{u}&J
+\end{array}
+\]
+且该方块是拉回方块。
+
+这说明“笛卡尔态射”是抽象范畴论中“拉回方块”的推广。
+
+\section{Comprehension category：理解范畴}
+
+Comprehension category 没有完全统一的单一定义，不同文献有不同强弱版本。最基本的思想是：
+\begin{quote}
+一个 fibration 描述“依赖于上下文的类型”；comprehension 结构则把一个类型变成“扩张后的上下文”。
+\end{quote}
+
+通常从一个 fibration
+\[
+p:\mathcal{E}\to\mathcal{B}
+\]
+开始。这里：
+\begin{itemize}
+  \item \(\mathcal{B}\) 的对象 \(\Gamma\) 被解释为上下文；
+  \item 纤维 \(\mathcal{E}_\Gamma\) 的对象 \(A\) 被解释为在上下文 \(\Gamma\) 中的类型；
+  \item 对象 \(A\in\mathcal{E}_\Gamma\) 应该产生一个新的上下文
+  \[
+  \Gamma.A;
+  \]
+  \item 并有一个投影
+  \[
+  \pi_A:\Gamma.A\to\Gamma.
+  \]
+\end{itemize}
+这个投影通常要求是一个笛卡尔态射，且满足
+\[
+p(A)=\Gamma.
+\]
+严格来说，若总范畴中的对象 \(A\) 不是直接一个“类型对象”，通常还需要一个 comprehension 函子。
+
+\subsection{一个常见的定义}
+
+一种常见定义是：一个 comprehension category 是一个 fibration
+\[
+p:\mathcal{E}\to\mathcal{B}
+\]
+配备一个函子
+\[
+\chi:\mathcal{E}\to\mathcal{B}^{\to}
+\]
+使得以下三角交换：
+\[
+\begin{array}{ccc}
+\mathcal{E} & \xrightarrow{\chi} & \mathcal{B}^{\to}\\
+& \searrow p & \downarrow\operatorname{cod}\\
+&&\mathcal{B}
+\end{array}
+\]
+也就是：
+\[
+\operatorname{cod}(\chi(A))=p(A).
+\]
+如果 \(A\in\mathcal{E}_\Gamma\)，那么可写：
+\[
+\chi(A)=\pi_A:\Gamma.A\to\Gamma.
+\]
+此外通常还要求 \(\chi\) 把某类笛卡尔态射映到 \(\mathcal{B}^{\to}\) 中相应的拉回方块，或者至少保持某种与基底变化相容的结构。
+
+不同版本可能要求：
+\begin{itemize}
+  \item \(\chi\) 是满射到某些箭头；
+  \item \(\chi\) 在每个纤维上忠实；
+  \item \(\chi\) 是纤维函子；
+  \item \(\chi\) 将笛卡尔态射映成拉回方块；
+  \item 只考虑满的 comprehension category；
+  \item 加入终对象、单位类型、积类型、和类型、\(\Pi\)-类型等结构。
+\end{itemize}
+因此，看到“comprehension category”时，需要查看文献具体采用哪种定义。
+
+\subsection{基本的 comprehension 图}
+
+对 \(A\in\mathcal{E}_\Gamma\)，comprehension 给出：
+\[
+\pi_A:\Gamma.A\to\Gamma.
+\]
+可以把它理解为：
+\begin{itemize}
+  \item \(\Gamma\)：已有上下文；
+  \item \(A\)：在 \(\Gamma\) 中的类型；
+  \item \(\Gamma.A\)：把变量 \(x:A\) 加入上下文后的新上下文；
+  \item \(\pi_A\)：忘掉新加入的变量。
+\end{itemize}
+在依赖类型论中，这对应于上下文扩张：
+\[
+\frac{\Gamma\vdash A\ \mathsf{type}}
+     {\Gamma,x:A\ \mathsf{context}}.
+\]
+
+\section{Fibration 与 comprehension category 的关系}
+
+可以这样区分：
+
+\subsection{Fibration}
+只表达：
+\begin{quote}
+类型可以沿上下文映射进行重索引。
+\end{quote}
+给定
+\[
+f:\Delta\to\Gamma
+\]
+以及
+\[
+A\in\mathcal{E}_\Gamma,
+\]
+得到
+\[
+f^*A\in\mathcal{E}_\Delta.
+\]
+这就是 substitution：
+\[
+A[\!f\!].
+\]
+
+\subsection{Comprehension category}
+除了 substitution 之外，还表达：
+\begin{quote}
+每个类型 \(A\in\mathcal{E}_\Gamma\) 都可以生成一个扩张上下文 \(\Gamma.A\)。
+\end{quote}
+即：
+\[
+A\in\mathcal{E}_\Gamma
+\quad\leadsto\quad
+\pi_A:\Gamma.A\to\Gamma.
+\]
+所以：
+\[
+\boxed{
+\text{comprehension category}
+=
+\text{带上下文扩张结构的 fibration}
+}
+\]
+但注意，这只是概念性总结；严格定义要看所采用的版本。
+
+\section{Comprehension 与 Grothendieck construction 的兼容性}
+
+设
+\[
+F:\mathcal{B}^{op}\to\mathbf{Cat}
+\]
+是一个索引范畴族，其 Grothendieck construction 给出：
+\[
+p:\int_{\mathcal{B}}F\to\mathcal{B}.
+\]
+如果每个类型 \(A\in F(\Gamma)\) 都指定一个箭头
+\[
+\pi_A:\Gamma.A\to\Gamma,
+\]
+并且对重索引满足相容性：
+\[
+f^*(A)
+\quad\text{对应于}\quad
+\Gamma.A\times_\Gamma\Delta\to\Delta,
+\]
+那么这个 fibration 就具有 comprehension 结构。
+
+也就是说，comprehension category 可以看成一种带有“对象分类/元素化”操作的 Grothendieck 构造。
+
+\section{各概念之间的关系图}
+
+可以把关系画成：
+\[
+\begin{array}{c}
+F:\mathcal{B}^{op}\to\mathbf{Cat}
+\\[2mm]
+\Downarrow\ \text{Grothendieck construction}
+\\[2mm]
+\pi:\int_{\mathcal{B}}F\to\mathcal{B}
+\\[2mm]
+\Downarrow
+\\[2mm]
+\text{split fibration}
+\\[2mm]
+\Downarrow\ \text{忘掉严格选择}
+\\[2mm]
+\text{cloven fibration}
+\\[2mm]
+\Downarrow\ \text{忘掉 cleavage}
+\\[2mm]
+\text{fibration}
+\end{array}
+\]
+
+另一方面：
+\[
+\begin{array}{c}
+\text{fibration }p:\mathcal{E}\to\mathcal{B}
+\\[2mm]
++\ \text{comprehension}
+\\[2mm]
+\Downarrow
+\\[2mm]
+\text{comprehension category}
+\end{array}
+\]
+
+更完整地说：
+\[
+\begin{array}{c}
+\text{strict indexed category}
+\\
+\Updownarrow
+\\
+\text{split fibration}
+\end{array}
+\]
+\[
+\begin{array}{c}
+\text{pseudofunctor }\mathcal{B}^{op}\rightsquigarrow\mathbf{Cat}
+\\
+\Updownarrow
+\\
+\text{fibration}
+\end{array}
+\]
+
+\section{术语间最容易混淆的地方}
+
+\subsection{fibration 不等于 cloven fibration}
+fibration：
+\[
+\text{笛卡尔提升存在}
+\]
+cloven fibration：
+\[
+\text{笛卡尔提升存在，并且选定了一个}
+\]
+所以 cleavage 是额外结构，不是 fibration 定义本身的一部分。
+
+\subsection{cleavage 不一定满足复合律}
+给定
+\[
+I\xrightarrow{u}J\xrightarrow{v}K,
+\]
+通常有两个对象：
+\[
+u^*(v^*X)
+\]
+和
+\[
+(vu)^*X.
+\]
+它们通常只满足一个规范同构：
+\[
+u^*v^*X\cong(vu)^*X.
+\]
+只有在 split cleavage 中，才要求它们严格相等。
+
+\subsection{Grothendieck construction 的方向}
+若使用
+\[
+F:\mathcal{B}^{op}\to\mathbf{Cat},
+\]
+则基底态射
+\[
+u:I\to J
+\]
+产生反向函子
+\[
+u^*:F(J)\to F(I).
+\]
+这是因为 fibration 描述的是 substitution 或 pullback：
+\[
+A\text{ over }J
+\quad\leadsto\quad
+u^*A\text{ over }I.
+\]
+如果使用协变函子
+\[
+F:\mathcal{B}\to\mathbf{Cat},
+\]
+相应构造通常得到 opfibration，而不是 fibration。
+
+\subsection{Cartesian 与 cocartesian 的区别}
+对于 fibration，使用的是：
+\[
+u:I\to J
+\]
+把 \(J\) 上的对象拉回到 \(I\)：
+\[
+u^*:\mathcal{E}_J\to\mathcal{E}_I.
+\]
+这是 cartesian 方向。
+
+对于 opfibration，使用 cocartesian morphism，把对象沿着 \(u\) 正向推送：
+\[
+u_!:\mathcal{E}_I\to\mathcal{E}_J.
+\]
+因此：
+\[
+\text{fibration}\leftrightarrow\text{反变索引}
+\]
+\[
+\text{opfibration}\leftrightarrow\text{协变索引}
+\]
+
+\section{一句话总结}
+\begin{itemize}
+  \item \textbf{Cartesian morphism}：具有泛性质的“沿基底态射反向运输”；
+  \item \textbf{Grothendieck fibration}：每个基底态射都存在这样的笛卡尔提升；
+  \item \textbf{Cleavage}：为每个笛卡尔提升选择一个具体代表；
+  \item \textbf{Cloven fibration}：带有 cleavage 的 fibration；
+  \item \textbf{Split fibration}：cleavage 还严格满足单位和复合；
+  \item \textbf{Grothendieck construction}：把
+  \[
+  \mathcal{B}^{op}\to\mathbf{Cat}
+  \]
+  的索引范畴族拼成一个总范畴，其投影是 fibration；
+  \item \textbf{Comprehension category}：带有“类型 \(A\) 产生上下文扩张
+  \(\Gamma.A\to\Gamma\)”结构的 fibration。
+\end{itemize}
+
+最核心的对应关系是：
+\[
+\boxed{
+\text{indexed categories}
+\;\simeq\;
+\text{fibrations}
+}
+\]
+而 comprehension category 是在这个对应之上，再加入依赖类型论中的“上下文扩张”结构。
+
+\newpage
+
+\section{关于“拉回”的解释}
+
+这里的“拉回”可以从两个层次理解：
+\begin{enumerate}
+  \item 范畴论中的 \textbf{pullback（纤维积）}；
+  \item 在 fibration 中，把一个位于上下文 \(J\) 上的对象沿着 \(u:I\to J\) 重新解释为位于 \(I\) 上的对象。
+\end{enumerate}
+
+\subsection{范畴论中的拉回}
+
+给定两个态射
+\[
+X\xrightarrow{f}J,
+\qquad
+I\xrightarrow{u}J,
+\]
+它们有相同的余域 \(J\)。一个拉回是对象
+\[
+X\times_J I
+\]
+连同两个投影：
+\[
+\begin{array}{ccc}
+X\times_J I & \xrightarrow{\pi_1} & X\\
+\downarrow{\pi_2} && \downarrow f\\
+I & \xrightarrow{u} & J
+\end{array}
+\]
+使得方块交换：
+\[
+f\circ\pi_1=u\circ\pi_2.
+\]
+并且满足如下泛性质：
+
+对于任意对象 \(Z\)，如果有态射
+\[
+a:Z\to X,
+\qquad
+b:Z\to I
+\]
+满足
+\[
+f\circ a=u\circ b,
+\]
+那么存在唯一态射
+\[
+\langle a,b\rangle:Z\to X\times_J I
+\]
+使得
+\[
+\pi_1\circ\langle a,b\rangle=a,
+\qquad
+\pi_2\circ\langle a,b\rangle=b.
+\]
+
+图示为：
+\[
+\begin{array}{ccccc}
+&&Z&&\\
+&{}^{a}\swarrow&&\searrow^{b}&\\
+X&&\longleftarrow&&I\\
+&\searrow_f&&\swarrow_u&\\
+&&J&
+\end{array}
+\]
+也就是说，\(X\times_J I\) 是所有“同时映到 \(X\) 和 \(I\)，并且在 \(J\) 中相容”的对象中最普遍的一个。
+
+\subsection{在集合中的例子}
+
+在集合范畴 \(\mathbf{Set}\) 中，若
+\[
+f:X\to J,
+\qquad
+u:I\to J,
+\]
+那么拉回就是集合
+\[
+X\times_J I
+=
+\{(x,i)\in X\times I\mid f(x)=u(i)\}.
+\]
+所以它只保留那些在 \(J\) 中落到同一个点的配对。
+
+例如：
+\[
+X=\{1,2,3\},\qquad
+J=\{a,b\},
+\]
+定义
+\[
+f(1)=a,\quad f(2)=a,\quad f(3)=b.
+\]
+再取
+\[
+I=\{x,y\},
+\qquad
+u(x)=a,\quad u(y)=b.
+\]
+则
+\[
+X\times_J I
+=
+\{(1,x),(2,x),(3,y)\}.
+\]
+因为：
+\begin{itemize}
+  \item \(1,2\) 和 \(x\) 都映到 \(a\)；
+  \item \(3\) 和 \(y\) 都映到 \(b\)；
+  \item 其他配对在 \(J\) 中不相容。
+\end{itemize}
+因此，集合中的拉回就是一种“按共同索引筛选配对”的操作。
+
+\subsection{为什么它叫“拉回”}
+
+考虑一个对象
+\[
+f:X\to J.
+\]
+可以把它理解为“位于 \(J\) 上的对象”或“覆盖 \(J\) 的族”。
+
+现在有一个态射
+\[
+u:I\to J.
+\]
+我们想把这个位于 \(J\) 上的对象搬到 \(I\) 上。于是构造：
+\[
+u^*X:=X\times_J I.
+\]
+这就是把 \(X\to J\) 沿着 \(u:I\to J\) 拉回：
+\[
+\begin{array}{ccc}
+u^*X=X\times_J I &\to& X\\
+\downarrow &&\downarrow\\
+I&\xrightarrow{u}&J
+\end{array}
+\]
+原来有：
+\[
+X\to J;
+\]
+拉回后得到：
+\[
+u^*X\to I.
+\]
+所以：
+\[
+\boxed{
+u^*(X\to J)
+=
+(X\times_J I\to I)
+}
+\]
+这就是“沿 \(u\) 的重索引”或“换基”。
+
+\subsection{集合族中的拉回：最直观的解释}
+
+设 \(X\to J\) 表示一族集合：
+\[
+\{X_j\}_{j\in J}.
+\]
+这里
+\[
+X_j=f^{-1}(j)
+\]
+是位于 \(j\) 上的那一部分。
+
+现在给定函数
+\[
+u:I\to J.
+\]
+那么拉回后的对象
+\[
+u^*X=X\times_J I\to I
+\]
+在每个 \(i\in I\) 上的纤维是：
+\[
+(u^*X)_i=X_{u(i)}.
+\]
+也就是说，原来按 \(J\) 索引的集合族：
+\[
+j\longmapsto X_j
+\]
+经过 \(u:I\to J\) 后，变成按 \(I\) 索引的集合族：
+\[
+i\longmapsto X_{u(i)}.
+\]
+这就是“重索引”。
+
+例如原族是：
+\[
+X_a=\{1,2\},\qquad X_b=\{3\}.
+\]
+若
+\[
+u:I=\{x,y,z\}\to J=\{a,b\}
+\]
+满足
+\[
+u(x)=a,\qquad u(y)=a,\qquad u(z)=b,
+\]
+则拉回后的族为：
+\[
+(u^*X)_x=X_a=\{1,2\},
+\]
+\[
+(u^*X)_y=X_a=\{1,2\},
+\]
+\[
+(u^*X)_z=X_b=\{3\}.
+\]
+所以拉回并没有改变每个元素本身，而是改变了它们所处的索引。
+
+\subsection{在 fibration 中的“拉回”}
+
+设
+\[
+p:\mathcal{E}\to\mathcal{B}
+\]
+是一个 fibration。
+
+取：
+\[
+u:I\to J
+\]
+以及一个位于 \(J\) 上的对象
+\[
+Y\in\mathcal{E}_J.
+\]
+所谓沿 \(u\) 拉回 \(Y\)，就是寻找一个对象
+\[
+u^*Y\in\mathcal{E}_I
+\]
+以及一个态射
+\[
+\overline{u}_Y:u^*Y\to Y
+\]
+满足：
+\[
+p(\overline{u}_Y)=u,
+\]
+并且 \(\overline{u}_Y\) 是笛卡尔态射。
+
+记作：
+\[
+\begin{array}{c}
+u^*Y\\
+\downarrow\\
+Y
+\end{array}
+\]
+这里要注意：
+\begin{quote}
+在一般 fibration 中，\(u^*Y\) 不一定是字面意义上的集合论拉回；它是通过笛卡尔泛性质定义出来的抽象“拉回”。
+\end{quote}
+在 \(\mathbf{Set}\) 或某些具体范畴中，它确实表现为通常的拉回；但在一般范畴中，拉回是由泛性质刻画的。
+
+\subsection{纤维化中的笛卡尔态射为什么类似拉回方块}
+
+考虑范畴
+\[
+\mathcal{C}^\to
+\]
+以及余域投影：
+\[
+\operatorname{cod}:\mathcal{C}^\to\to\mathcal{C}.
+\]
+一个对象是箭头：
+\[
+X\xrightarrow{f}J.
+\]
+若有基底态射
+\[
+u:I\to J,
+\]
+那么沿 \(u\) 拉回 \(f:X\to J\)，得到：
+\[
+\begin{array}{ccc}
+X\times_J I&\to&X\\
+\downarrow&&\downarrow f\\
+I&\xrightarrow{u}&J
+\end{array}
+\]
+在箭头范畴中，这对应一个态射：
+\[
+(X\times_J I\to I)\longrightarrow(X\to J).
+\]
+它在基底上的投影正是：
+\[
+u:I\to J.
+\]
+这个箭头范畴中的态射是笛卡尔态射，当且仅当原来的方块是拉回方块。
+
+因此在这个例子中：
+\[
+\boxed{
+\text{笛卡尔态射}
+=
+\text{拉回方块}
+}
+\]
+而一般 fibration 把“拉回方块”的泛性质抽象化了。
+
+\subsection{与依赖类型中的 substitution 的关系}
+
+在依赖类型论中，可以把：
+\begin{itemize}
+  \item \(\Gamma\) 看作上下文；
+  \item \(A\in\mathcal{E}_\Gamma\) 看作上下文 \(\Gamma\) 中的类型；
+  \item \(f:\Delta\to\Gamma\) 看作代换。
+\end{itemize}
+那么拉回就是类型代换：
+\[
+A\in\mathcal{E}_\Gamma
+\quad\leadsto\quad
+f^*A\in\mathcal{E}_\Delta.
+\]
+通常记为：
+\[
+A[f].
+\]
+因此：
+\[
+\boxed{
+f^*A
+\text{ 就是把类型 }A\text{ 沿代换 }f\text{ 拉回到新上下文 }\Delta
+}
+\]
+举例来说，若在上下文 \(\Gamma=(x:\mathbb{N})\) 中有类型
+\[
+A(x),
+\]
+而有代换
+\[
+f:\Delta\to\Gamma,
+\]
+例如 \(\Delta=(y:\mathbb{N})\) 且
+\[
+f(x)=y+1,
+\]
+那么拉回后的类型就是：
+\[
+f^*A=A(y+1).
+\]
+这就是 dependent type theory 中的 substitution。
+
+\subsection{拉回的两个重要性质}
+
+\subsubsection{恒等态射的拉回}
+沿恒等态射拉回不会改变对象：
+\[
+1_J^*Y\cong Y.
+\]
+在 split fibration 中要求严格相等：
+\[
+1_J^*Y=Y.
+\]
+
+\subsubsection{复合的拉回}
+若有：
+\[
+I\xrightarrow{u}J\xrightarrow{v}K,
+\]
+以及 \(Y\in\mathcal{E}_K\)，那么：
+\[
+u^*(v^*Y)\cong(vu)^*Y.
+\]
+意思是：
+\begin{quote}
+先沿 \(v\) 拉回，再沿 \(u\) 拉回，等价于直接沿复合 \(vu\) 拉回。
+\end{quote}
+在普通 fibration 中这是规范同构；在 split fibration 中可以要求严格相等：
+\[
+u^*v^*Y=(vu)^*Y.
+\]
+
+\subsection{最简洁的直观总结}
+
+如果有一个对象“位于” \(J\) 上：
+\[
+Y\to J,
+\]
+以及一个映射：
+\[
+u:I\to J,
+\]
+那么拉回就是构造一个“位于” \(I\) 上的新对象：
+\[
+u^*Y\to I,
+\]
+使得它尽可能普遍地与原对象 \(Y\to J\) 相容。
+
+在不同语境中，它分别表现为：
+\begin{center}
+\begin{tabular}{c|c}
+\text{语境} & \text{拉回的含义}\\
+\hline
+\(\mathbf{Set}\) & \text{按函数重新索引集合族}\\
+\text{几何} & \text{拉回空间、丛或截面}\\
+\text{范畴论} & \text{满足泛性质的纤维积}\\
+\text{fibration} & \text{笛卡尔提升}\\
+\text{依赖类型论} & \text{类型沿代换进行 substitution}\\
+\text{comprehension category} & \text{类型在上下文中的重索引}
+\end{tabular}
+\end{center}
+
+因此在前面的讨论中，
+\[
+u^*Y
+\]
+的“拉回”本质上就是：
+\begin{quote}
+沿着基底态射 \(u:I\to J\)，把原本位于 \(J\) 上的对象 \(Y\) 重新解释为位于 \(I\) 上的对象。
+\end{quote}
+
+\newpage
+
+\section{重索引函子具体是怎么得到的}
+
+设
+\[
+p:\mathcal{E}\to\mathcal{B}
+\]
+是一个带 cleavage 的 fibration。固定一个基底态射
+\[
+u:I\to J.
+\]
+cleavage 为每个 \(Y\in\mathcal{E}_J\) 选择一个笛卡尔态射：
+\[
+\phi_Y^u:u^*Y\longrightarrow Y
+\]
+满足：
+\[
+p(u^*Y)=I,\qquad p(Y)=J,\qquad p(\phi_Y^u)=u.
+\]
+于是 \(u^*Y\) 就是 \(u^*\) 在对象 \(Y\) 上的定义。
+
+关键是说明它如何作用在态射上。
+
+\subsection{对象上的定义}
+
+给定
+\[
+Y\in\mathcal{E}_J,
+\]
+cleavage 选择笛卡尔提升：
+\[
+\begin{array}{ccc}
+u^*Y&\xrightarrow{\phi_Y^u}&Y\\
+&&\downarrow p\\
+I&\xrightarrow{u}&J.
+\end{array}
+\]
+因此定义：
+\[
+u^*(Y):=u^*Y.
+\]
+现在还需要定义：
+\[
+u^*:\mathcal{E}_J\to\mathcal{E}_I
+\]
+在态射上的作用。
+
+\subsection{对纤维内态射的定义}
+
+取纤维 \(\mathcal{E}_J\) 中的态射：
+\[
+f:Y\to Y'.
+\]
+因为 \(f\) 位于纤维 \(\mathcal{E}_J\) 中，所以：
+\[
+p(f)=1_J.
+\]
+我们有两个已知态射：
+\[
+u^*Y\xrightarrow{\phi_Y^u}Y
+\xrightarrow{f}Y'.
+\]
+其复合为：
+\[
+f\circ\phi_Y^u:u^*Y\to Y'.
+\]
+在基底中，它被 \(p\) 映成：
+\[
+p(f\circ\phi_Y^u)
+=
+p(f)\circ p(\phi_Y^u)
+=
+1_J\circ u
+=
+u.
+\]
+另一方面，\(\phi_{Y'}^u\) 是 \(Y'\) 沿 \(u\) 的指定笛卡尔提升：
+\[
+\phi_{Y'}^u:u^*Y'\to Y'.
+\]
+因此，根据 \(\phi_{Y'}^u\) 的笛卡尔泛性质，存在唯一态射
+\[
+u^*f:u^*Y\to u^*Y'
+\]
+使得下图交换：
+\[
+\begin{array}{ccc}
+u^*Y & \xrightarrow{u^*f} & u^*Y'\\
+\downarrow{\phi_Y^u} && \downarrow{\phi_{Y'}^u}\\
+Y & \xrightarrow{f} & Y'.
+\end{array}
+\]
+也就是：
+\[
+\boxed{
+\phi_{Y'}^u\circ u^*f
+=
+f\circ\phi_Y^u
+}
+\]
+并且由于它是纤维内态射，还满足：
+\[
+p(u^*f)=1_I.
+\]
+所以：
+\[
+u^*f:u^*Y\to u^*Y'
+\]
+确实是 \(\mathcal{E}_I\) 中的态射。
+
+这就定义了 \(u^*\) 对态射的作用。
+
+\subsection{图像化理解}
+
+整个构造就是把下面这个“右边的态射”向左边提升：
+\[
+\begin{array}{ccccc}
+u^*Y & \dashrightarrow & u^*Y'\\
+\downarrow && \downarrow\\
+Y&\xrightarrow{f}&Y'
+\end{array}
+\]
+其中右边的垂直箭头
+\[
+u^*Y'\to Y'
+\]
+是笛卡尔态射，因此允许唯一地填入虚线箭头：
+\[
+u^*Y\to u^*Y'.
+\]
+所以 \(u^*f\) 不是额外随意定义的，而是由笛卡尔泛性质强制决定的。
+
+\subsection{为什么它保持恒等态射？}
+
+要证明：
+\[
+u^*(1_Y)=1_{u^*Y}.
+\]
+根据定义，\(u^*(1_Y)\) 是唯一满足
+\[
+\phi_Y^u\circ u^*(1_Y)
+=
+1_Y\circ\phi_Y^u
+=
+\phi_Y^u
+\]
+的态射
+\[
+u^*Y\to u^*Y.
+\]
+但恒等态射也满足：
+\[
+\phi_Y^u\circ 1_{u^*Y}
+=
+\phi_Y^u.
+\]
+由笛卡尔泛性质给出的唯一性，得到：
+\[
+\boxed{
+u^*(1_Y)=1_{u^*Y}
+}
+\]
+
+\subsection{为什么它保持复合？}
+
+取纤维内态射：
+\[
+Y\xrightarrow{f}Y'\xrightarrow{g}Y''.
+\]
+我们要证明：
+\[
+u^*(g\circ f)=u^*g\circ u^*f.
+\]
+根据定义：
+\[
+\phi_{Y''}^u\circ u^*(g\circ f)
+=
+(g\circ f)\circ\phi_Y^u.
+\]
+另一方面：
+\begin{align*}
+\phi_{Y''}^u\circ(u^*g\circ u^*f)
+&=
+(\phi_{Y''}^u\circ u^*g)\circ u^*f\\
+&=
+(g\circ\phi_{Y'}^u)\circ u^*f\\
+&=
+g\circ(\phi_{Y'}^u\circ u^*f)\\
+&=
+g\circ(f\circ\phi_Y^u)\\
+&=
+(g\circ f)\circ\phi_Y^u.
+\end{align*}
+所以 \(u^*(g\circ f)\) 和 \(u^*g\circ u^*f\) 都是使上式成立的唯一态射。于是：
+\[
+\boxed{
+u^*(g\circ f)=u^*g\circ u^*f
+}
+\]
+因此，固定 \(u:I\to J\) 后，确实得到一个函子：
+\[
+\boxed{
+u^*:\mathcal{E}_J\to\mathcal{E}_I
+}
+\]
+
+\subsection{为什么是反变的？}
+
+如果在基底中有：
+\[
+u:I\to J,
+\]
+那么它诱导的重索引函子方向是：
+\[
+u^*:\mathcal{E}_J\to\mathcal{E}_I.
+\]
+方向反过来了。
+
+因此，对象层面上得到的是：
+\[
+I\longmapsto\mathcal{E}_I,
+\]
+而基底态射
+\[
+u:I\to J
+\]
+对应于：
+\[
+u^*:\mathcal{E}_J\to\mathcal{E}_I.
+\]
+所以这是一个反变的索引：
+\[
+\mathcal{B}^{op}\to\mathbf{Cat}.
+\]
+
+\subsection{复合时为什么通常只有自然同构？}
+
+现在有基底态射：
+\[
+I\xrightarrow{u}J\xrightarrow{v}K.
+\]
+以及 \(Y\in\mathcal{E}_K\)。
+
+可以有两种方式把 \(Y\) 拉回到 \(\mathcal{E}_I\)：
+
+第一种，先沿 \(v\)，再沿 \(u\)：
+\[
+u^*(v^*Y).
+\]
+第二种，直接沿 \(vu\)：
+\[
+(vu)^*Y.
+\]
+它们通常不严格相等，但有一个规范同构：
+\[
+\boxed{
+u^*v^*Y\cong(vu)^*Y
+}
+\]
+为什么？因为两者到 \(Y\) 的复合都是笛卡尔态射，并且都位于基底态射 \(vu:I\to K\) 之上：
+\[
+u^*v^*Y\to v^*Y\to Y,
+\]
+以及
+\[
+(vu)^*Y\to Y.
+\]
+两个同一基底态射之上的笛卡尔提升之间存在唯一的垂直同构。
+
+对态射也同样成立，于是得到自然同构：
+\[
+u^*v^*\cong(vu)^*.
+\]
+因此，任意带 cleavage 的 fibration 给出的通常不是严格函子
+\[
+\mathcal{B}^{op}\to\mathbf{Cat},
+\]
+而是一个伪函子：
+\[
+\mathcal{B}^{op}\rightsquigarrow\mathbf{Cat}.
+\]
+
+\subsection{一个具体例子：集合上的拉回}
+
+考虑余域投影：
+\[
+\operatorname{cod}:\mathbf{Set}^{\to}\to\mathbf{Set}.
+\]
+对象是函数：
+\[
+q:X\to J.
+\]
+给定函数：
+\[
+u:I\to J,
+\]
+沿 \(u\) 的拉回对象是：
+\[
+u^*q:
+X\times_J I\to I.
+\]
+现在取纤维内态射：
+\[
+f:(X\xrightarrow{q} J)\to(X'\xrightarrow{q'}J).
+\]
+它就是一个函数 \(f:X\to X'\)，满足：
+\[
+q'\circ f=q.
+\]
+那么重索引后的态射为：
+\[
+u^*f:X\times_J I\to X'\times_J I,
+\]
+定义为：
+\[
+u^*f(x,i)=(f(x),i).
+\]
+这是良定义的，因为如果
+\[
+q(x)=u(i),
+\]
+则：
+\[
+q'(f(x))
+=
+q(x)
+=
+u(i).
+\]
+所以：
+\[
+(f(x),i)\in X'\times_J I.
+\]
+这正是前面抽象构造
+\[
+\phi_{Y'}^u\circ u^*f
+=
+f\circ\phi_Y^u
+\]
+在集合范畴中的具体表现。
+
+\subsection{核心结论}
+
+给定一个 cleavage，对于每个
+\[
+u:I\to J
+\]
+和每个纤维态射
+\[
+f:Y\to Y',
+\]
+定义 \(u^*f\) 的方式是：
+\[
+\boxed{
+u^*f
+\text{ 是唯一使 }
+\phi_{Y'}^u\circ u^*f
+=
+f\circ\phi_Y^u
+\text{ 成立的态射}
+}
+\]
+其中：
+\[
+\phi_Y^u:u^*Y\to Y,
+\qquad
+\phi_{Y'}^u:u^*Y'\to Y'
+\]
+是 cleavage 选定的笛卡尔提升。
+
+笛卡尔态射的泛性质保证了：
+\begin{enumerate}
+  \item \(u^*f\) 存在；
+  \item \(u^*f\) 唯一；
+  \item \(u^*\) 保持恒等；
+  \item \(u^*\) 保持复合。
+\end{enumerate}
+所以它自然成为一个函子：
+\[
+u^*:\mathcal{E}_J\to\mathcal{E}_I.
+\]
+
+\newpage
+
+\section{“cleavage 通常不唯一，也不一定严格地与复合相容”的含义}
+
+这句话包含两个意思：\textbf{选择不唯一}，以及\textbf{选择未必与复合严格相容}。
+
+\subsection{“cleavage 通常不唯一”是什么意思？}
+
+设
+\[
+p:\mathcal{E}\to\mathcal{B}
+\]
+是一个 fibration。给定
+\[
+u:I\to J,
+\qquad
+Y\in\mathcal{E}_J,
+\]
+fibration 只保证存在某个笛卡尔态射：
+\[
+\phi:u^*Y\to Y
+\]
+满足
+\[
+p(\phi)=u.
+\]
+但它不指定到底选哪一个。
+
+如果还有另一个笛卡尔态射：
+\[
+\phi':(u^*Y)'\to Y
+\]
+也满足
+\[
+p(\phi')=u,
+\]
+那么 \(\phi\) 和 \(\phi'\) 都可以作为 \(Y\) 沿 \(u\) 的笛卡尔提升。
+
+因此，一个 cleavage 就是对所有 \((u,Y)\) 选定一个提升：
+\[
+\phi_Y^u:u^*Y\to Y.
+\]
+不同的选法可能给出不同的 cleavage。
+
+不过这些不同选择之间并不是毫无关系。两个笛卡尔提升之间有唯一的垂直同构：
+\[
+\theta:u^*Y\cong (u^*Y)'.
+\]
+这里“垂直”指：
+\[
+p(\theta)=1_I.
+\]
+所以 \(u^*Y\) 通常不是严格唯一的，而是“在唯一同构意义下唯一”。
+
+\subsection{一个简单例子}
+
+在集合范畴中，考虑投影：
+\[
+p:\mathbf{Set}^{\to}\to\mathbf{Set},
+\]
+即把函数
+\[
+X\to J
+\]
+送到 \(J\)。
+
+给定：
+\[
+u:I\to J,
+\qquad
+Y=(X\to J),
+\]
+一个标准拉回是：
+\[
+X\times_J I\to I.
+\]
+但如果有一个集合 \(K\) 与 \(X\times_J I\) 之间的双射，那么也可以把
+\[
+K\to I
+\]
+作为同一个拉回对象的另一个表示。它们虽然不是同一个集合，但同构。
+
+因此，严格来说，拉回对象不是唯一的；它只是在同构意义下唯一。选择哪个具体的拉回对象，就是 cleavage 中“选择”的部分。
+
+\subsection{“不一定严格地与复合相容”是什么意思？}
+
+设基底中有两个连续态射：
+\[
+I\xrightarrow{u}J\xrightarrow{v}K.
+\]
+设
+\[
+Y\in\mathcal{E}_K.
+\]
+我们可以有两种拉回方式。
+
+第一种：先沿 \(v\) 拉回，再沿 \(u\) 拉回：
+\[
+Y
+\longmapsto
+v^*Y
+\longmapsto
+u^*(v^*Y).
+\]
+第二种：直接沿复合 \(v\circ u\) 拉回：
+\[
+Y
+\longmapsto
+(vu)^*Y.
+\]
+通常我们只有一个规范同构：
+\[
+\boxed{
+u^*(v^*Y)\cong(vu)^*Y
+}
+\]
+而不一定有严格相等：
+\[
+u^*(v^*Y)=(vu)^*Y.
+\]
+所谓“与复合相容”，就是指是否严格满足：
+\[
+\boxed{
+u^*v^*=(vu)^*
+}
+\]
+以及对恒等态射是否严格满足：
+\[
+\boxed{
+(1_J)^*=\operatorname{id}_{\mathcal{E}_J}.
+}
+\]
+一般 cleavage 只保证它们同构，而不保证它们字面相等。
+
+\subsection{为什么只能得到同构？}
+
+先沿 \(v\) 再沿 \(u\) 得到：
+\[
+u^*(v^*Y).
+\]
+它到 \(Y\) 有一个复合态射：
+\[
+u^*(v^*Y)
+\longrightarrow
+v^*Y
+\longrightarrow
+Y.
+\]
+这个复合态射位于基底态射
+\[
+I\xrightarrow{u}J\xrightarrow{v}K
+\]
+即 \(vu:I\to K\) 之上，并且是笛卡尔态射。
+
+另一方面，cleavage 还直接选择了一个 \(vu\) 的笛卡尔提升：
+\[
+(vu)^*Y\to Y.
+\]
+于是我们有两个位于同一个基底态射 \(vu\) 之上的笛卡尔提升：
+\[
+u^*(v^*Y)\to Y,
+\qquad
+(vu)^*Y\to Y.
+\]
+笛卡尔提升的唯一性只告诉我们它们之间有唯一的垂直同构：
+\[
+u^*(v^*Y)\cong(vu)^*Y.
+\]
+但它并不告诉我们这两个对象必须是同一个对象。
+
+\subsection{对应到普通拉回}
+
+在普通范畴中，也有类似现象。
+
+给定：
+\[
+X\to K,
+\qquad
+I\to J\to K,
+\]
+可以先构造：
+\[
+X\times_K J,
+\]
+再构造：
+\[
+(X\times_K J)\times_J I.
+\]
+也可以直接构造：
+\[
+X\times_K I.
+\]
+这两个对象通常不是严格相同的对象，但有自然同构：
+\[
+\bigl(X\times_K J\bigr)\times_J I
+\cong
+X\times_K I.
+\]
+在集合中，如果我们采用标准的有序对构造，它们甚至可能长得不同：
+\begin{itemize}
+  \item 一个元素可能写成 \(((x,j),i)\)；
+  \item 另一个元素可能写成 \((x,i)\)。
+\end{itemize}
+它们显然可以自然对应，但不是字面上的同一个集合。
+
+这正是一般 cleavage 中
+\[
+u^*v^*Y\cong(vu)^*Y
+\]
+而非严格相等的原因。
+
+\subsection{Split cleavage 是什么？}
+
+如果一个 cleavage 特别选择得很好，使得：
+\[
+(1_J)^*Y=Y
+\]
+并且：
+\[
+u^*(v^*Y)=(vu)^*Y
+\]
+都严格成立，那么称它是一个 \textbf{split cleavage}。
+
+相应的 fibration 称为 \textbf{split fibration}。
+
+所以区别是：
+\begin{center}
+\begin{tabular}{c|c}
+\text{普通 cleavage}
+&
+\(u^*v^*Y\cong(vu)^*Y\)
+\\[1mm]
+\text{split cleavage}
+&
+\(u^*v^*Y=(vu)^*Y\)
+\end{tabular}
+\end{center}
+
+普通 cleavage 给出的是伪函子：
+\[
+\mathcal{B}^{op}\rightsquigarrow\mathbf{Cat},
+\]
+而 split cleavage 给出严格函子：
+\[
+\mathcal{B}^{op}\to\mathbf{Cat}.
+\]
+
+\subsection*{总结}
+“cleavage 通常不唯一”：
+\begin{quote}
+对同一个 \(u:I\to J\) 和 \(Y\in\mathcal{E}_J\)，可以选择不同的笛卡尔提升；它们一般只在同构意义下相同。
+\end{quote}
+
+“cleavage 不一定严格地与复合相容”：
+\begin{quote}
+先沿 \(v\) 再沿 \(u\) 得到的对象 \(u^*v^*Y\)，与直接沿 \(vu\) 得到的对象 \((vu)^*Y\)，通常只有规范同构，而不是严格相等。
+\end{quote}
+
+也就是：
+\[
+\boxed{
+\text{存在性与唯一同构}
+\neq
+\text{严格指定且严格相等}
+}
+\]
+
+\end{document}

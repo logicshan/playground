@@ -1,0 +1,525 @@
+\documentclass[UTF8, a4paper, 12pt]{ctexart}
+
+% 数学宏包
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% 页面设置
+\usepackage[a4paper, margin=2.5cm]{geometry}
+
+% 超链接
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue]{hyperref}
+
+% 范畴论图示
+\usepackage{tikz-cd}
+
+% 列表设置
+\usepackage{enumitem}
+
+% 取消首行缩进
+\ctexset{autoindent=false}   % 先关闭 ctex 的自动调整功能
+\setlength{\parindent}{0pt}  % 再把段首缩进设为 0
+
+% 常用数学符号
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Grp}{\mathbf{Grp}}
+\newcommand{\Ab}{\mathbf{Ab}}
+\newcommand{\Cat}{\mathbf{Cat}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\normalcl}[1]{\left\langle #1 \right\rangle^{\mathrm{normal}}}
+
+\title{范畴论中的 Equalizer 与 Coequalizer}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{问题}
+
+范畴论中的 equalizer、coequalizer 的定义是什么？
+它们的直观是什么？请给出例子解释。
+
+\section{Equalizer：等化子}
+
+设在一个范畴中有两个平行态射
+\[
+f,g\colon X\rightrightarrows Y,
+\]
+也就是两个态射
+\[
+f\colon X\to Y,\qquad g\colon X\to Y.
+\]
+
+\subsection{定义}
+
+如果有态射
+\[
+e\colon E\to X
+\]
+满足
+\[
+f\circ e=g\circ e,
+\]
+并且对任意态射
+\[
+h\colon Z\to X,
+\]
+只要
+\[
+f\circ h=g\circ h,
+\]
+就存在唯一的态射
+\[
+u\colon Z\to E
+\]
+使得
+\[
+h=e\circ u,
+\]
+那么称 \(e\colon E\to X\) 是 \(f,g\) 的
+\emph{equalizer}，中文称为\textbf{等化子}。
+
+其交换图如下：
+\[
+\begin{tikzcd}
+Z \arrow[rr, "u", dashed] \arrow[dr, "h"'] &&
+E \arrow[dl, "e"] \\
+& X &
+\end{tikzcd}
+\]
+其中还要求
+\[
+f\circ e=g\circ e.
+\]
+
+完整地说，等化子满足以下两个条件：
+
+\begin{enumerate}[label=\arabic*.]
+    \item \(f\circ e=g\circ e\)；
+    \item 对任意满足 \(f\circ h=g\circ h\) 的 \(h\colon Z\to X\)，
+    存在唯一的 \(u\colon Z\to E\)，使得 \(h=e\circ u\)。
+\end{enumerate}
+
+\subsection{直观理解}
+
+Equalizer 是 \(X\) 中那些被 \(f\) 和 \(g\) ``区分不出来''的部分。
+
+在集合范畴 \(\Set\) 中，等化子就是集合
+\[
+E=\{x\in X\mid f(x)=g(x)\},
+\]
+以及它到 \(X\) 的包含映射
+\[
+e\colon E\hookrightarrow X.
+\]
+
+因此，equalizer 可以直观地理解为：
+
+\begin{quote}
+取出 \(X\) 中使 \(f\) 和 \(g\) 相等的最大子对象。
+\end{quote}
+
+这里的“最大”不是简单地指元素数量最多，而是指它满足一个泛性质：
+任何其他使 \(f\) 和 \(g\) 相等的对象，都必须唯一地经过 \(E\)。
+
+\subsection{集合中的例子}
+
+设
+\[
+X=\mathbb{R},\qquad Y=\mathbb{R},
+\]
+定义
+\[
+f(x)=x^2,\qquad g(x)=|x|.
+\]
+
+我们寻找满足
+\[
+x^2=|x|
+\]
+的实数 \(x\)。
+
+解为
+\[
+x=-1,\qquad x=0,\qquad x=1.
+\]
+
+所以 equalizer 是集合
+\[
+E=\{-1,0,1\},
+\]
+以及包含映射
+\[
+e\colon E\hookrightarrow \mathbb{R}.
+\]
+
+因为对于每个 \(x\in E\)，都有
+\[
+f(x)=g(x).
+\]
+
+如果另一个集合 \(Z\) 有映射
+\[
+h\colon Z\to\mathbb{R},
+\]
+并且满足
+\[
+f\circ h=g\circ h,
+\]
+那么对于每个 \(z\in Z\)，都有
+\[
+h(z)\in\{-1,0,1\}.
+\]
+
+因此，\(h\) 唯一地分解为
+\[
+Z\xrightarrow{u}E\xrightarrow{e}\mathbb{R}.
+\]
+
+\section{Coequalizer：余等化子}
+
+仍然设有两个平行态射
+\[
+f,g\colon X\rightrightarrows Y.
+\]
+
+\subsection{定义}
+
+如果有态射
+\[
+q\colon Y\to Q
+\]
+满足
+\[
+q\circ f=q\circ g,
+\]
+并且对任意态射
+\[
+h\colon Y\to Z,
+\]
+只要
+\[
+h\circ f=h\circ g,
+\]
+就存在唯一的态射
+\[
+u\colon Q\to Z
+\]
+使得
+\[
+h=u\circ q,
+\]
+那么称 \(q\colon Y\to Q\) 是 \(f,g\) 的
+\emph{coequalizer}，中文称为\textbf{余等化子}。
+
+其交换图如下：
+\[
+\begin{tikzcd}
+X
+    \arrow[r, bend left=45, "f"]
+    \arrow[r, bend right=45, swap, "g"]
+&
+Y
+    \arrow[r, "q"]
+    \arrow[dr, "h"']
+&
+Q
+    \arrow[d, "u", dashed]
+\\
+&& Z
+\end{tikzcd}
+\]
+
+其中要求
+\[
+q\circ f=q\circ g,
+\]
+并且任意满足
+\[
+h\circ f=h\circ g
+\]
+的态射 \(h\colon Y\to Z\)，都唯一地分解为
+\[
+h=u\circ q.
+\]
+
+\subsection{直观理解}
+
+Coequalizer 不再从 \(X\) 中选出一部分，而是把 \(Y\) 中的某些元素识别起来，使得 \(f\) 和 \(g\) 的结果变得相同。
+
+在集合范畴 \(\Set\) 中，coequalizer 大致是商集合
+\[
+Q=Y/{\sim},
+\]
+其中 \(\sim\) 是由关系
+\[
+f(x)\sim g(x)\qquad (x\in X)
+\]
+生成的最小等价关系。
+
+因此，coequalizer 可以直观地理解为：
+
+\begin{quote}
+把 \(f(x)\) 和 \(g(x)\) 强制识别为同一个元素，从而得到最一般的商对象。
+\end{quote}
+
+\subsection{集合中的例子}
+
+设
+\[
+X=\{a,b\},\qquad Y=\{1,2,3,4\}.
+\]
+
+定义两个映射
+\[
+f(a)=1,\qquad f(b)=2,
+\]
+以及
+\[
+g(a)=2,\qquad g(b)=3.
+\]
+
+我们要求一个映射
+\[
+q\colon Y\to Q
+\]
+满足
+\[
+q\circ f=q\circ g.
+\]
+
+由 \(a\) 得到
+\[
+q(1)=q(2).
+\]
+
+由 \(b\) 得到
+\[
+q(2)=q(3).
+\]
+
+因此必须有
+\[
+q(1)=q(2)=q(3).
+\]
+
+元素 \(4\) 不受任何关系约束，可以单独保留。
+
+于是 coequalizer 可以取为
+\[
+Q=\{[1],[4]\},
+\]
+其中
+\[
+[1]=\{1,2,3\},\qquad [4]=\{4\}.
+\]
+
+商映射为
+\[
+q\colon Y\to Q,
+\]
+满足
+\[
+q(1)=q(2)=q(3)=[1],
+\qquad
+q(4)=[4].
+\]
+
+这就是把由 \(f(x)\) 和 \(g(x)\) 产生的元素强行合并。
+
+\section{群中的 Equalizer}
+
+在群范畴 \(\Grp\) 中，设有两个群同态
+\[
+f,g\colon G\to H.
+\]
+
+那么它们的 equalizer 是子群
+\[
+E=\{x\in G\mid f(x)=g(x)\}.
+\]
+
+特别地，如果 \(g\) 是平凡同态，或者考虑
+\[
+f\colon G\to H,\qquad 0\colon G\to H,
+\]
+那么 equalizer 就是 \(f\) 的核：
+\[
+\ker f
+=
+\{x\in G\mid f(x)=e_H\}.
+\]
+
+因此：
+
+\begin{quote}
+群同态的 kernel 是某个 equalizer 的特殊情形。
+\end{quote}
+
+\section{群中的 Coequalizer}
+
+在群范畴 \(\Grp\) 中，设有两个群同态
+\[
+f,g\colon G\to H.
+\]
+
+那么 coequalizer 是一个商群
+\[
+q\colon H\to Q
+\]
+满足
+\[
+q\circ f=q\circ g.
+\]
+
+要求
+\[
+q(f(x))=q(g(x)),
+\]
+等价于要求
+\[
+q\bigl(f(x)g(x)^{-1}\bigr)=e_Q.
+\]
+
+因此，需要把所有元素
+\[
+f(x)g(x)^{-1}
+\]
+都变成单位元。为了保持群结构，需要取这些元素生成的正规闭包：
+\[
+N=
+\normalcl{
+f(x)g(x)^{-1}\mid x\in G
+}.
+\]
+
+于是 coequalizer 是自然商映射
+\[
+q\colon H\to H/N.
+\]
+
+特别地，如果 \(g\) 是平凡同态，则
+\[
+N=\normalcl{f(G)}.
+\]
+
+如果 \(f(G)\) 本身是正规子群，则 coequalizer 就是
+\[
+H/f(G).
+\]
+
+这说明：
+
+\begin{quote}
+在群范畴中，余等化子通常表现为除以某个正规子群。
+\end{quote}
+
+\section{Equalizer 与 Coequalizer 的对偶性}
+
+Equalizer 和 coequalizer 是完全对偶的概念。
+
+Equalizer 的形式是
+\[
+E\longrightarrow X\rightrightarrows Y,
+\]
+也就是寻找一个对象 \(E\to X\)，使得两条复合路径相等。
+
+Coequalizer 的形式是
+\[
+X\rightrightarrows Y\longrightarrow Q,
+\]
+也就是从 \(Y\) 出发，通过商映射使两条平行态射相等。
+
+如果把范畴中的所有箭头反向：
+
+\begin{itemize}
+    \item equalizer 会变成 coequalizer；
+    \item coequalizer 会变成 equalizer。
+\end{itemize}
+
+形式化地说：
+\[
+\operatorname{Coeq}_{\mathcal{C}}(f,g)
+=
+\operatorname{Eq}_{\mathcal{C}^{\op}}(f^{\op},g^{\op}).
+\]
+
+\section{与 Kernel、Cokernel 的关系}
+
+在有零对象的范畴中：
+
+\begin{itemize}
+    \item kernel 是某种 equalizer；
+    \item cokernel 是某种 coequalizer。
+\end{itemize}
+
+对于群或阿贝尔群，有
+\[
+\ker(f)=\operatorname{Eq}(f,0).
+\]
+
+在阿贝尔群范畴 \(\Ab\) 中，
+\[
+\operatorname{coker}(f)=\operatorname{Coeq}(f,0).
+\]
+
+具体地，对于阿贝尔群同态
+\[
+f\colon G\to H,
+\]
+有
+\[
+\operatorname{coker}(f)
+=
+H/\operatorname{im}(f).
+\]
+
+在一般群中，则需要对像取正规闭包。
+
+\section{总结}
+
+对于平行态射
+\[
+f,g\colon X\rightrightarrows Y,
+\]
+可以这样记忆：
+
+\subsection*{Equalizer}
+
+\[
+E\to X
+\]
+
+是 \(X\) 中使 \(f\) 和 \(g\) 相等的部分。
+
+在集合中：
+\[
+E=\{x\in X\mid f(x)=g(x)\}.
+\]
+
+\subsection*{Coequalizer}
+
+\[
+Y\to Q
+\]
+
+是把 \(f(x)\) 和 \(g(x)\) 识别为相同之后得到的商对象。
+
+在集合中：
+\[
+Q=Y/\bigl(f(x)\sim g(x)\bigr).
+\]
+
+一句话概括：
+
+\begin{quote}
+Equalizer 是取满足相等条件的子对象；
+Coequalizer 是施加相等关系得到商对象。
+\end{quote}
+
+\end{document}

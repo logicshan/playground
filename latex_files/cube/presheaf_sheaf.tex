@@ -1,0 +1,1981 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+\usepackage[
+  hybrid,                            % 允许在 Markdown 中混用 LaTeX 命令
+  texMathDollars                     % 启用 $...$ 和 $$...$$ 数学公式
+]{markdown}
+
+\usepackage{graphicx} % Allows including images
+\graphicspath{{./images/}}
+
+\title{presheaf}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{子函子(Subfunctor)的定义}
+\begin{markdown}
+设
+$$
+F,G:\mathcal C\to\mathcal D
+$$
+
+是两个函子。
+
+如果对每个 $X\in\mathcal C$，都有一个 monomorphism
+$$
+i_X:G(X)\hookrightarrow F(X),
+$$
+
+并且这些 $i_X$ 组成一个自然变换
+$$
+i:G\Rightarrow F,
+$$
+
+那么称
+$$
+\boxed{G\text{ 是 }F\text{ 的一个 subfunctor}}
+$$
+
+或者说
+$$
+G\subseteq F.
+$$
+
+换句话说：
+$$
+\boxed{\text{subfunctor}=\text{objectwise subobject}+\text{naturality}}
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{筛(Sieve)}
+\begin{markdown}
+给定 $X\in\mathcal C$。
+
+一个 sieve $S$ on $X$ 是一个 subfunctor
+$$ S\subseteq y_X=\mathcal C(-,X). $$
+
+等价地：
+
+$S$ 是一类指向 $X$ 的 morphisms，并且对于复合封闭。
+
+即：
+
+如果
+$$ f:Y\to X\in S $$
+
+以及
+$$ g:Z\to Y, $$
+
+那么
+$$ f\circ g:Z\to X $$
+
+也必须属于 $S$。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Grothendieck topology 的定义}
+\begin{markdown}
+一个 Grothendieck topology $J$ 给每一个对象
+$$
+X\in\mathcal C
+$$
+
+指定一个集合
+$$
+J(X)
+$$
+
+其中元素都是 $X$ 上的 sieves：
+$$
+J(X)\subseteq\operatorname{Sieve}(X).
+$$
+
+如果
+$$
+S\in J(X),
+$$
+
+我们就称：
+$$
+\boxed{S\text{ 是 }X\text{ 上的 covering sieve}}
+$$
+
+所以：
+$$
+\boxed{J(X)=\\{\text{$X$ 上所有被认为是 covering 的 sieves}\\}}
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+一个 **Grothendieck topology** $J$ on $\mathcal C$，是一个赋值
+$$
+X\mapsto J(X)
+$$
+
+满足下面三个公理。
+
+---
+
+\textbf{公理 GT1：最大 sieve 是 covering}
+
+对每个 $X$：
+$$
+\boxed{
+y_X\in J(X)
+}
+$$
+
+这里
+$$
+y_X=\mathcal C(-,X)
+$$
+
+是最大 sieve。
+
+为什么它叫最大 sieve？
+
+因为对于任何 sieve $S$ on $X$：
+$$
+S\subseteq y_X.
+$$
+
+所以 $y_X$ 包含所有
+$$
+Y\to X.
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+\textbf{公理 GT2：Base change / Pullback stability}
+
+假设：
+$$
+S\in J(X)
+$$
+
+即 $S$ 是 $X$ 上的 covering sieve。
+
+再取任意 morphism：
+$$
+f:Y\to X.
+$$
+
+我们可以把 $S$ 拉回到 $Y$。
+
+定义：
+$$
+\boxed{f^*S = \{g:Z\to Y\mid f\circ g\in S\}}
+$$
+
+那么要求：
+$$
+\boxed{S\in J(X)\quad\Longrightarrow\quad f^*S\in J(Y)}
+$$
+
+也就是说：
+
+> **cover 拉回以后仍然是 cover。**
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+\textbf{公理 GT3：Transitivity}
+
+这是三个公理中最不直观、但非常重要的一个。
+
+假设：
+$$
+S\in J(X).
+$$
+
+所以 $S$ 是 $X$ 的一个 covering sieve。
+
+现在对于每个
+$$
+f:Y\to X
+$$
+
+且
+$$
+f\in S,
+$$
+
+我们又选择一个 covering sieve：
+$$
+R_f\in J(Y).
+$$
+
+把所有这些 $R_f$ “合起来”，得到 $X$ 上的 sieve $R$：
+$$
+R=
+\{g:Z\to X
+\mid
+\exists f:Y\to X\in S,\;
+\exists h:Z\to Y\in R_f,\;
+g=f\circ h
+\}.
+$$
+
+那么要求：
+$$
+\boxed{
+R\in J(X)
+}
+$$
+
+这就是 transitivity。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+\textbf{用一句话理解 GT3}
+
+它说：
+$$
+\boxed{
+\text{cover }X +
+\text{cover each piece}
+\Rightarrow
+\text{cover }X
+}
+$$
+
+例如：
+$$
+X
+$$
+
+先被
+$$
+U_i\to X
+$$
+
+覆盖。
+
+然后每一个 $U_i$ 又被
+$$
+V_{ij}\to U_i
+$$
+
+覆盖。
+
+那么复合：
+$$
+V_{ij}\to U_i\to X
+$$
+
+应该仍然构成 $X$ 的覆盖。
+
+这就是所谓：
+$$
+\boxed{\text{cover of a cover is a cover}}
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Grothendieck topology 另一个版本定义(貌似更常用)}
+\begin{markdown}
+- 一个 **Grothendieck 拓扑** $J$（或称 coverage / pretopology 的饱和化）在 $\mathcal{C}$ 上给每个对象 $X$ 指定一族 **covering sieves**（覆盖筛）$J(X)$，满足：  
+  1. 最大筛 $y(X)=\mathrm{Hom}(-,X)$ 属于 $J(X)$；  
+  2. 对任意 $f:Y\to X$，若 $R\in J(X)$，则拉回 $f^*R\in J(Y)$；  
+  3. 若 $R\in J(X)$，且筛 $S$ 满足“对每个 $f\in R$ 有 $f^*S\in J(\mathrm{dom}\,f)$”，则 $S\in J(X)$。  
+- **位点** $(\mathcal{C},J)$ 就是配备了 Grothendieck 拓扑的范畴。  
+（常用的“覆盖族”版本要求 pullback 存在，并满足同构、复合、拉回三条公理；再取生成的筛即得拓扑。）
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Site}
+\begin{markdown}
+$$
+\boxed{
+\text{Site} =
+(\mathcal C,J)
+}
+$$
+
+其中：
+
+* $\mathcal C$：一个范畴；
+* $J$：$\mathcal C$ 上的 Grothendieck topology。
+
+这就是 site。
+
+注意：
+
+> **site 不是一个新的数学对象类别，而是“一个范畴 + 指定哪些 sieve 是覆盖”的结构。**
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{$S$-compatible family}
+\begin{markdown}
+我们有：
+
+$$
+S\hookrightarrow y_X
+$$
+
+和 presheaf
+$$
+F:\mathcal C^{op}\to\mathbf{Set}.
+$$
+
+一个 $S$-compatible family 定义为一个自然变换：
+$$
+\boxed{
+s:S\Rightarrow F.
+}
+$$
+
+也就是说：
+$$
+s\in\operatorname{Nat}(S,F).
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+\begin{markdown}
+因为：
+$$
+S(Y)\subseteq\mathcal C(Y,X),
+$$
+
+所以对于每个：
+$$
+f:Y\to X
+$$
+
+且
+$$
+f\in S(Y),
+$$
+
+我们得到一个：
+$$
+s_f\in F(Y).
+$$
+
+也就是说：
+$$
+\boxed{
+\text{每一个 cover 的局部箭头 }f:Y\to X
+\text{ 都有一个 section }s_f\in F(Y)
+}
+$$
+
+但是这些 $s_f$ 不能随便选。
+
+自然性要求：
+
+如果
+$$
+g:Z\to Y,
+$$
+
+那么：
+$$
+f\circ g\in S(Z),
+$$
+
+并且要求：
+$$
+\boxed{
+F(g)(s_f)=s_{f\circ g}.
+}
+$$
+
+也就是说：
+
+> 把 $s_f$ 限制到更小的 $Z$，必须得到 $s_{f\circ g}$。
+
+所以它确实是一个**相容的局部数据系统**。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{一个 global section 如何产生 compatible family？}
+\begin{markdown}
+现在假设我们已经有：
+
+$$
+s\in F(X).
+$$
+
+那么对每一个：
+
+$$
+f:Y\to X\in S,
+$$
+
+可以把 $s$ restriction 到 $Y$：
+
+$$
+F(f)(s)\in F(Y).
+$$
+
+因此：
+
+$$
+s\in F(X)
+$$
+
+自然地产生一个自然变换：
+
+$$
+S\Rightarrow F.
+$$
+
+于是有一个 canonical map：
+
+$$
+\boxed{
+F(X)\longrightarrow\operatorname{Nat}(S,F).
+}
+$$
+
+它可以理解成：
+
+$$
+\boxed{
+\text{global section}
+\longmapsto
+\text{its compatible local restrictions}.
+}
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Sheaf condition}
+\begin{markdown}
+一个 presheaf
+$$
+F:\mathcal C^{op}\to\mathbf{Set}
+$$
+
+称为一个 **sheaf**，如果对于每一个对象
+$$
+X\in\mathcal C
+$$
+
+以及每一个 covering sieve
+$$
+S\in J(X),
+$$
+
+canonical map
+$$
+\boxed{
+F(X)\longrightarrow\operatorname{Nat}(S,F)
+}
+$$
+
+都是双射。
+
+即：
+$$
+\boxed{
+F(X)\cong\operatorname{Nat}(S,F)
+}
+$$
+
+这就是 **sieve formulation of the sheaf condition**。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{这个双射究竟表达了什么？}
+\begin{markdown}
+它实际上包含两个条件。
+
+---
+
+\textbf{(1) Existence：可以 glue}
+
+surjective：
+
+$$
+F(X)\twoheadrightarrow\operatorname{Nat}(S,F)
+$$
+
+意味着：
+
+> 每一个 compatible local family 都来自某个 global section。
+
+即：
+
+$$
+\boxed{
+\text{local compatible data}
+\Rightarrow
+\text{global data}
+}
+$$
+
+这就是 **gluing**。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+\textbf{Uniqueness：gluing 是唯一的}
+
+injective：
+$$
+F(X)\hookrightarrow\operatorname{Nat}(S,F)
+$$
+
+意味着：
+
+如果
+$$
+s,t\in F(X)
+$$
+
+在 cover $S$ 上 restriction 完全相同，那么：
+$$
+s=t.
+$$
+
+即：
+$$
+\boxed{
+\text{global section is determined locally}
+}
+$$
+
+所以 sheaf condition 实际上就是：
+$$
+\boxed{
+\text{existence of gluing}
++
+\text{uniqueness of gluing}
+}
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+从 Yoneda 观点看：
+$$
+S\hookrightarrow y_X.
+$$
+
+restriction 给出：
+$$
+F(X)
+\cong
+\operatorname{Nat}(y_X,F)
+\longrightarrow
+\operatorname{Nat}(S,F).
+$$
+
+因此 sheaf condition 就是：
+$$
+\boxed{
+\operatorname{Nat}(y_X,F)
+\simeq
+\operatorname{Nat}(S,F)
+}
+$$
+
+这已经开始显露出 **localization** 的味道：
+
+> 对于 sheaf $F$，cover $S\to y_X$ 在 $F$ 看来是一个等价。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Presheaf category 与 sheaf category}
+\begin{markdown}
+所有 presheaves：
+$$
+\widehat{\mathcal C} = [\mathcal C^{op},\mathbf{Set}].
+$$
+
+所有 sheaves：
+$$
+\operatorname{Sh}(\mathcal C,J) \subseteq \widehat{\mathcal C}.
+$$
+
+这是一个非常特殊的子范畴：
+$$
+\boxed{\operatorname{Sh}(\mathcal C,J) \hookrightarrow \operatorname{PSh}(\mathcal C)}
+$$
+
+具有左伴随：
+$$
+a:\operatorname{PSh}(\mathcal C)\rightleftarrows\operatorname{Sh}(\mathcal C,J):i
+$$
+
+其中 $i$ 是 inclusion，$a$ 称为 **sheafification**。
+
+所以：
+$$
+a\dashv i.
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Sheafification}
+\begin{markdown}
+对于任意 presheaf $F$，sheafification 给出
+$$
+aF
+$$
+
+它是一个 sheaf，并且有 canonical map
+$$
+\eta_F:F\to i(aF)
+$$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{filtered category}
+\begin{markdown}
+**Filtered category（滤子化范畴 / 滤范畴）的严格定义如下：**
+
+一个范畴 $J$ 称为 **filtered（滤子化的）**，如果它满足以下三个条件：
+
+1. $J$ 非空；
+2. 对任意两个对象 $j, j' \in J$，存在对象 $k \in J$ 以及态射 $j \to k$ 和 $j' \to k$；
+3. 对任意两个平行态射 $u, v : i \to j$，存在对象 $k$ 以及态射 $w : j \to k$，使得 $w \circ u = w \circ v$。
+
+这是最常见的“有限滤子化”（finitely filtered）定义，也是 Wikipedia、Stacks Project、nLab 等标准来源采用的版本。
+
+等价的刻画（更抽象、更统一）是：
+
+- $J$ 中**任意有限图（finite diagram）都有 cocone**（即存在某个对象以及从该图到这个对象的自然变换）。
+
+这两者等价，因为任意有限 colimit 可由初始对象、二元余积和余等化子生成，而上述三条条件正好保证这三类有限图有 cocone。
+
+（更一般地，对正则基数 $\kappa$，可定义 $\kappa$-filtered category：任意基数小于 $\kappa$ 的图都有 cocone。普通 filtered 对应 $\omega$-filtered / 有限情况。）
+
+\textbf{直观解释}
+
+Filtered category 是 **directed set（有向集）** 的范畴化版本。
+
+- 在有向集中，任意两个元素都有一个“共同上界”。
+- 在范畴中，对象之间没有“大小比较”，只有态射，因此：
+  - 条件 2 说：任意两个对象都能“往后走”找到一个共同的目标对象（上界）；
+  - 条件 3 说：如果两个平行态射“不一致”，你还可以再往后走一步，把它们“强行变成相等”（等于是用一个态射把它们等化掉）。
+
+整体感觉是：这个范畴“越往后走越集中、越一致”，你可以不断往后推进，把任意有限多的对象和态射都“汇聚”到同一个对象上，并且让相关的三角形交换。
+
+**为什么重要？**  
+以 filtered category 为指标的 colimit（称为 **filtered colimit**）行为特别好：它们在 $\mathbf{Set}$ 中与有限极限交换，很多构造（如 Ind-对象、局部有限表示模等）都依赖这个性质。
+
+对偶概念是 **cofiltered category**（上滤子化范畴）：把所有箭头方向反过来即可。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{pseudofunctor}
+现在我们考虑：
+$$
+\mathcal F:\mathcal C^{op}\to\mathbf{Cat}.
+$$
+
+对于每个：
+$$
+X\in\mathcal C
+$$
+
+给一个 category：
+$$
+\mathcal F(X).
+$$
+
+对于每个：
+$$
+f:Y\to X
+$$
+
+给一个 functor：
+$$
+f^*:\mathcal F(X)\to\mathcal F(Y).
+$$
+
+我们希望：
+$$
+(f\circ g)^*=g^*\circ f^*
+$$
+
+并且：
+$$
+(\operatorname{id}_X)^*=\operatorname{id}_{\mathcal F(X)}.
+$$
+
+但是在很多自然例子中，这两个等式并不是严格成立，而只有\textbf{自然同构}：
+$$
+\boxed{(f\circ g)^*\cong g^*\circ f^*}
+$$
+
+以及：
+$$
+\boxed{(\operatorname{id}_X)^*\cong\operatorname{id}_{\mathcal F(X)}}
+$$
+
+因此我们不能用普通 functor，而使用 \textbf{pseudofunctor}。
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Composition constraint}
+如果：
+$$
+X\xleftarrow{f}Y\xleftarrow{g}Z
+$$
+
+即：
+$$
+f:Y\to X
+\qquad
+g:Z\to Y
+$$
+
+那么有：
+$$
+g^*:\mathcal F(Y)\to\mathcal F(Z)
+$$
+
+和：
+$$
+f^*:\mathcal F(X)\to\mathcal F(Y).
+$$
+
+因此：
+$$
+g^*f^*:\mathcal F(X)\to\mathcal F(Z).
+$$
+
+另一方面：
+$$
+f\circ g:Z\to X
+$$
+
+给出：
+$$
+(f\circ g)^*:\mathcal F(X)\to\mathcal F(Z).
+$$
+
+pseudofunctor 给出一个自然同构：
+$$
+\boxed{
+c_{f,g}:
+g^*f^*
+\xRightarrow{\cong}
+(f\circ g)^*
+}
+$$
+
+注意这里的 $c_{f,g}$ 是两个 functor 之间的 \textbf{natural isomorphism}。
+\end{frame}
+
+\begin{frame}[fragile]{Identity constraint}
+对于每个：
+$$
+X\in\mathcal C,
+$$
+
+有：
+$$
+\operatorname{id}_X:X\to X.
+$$
+
+因此有：
+$$
+(\operatorname{id}_X)^*:
+\mathcal F(X)\to\mathcal F(X).
+$$
+
+pseudofunctor 给出自然同构：
+$$
+\boxed{
+u_X:
+\operatorname{Id}_{\mathcal F(X)}
+\xRightarrow{\cong}
+(\operatorname{id}_X)^*.
+}
+$$
+
+当然也可以把方向反过来定义：
+$$
+(\operatorname{id}_X)^*
+\xRightarrow{\cong}
+\operatorname{Id}_{\mathcal F(X)}.
+$$
+
+两种 convention 都可以，关键是后面的 coherence condition 必须与 convention 一致。
+\end{frame}
+
+\begin{frame}[fragile]{Pseudofunctor 还必须满足 coherence}
+\begin{markdown}
+仅仅给：
+
+$$
+c_{f,g}
+$$
+
+和：
+
+$$
+u_X
+$$
+
+还不够。
+
+它们必须满足两个 coherence conditions：
+
+1. identity coherence；
+2. associativity coherence。
+
+这就是 pseudofunctor 的核心。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Associativity coherence}
+考虑三个 composable arrows：
+$$
+W\xrightarrow{h}Z\xrightarrow{g}Y\xrightarrow{f}X
+$$
+
+即：
+$$
+f:Y\to X
+\qquad
+g:Z\to Y
+\qquad
+h:W\to Z
+$$
+
+我们有四个相关 functors：
+$$
+h^*g^*f^*,
+$$
+
+$$
+(h\circ g)^*f^*,
+$$
+
+$$
+h^*(f\circ g)^*,
+$$
+
+以及：
+$$
+(f\circ g\circ h)^*.
+$$
+
+从：
+$$
+h^*g^*f^*
+$$
+
+到：
+$$
+(fgh)^*
+$$
+
+存在两条自然同构路径。
+\end{frame}
+
+\begin{frame}[fragile]
+\textbf{路径 A：先组合 $f,g$}
+
+首先：
+$$
+h^*g^*f^*
+\xRightarrow{h^**c_{f,g}}
+h^*(fg)^*.
+$$
+
+然后：
+$$
+h^*(fg)^*
+\xRightarrow{c_{fg,h}}
+(fgh)^*.
+$$
+
+所以得到：
+$$
+h^*g^*f^*
+\Longrightarrow
+(fgh)^*.
+$$
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+**路径 B：先组合 $g,h$**
+
+首先：
+$$
+h^*g^*f^*
+\xRightarrow{c_{g,h}*f^*}
+(gh)^*f^*.
+$$
+
+然后：
+$$
+(gh)^*f^*
+\xRightarrow{c_{f,gh}}
+(fgh)^*.
+$$
+
+要求这两条路径相等：
+$$
+\boxed{
+c_{fg,h}\circ(h^**c_{f,g}) =
+c_{f,gh}\circ(c_{g,h}*f^*).
+}
+$$
+
+这里：
+
+* $h^**c_{f,g}$ 表示把自然变换 $c_{f,g}$ 用 functor $h^*$ whisker；
+* $c_{g,h}*f^*$ 表示在右边 whisker $f^*$。
+
+这就是 pseudofunctor 的 **associativity coherence condition**。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{whiskering}
+先固定 whiskering 记号
+
+这是前面最容易混淆的地方。
+
+假设：
+$$
+\alpha:F\Rightarrow G
+$$
+
+是 natural transformation。
+
+\textbf{左 whiskering}
+
+如果：
+$$
+H:\mathcal B\to\mathcal D,
+$$
+
+那么：
+$$
+\boxed{
+H*\alpha
+}
+$$
+
+定义为：
+$$
+HF\Rightarrow HG.
+$$
+
+其 component：
+$$
+\boxed{
+(H*\alpha)_A
+=
+H(\alpha_A).
+}
+$$
+
+\textbf{右 whiskering}
+
+如果：
+$$
+K:\mathcal D\to\mathcal A,
+$$
+
+那么：
+$$
+\boxed{
+\alpha*K
+}
+$$
+
+定义为：
+
+$$
+FK\Rightarrow GK.
+$$
+
+其 component：
+$$
+\boxed{
+(\alpha*K)_D
+=
+\alpha_{K(D)}.
+}
+$$
+
+\textbf{Vertical composition}
+
+如果：
+$$
+F\xRightarrow{\alpha}G
+\xRightarrow{\beta}H,
+$$
+
+则：
+$$
+\boxed{
+\beta\circ\alpha:F\Rightarrow H
+}
+$$
+
+是 vertical composition。
+
+其 component：
+$$
+\boxed{
+(\beta\circ\alpha)_A
+=
+\beta_A\circ\alpha_A.
+}
+$$
+
+因此：
+$$
+\circ
+$$
+
+和：
+$$
+*
+$$
+
+是两种不同的操作：
+$$
+\boxed{
+\circ=\text{vertical composition},
+\qquad
+*=\text{whiskering}.
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Right identity coherence}
+考虑：
+$$
+f:Y\to X.
+$$
+
+composition constraint：
+$$
+c_{f,\operatorname{id}_Y}
+:
+(\operatorname{id}_Y)^*f^*
+\Longrightarrow
+f^*.
+$$
+
+另一方面：
+$$
+u_Y^{-1}:
+(\operatorname{id}_Y)^*
+\Longrightarrow
+\operatorname{Id}_{F(Y)}.
+$$
+
+右 whiskering \(f^*\)：
+$$
+u_Y^{-1}*f^*
+:
+(\operatorname{id}_Y)^*f^*
+\Longrightarrow
+f^*.
+$$
+
+要求：
+$$
+\boxed{
+c_{f,\operatorname{id}_Y}
+=
+u_Y^{-1}*f^*.
+}
+$$
+
+逐对象写就是：
+$$
+\boxed{
+c_{f,\operatorname{id}_Y}(A)
+=
+u_Y^{-1}(f^*A).
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Left identity coherence}
+同样：
+$$
+c_{\operatorname{id}_X,f}
+:
+f^*(\operatorname{id}_X)^*
+\Longrightarrow
+f^*.
+$$
+
+而：
+$$
+u_X^{-1}:
+(\operatorname{id}_X)^*
+\Longrightarrow
+\operatorname{Id}_{F(X)}.
+$$
+
+左边 whiskering \(f^*\)：
+$$
+f^**u_X^{-1}
+:
+f^*(\operatorname{id}_X)^*
+\Longrightarrow
+f^*.
+$$
+
+所以要求：
+$$
+\boxed{
+c_{\operatorname{id}_X,f}
+=
+f^**u_X^{-1}.
+}
+$$
+
+逐对象：
+$$
+\boxed{
+c_{\operatorname{id}_X,f}(A)
+=
+f^*\bigl(u_X^{-1}(A)\bigr).
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile,shrink]{pseudofunctor定义总结}
+一个 contravariant pseudofunctor
+$$
+\boxed{
+F:\mathcal C^{op}\to\mathbf{Cat}
+}
+$$
+
+包括：
+
+\textbf{数据}
+$$
+\boxed{
+\begin{aligned}
+X&\mapsto F(X),\\
+(f:Y\to X)&\mapsto f^*:F(X)\to F(Y),\\
+c_{f,g}&:g^*f^*\xRightarrow{\cong}(fg)^*,\\
+u_X&:\operatorname{Id}_{F(X)}
+\xRightarrow{\cong}
+(\operatorname{id}_X)^*.
+\end{aligned}
+}
+$$
+
+\textbf{条件}
+
+对于每个 \(f:Y\to X\)：
+$$
+\boxed{
+c_{f,\operatorname{id}_Y}
+=
+u_Y^{-1}*f^*
+}
+$$
+
+以及：
+$$
+\boxed{
+c_{\operatorname{id}_X,f}
+=
+f^**u_X^{-1}.
+}
+$$
+
+对于：
+$$
+X\xleftarrow fY\xleftarrow gZ\xleftarrow hW,
+$$
+
+有：
+$$
+\boxed{
+c_{fg,h}\circ(h^**c_{f,g})
+=
+c_{f,gh}\circ(c_{g,h}*f^*).
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile]{用一个图看清 associativity}
+可以把 associativity coherence 记成这个交换图：
+$$
+\boxed{
+\begin{array}{ccc}
+h^*g^*f^*
+&
+\xrightarrow{\,h^**c_{f,g}\,}
+&
+h^*(fg)^*
+\\[2mm]
+\downarrow{\scriptstyle c_{g,h}*f^*}
+&&
+\downarrow{\scriptstyle c_{fg,h}}
+\\[2mm]
+(gh)^*f^*
+&
+\xrightarrow{\,c_{f,gh}\,}
+&
+(fgh)^*
+\end{array}
+}
+$$
+
+即：
+$$
+\boxed{
+c_{fg,h}\circ(h^**c_{f,g})
+=
+c_{f,gh}\circ(c_{g,h}*f^*).
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Descent datum}
+设：
+$$
+\mathcal C
+$$
+
+是一个范畴，并且
+$$
+\boxed{
+F:\mathcal C^{op}\to\mathbf{Cat}
+}
+$$
+
+是一个 contravariant pseudofunctor。
+
+我们固定以下记号。
+
+对于：
+$$
+f:Y\to X,
+$$
+
+写：
+$$
+\boxed{
+f^*:F(X)\to F(Y)
+}
+$$
+
+对于：
+$$
+X\xleftarrow{f}Y\xleftarrow{g}Z,
+$$
+
+即：
+$$
+f:Y\to X,\qquad g:Z\to Y,
+$$
+
+pseudofunctor 的 composition constraint 是：
+$$
+\boxed{
+c_{f,g}:
+g^*f^*
+\xRightarrow{\cong}
+(f\circ g)^*
+}
+$$
+
+对于 \(A\in F(X)\)，其 component 是：
+$$
+\boxed{
+c_{f,g}(A):
+g^*f^*A
+\xrightarrow{\cong}
+(fg)^*A
+}
+$$
+
+Identity constraint 是：
+$$
+\boxed{
+u_X:
+\operatorname{Id}_{F(X)}
+\xRightarrow{\cong}
+(\operatorname{id}_X)^*
+}
+$$
+
+所以：
+$$
+u_X(A):
+A\xrightarrow{\cong}(\operatorname{id}_X)^*A
+$$
+\end{frame}
+
+\begin{frame}[fragile,shrink]{固定一个 sieve}
+现在取：
+$$
+X\in\mathcal C
+$$
+
+以及一个 sieve：
+$$
+\boxed{
+S\hookrightarrow y_X=\mathcal C(-,X)
+}
+$$
+
+也就是说，对于每一个 \(Y\in\mathcal C\)：
+$$
+S(Y)\subseteq\mathcal C(Y,X),
+$$
+
+并且：
+$$
+f\in S(Y),\quad g:Z\to Y
+$$
+
+必然推出：
+$$
+fg=f\circ g\in S(Z)
+$$
+
+如果：
+$$
+S\in J(X),
+$$
+
+则 \(S\) 是 covering sieve。
+
+\textbf{Descent datum 的定义本身不需要 \(S\) 是 covering sieve；只有讨论 sheaf/stack condition 时才要求 \(S\) covering。}
+\end{frame}
+
+\begin{frame}[fragile]{Descent datum 的第一部分：局部对象}
+对于每一个：
+$$
+f:Y\to X
+$$
+
+满足：
+$$
+f\in S(Y),
+$$
+
+选择一个对象：
+$$
+\boxed{
+A_f\in F(Y)
+}
+$$
+
+因此，我们为 sieve 中的每一个箭头：
+$$
+f:Y\to X
+$$
+
+配置一个位于 fiber \(F(Y)\) 中的对象 \(A_f\)。
+
+可以写成：
+$$
+\boxed{
+f\in S(Y)
+\quad\leadsto\quad
+A_f\in F(Y)
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Descent datum 的第二部分：transition isomorphism}
+现在取：
+$$
+f:Y\to X\in S(Y)
+$$
+
+以及任意：
+$$
+g:Z\to Y
+$$
+
+因为 \(S\) 是 sieve，所以：
+$$
+fg=f\circ g\in S(Z)
+$$
+
+因此：
+$$
+A_f\in F(Y)
+$$
+
+可以沿着 \(g\) restriction：
+$$
+g^*A_f\in F(Z)
+$$
+
+另一方面：
+$$
+A_{fg}\in F(Z)
+$$
+
+因此要求给出一个 isomorphism：
+$$
+\boxed{
+\theta_{f,g}:
+g^*A_f
+\xrightarrow{\cong}
+A_{fg}
+}
+$$
+
+这就是 descent datum 的 transition isomorphism。
+\end{frame}
+
+\begin{frame}[fragile,shrink]{第一个 coherence：identity condition}
+现在令：
+$$
+g=\operatorname{id}_Y
+$$
+
+那么：
+$$
+fg=f
+$$
+
+所以：
+$$
+\theta_{f,\operatorname{id}_Y}:
+(\operatorname{id}_Y)^*A_f
+\longrightarrow
+A_f
+$$
+
+另一方面，由 pseudofunctor 的 unit constraint：
+$$
+u_Y:
+\operatorname{Id}_{F(Y)}
+\Rightarrow
+(\operatorname{id}_Y)^*
+$$
+
+有：
+$$
+u_Y(A_f):
+A_f
+\longrightarrow
+(\operatorname{id}_Y)^*A_f
+$$
+
+因此要求：
+$$
+\boxed{
+\theta_{f,\operatorname{id}_Y}
+\circ
+u_Y(A_f)
+=
+\operatorname{id}_{A_f}
+}
+$$
+
+等价地：
+$$
+\boxed{
+\theta_{f,\operatorname{id}_Y}
+=
+u_Y(A_f)^{-1}
+}
+$$
+
+这就是 identity condition。
+\end{frame}
+
+\begin{frame}[fragile]{第二个 coherence：cocycle condition}
+现在考虑三个 composable arrows：
+$$
+\boxed{
+X\xleftarrow{f}Y\xleftarrow{g}Z\xleftarrow{h}W.
+}
+$$
+
+即：
+$$
+f:Y\to X,
+\qquad
+g:Z\to Y,
+\qquad
+h:W\to Z.
+$$
+
+从：
+$$
+h^*g^*A_f
+$$
+
+到：
+$$
+A_{fgh}
+$$
+
+有两条自然的路径。
+\end{frame}
+
+\begin{frame}[fragile]{路径一：先沿 \(g\)，再沿 \(h\)}
+首先使用：
+$$
+\theta_{f,g}:
+g^*A_f\to A_{fg}.
+$$
+
+应用 \(h^*\)，得到：
+$$
+h^*(\theta_{f,g}):
+h^*g^*A_f
+\longrightarrow
+h^*A_{fg}.
+$$
+
+然后使用：
+$$
+\theta_{fg,h}:
+h^*A_{fg}
+\longrightarrow
+A_{fgh}.
+$$
+
+因此得到：
+$$
+\boxed{
+h^*g^*A_f
+\xrightarrow{h^*(\theta_{f,g})}
+h^*A_{fg}
+\xrightarrow{\theta_{fg,h}}
+A_{fgh}.
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile]{路径二：先把 \(g,h\) 合并}
+pseudofunctor 给出：
+$$
+c_{g,h}:
+h^*g^*
+\xRightarrow{\cong}
+(gh)^*.
+$$
+
+在 \(A_f\) 上：
+$$
+c_{g,h}(A_f):
+h^*g^*A_f
+\longrightarrow
+(gh)^*A_f.
+$$
+
+然后使用：
+$$
+\theta_{f,gh}:
+(gh)^*A_f
+\longrightarrow
+A_{fgh}.
+$$
+
+因此得到：
+$$
+\boxed{
+h^*g^*A_f
+\xrightarrow{c_{g,h}(A_f)}
+(gh)^*A_f
+\xrightarrow{\theta_{f,gh}}
+A_{fgh}.
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile]{Cocycle condition 的严格公式}
+要求上面的两条路径相同：
+$$
+\boxed{
+\theta_{fg,h}
+\circ
+h^*(\theta_{f,g})
+=
+\theta_{f,gh}
+\circ
+c_{g,h}(A_f).
+}
+$$
+
+这就是 descent datum 的 cocycle condition。
+
+注意这里的
+$$
+c_{g,h}(A_f)
+$$
+
+非常重要，因为 \(c_{g,h}\) 是一个 natural isomorphism：
+$$
+c_{g,h}:
+h^*g^*
+\Rightarrow
+(gh)^*,
+$$
+
+而不是一个普通 morphism。
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Descent datum 的完整定义}
+设：
+$$
+F:\mathcal C^{op}\to\mathbf{Cat}
+$$
+
+是一个 contravariant pseudofunctor，采用：
+$$
+c_{f,g}:g^*f^*\Rightarrow(fg)^*
+$$
+
+和：
+$$
+u_X:\operatorname{Id}_{F(X)}
+\Rightarrow(\operatorname{id}_X)^*
+$$
+
+的 convention。
+
+给定：
+$$
+S\hookrightarrow y_X
+$$
+
+一个 \textbf{\(S\)-descent datum} 是以下数据：
+
+\textbf{(D1) Local objects}
+
+对每一个：
+$$
+f:Y\to X\in S(Y),
+$$
+
+给出：
+$$
+\boxed{
+A_f\in F(Y).
+}
+$$
+
+\textbf{(D2) Transition isomorphisms}
+
+对每一个：
+$$
+f:Y\to X\in S(Y),
+\qquad
+g:Z\to Y,
+$$
+
+给出：
+$$
+\boxed{
+\theta_{f,g}:
+g^*A_f
+\xrightarrow{\cong}
+A_{fg}.
+}
+$$
+
+\textbf{(D3) Identity coherence}
+
+对每一个：
+$$
+f:Y\to X\in S(Y),
+$$
+
+满足：
+$$
+\boxed{
+\theta_{f,\operatorname{id}_Y}
+\circ
+u_Y(A_f)
+=
+\operatorname{id}_{A_f}.
+}
+$$
+
+\textbf{(D4) Cocycle coherence}
+
+对于：
+$$
+X\xleftarrow{f}Y\xleftarrow{g}Z\xleftarrow{h}W,
+$$
+
+满足：
+$$
+\boxed{
+\theta_{fg,h}
+\circ
+h^*(\theta_{f,g})
+=
+\theta_{f,gh}
+\circ
+c_{g,h}(A_f).
+}
+$$
+
+这四项就是完整的 descent datum。
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Global object 如何产生 descent datum？}
+这是理解整个定义最重要的一步。
+
+给定：
+$$
+A\in F(X),
+$$
+
+定义：
+$$
+\boxed{
+A_f:=f^*A.
+}
+$$
+
+对于：
+$$
+f:Y\to X,
+\qquad
+g:Z\to Y,
+$$
+
+定义：
+$$
+\boxed{
+\theta_{f,g}:=c_{f,g}(A).
+}
+$$
+
+因为：
+$$
+c_{f,g}(A):
+g^*f^*A
+\overset{\cong}{\longrightarrow}
+(fg)^*A,
+$$
+
+恰好就是：
+$$
+g^*A_f
+\overset{\cong}{\longrightarrow}
+A_{fg}.
+$$
+
+所以每一个 global object：
+$$
+A\in F(X)
+$$
+
+都会产生一个 descent datum：
+$$
+\boxed{
+\operatorname{Desc}(A).
+}
+$$
+
+于是得到 canonical functor：
+$$
+\boxed{
+F(X)
+\longrightarrow
+\operatorname{Desc}_F(S).
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile]{为什么 cocycle condition 正好成立？}
+因为 descent datum 的 cocycle condition：
+$$
+\theta_{fg,h}
+\circ
+h^*(\theta_{f,g})
+=
+\theta_{f,gh}
+\circ
+c_{g,h}(A_f)
+$$
+
+在 global descent datum 中变成：
+$$
+c_{fg,h}(A)
+\circ
+h^*\bigl(c_{f,g}(A)\bigr)
+=
+c_{f,gh}(A)
+\circ
+c_{g,h}(f^*A).
+$$
+
+这正是 pseudofunctor 本身的 associativity coherence：
+$$
+\boxed{
+c_{fg,h}\circ(h^**c_{f,g})
+=
+c_{f,gh}\circ(c_{g,h}*f^*).
+}
+$$
+
+所以：
+$$
+\boxed{
+\text{descent cocycle}
+\quad\text{来自}\quad
+\text{pseudofunctor coherence}.
+}
+$$
+
+这其实是整个结构最漂亮的地方。
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Descent category}
+最后，如果有两个 descent data：
+$$
+(A_f,\theta_{f,g})
+$$
+
+和：
+$$
+(B_f,\eta_{f,g}),
+$$
+
+它们之间的 morphism 是一族：
+$$
+\boxed{
+\phi_f:A_f\to B_f
+}
+$$
+
+其中：
+$$
+\phi_f\in F(Y)
+$$
+
+（这里 \(f:Y\to X\)），并且满足：
+$$
+\boxed{
+\eta_{f,g}
+\circ
+g^*(\phi_f)
+=
+\phi_{fg}
+\circ
+\theta_{f,g}.
+}
+$$
+
+即交换图：
+$$
+\boxed{
+\begin{array}{ccc}
+g^*A_f
+&
+\xrightarrow{g^*(\phi_f)}
+&
+g^*B_f
+\\[2mm]
+\downarrow{\theta_{f,g}}
+&&
+\downarrow{\eta_{f,g}}
+\\[2mm]
+A_{fg}
+&
+\xrightarrow{\phi_{fg}}
+&
+B_{fg}.
+\end{array}
+}
+$$
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+这些 descent data 和 morphisms 构成 category：
+$$
+\boxed{
+\operatorname{Desc}_F(S).
+}
+$$
+
+于是整个结构最终可以浓缩为：
+$$
+\boxed{
+F(X)
+\longrightarrow
+\operatorname{Desc}_F(S),
+}
+$$
+
+其中：
+$$
+\boxed{
+A
+\longmapsto
+\left(
+A_f=f^*A,\;
+\theta_{f,g}=c_{f,g}(A)
+\right).
+}
+$$
+
+而：
+$$
+\boxed{
+\text{\(F\) 是 stack}
+\iff
+F(X)\longrightarrow\operatorname{Desc}_F(S)
+\text{ 对每个 covering sieve \(S\) 都是 equivalence}.
+}
+$$
+\begin{markdown}
+这套符号下，**pseudofunctor 的 $c_{f,g},u_X$** 与 **descent datum 的 $\theta_{f,g}$** 的关系就完全统一了：对于一个 global object $A$，它的 descent datum 的 $\theta$ **就是** pseudofunctor 的 composition constraint $c$ 在 $A$ 上的 component。
+\end{markdown}
+\end{frame}
+
+\begin{frame}
+The Grothendieck construction associates to a contravariant pseudofunctor a fibered category, and conversely, each fibered category is induced by some contravariant pseudofunctor. Because of this, a contravariant pseudofunctor, which is a category-valued presheaf, is often also called a prestack (a stack minus effective descent).\cite{wiki_pseudofunctor}
+\end{frame}
+
+% 参考文献帧，长列表自动分页
+\begin{frame}[allowframebreaks]{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{wiki_pseudofunctor}
+\url{https://en.wikipedia.org/wiki/Pseudo-functor}
+
+\end{thebibliography}
+\end{frame}
+\end{document}
