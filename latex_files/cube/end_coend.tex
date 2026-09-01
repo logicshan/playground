@@ -1,0 +1,287 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+\usepackage[
+  hybrid,                            % 允许在 Markdown 中混用 LaTeX 命令
+  texMathDollars                     % 启用 $...$ 和 $$...$$ 数学公式
+]{markdown}
+
+\usepackage{graphicx} % Allows including images
+\graphicspath{{./images/}}
+
+\title{End}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile,shrink]{dinatural transformation}
+Let $F, G \colon C^{\mathrm{op}} \times C \to D$ be functors. A \textbf{dinatural transformation} from $F$ to $G$, sometimes written
+\[
+\alpha \colon F \overset{\bullet}{\to} G,
+\]
+consists of a collection of morphisms
+\[
+\alpha_c \colon F(c,c) \to G(c,c)
+\]
+such that for every morphism $f \colon c \to c'$ in $C$,
+\[
+G(c,f)\alpha_c F(f,c) = G(f,c')\alpha_{c'} F(c',f) \colon F(c',c) \to G(c,c')
+\]
+If drawn out as a commutative diagram, this becomes a ``hexagon identity'':
+
+\begin{center}
+\begin{tikzcd}[row sep=2.2em, column sep=2.2em]
+  & F(c,c) \arrow[r,"{\alpha_c}"] & G(c,c) \arrow[dr,"{G(c,f)}"] & \\
+  F(c',c) \arrow[ur,"{F(f,c)}"] \arrow[dr,"{F(c',f)}"'] & & & G(c,c') \\
+  & F(c',c') \arrow[r,"{\alpha_{c'}}"'] & G(c',c') \arrow[ur,"{G(f,c')}"'] &
+\end{tikzcd}
+\end{center}
+\end{frame}
+
+\begin{frame}{Special cases}
+If $F$ and $G$ both factor through the projection $C^{\mathrm{op}}\times C\to C$, then the notion reduces to an ordinary natural transformation, and similarly if they both factor through $C^{\mathrm{op}}$.
+
+If $F$ factors through $C$ while $G$ factors through $C^{\mathrm{op}}$, then we obtain a notion of natural transformation from a covariant functor to a contravariant one, and dually.
+
+If $G$ is constant, the hexagon identity reduces to the ``domain'' version of extranaturality, involving a commutative square of the form
+\[
+\alpha_c F(f,c)=\alpha_{c'}F(c',f)\colon F(c',c)\to G
+\]
+where $G$ is constant with respect to the argument $c$. Similarly, if $F$ is constant, it yields the ``codomain'' version with a commutative square of the form
+\[
+G(c,f)\alpha_c=G(f,c')\alpha_{c'}\colon F\to G(c,c')
+\]
+when $F$ is constant with respect to the argument $c$.
+\end{frame}
+
+\begin{frame}[fragile,shrink]{Wedge}
+设：
+$$
+H:\mathcal C^{op}\times\mathcal C\to\mathcal E.
+$$
+
+以及 constant bifunctor：
+$$
+\Delta X:\mathcal C^{op}\times\mathcal C\to\mathcal E
+$$
+
+定义：
+$$
+\Delta X(c,c')=X.
+$$
+
+那么：
+$$
+\boxed{
+\omega:\Delta X\Rrightarrow H
+}
+$$
+
+就是一个 dinatural transformation。
+
+它的 component 是：
+$$
+\omega_c:X\to H(c,c).
+$$
+
+dinaturality condition 变成：
+$$
+\boxed{
+H(f,1_{c'})\circ\omega_{c'}
+=
+H(1_c,f)\circ\omega_c
+}
+$$
+
+这正是 \textbf{wedge} 的定义。
+
+所以：
+$$
+\boxed{
+\text{wedge}
+=
+\text{dinatural transformation }
+\Delta X\Rrightarrow H
+}
+$$
+\end{frame}
+
+\begin{frame}{Cowedge}
+如果：
+$$
+\iota:H\Rrightarrow\Delta X,
+$$
+
+那么 component：
+$$
+\iota_c:H(c,c)\to X.
+$$
+
+dinaturality condition 变成：
+$$
+\boxed{
+\iota_c\circ H(1_c,f)
+=
+\iota_{c'}\circ H(f,1_{c'})
+}
+$$
+
+这就是 \textbf{cowedge}。
+
+所以：
+$$
+\boxed{
+\text{cowedge}
+=
+\text{dinatural transformation }
+H\Rrightarrow\Delta X
+}
+$$
+\end{frame}
+
+\begin{frame}[shrink]{end / coend}
+给定：
+$$
+H:\mathcal C^{op}\times\mathcal C\to\mathcal E.
+$$
+
+\textbf{End}
+
+一个 end 是一个 universal dinatural transformation：
+$$
+\boxed{
+\omega:
+\Delta\left(\int_cH(c,c)\right)
+\Rrightarrow H
+}
+$$
+
+即：
+$$
+\omega_c:
+\int_cH(c,c)\to H(c,c).
+$$
+
+它 universal 的意思是：
+
+对于任意：
+$$
+\alpha:\Delta X\Rrightarrow H,
+$$
+
+存在唯一：
+$$
+u:X\to\int_cH(c,c)
+$$
+
+使：
+$$
+\boxed{
+\alpha=\omega\circ\Delta u
+}
+$$
+\end{frame}
+
+\begin{frame}
+\textbf{Coend}
+
+一个 coend 是一个 universal dinatural transformation：
+$$
+\boxed{
+\iota:
+H\Rrightarrow
+\Delta\left(\int^cH(c,c)\right)
+}
+$$
+
+即：
+$$
+\iota_c:
+H(c,c)\to\int^cH(c,c)
+$$
+
+对于任意：
+$$
+\alpha:H\Rrightarrow\Delta X,
+$$
+
+存在唯一：
+$$
+u:\int^cH(c,c)\to X
+$$
+
+使：
+$$
+\boxed{
+\alpha=\Delta u\circ\iota
+}
+$$
+\end{frame}
+
+\begin{frame}{典型例子}
+\begin{itemize}
+  \item end 给出自然变换
+  \item Yoneda 引理的 end 形式
+  \item Yoneda 引理的 coend 形式
+  \item Kan extension
+  \item Geometric realization
+\end{itemize}
+\end{frame}
+
+\begin{frame}{优点}
+\begin{itemize}
+  \item End/coend 最大的优势：把“自然性条件”打包掉。
+  \item End/coend 将 universal construction 转化成一种可进行代数操作的表达式。
+\end{itemize}
+
+$$
+\boxed{
+\textbf{End/coend 是范畴论的“积分/求和演算”。}
+}
+$$
+
+而 \textbf{Kan extension 更像是你要解决的 universal problem}：
+$$
+\boxed{
+\text{Kan extension：我要构造什么？}
+}
+$$
+$$
+\boxed{
+\text{End/coend：这个 universal object 如何把它写成一个可操作的公式？}
+}
+$$
+\end{frame}
+
+% 参考文献帧，长列表自动分页
+\begin{frame}[allowframebreaks]{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{ncatlab_dinatural}
+\url{https://ncatlab.org/nlab/show/dinatural+transformation}
+
+\bibitem{end_natural_transformation}
+\url{https://chatgpt.com/s/t_6a96dbb328ec81919d35598bf6fee18d}
+
+\end{thebibliography}
+\end{frame}
+\end{document}
