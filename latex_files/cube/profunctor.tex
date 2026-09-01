@@ -1,0 +1,245 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+\usepackage[
+  hybrid,                            % 允许在 Markdown 中混用 LaTeX 命令
+  texMathDollars                     % 启用 $...$ 和 $$...$$ 数学公式
+]{markdown}
+
+\usepackage{graphicx} % Allows including images
+\graphicspath{{./images/}}
+
+\title{profunctor}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{定义}
+设 \(\mathcal C,\mathcal D\) 是范畴。
+
+一个从 \(\mathcal C\) 到 \(\mathcal D\) 的 profunctor，是一个函子
+\[
+\boxed{
+\Phi:\mathcal D^{\mathrm{op}}\times\mathcal C\to\mathbf{Set}
+}
+\]
+
+记作
+\[
+\boxed{
+\Phi:\mathcal C\nrightarrow\mathcal D
+}
+\]
+\end{frame}
+
+\begin{frame}{Profunctor = “不一定来自同一个范畴的 Hom”}
+普通 Hom 是：
+$$
+\mathcal C(-,-):
+\mathcal C^{op}\times\mathcal C\to\mathbf{Set}.
+$$
+
+这里两个对象：
+$$
+c,d
+$$
+
+来自同一个范畴。
+
+Profunctor 则把它推广为：
+$$
+\phi:D^{op}\times C\to\mathbf{Set}.
+$$
+
+于是：
+$$
+\phi(d,c)
+$$
+
+就像一个“跨范畴的 Hom”。
+
+所以可以把它理解成：
+$$
+\boxed{
+\text{Profunctor}
+\approx
+\text{generalized Hom between two categories}.
+}
+$$
+
+这其实比“二元函子”的定义更有直觉。
+\end{frame}
+
+\begin{frame}{Profunctors as categories}
+一个 Profunctor 可以直接看成一个“拼接出来的范畴”，其中 \(C\) 和 \(D\) 是两个子范畴，而 Profunctor 给出了它们之间额外的“异质态射”。
+\end{frame}
+
+\begin{frame}[shrink]{Functor 是一种特殊的 Profunctor}
+如果：
+$$
+F:C\to D,
+$$
+
+Yoneda embedding：
+$$
+Y_D:D\to\widehat D
+$$
+
+把 \(F\) 变成：
+$$
+Y_D\circ F:C\to\widehat D.
+$$
+
+由于：
+$$
+\widehat D=\mathbf{Set}^{D^{op}},
+$$
+
+所以对于 \(c\in C\)，得到一个 presheaf：
+$$
+Y_D(Fc)=D(-,Fc).
+$$
+
+也就是说：
+$$
+\boxed{
+\phi_F(d,c)=D(d,Fc).
+}
+$$
+
+因此：
+$$
+\phi_F:D^{op}\times C\to\mathbf{Set}.
+$$
+
+这就是一个 Profunctor。材料也明确给出了：
+$$
+\phi_F=Y_D\circ F.
+$$
+
+所以：
+$$
+\boxed{
+F:C\to D
+\quad\leadsto\quad
+\phi_F(d,c)=D(d,Fc).
+}
+$$
+
+可以理解成：
+
+\begin{quote} Functor 给每个 \(c\) 指定一个 \(D\) 中的对象 \(Fc\)；Profunctor 则进一步问：任意 \(d\) 到这个 \(Fc\) 有多少态射？\end{quote}
+\end{frame}
+
+\begin{frame}[shrink]{Yoneda 和 Profunctor 的联系}
+注意：
+$$
+Y_D(d)=D(-,d).
+$$
+
+所以一个对象：
+$$
+d\in D
+$$
+
+实际上可以被表示成一个 presheaf：
+$$
+D(-,d).
+$$
+
+而一个 Profunctor：
+$$
+\phi:D^{op}\times C\to Set
+$$
+
+等价于：
+$$
+\widehat\phi:C\to\widehat D.
+$$
+
+即：
+$$
+\boxed{
+\phi(d,c)
+=
+\widehat\phi(c)(d).
+}
+$$
+
+所以你可以把 Profunctor 看成：
+$$
+\boxed{
+C\longrightarrow \widehat D
+}
+$$
+
+即：
+
+\begin{quote}\textbf{把 \(C\) 中的每一个对象，送到 \(D\) 上的一个 presheaf。}\end{quote}
+
+这实际上是非常重要的视角。
+\end{frame}
+
+\begin{frame}[shrink]{Composition of profunctors}
+The composite $\psi\phi$ of two profunctors
+\[
+\phi \colon C \nrightarrow D \quad\text{and}\quad \psi \colon D \nrightarrow E
+\]
+is given by
+\[
+\psi\phi = \operatorname{Lan}_{Y_D}(\hat{\psi}) \circ \hat{\phi}
+\]
+where $\operatorname{Lan}_{Y_D}(\hat{\psi})$ is the left \textcolor{blue}{Kan extension} of the functor $\hat{\psi}$ along the \textcolor{blue}{Yoneda functor} $Y_D \colon D \to \hat{D}$ of $D$ (which to every object $d$ of $D$ associates the functor $D(-,d) \colon D^{\mathrm{op}} \to \mathbf{Set}$).
+
+It can be shown that
+\[
+(\psi\phi)(e,c) = \Biggl( \coprod_{d\in D} \psi(e,d) \times \phi(d,c) \Biggr) \Big/ \sim
+\]
+where $\sim$ is the least \textcolor{blue}{equivalence relation} such that $(y',x') \sim (y,x)$ whenever there exists a morphism $v$ in $D$ such that
+\[
+y' = vy \in \psi(e,d') \quad\text{and}\quad x'v = x \in \phi(d,c).
+\]
+Equivalently, profunctor composition can be written using a \textcolor{blue}{coend}
+\[
+(\psi\phi)(e,c) = \int^{d\in D} \psi(e,d) \times \phi(d,c).
+\]
+\end{frame}
+
+\begin{frame}{Bicategory of profunctors}
+Composition of profunctors is associative only up to isomorphism (because the product is not strictly associative in $\mathbf{Set}$). The best one can hope is therefore to build a \textcolor{blue}{bicategory} $\mathbf{Prof}$ whose
+\begin{itemize}
+  \item 0-cells are \textcolor{blue}{small categories},
+  \item 1-cells between two small categories are the profunctors between those categories,
+  \item 2-cells between two profunctors are the \textcolor{blue}{natural transformations} between those profunctors.
+\end{itemize}
+\end{frame}
+
+% 参考文献帧，长列表自动分页
+\begin{frame}[allowframebreaks]{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{wiki_profunctor}
+\url{https://en.wikipedia.org/wiki/Profunctor}
+
+\end{thebibliography}
+\end{frame}
+\end{document}
