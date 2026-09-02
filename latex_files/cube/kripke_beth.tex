@@ -1,0 +1,143 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+\usepackage[
+  hybrid,                            % 允许在 Markdown 中混用 LaTeX 命令
+  texMathDollars                     % 启用 $...$ 和 $$...$$ 数学公式
+]{markdown}
+
+\usepackage{graphicx} % Allows including images
+\graphicspath{{./images/}}
+
+\title{Motivation of Kripke And Beth Semantics}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{直觉主义逻辑的背景}
+\begin{markdown}
+20世纪初，布劳威尔提出直觉主义数学，强调数学对象必须通过构造获得。海廷后来把直觉主义逻辑形式化，形成了现代直觉主义命题逻辑和谓词逻辑的基础。
+
+此时的问题是：
+
+> 如果不把命题简单地看作真假值，怎样给出一种严格的语义？
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Kripke 语义的发展}
+\begin{markdown}
+1950年代，Saul Kripke 提出了以“可能世界”和“信息增长”为核心的语义。
+
+Kripke 语义带来了几个重要成果：
+
+- 为直觉主义逻辑提供了清晰的模型论解释；
+- 说明了为什么排中律、双重否定消去等经典原则不能普遍使用；
+- 为证明直觉主义逻辑的可靠性和完备性提供工具；
+- 能够构造反例模型，证明某些公式不能在直觉主义逻辑中证明；
+- 后来推广到模态逻辑、时态逻辑、动态逻辑和计算机科学中的程序语义。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{Beth 语义的发展}
+\begin{markdown}
+Evert Willem Beth 在20世纪中期发展了以树、路径和证明展开为核心的语义方法。
+
+Beth 语义具有更明显的证明论色彩：
+
+- 它把证明看作逐步展开的过程；
+- 分支表示证明中可能出现的不同发展；
+- bar 表示所有可能的发展最终都会达到某种证明状态；
+- 它帮助说明直觉主义逻辑中析取、存在量词和证明对象的构造性含义。
+
+后来，Beth 语义与 Kripke 语义、拓扑语义、Heyting 代数语义之间建立了更深入的联系。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{作用}
+\begin{markdown}
+\textbf{1. 解释直觉主义逻辑}
+
+它们把“证明才是真”转化为严格的语义条件。例如：
+
+- 蕴含不是简单的真假函数，而是对未来信息状态的稳定要求；
+- 否定不是“假值”，而是“不存在任何未来证明”；
+- 存在命题要求能提供见证；
+- 析取要求能指出或最终确定哪一边成立。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+\textbf{2. 证明逻辑的可靠性与完备性}
+
+语义学可以证明：
+$$
+\vdash A \quad\Longrightarrow\quad \models A
+$$
+
+即：可证明的公式在所有模型中都成立。
+
+完备性则反过来说明：
+$$
+\models A \quad\Longrightarrow\quad \vdash A
+$$
+
+即：如果一个公式在所有模型中都成立，那么它确实可以在逻辑系统中证明。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+\textbf{3. 证明某些经典原则不能使用}
+
+例如，构造一个 Kripke 模型，使得：
+$$
+w\not\models P\lor\neg P
+$$
+
+就可以说明排中律不是直觉主义逻辑的普遍定理。
+
+类似地，还可以研究：
+$$
+\neg\neg P\to P
+$$
+
+为什么在经典逻辑中成立，却不一定在直觉主义逻辑中成立。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{总结}
+\begin{markdown}
+可以这样记忆：
+
+> **Kripke 语义把直觉主义真理理解为“在所有未来信息状态中保持成立”；Beth 语义则把它理解为“沿着所有可能的证明展开路径，最终都能达到相应的证明结果”。**
+
+更简洁地说：
+
+- **Kripke：状态语义、偏序、未来世界；**
+- **Beth：过程语义、树结构、证明路径；**
+- **共同点：都描述构造性真理和信息增长；**
+- **区别：Kripke 更静态和模型论，Beth 更动态和证明论。**
+\end{markdown}
+\end{frame}
+
+\end{document}

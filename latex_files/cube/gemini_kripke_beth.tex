@@ -1,0 +1,155 @@
+\documentclass[UTF8,a4paper,11pt]{ctexart}
+
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes}
+
+\title{克里普克语义与贝斯语义\\[0.5em]
+\large Kripke Semantics and Beth Semantics}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+克里普克语义（Kripke Semantics）与贝斯语义（Beth Semantics）是针对非古典逻辑（特别是直觉主义逻辑 Intuitionistic Logic 和模态逻辑 Modal Logic）建立的两种主流关系模型（Relational Model）/图语义。
+
+它们放弃了古典逻辑中“命题非真即假（真值表）”的静态观点，转而将逻辑推演建模为知识状态的演化或计算过程的分支。
+
+\section{什么是 Kripke 语义与 Beth 语义？}
+
+\subsection{克里普克语义（Kripke Semantics）}
+
+由美国哲学家/逻辑学家萨尔·克里普克（Saul Kripke）提出。其核心模型是一个三元组
+\[
+\mathcal{M} = \langle W, R, V \rangle
+\]：
+
+\begin{itemize}[leftmargin=2em]
+  \item $W$（可能世界/信息状态集）：代表不同的时间点、观察者状态或知识节点。
+  \item $R$（可达关系/信息积累关系）：表示状态之间的演变或迁移（在直觉主义逻辑中，$R$ 是偏序关系 $\leqslant$，代表知识只能增加不能减少）。
+  \item $V$（赋值函数）：决定每个状态下哪些原子命题成立。
+\end{itemize}
+
+在直觉主义逻辑的 Kripke 语义中，命题 $A \lor B$ 在状态 $w$ 成立，当且仅当在当前状态 $w$ 下，$A$ 已经成立，或者 $B$ 已经成立。
+
+\subsection{贝斯语义（Beth Semantics）}
+
+由荷兰逻辑学家埃弗特·威廉·贝斯（Evert Willem Beth）提出。Beth 模型同样由节点和树状次序构成，但其核心创新在于引入了\emph{截面/Bar}（覆盖/Cover）条件：
+
+\begin{itemize}[leftmargin=2em]
+  \item Beth 语义允许将验证过程推迟到未来的“分支”上。
+  \item 在状态 $w$ 下，命题 $A \lor B$ 成立，并不要求当前 $w$ 就能断定 $A$ 或 $B$；而是要求从 $w$ 出发的任何一条未来发展路径（Path/Branch），最终都会穿过一个使 $A$ 成立或使 $B$ 成立的节点。
+\end{itemize}
+
+\section{核心联系与区别}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \begin{tabular}{>{\raggedright\arraybackslash}p{2.8cm}
+                  >{\raggedright\arraybackslash}p{5.8cm}
+                  >{\raggedright\arraybackslash}p{5.8cm}}
+    \toprule
+    \textbf{比较维度} & \textbf{Kripke 语义} & \textbf{Beth Semantics（贝斯语义）} \\
+    \midrule
+    直观隐喻
+      & 确定性的知识状态（现在知道了就是知道了）
+      & 必然实现的计算/观察过程（未来总有一刻能知道） \\
+    \addlinespace
+    析取判定\newline$(A \lor B)$
+      & $w \Vdash A \lor B \iff w \Vdash A$ 或 $w \Vdash B$（强即时性）
+      & $w \Vdash A \lor B \iff$ 穿过 $w$ 的所有路径最终都覆盖（Bar）了 $A$ 或 $B$ 的验证节点 \\
+    \addlinespace
+    存在量词判定\newline$(\exists x\, A(x))$
+      & 当前节点必须能构造出具体的元素 $d$
+      & 沿着每条未来路径，最终都能找到对应的元素 $d$ \\
+    \addlinespace
+    几何/拓扑对应
+      & 对应 Alexandroff 拓扑
+      & 对应一般拓扑空间（及格罗滕迪克拓扑/束论 Sheaf Theory） \\
+    \addlinespace
+    应用主场
+      & 广泛应用于模态逻辑、时态逻辑、直觉主义逻辑
+      & 主要应用于直觉主义逻辑、拓扑语义与构造性数学 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{核心区别：即时验证 vs.\ 终态验证}
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Kripke 的逻辑更加“局部”且“确定”}：如果一个节点声称“$A$ 或 $B$”成立，它现在就必须掏出 $A$ 的证据或 $B$ 的证据。
+  \item \textbf{Beth 的逻辑包含了“时间/过程演进”的容错性}：即使现在不知道是 $A$ 还是 $B$，但只要能保证“无论未来怎么发展，都不会逃脱 $A$ 或 $B$ 的范围”，当前状态就可以承认 $A \lor B$ 成立。
+\end{itemize}
+
+\subsection{核心联系}
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{包含关系}：所有 Kripke 模型都可以看作是特殊的 Beth 模型（当 Beth 模型中的 Bar 退化为单元素节点集合时，就变成了 Kripke 模型）。
+  \item \textbf{等价完备性}：对于直觉主义命题逻辑（IPC）和谓词逻辑（IQC），Kripke 语义与 Beth 语义是语义等价的——一个公式在所有 Kripke 模型中有效，当且仅当它在所有 Beth 模型中有效。
+\end{itemize}
+
+\section{发展过程}
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1.1cm,
+  every node/.style={align=center, font=\small},
+  box/.style={draw, rounded corners, thick, inner sep=6pt, text width=9cm},
+  arr/.style={-{Stealth[length=2.5mm]}, thick}
+]
+  \node[box] (heyting) {[1930s] Heyting 语法化直觉主义逻辑};
+  \node[box, below=of heyting] (beth) {[1956] Beth 提出 Beth 语义\\试图为直觉主义逻辑提供直观的图论/拓扑解释\\（源于 Brouwer 的选择序列）};
+  \node[box, below=of beth] (kripke) {[1959--1965] Kripke 提出 Kripke 语义\\简化了模型结构，成功推广到模态逻辑与非经典逻辑};
+  \node[box, below=of kripke] (topo) {[1970s--] 统一于拓扑语义与束论（Sheaf Theory）\\证明了 Kripke 语义对应 Alexandroff 拓扑，Beth 语义对应 Grothendieck 拓扑};
+
+  \draw[arr] (heyting) -- (beth);
+  \draw[arr] (beth) -- (kripke);
+  \draw[arr] (kripke) -- (topo);
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Beth 的突破（1956年）}：构造性数学创始人 Brouwer 提出了“自由选择序列（Free Choice Sequences）”的概念。Beth 为了给直觉主义逻辑提供完整的模型论证明，结合了树状图结构与拓扑空间中的“覆盖”概念，创立了 Beth 语义，成功给出了直觉主义逻辑的完备性证明。
+
+  \item \textbf{Kripke 的简化与推广（1959--1965年）}：Kripke 简化了 Beth 语义中复杂的 Path/Bar 条件，引入了更直观的“可能世界 + 可达关系”结构。这不仅让直觉主义逻辑的语义更加易懂，更引发了模态逻辑（S4, S5, K, LTL 等）的爆发式发展。
+
+  \item \textbf{范畴论与束论的统一（1970年代以后）}：逻辑学家发现 Beth 语义和 Kripke 语义都可以纳入拓扑学和范畴论（Sheaf Theory 束论/Grothendieck Topos）的框架中。Kripke 语义对应预束（Presheaf），而 Beth 语义对应真正的束（Sheaf）。
+\end{enumerate}
+
+\section{作用与应用领域}
+
+\subsection{逻辑学研究（完备性与可判定性）}
+
+\begin{itemize}[leftmargin=2em]
+  \item 提供了非构造性与构造性逻辑之间的桥梁。
+  \item 用于证明特定系统（如 Intuitionistic Logic）的完备性（Completeness）、可判定性（Decidability）以及有限模型性质（Finite Model Property）。
+  \item 通过构造反例模型，轻松证明某些经典逻辑公理（如排中律 $A \lor \neg A$、双重否定消除 $\neg\neg A \to A$）在直觉主义逻辑中不成立。
+\end{itemize}
+
+\subsection{计算机科学与程序理论}
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{程序验证与模态逻辑}：Kripke 语义是 Temporal Logic（时态逻辑，如 LTL, CTL）和 Model Checking（模型检测）的理论基础，广泛用于芯片设计、并发协议和软件系统的自动化验证。
+  \item \textbf{类型论与 Curry-Howard 构架}：在直觉主义逻辑与 $\lambda$ 演算的对应关系中，Beth/Kripke 语义提供了程序并发分支与异步计算的语义解释。
+\end{itemize}
+
+\subsection{哲学与认知科学}
+
+\begin{itemize}[leftmargin=2em]
+  \item 用于建模认识论（Epistemic Logic）中的“知识积累”与“信念修正”。
+  \item 解释时空演化、不确定性下的决策以及动态信息的更新。
+\end{itemize}
+
+\end{document}
