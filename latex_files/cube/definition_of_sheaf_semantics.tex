@@ -1,0 +1,630 @@
+\documentclass{ctexart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{stmaryrd}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+下面给出一个符号统一、定义完整的版本。全文中将 \textbf{sort} 翻译为``类型''，不译为``排序''。
+
+\section*{Locale 上的束语义}
+
+设 $X$ 是一个 locale，记其开集框架为
+
+\[
+\mathcal O(X).
+\]
+
+其底元和顶元分别记为
+
+\[
+\bot_X:=0_{\mathcal O(X)},
+\qquad
+\top_X:=1_{\mathcal O(X)}.
+\]
+
+对 $U,V\in\mathcal O(X)$，关系 $V\le U$ 表示 $V$ 是 $U$ 的子开集；$U\wedge V$ 表示交，$\bigvee_iU_i$ 表示并。
+
+把 $\mathcal O(X)$ 看作 site：一个族 $(U_i\le U)_{i\in I}$ 是覆盖，当且仅当
+
+\[
+\bigvee_{i\in I}U_i=U.
+\]
+
+记 $X$ 上的层范畴为
+
+\[
+\mathrm{Sh}(X).
+\]
+
+\section*{1. 多类型一阶语言}
+
+一个多类型一阶语言 $\mathcal L$ 包含：
+
+\begin{enumerate}[leftmargin=2em]
+    \item 类型符号的一族 $\mathcal S$；
+    \item 对每个 $A\in\mathcal S$，一族类型为 $A$ 的变量；
+    \item 函数符号
+    \[
+    f:A_1\times\cdots\times A_n\to B;
+    \]
+    \item 关系符号
+    \[
+    R\hookrightarrow A_1\times\cdots\times A_n.
+    \]
+\end{enumerate}
+
+当 $n=0$ 时，函数符号是常元，关系符号是命题常元。
+
+公式由原子公式、逻辑联结词
+
+\[
+\top,\quad\bot,\quad\wedge,\quad\vee,\quad\Rightarrow
+\]
+
+以及量词
+
+\[
+\forall,\quad\exists
+\]
+
+构成。否定是派生符号：
+
+\[
+\neg\varphi:=\varphi\Rightarrow\bot.
+\]
+
+\section*{2. $\mathrm{Sh}(X)$ 中的 $\mathcal L$-结构}
+
+记
+
+\[
+\operatorname{Mod}_{\mathcal L}(\mathrm{Sh}(X))
+\]
+
+为所有定义在 $\mathrm{Sh}(X)$ 中的 $\mathcal L$-结构所成的类。
+
+一个这样的结构记为
+
+\[
+\mathbf M\in
+\operatorname{Mod}_{\mathcal L}(\mathrm{Sh}(X)).
+\]
+
+注意，不能写 $\mathbf M\in\mathrm{Sh}(X)$，因为 $\mathbf M$ 本身不是一个层，而是由若干层、层态射和子对象组成的结构。
+
+\subsection*{2.1 类型的解释}
+
+每个类型 $A\in\mathcal S$ 被解释为一个层
+
+\[
+\llbracket A\rrbracket_{\mathbf M}=F_A
+\in\operatorname{Ob}(\mathrm{Sh}(X)).
+\]
+
+\subsection*{2.2 函数符号的解释}
+
+对于函数符号
+
+\[
+f:A_1\times\cdots\times A_n\to B,
+\]
+
+给定一个层态射
+
+\[
+\llbracket f\rrbracket_{\mathbf M}:
+F_{A_1}\times\cdots\times F_{A_n}
+\longrightarrow F_B.
+\]
+
+在每个开集 $U\in\mathcal O(X)$ 上，它给出函数
+
+\[
+\llbracket f\rrbracket_{\mathbf M,U}:
+F_{A_1}(U)\times\cdots\times F_{A_n}(U)
+\longrightarrow F_B(U),
+\]
+
+并且与限制映射相容：
+
+\[
+\llbracket f\rrbracket_{\mathbf M,U}(a_1,\ldots,a_n)|_V
+=
+\llbracket f\rrbracket_{\mathbf M,V}
+(a_1|_V,\ldots,a_n|_V).
+\]
+
+\subsection*{2.3 关系符号的解释}
+
+对于关系符号
+
+\[
+R\hookrightarrow A_1\times\cdots\times A_n,
+\]
+
+给定一个子对象
+
+\[
+\llbracket R\rrbracket_{\mathbf M}
+\hookrightarrow
+F_{A_1}\times\cdots\times F_{A_n}.
+\]
+
+将该子对象视为一个子层，仍记为 $\llbracket R\rrbracket_{\mathbf M}$。于是，对每个 $U$，有包含关系
+
+\[
+\llbracket R\rrbracket_{\mathbf M}(U)
+\subseteq
+F_{A_1}(U)\times\cdots\times F_{A_n}(U).
+\]
+
+\section*{3. 上下文、赋值与项的解释}
+
+设变量上下文为
+
+\[
+\Gamma=(x_1:A_1,\ldots,x_n:A_n).
+\]
+
+在模型 $\mathbf M$ 中，定义上下文对应的层
+
+\[
+F_\Gamma
+:=
+F_{A_1}\times\cdots\times F_{A_n}.
+\]
+
+对开集 $U\in\mathcal O(X)$，一个 $\Gamma$-赋值是一个元素
+
+\[
+\mathbf a=(a_1,\ldots,a_n)\in F_\Gamma(U),
+\]
+
+即
+
+\[
+a_i\in F_{A_i}(U).
+\]
+
+若 $V\le U$，则记
+
+\[
+\mathbf a|_V
+:=
+(a_1|_V,\ldots,a_n|_V).
+\]
+
+\subsection*{3.1 项的解释}
+
+若项 $t$ 在上下文 $\Gamma$ 中的类型为 $B$，则对每个 $U$ 有
+
+\[
+\llbracket t\rrbracket_{\mathbf M,U}:
+F_\Gamma(U)\longrightarrow F_B(U).
+\]
+
+其定义递归如下。
+
+变量：
+
+\[
+\llbracket x_i\rrbracket_{\mathbf M,U}(\mathbf a)=a_i.
+\]
+
+若
+
+\[
+t=f(t_1,\ldots,t_k),
+\]
+
+其中
+
+\[
+f:A_1\times\cdots\times A_k\to B,
+\]
+
+则
+
+\[
+\llbracket t\rrbracket_{\mathbf M,U}(\mathbf a)
+=
+\llbracket f\rrbracket_{\mathbf M,U}
+\bigl(
+\llbracket t_1\rrbracket_{\mathbf M,U}(\mathbf a),
+\ldots,
+\llbracket t_k\rrbracket_{\mathbf M,U}(\mathbf a)
+\bigr).
+\]
+
+项解释满足限制相容性：
+
+\[
+\llbracket t\rrbracket_{\mathbf M,U}(\mathbf a)|_V
+=
+\llbracket t\rrbracket_{\mathbf M,V}(\mathbf a|_V).
+\]
+
+\section*{4. Kripke--Joyal 迫近关系}
+
+对公式 $\varphi$、开集 $U\in\mathcal O(X)$ 和赋值 $\mathbf a\in F_\Gamma(U)$，定义
+
+\[
+U\models_{\mathbf M}\varphi[\mathbf a].
+\]
+
+省略模型下标时，写作
+
+\[
+U\models\varphi[\mathbf a].
+\]
+
+\subsection*{4.1 原子公式}
+
+\subsubsection*{等式}
+
+若 $t_1,t_2$ 都是类型 $B$ 的项，则
+
+\[
+U\models t_1=t_2[\mathbf a]
+\]
+
+当且仅当
+
+\[
+\llbracket t_1\rrbracket_{\mathbf M,U}(\mathbf a)
+=
+\llbracket t_2\rrbracket_{\mathbf M,U}(\mathbf a)
+\]
+
+作为集合 $F_B(U)$ 中的元素相等。
+
+\subsubsection*{关系}
+
+若 $R$ 是 $n$-元关系符号，则
+
+\[
+U\models R(t_1,\ldots,t_n)[\mathbf a]
+\]
+
+当且仅当
+
+\[
+\bigl(
+\llbracket t_1\rrbracket_{\mathbf M,U}(\mathbf a),
+\ldots,
+\llbracket t_n\rrbracket_{\mathbf M,U}(\mathbf a)
+\bigr)
+\in
+\llbracket R\rrbracket_{\mathbf M}(U).
+\]
+
+\subsection*{4.2 命题联结词}
+
+\subsubsection*{真}
+
+\[
+U\models\top[\mathbf a]
+\]
+
+总是成立。
+
+\subsubsection*{假}
+
+\[
+U\models\bot[\mathbf a]
+\quad\Longleftrightarrow\quad
+U=\bot_X.
+\]
+
+也就是说，$\bot$ 只在 frame 的底元，即空开集上成立。
+
+\subsubsection*{合取}
+
+\[
+U\models(\varphi\wedge\psi)[\mathbf a]
+\]
+
+当且仅当
+
+\[
+U\models\varphi[\mathbf a]
+\quad\text{且}\quad
+U\models\psi[\mathbf a].
+\]
+
+\subsubsection*{析取}
+
+\[
+U\models(\varphi\vee\psi)[\mathbf a]
+\]
+
+当且仅当存在覆盖
+
+\[
+U=\bigvee_{i\in I}U_i
+\]
+
+使得对每个 $i\in I$，至少有一个成立：
+
+\[
+U_i\models\varphi[\mathbf a|_{U_i}]
+\]
+
+或
+
+\[
+U_i\models\psi[\mathbf a|_{U_i}].
+\]
+
+不同的 $U_i$ 上可以由不同的析取项成立。
+
+\subsubsection*{蕴涵}
+
+\[
+U\models(\varphi\Rightarrow\psi)[\mathbf a]
+\]
+
+当且仅当对所有 $V\le U$，都有
+
+\[
+V\models\varphi[\mathbf a|_V]
+\quad\Longrightarrow\quad
+V\models\psi[\mathbf a|_V].
+\]
+
+\subsubsection*{否定}
+
+由于
+
+\[
+\neg\varphi:=\varphi\Rightarrow\bot,
+\]
+
+有
+
+\[
+U\models\neg\varphi[\mathbf a]
+\]
+
+当且仅当对所有 $V\le U$，
+
+\[
+V\models\varphi[\mathbf a|_V]
+\quad\Longrightarrow\quad
+V=\bot_X.
+\]
+
+\subsection*{4.3 量词}
+
+设 $y$ 是类型为 $B$ 的变量，且 $F_B=\llbracket B\rrbracket_{\mathbf M}$。
+
+\subsubsection*{存在量词}
+
+\[
+U\models\exists y^B\,\varphi(\mathbf a,y)
+\]
+
+当且仅当存在覆盖
+
+\[
+U=\bigvee_{i\in I}U_i
+\]
+
+以及截面
+
+\[
+b_i\in F_B(U_i)
+\]
+
+使得对每个 $i\in I$，
+
+\[
+U_i\models
+\varphi(\mathbf a|_{U_i},b_i).
+\]
+
+因此，存在量词表达的是局部存在，而不一定要求在整个 $U$ 上存在一个统一见证。
+
+\subsubsection*{全称量词}
+
+\[
+U\models\forall y^B\,\varphi(\mathbf a,y)
+\]
+
+当且仅当对所有 $V\le U$ 以及所有
+
+\[
+b\in F_B(V),
+\]
+
+都有
+
+\[
+V\models\varphi(\mathbf a|_V,b).
+\]
+
+\section*{5. 迫近关系的基本性质}
+
+\subsection*{5.1 单调性}
+
+若 $V\le U$，且
+
+\[
+U\models\varphi[\mathbf a],
+\]
+
+则
+
+\[
+V\models\varphi[\mathbf a|_V].
+\]
+
+\subsection*{5.2 局部性}
+
+若
+
+\[
+U=\bigvee_{i\in I}U_i
+\]
+
+且对每个 $i\in I$ 都有
+
+\[
+U_i\models\varphi[\mathbf a|_{U_i}],
+\]
+
+则
+
+\[
+U\models\varphi[\mathbf a].
+\]
+
+单调性与局部性保证了迫近关系与层的限制、分片和胶合相容。
+
+\section*{6. 公式的 frame 真值}
+
+对固定模型 $\mathbf M$、公式 $\varphi$ 和赋值 $\mathbf a\in F_\Gamma(U)$，可以定义其真值开集为
+
+\[
+\|\varphi[\mathbf a]\|
+:=
+\bigvee
+\left\{
+V\le U
+\;\middle|\;
+V\models\varphi[\mathbf a|_V]
+\right\}.
+\]
+
+特别地，对于闭公式 $\sigma$，其真值是 $\mathcal O(X)$ 中的元素：
+
+\[
+\|\sigma\|
+=
+\bigvee
+\left\{
+U\in\mathcal O(X)
+\;\middle|\;
+U\models_{\mathbf M}\sigma
+\right\}.
+\]
+
+并且
+
+\[
+U\models_{\mathbf M}\sigma
+\quad\Longleftrightarrow\quad
+U\le \|\sigma\|.
+\]
+
+因此，公式的真值自然形成 frame $\mathcal O(X)$ 中的元素，而不是通常意义下的二值真值。
+
+\section*{7. 全局满足与逻辑有效性}
+
+若 $\sigma$ 是闭公式，则定义
+
+\[
+\mathrm{Sh}(X),\mathbf M\models\sigma
+\]
+
+当且仅当
+
+\[
+\top_X\models_{\mathbf M}\sigma,
+\]
+
+其中 $\top_X=1_{\mathcal O(X)}$ 是 frame $\mathcal O(X)$ 的顶元。
+
+对所有模型都成立时，写作
+
+\[
+\mathrm{Sh}(X)\models\sigma,
+\]
+
+其含义是
+
+\[
+\forall\mathbf M\in
+\operatorname{Mod}_{\mathcal L}(\mathrm{Sh}(X)),
+\qquad
+\top_X\models_{\mathbf M}\sigma.
+\]
+
+这里的 $\top_X$ 是 $\mathcal O(X)$ 的顶元，不是 $\mathrm{Sh}(X)$ 中的终对象。虽然二者都常被记为 $1$，但在本文中将它们区分为：
+
+\[
+\top_X\in\mathcal O(X),
+\qquad
+1_{\mathrm{Sh}(X)}\in\mathrm{Sh}(X).
+\]
+
+\section*{8. 直觉主义逻辑的可靠性}
+
+若
+
+\[
+\vdash_{\mathrm{NJ}}\varphi
+\]
+
+表示 $\varphi$ 是直觉主义一阶逻辑中的定理，则对任意 locale $X$ 和任意
+
+\[
+\mathbf M\in
+\operatorname{Mod}_{\mathcal L}(\mathrm{Sh}(X)),
+\]
+
+都有
+
+\[
+\top_X\models_{\mathbf M}\varphi.
+\]
+
+更一般地，若
+
+\[
+\Gamma\vdash_{\mathrm{NJ}}\varphi,
+\]
+
+则对任意开集 $U\in\mathcal O(X)$、任意模型
+
+\[
+\mathbf M\in
+\operatorname{Mod}_{\mathcal L}(\mathrm{Sh}(X)),
+\]
+
+以及任意赋值
+
+\[
+\mathbf a\in F_\Gamma(U),
+\]
+
+都有
+
+\[
+U\models_{\mathbf M}\varphi[\mathbf a].
+\]
+
+因此正确的可靠性定理是
+
+\[
+\boxed{
+\Gamma\vdash_{\mathrm{NJ}}\varphi
+\Longrightarrow
+\forall X\,
+\forall\mathbf M\in
+\operatorname{Mod}_{\mathcal L}(\mathrm{Sh}(X))
+\,\forall U\in\mathcal O(X)
+\,\forall\mathbf a\in F_\Gamma(U),
+\quad
+U\models_{\mathbf M}\varphi[\mathbf a]
+}
+\]
+
+这里应称为\textbf{可靠性}（soundness），而不是``直觉主义完备性''。完备性是另一个方向，需要额外的语义类和证明系统假设。
+
+\end{document}

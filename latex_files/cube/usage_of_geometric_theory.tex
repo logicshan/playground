@@ -1,0 +1,433 @@
+\documentclass{ctexart}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{boxedminipage}
+
+\newtheorem{remark}{评注}
+
+\begin{document}
+
+整体思路是对的，尤其是这句话：
+
+\begin{quote}
+Geometric theory 用来构造理论的分类对象；sheaf semantics 用来在这些分类对象上解释和推理。
+\end{quote}
+
+但有几处需要严格修正。最重要的是：
+
+\[
+\boxed{
+\text{命题 geometric theory 通常分类 locale；一般 geometric theory 分类 topos。}
+}
+\]
+
+不能把这两种情况完全混同。
+
+\section*{1. 命题理论对应 classifying locale：基本正确}
+
+如果 \(\mathbb T\) 是命题 geometric theory，那么它没有 sort、变量和带参数的关系符号，只有命题符号以及
+
+\[
+\top,\quad\bot,\quad\wedge,\quad\bigvee.
+\]
+
+其公式模可证明等价形成 frame：
+
+\[
+\mathcal O(\mathbb T)
+=
+\{\text{命题 geometric formulas}\}/\mathord{\dashv\vdash_{\mathbb T}}.
+\]
+
+因此得到一个 locale：
+
+\[
+L(\mathbb T).
+\]
+
+在这种情形下：
+
+\[
+\boxed{
+\text{\(\mathbb T\) 的 classifying object 是一个 locale。}
+}
+\]
+
+并且它的点对应 \(\mathbb T\) 的 set-based models：
+
+\[
+\operatorname{Pt}(L(\mathbb T))
+\cong
+\operatorname{Mod}_{\mathbf{Set}}(\mathbb T).
+\]
+
+更具体地，一个 set-based 模型就是一个真值赋值
+
+\[
+v:\{\text{命题符号}\}\to\Omega
+\]
+
+并满足所有公理；这等价于 Lindenbaum frame 上的 frame homomorphism
+
+\[
+\mathcal O(\mathbb T)\to\Omega,
+\]
+
+也就是完全素滤子。
+
+所以你第 1 点的核心说法是正确的。
+
+不过，``任意一个命题 geometric theory 都对应一个 classifying locale''最好补充：
+
+\begin{quote}
+这里的 classifying locale 是命题理论的 classifying topos 的局部对象；一般 geometric theory 的分类对象不一定是 locale，而是 classifying topos。
+\end{quote}
+
+\section*{2. 一般 geometric theory 的分类对象是 classifying topos}
+
+如果 \(\mathbb T\) 含有 sort 和变量，例如环的理论，那么其模型不是简单的真假赋值。
+
+一个 \(\mathbb T\)-模型 \(M\) 在 \(\mathbf{Set}\) 中包括：
+
+\begin{itemize}
+\item 每个 sort 的集合；
+\item 每个函数符号的函数；
+\item 每个关系符号的子集；
+\item 满足所有 geometric sequents。
+\end{itemize}
+
+这种理论一般由一个 classifying topos
+
+\[
+\mathbf{Set}[\mathbb T]
+\]
+
+分类，而不是由一个 locale 分类。
+
+它满足：
+
+\[
+\operatorname{Mod}_{\mathbb T}(\mathcal E)
+\cong
+\operatorname{Geom}(\mathcal E,\mathbf{Set}[\mathbb T])
+\]
+
+的自然对应，其中 \(\mathcal E\) 是适当的 topos。
+
+因此应区分：
+
+\[
+\boxed{
+\begin{aligned}
+\text{命题 geometric theory}
+&\longrightarrow \text{classifying locale},\\
+\text{一般 geometric theory}
+&\longrightarrow \text{classifying topos}.
+\end{aligned}
+}
+\]
+
+在某些特殊情况下，一般理论的 classifying topos 也是 localic 的，这时才能进一步由某个 locale 表示。
+
+\section*{3. ``定义 sheaf model''：基本正确，但需要精确化}
+
+在一个 locale \(X\) 上，严格说通常考虑其 sheaf topos：
+
+\[
+\operatorname{Sh}(X).
+\]
+
+一个 \(\mathbb T\)-模型是 \(\operatorname{Sh}(X)\) 中的一个模型：
+
+\begin{itemize}
+\item 每个 sort \(A\) 解释为一个对象
+  \[
+  A^M\in\operatorname{Sh}(X);
+  \]
+\item 函数符号解释为态射；
+\item 关系符号解释为子对象；
+\item 所有公理在内部逻辑中成立。
+\end{itemize}
+
+因此，将 sort 说成``sheaf''，在普通空间 \(X\) 上是直观且正确的；在一般 locale 上，更严格地说是 \(\operatorname{Sh}(X)\) 中的对象。
+
+``关系符号解释为子 sheaf''也基本正确，但更一般的说法是：
+
+\[
+R^M\hookrightarrow
+A_1^M\times\cdots\times A_n^M
+\]
+
+是一个子对象。
+
+它未必需要单独称作某种传统意义上的``子 sheaf''。
+
+\section*{4. Generic model：方向需要修正}
+
+你所说的 generic model 基本正确，但最好用几何态射明确写出。
+
+设 \(\mathbb T\) 的 classifying topos 是
+
+\[
+\mathbf{Set}[\mathbb T],
+\]
+
+其中有一个 generic model
+
+\[
+M_{\mathrm{gen}}.
+\]
+
+对任意 topos \(\mathcal E\)，每个 \(\mathbb T\)-模型 \(M\) 对应一个几何态射
+
+\[
+f:\mathcal E\to\mathbf{Set}[\mathbb T],
+\]
+
+并且
+
+\[
+M\cong f^\ast(M_{\mathrm{gen}}).
+\]
+
+所以准确表述是：
+
+\[
+\boxed{
+\text{任意 \(\mathcal E\) 中的 \(\mathbb T\)-模型，
+都是 generic model 沿某个几何态射的逆像。}
+}
+\]
+
+如果 \(\mathbb T\) 是命题理论，并且 classifying topos 是
+
+\[
+\operatorname{Sh}(L(\mathbb T)),
+\]
+
+那么对另一个 locale \(Y\)，一个 \(\mathbb T\)-模型对应于 locale morphism
+
+\[
+Y\to L(\mathbb T).
+\]
+
+其模型是 generic model 沿对应几何态射拉回得到的。
+
+因此你的第 3 点应改成：
+
+\begin{quote}
+对命题 geometric theory，generic model 位于 \(\operatorname{Sh}(L(\mathbb T))\) 中；对一般 geometric theory，它位于 classifying topos \(\mathbf{Set}[\mathbb T]\) 中。
+\end{quote}
+
+另外，``沿着某个 locale morphism 拉回''只适用于分类对象和语义对象都处于 localic 情形。一般情况下应说``沿几何态射取逆像''。
+
+\section*{5. 关于 \(\operatorname{Spec}(A)\)：方向基本正确}
+
+给定交换环 \(A\)，可以构造一个命题 geometric theory，其命题符号通常表示基本开集：
+
+\[
+D(a),\qquad a\in A.
+\]
+
+相应的 frame 由这些生成元以及描述它们关系的 geometric axioms 生成，例如：
+
+\[
+D(0)=\bot,
+\]
+
+\[
+D(1)=\top,
+\]
+
+\[
+D(ab)=D(a)\wedge D(b),
+\]
+
+以及
+
+\[
+D(a)\le D(a+b)\vee D(b).
+\]
+
+这里最后一个关系反映：
+
+\[
+V(a+b)\supseteq V(a)\cap V(b)
+\]
+
+或等价的谱空间基本开集关系。
+
+由此得到 Zariski locale：
+
+\[
+\operatorname{Spec}(A).
+\]
+
+其点对应于 \(A\) 的素理想：
+
+\[
+\operatorname{Pt}(\operatorname{Spec}(A))
+\cong
+\operatorname{Spec}_{\mathrm{set}}(A).
+\]
+
+不过，``素滤子理论''这个说法要看你具体采用的 presentation。更常见的说法是：
+
+\begin{itemize}
+\item 素理想的 geometric theory；
+\item 或基本开集 \(D(a)\) 的命题 geometric theory；
+\item 或 \(A\) 的素滤子理论。
+\end{itemize}
+
+这些描述可以等价地呈现同一个 Zariski locale，但需要明确具体生成元和公理。
+
+\section*{6. 关于 \(A^\sim\) 是场：需要避免过强表述}
+
+你写道：
+
+\[
+\operatorname{Sh}(\operatorname{Spec}(A))
+\models
+\text{``\(A^\sim\) 是场''}.
+\]
+
+这句话在某些构造中是正确的，但需要说明 \(A^\sim\) 到底是什么。
+
+通常在 Zariski locale 上，考虑由 \(A\) 得到的结构 sheaf 或 generic localization。内部可以构造一个 generic prime ideal：
+
+\[
+\mathfrak p_{\mathrm{gen}}\subseteq A,
+\]
+
+并考虑商环：
+
+\[
+A/\mathfrak p_{\mathrm{gen}}.
+\]
+
+在适当的内部语义下，这个商环是一个域；或者其进一步局部化得到内部域。这种结论表达了：
+
+\begin{quote}
+在 generic prime point 上，环 \(A\) 看起来像一个域。
+\end{quote}
+
+但要区分几个对象：
+
+\begin{enumerate}
+\item 结构 sheaf \(\mathcal O_{\operatorname{Spec}(A)}\)；
+\item constant sheaf associated to \(A\)；
+\item generic prime ideal 的商；
+\item stalk
+   \[
+   \mathcal O_{\operatorname{Spec}(A),\mathfrak p};
+   \]
+\item residue field
+   \[
+   \kappa(\mathfrak p).
+   \]
+\end{enumerate}
+
+结构 sheaf本身一般不是一个域，因为其全局截面是 \(A\)，而 \(A\) 不必是域。正确结论通常是关于 generic prime quotient、generic stalk 或 residue-field 型对象，而不是笼统地说``结构 sheaf 是场''。
+
+\section*{7. ``所有 sheaf 都建立在这些 locale 上''过于绝对}
+
+这句话：
+
+\begin{quote}
+我们后续所有的 sheaf 和 sheaf semantics 都是建立在这些由 geometric theory 呈现出来的 locale 上的。
+\end{quote}
+
+如果是在某篇特定论文的局部框架内，可能是对的；但作为一般数学陈述，它太强。
+
+更准确的是：
+
+\begin{quote}
+在命题 geometric theory 的情形，理论可以由 classifying locale 呈现，并可在该 locale 的 sheaf topos 中使用 generic model 和 sheaf semantics。对于一般 geometric theory，分类对象通常是 classifying topos，而不一定是 locale。
+\end{quote}
+
+此外，sheaf semantics 不一定必须先从 geometric theory 构造 locale。给定任意 locale \(X\)，都可以直接研究：
+
+\[
+\operatorname{Sh}(X)
+\]
+
+中的对象及其内部逻辑。Geometric theory 提供的是：
+
+\begin{itemize}
+\item 要研究的结构；
+\item 公理；
+\item generic model；
+\item 分类性质；
+\item 与其他模型之间的统一对应。
+\end{itemize}
+
+它不是 sheaf semantics 存在的前提。
+
+\section*{8. 更准确的工作流}
+
+你的工作流可以改成下面这样：
+
+\subsection*{命题理论情形}
+
+\begin{enumerate}
+\item 为目标对象写出命题 geometric theory \(\mathbb T\)；
+\item 构造 Lindenbaum frame：
+   \[
+   \mathcal O(\mathbb T);
+   \]
+\item 将其看作 classifying locale：
+   \[
+   L(\mathbb T);
+   \]
+\item 在
+   \[
+   \operatorname{Sh}(L(\mathbb T))
+   \]
+   中得到 generic model；
+\item 使用 Kripke–Joyal/sheaf semantics 进行内部推理；
+\item 由分类性质把结果传递到任意相应模型。
+\end{enumerate}
+
+\subsection*{一般结构理论情形}
+
+\begin{enumerate}
+\item 写出带 sorts、函数和关系的 geometric theory \(\mathbb T\)；
+\item 构造 classifying topos：
+   \[
+   \mathbf{Set}[\mathbb T];
+   \]
+\item 在其中取 generic model；
+\item 对任意 topos \(\mathcal E\) 中的模型，通过几何态射拉回；
+\item 在 \(\mathcal E\) 的内部逻辑中使用该模型。
+\end{enumerate}
+
+\section*{最终评价}
+
+你的四点可以概括为：
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{5cm}|p{4cm}|p{6cm}|}
+\hline
+\textbf{原说法} & \textbf{评价} & \textbf{需要的修正} \\
+\hline
+geometric theory 呈现 locale & 对命题理论正确 & 一般理论呈现 classifying topos \\
+\hline
+geometric theory 定义 sheaf model & 正确 & sheaf 是 \(\operatorname{Sh}(X)\) 中对象，关系是子对象 \\
+\hline
+存在 generic model & 正确 & 一般沿几何态射拉回，不一定是 locale morphism \\
+\hline
+用于 \(\operatorname{Spec}(A)\) 和构造性代数 & 正确 & 需具体说明理论、公理及所称的``generic field''对象 \\
+\hline
+\end{tabular}
+\end{table}
+
+因此，最准确的一句话是：
+
+\begin{quote}
+\textbf{Geometric theory 是描述数学结构及其局部稳定公理的语法工具；它的分类对象在命题情形下是 locale、一般情形下是 classifying topos。Sheaf semantics 则是在这些分类对象或任意其他 topos 中解释 geometric theory、构造 generic model，并进行局部的构造性推理。}
+\end{quote}
+
+\end{document}

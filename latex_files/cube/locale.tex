@@ -1,0 +1,875 @@
+\documentclass{beamer}
+\usepackage{ctex}
+\usetheme{SimplePlus}
+\setbeamertemplate{footline}{}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz-cd}
+
+\usepackage{unicode-math}
+%\setmathfont{STIX Two Math}
+%\setmathfont{TeX Gyre Termes Math}
+%\setmathfont{Libertinus Math}
+%\setmathfont{Fira Math}
+
+\usepackage[
+  hybrid,                            % 允许在 Markdown 中混用 LaTeX 命令
+  texMathDollars                     % 启用 $...$ 和 $$...$$ 数学公式
+]{markdown}
+
+\usepackage{graphicx} % Allows including images
+\graphicspath{{./images/}}
+
+\title{locale}
+
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{偏序集（Partially Ordered Set, Poset）}
+\begin{markdown}
+一个**偏序集**是一个二元组 $(A,\leq)$，其中：
+- $A$ 是一个集合，
+- $\leq$ 是 $A$ 上的二元关系，满足：
+  1. **自反性**：对所有 $a\in A$，$a\leq a$；
+  2. **反对称性**：若 $a\leq b$ 且 $b\leq a$，则 $a=b$；
+  3. **传递性**：若 $a\leq b$ 且 $b\leq c$，则 $a\leq c$。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{上界与下界}
+\begin{markdown}
+设 $(A,\leq)$ 是偏序集，$S\subseteq A$ 是任意子集。
+
+- 元素 $u\in A$ 称为 $S$ 的一个**上界**（upper bound），当且仅当
+  $$
+  \forall s\in S,\quad s\leq u.
+  $$
+
+- 元素 $\ell\in A$ 称为 $S$ 的一个**下界**（lower bound），当且仅当
+  $$
+  \forall s\in S,\quad \ell\leq s.
+  $$
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{最小上界（Join / Supremum）与最大下界（Meet / Infimum）}
+\begin{markdown}
+- 若存在元素 $u\in A$，使得
+  1. $u$ 是 $S$ 的上界，
+  2. 对 $S$ 的任意上界 $v$，都有 $u\leq v$，
+  则称 $u$ 是 $S$ 的**最小上界**（least upper bound），记作
+  $$
+  u = \bigvee S = \sup S.
+  $$
+  （当 $S=\{a,b\}$ 时，常记作 $a\vee b$。）
+
+- 若存在元素 $\ell\in A$，使得
+  1. $\ell$ 是 $S$ 的下界，
+  2. 对 $S$ 的任意下界 $m$，都有 $m\leq \ell$，
+  则称 $\ell$ 是 $S$ 的**最大下界**（greatest lower bound），记作
+  $$
+  \ell = \bigwedge S = \inf S.
+  $$
+  （当 $S=\{a,b\}$ 时，常记作 $a\wedge b$。）
+
+注意：最小上界和最大下界如果存在，则**唯一**（由反对称性保证）。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{格（Lattice）}
+\begin{markdown}
+一个偏序集 $(A,\leq)$ 称为**格**，当且仅当对任意两个元素 $a,b\in A$，
+- $a\vee b = \sup\{a,b\}$ 存在，
+- $a\wedge b = \inf\{a,b\}$ 存在。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{完备格（Complete Lattice）}
+\begin{markdown}
+一个偏序集 $(A,\leq)$ 称为**完备格**（complete lattice），当且仅当对**任意子集** $S\subseteq A$（包括空集和整个 $A$），
+- $\bigvee S = \sup S$ 存在，
+- $\bigwedge S = \inf S$ 存在。
+
+特别地：
+- 空集的上确界 $\bigvee\emptyset$ 是 $A$ 的**最小元**，记作 $\bot$（bottom）；
+- 空集的下确界 $\bigwedge\emptyset$ 是 $A$ 的**最大元**，记作 $\top$（top）；
+- 整个集合的上确界 $\bigvee A = \top$，下确界 $\bigwedge A = \bot$。
+
+因此，完备格一定是有界的（有最大元和最小元），并且是格。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{“任意并 + 有限交” 和“任意并 + 任意交”是等价的}
+\begin{markdown}
+关键事实（序理论中的标准结果）：
+
+> 若一个偏序集拥有**所有任意并**（arbitrary joins），则它自动拥有**所有任意交**（arbitrary meets）。
+
+具体构造如下：对任意子集 $S\subseteq A$，定义
+$$
+\bigwedge S \;:=\; \bigvee\{ x\in A \mid x\leq s\text{ 对所有 }s\in S\}.
+$$
+（即所有下界的并）。可以验证这确实是 $S$ 的最大下界。
+
+因此：
+
+- 有“任意并 + 有限交” $\implies$ 有任意并 + 任意交 $\implies$ 是 complete lattice；
+- 反过来，complete lattice 当然有任意并和有限交。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{frame}
+\begin{markdown}
+**表述 A**
+
+Frame 是一个偏序集 $A$，具有  
+- 任意（集合索引的）并 $\bigvee$，  
+- 有限交 $\wedge$，  
+并且满足分配律
+$$
+b \wedge \Bigl(\bigvee_{i\in I} a_i\Bigr) = \bigvee_{i\in I} (b \wedge a_i).
+$$
+
+**表述 B**
+
+Frame 是一个 **complete lattice**（完备格），并且满足同样的分配律。
+\end{markdown}
+
+\vspace{4ex}
+由前一页的讨论, 这两个表述是等价的.
+\end{frame}
+
+\begin{frame}{Frame homomorphism}
+设 $A$ 与 $A'$ 是两个 frame。
+
+一个函数
+$$
+\alpha : A \to A'
+$$
+称为 \textbf{frame homomorphism}，当且仅当它同时满足以下两个条件：
+
+\begin{enumerate}
+  \item \textbf{任意并保持}（preservation of arbitrary joins）\\
+  对任意指标集 $I$ 与任意族 $(a_i)_{i\in I}$（其中 $a_i\in A$），有
+  $$
+  \alpha\Bigl(\bigvee_{i\in I} a_i\Bigr) = \bigvee_{i\in I} \alpha(a_i).
+  $$
+  （特别地，取空族时得到 $\alpha(\bot_A)=\bot_{A'}$。）
+
+  \item \textbf{有限交保持}（preservation of finite meets）\\
+  对任意 $a,b\in A$，有
+  $$
+  \alpha(a\wedge b)=\alpha(a)\wedge\alpha(b).
+  $$
+  （特别地，取空交时得到 $\alpha(\top_A)=\top_{A'}$。）
+\end{enumerate}
+
+由条件 1 或条件 2 可立即推出 $\alpha$ 是\textbf{单调的}（monotone）：
+$$
+a\leq b\quad\Longrightarrow\quad\alpha(a)\leq\alpha(b).
+$$
+\end{frame}
+
+\begin{frame}{locale}
+Frames, together with frame homomorphisms, form a category.
+
+The opposite category of the category of frames is known as the \textbf{category of locales}. A locale $X$ is thus nothing but a frame; if we consider it as a frame, we will write it as $\mathcal{O}(X)$. A \textbf{locale morphism} $X \to Y$ from the locale $X$ to the locale $Y$ is given by a frame homomorphism $\mathcal{O}(Y) \to \mathcal{O}(X)$.
+
+Every topological space $T$ gives rise to a frame $\Omega(T)$ of open sets and thus to a locale. A locale is called \textbf{spatial} if it isomorphic (in the category of locales) to a locale arising from a topological space in this manner.
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+在标准 locale 理论的形式化中，
+
+- **locale $X$ 与 frame $\mathcal{O}(X)$ 在本质上是同一个数学对象**；
+- $\mathcal{O}(X)$ **不是**一个额外附加的结构，而是当我们把这个对象**当作 frame 来看待**时使用的记号。
+
+它们之间的关系是**恒等（或规范同构）**，而不是“$X$ 配上一个 frame $\mathcal{O}(X)$”。
+
+- $\mathcal{O}(X)$ **就是** locale $X$ 本身（当它被看作 frame 时的记号）。  
+
+- $X$ 和 $\mathcal{O}(X)$ **不是**两个不同的对象，而是同一个对象在不同范畴语境下的两种名称。
+
+- 当我们写 $\mathcal{O}(X)$ 时，我们强调的是“把它当作 frame 来运算（算并、算交）”；
+- 当我们写 $X$ 时，我们强调的是“把它当作空间来看待（谈连续映射、谈点、谈子locale 等）”
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{滤子（Filter）}
+\begin{markdown}
+下面设 $A$ 是一个 frame，偏序记为 $\le$，meet 记为 $\wedge$，join 记为 $\bigvee$，最小元为 $\bot$，最大元为 $\top$。
+
+在 locale 理论中，滤子通常定义在 frame 的开集格 $\mathcal O(X)$ 上。
+
+子集 $F\subseteq A$ 称为 **滤子**，当且仅当它满足：
+
+1. $\top\in F$（包含最大元）；
+2. **向上封闭**（upward-closed）：  
+   若 $a\in F$ 且 $a\leq b$，则 $b\in F$；
+3. **对有限交封闭**：  
+   若 $a,b\in F$，则 $a\wedge b\in F$。
+
+（等价地，对任意有限个元素 $a_1,\dots,a_n\in F$，都有 $a_1\wedge\cdots\wedge a_n\in F$。）
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{markdown}
+“向上的、对有限交封闭的集合”。可以想象成“足够大的开集的集合”，或者“某个点所属的开集的集合”。
+
+\vspace{4ex}
+例子：点产生的滤子
+
+设 $X$ 是拓扑空间，$x\in X$。定义
+$$
+F_x
+:=
+\{U\in\mathcal O(X)\mid x\in U\}.
+$$
+
+这是所有包含点 $x$ 的开集组成的集合。
+
+它是一个滤子：
+
+1. $X\in F_x$，所以非空；
+2. 若 $x\in U$ 且 $U\subseteq V$，则 $x\in V$；
+3. 若 $x\in U$ 且 $x\in V$，则
+   $$x\in U\cap V.$$
+
+这个滤子表示点 $x$ 的所有开邻域。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{真滤子（Proper Filter）}
+\begin{markdown}
+滤子 $F$ 称为 **真滤子**，当且仅当  
+$$
+\bot\notin F.
+$$
+
+（即它不是整个 $A$。）
+
+\vspace{4ex}
+排除了“整个空间”这个平凡情况，真正对应可能的“点”或“理想化的位置”。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{素滤子（Prime Filter）}
+\begin{markdown}
+真滤子 $F$ 称为 **素滤子**，当且仅当它满足：
+
+> 若 $a\vee b\in F$，则 $a\in F$ 或 $b\in F$。
+
+（只对**二元并**做“选出某一个”的要求。）
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{完全素滤子（Completely Prime Filter）}
+\begin{markdown}
+真滤子 $F$ 称为 **完全素滤子**，当且仅当它满足：
+
+> 若 $\bigvee_{i\in I}a_i\in F$（任意指标集的并），则存在某个 $i\in I$ 使得 $a_i\in F$。
+
+（对**任意并**都做“选出某一个”的要求。）
+
+注意：完全素滤子自动是素滤子（取 $I$ 为二元即可），也自动是真滤子（因为 $\bot=\bigvee\emptyset$，若 $\bot\in F$ 则空指标集中存在元素，矛盾）。
+
+\vspace{4ex}
+- 完全素滤子可以被看作“广义的点”。
+- 因为完全素滤子不依赖选择公理即可定义，它在构造性 locale 理论中比“真正的点集”更可靠。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{一点 locale（one-point locale）$\mathrm{pt}$}
+\begin{markdown}
+**一点 locale** $\mathrm{pt}$ 是由**一点拓扑空间** $\{\star\}$ 诱导出的 locale。
+
+- 一点拓扑空间 $\{\star\}$ 的开集族是它的幂集：
+  $$
+  \mathcal{O}(\{\star\}) = \{\emptyset,\ \{\star\}\}.
+  $$
+- 因此，一点 locale $\mathrm{pt}$ 的 frame of opens 就是
+  $$
+  O(\mathrm{pt}) = \mathcal{P}(\{\star\}) = \{\bot,\ \top\},
+  $$
+  其中：
+  - $\bot = \emptyset$（最小元，空并），
+  - $\top = \{\star\}$（最大元，空交）。
+
+在普通拓扑中，从一点空间 $\{\star\}$ 到任意拓扑空间 $Y$ 的连续映射与 $Y$ 的点一一对应。  
+Locale 理论把这个想法提升为定义：
+
+> 一个 locale $X$ 的**点**（point）是一个 locale morphism $\mathrm{pt} \to X$。
+
+这个定义完全不依赖 $X$ 本身有没有“真正的点集”，而是把点定义为“从一点 locale 出发的连续映射”。这正是 point-free 思想的体现：点是**派生**概念，而不是原始概念。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{一点 locale 的 frame}
+设 $1$ 表示只有一个点的空间：
+\[
+1=\{\ast\}.
+\]
+
+它的开集只有两个：
+\[
+\varnothing,\qquad \{\ast\}.
+\]
+
+因此它的开集 frame 是
+\[
+\mathcal O(1)=\{\bot,\top\},
+\]
+也就是两元素 frame：
+\[
+\Omega=\{0,1\},
+\]
+其中
+\[
+\bot=0,\qquad \top=1.
+\]
+
+运算为：
+\[
+0\wedge 0=0,\qquad
+0\wedge 1=0,\qquad
+1\wedge 1=1,
+\]
+\[
+0\vee 0=0,\qquad
+0\vee 1=1,\qquad
+1\vee 1=1.
+\]
+
+所以：
+\[
+\boxed{\mathcal O(1)\cong \Omega=\{\bot,\top\}.}
+\]
+
+这里要注意：
+\begin{itemize}
+\item \textbf{一点 locale} 的 frame 是两元素 frame；
+\item 只有一个元素的 frame
+  \[
+  \{\bot=\top\}
+  \]
+  对应的是空 locale，而不是一点 locale。
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,shrink]{点与完全素滤子}
+设 $X$ 是一个 locale，其 frame of opens 为
+\[
+\mathcal O(X).
+\]
+
+一个 locale 的点定义为一个 locale morphism
+\[
+p:\mathrm{pt}\to X.
+\]
+
+由于 locale morphism 反向对应 frame homomorphism，这等价于一个 frame homomorphism
+\[
+p^\ast:\mathcal O(X)\to\Omega,
+\]
+其中
+\[
+\Omega=\{\bot,\top\}
+\]
+是两元素 frame。
+
+由 $p^\ast$ 定义：
+\[
+F_p =
+\{U\in\mathcal O(X)\mid p^\ast(U)=\top\}.
+\]
+
+这个 $F_p$ 是一个完全素滤子。
+
+反过来，一个完全素滤子 $F\subseteq\mathcal O(X)$ 定义一个映射：
+\[
+p_F^\ast:\mathcal O(X)\to\Omega,
+\]
+令
+\[
+p_F^\ast(U)=
+\begin{cases}
+\top,&U\in F,\\
+\bot,&U\notin F.
+\end{cases}
+\]
+
+因为 $F$ 是滤子并且完全素，所以 $p_F^\ast$ 保持：
+\[
+p_F^\ast(\top)=\top,
+\]
+\[
+p_F^\ast(U\wedge V)
+=
+p_F^\ast(U)\wedge p_F^\ast(V),
+\]
+以及
+\[
+p_F^\ast\left(\bigvee_i U_i\right)
+=
+\bigvee_i p_F^\ast(U_i).
+\]
+
+因此：
+\[
+\boxed{
+\text{locale 的点}
+\;\Longleftrightarrow\;
+\text{其开集 frame 上的完全素滤子}.
+}
+\]
+
+这正是“完全素滤子”在 locale 理论中的核心用处。
+\end{frame}
+
+\begin{frame}[fragile]{覆盖}
+\begin{markdown}
+若 $U=\bigvee_i U_i$，则称 $\{U_i\}$ 是 $U$ 的一个 **open covering**。
+\end{markdown}
+\end{frame}
+
+\begin{frame}[fragile]{sheaf(层)}
+设 \(X\) 是一个 locale。
+
+\begin{itemize}
+\item \textbf{Presheaf（预层）} \(F\) 在 \(X\) 上由以下数据给出：
+  \begin{itemize}
+  \item 对每个开 \(U\in O(X)\)，一个集合 \(F(U)\)（称为 \(U\) 上的 \textbf{sections}）；
+  \item 对每对开 \(V\leq U\)，一个 \textbf{restriction map}
+    \[
+    (\cdot)|_V^U:F(U)\to F(V),
+    \]
+  满足恒等性与复合性：
+  \[
+  (\cdot)|_U^U=\mathrm{id}_{F(U)},\qquad
+  (\cdot)|_W^V\circ(\cdot)|_V^U=(\cdot)|_W^U
+  \quad(W\leq V\leq U).
+  \]
+  \end{itemize}
+
+\item \textbf{Compatible family（相容族）}：对覆盖 \(U=\bigvee_i U_i\)，一族截面 \((s_i)_i\)（\(s_i\in F(U_i)\)）称为相容的，当且仅当对所有 \(i,j\) 有
+  \[
+  s_i|_{U_i\wedge U_j}^{U_i}=s_j|_{U_i\wedge U_j}^{U_j}.
+  \]
+
+\item \textbf{Sheaf（层）}：预层 \(F\) 称为 sheaf，当且仅当对任意覆盖 \(U=\bigvee_i U_i\) 与任意相容族 \((s_i)_i\)，存在\textbf{唯一}的截面 \(s\in F(U)\) 使得
+  \[
+  s|_{U_i}^U=s_i\quad\text{对所有 }i.
+  \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Morphism of sheaves}
+\[ \eta : F \to G \]
+一族映射 $\eta_{U} : F(U) \to G(U)$, 与 restriction 交换
+\[
+\begin{tikzcd}
+F(U) \arrow[r, "\eta_U"] \arrow[d,"(\cdot)|_V^U"] & G(U) \arrow[d,"(\cdot)|_V^U"] \\
+F(V) \arrow[r, "\eta_V"'] & G(V)
+\end{tikzcd}
+\]
+  \[
+  \eta_V(s|_V^U)=(\eta_U(s))|_V^U.
+  \]
+\end{frame}
+
+\begin{frame}[fragile]{Geometric Theory}
+一个 \textbf{geometric theory} $T$ 是一个二元组
+\[
+T = (\Sigma,\ \mathcal{A}),
+\]
+\end{frame}
+
+\begin{frame}{Signature $\Sigma$}
+$\Sigma = (S,\ F,\ R)$ 是一个（可多 sort 的）一阶语言，由三部分组成：
+
+\begin{itemize}
+    \item $S$：sort 的集合；
+    \item $F$：函数符号的集合。每个函数符号具有指定的类型
+    \[
+    f : A_1\times\cdots\times A_n \to B
+    \]
+    （其中 $A_1,\dots,A_n,B\in S$，$n\geq 0$）；
+    \item $R$：关系符号的集合。每个关系符号具有指定的类型
+    \[
+    R \hookrightarrow A_1\times\cdots\times A_n
+    \]
+    （其中 $A_1,\dots,A_n\in S$，$n\geq 0$）。
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Geometric Formula}
+在 signature $\Sigma$ 上，\textbf{geometric formula} 由下列归纳定义给出：
+
+\[
+\varphi\ ::=\ 
+\top
+\ \big|\ 
+\bot
+\ \big|\ 
+t_1 = t_2
+\ \big|\ 
+R(t_1,\dots,t_n)
+\ \big|\ 
+\varphi\wedge\psi
+\ \big|\ 
+\bigvee_{i\in I}\varphi_i
+\ \big|\ 
+\exists x:A.\,\varphi
+\]
+
+其中：
+\begin{itemize}
+    \item $t_1,t_2,\dots$ 是由函数符号构成的项；
+    \item $I$ 是任意集合（允许\textbf{任意}析取）；
+    \item 自由变量与绑定变量遵循通常的一阶逻辑规则。
+\end{itemize}
+
+\textbf{禁止}使用 $\Rightarrow$、$\forall$、以及作为基本连接词的 $\neg$。
+\end{frame}
+
+\begin{frame}{Geometric Sequent}
+一个 \textbf{geometric sequent} 是形如
+\[
+\varphi\ \vdash_{\vec{x}}\ \psi
+\]
+的表达式，其中
+\begin{itemize}
+    \item $\varphi$ 和 $\psi$ 都是 geometric formula；
+    \item $\vec{x} = (x_1:A_1,\dots,x_n:A_n)$ 是一个上下文，声明 $\varphi$ 与 $\psi$ 中允许出现的全部自由变量。
+\end{itemize}
+\end{frame}
+
+\begin{frame}{公理集 $\mathcal{A}$}
+$\mathcal{A}$ 是任意一组 geometric sequents（作为理论的公理）。
+\end{frame}
+
+\begin{frame}[shrink]{原子公式}
+在给定的 signature $\Sigma = (S, F, R)$ 上，\textbf{原子公式}只有以下两种：
+
+\begin{enumerate}
+    \item \textbf{等式原子公式}
+    \[
+    t_1 = t_2
+    \]
+    其中 $t_1$ 和 $t_2$ 是\textbf{相同 sort} 的项（term）。
+
+    \item \textbf{关系原子公式}
+    \[
+    R(t_1, \dots, t_n)
+    \]
+    其中 $R \hookrightarrow A_1 \times \cdots \times A_n$ 是一个关系符号，\\
+    且 $t_i$ 是 sort 为 $A_i$ 的项（$i = 1, \dots, n$）。
+\end{enumerate}
+
+\textbf{补充说明}
+
+\begin{itemize}
+    \item \textbf{项（term）} 由函数符号和变量按通常方式归纳生成：\\
+    变量是项；若 $f : A_1 \times \cdots \times A_n \to B$ 是函数符号，$t_i$ 是 sort $A_i$ 的项，则 $f(t_1, \dots, t_n)$ 是 sort $B$ 的项。
+
+    \item 原子公式是构造 geometric formula 的\textbf{最底层原材料}。\\
+    Geometric formula 就是从这些原子公式出发，只用 $\top$、$\bot$、$\wedge$、任意 $\bigvee$ 和 $\exists$ 有限次（或任意次析取）组合得到的公式。
+\end{itemize}
+
+因此，在之前给出的 geometric formula 归纳定义中，
+\[
+t_1 = t_2 \qquad\text{和}\qquad R(t_1, \dots, t_n)
+\]
+就是全部的原子公式。
+\end{frame}
+
+\begin{frame}{总结}
+\begin{quote}
+\textbf{Geometric theory} $=$ 一个（多 sort）signature $+$ 一组 geometric sequents，\\
+其中 geometric formula 仅由 $\top,\bot,\wedge,$ \textbf{任意} $\bigvee,$ $\exists$ 以及原子公式构成。
+\end{quote}
+\end{frame}
+
+\begin{frame}[shrink]{关系符号当 $n=0$ 时发生什么}
+当 $n=0$ 时，关系符号写成：
+\[
+P().
+\]
+但通常省略括号，直接写成：
+\[
+P.
+\]
+它没有变量，也没有参数。因此它本身就是一个无自由变量的原子公式。
+
+从集合论角度看，零元乘积定义为单元素集合：
+\[
+\prod_{i\in\varnothing}X_i=1=\{*\}.
+\]
+所以一个零元关系的解释应当是：
+\[
+R^M\subseteq 1.
+\]
+而一个单元素集合 $1=\{*\}$ 只有两个子集：
+\[
+\varnothing,\qquad \{*\}.
+\]
+因此，零元关系在模型中只有两种可能解释：
+\[
+R^M=\varnothing
+\]
+或
+\[
+R^M=\{*\}.
+\]
+它们分别表示：
+\[
+R\text{ 为假}
+\]
+或
+\[
+R\text{ 为真}.
+\]
+所以零元关系符号实际上就是一个命题变量。
+\end{frame}
+
+\begin{frame}{Geometric theory 是怎么使用的}
+Geometric theory 不是 sheaf semantics 的直接组成部分，但它是\textbf{构造我们进行 sheaf semantics 的舞台}的核心工具。具体用在以下四个关键地方：
+\end{frame}
+
+\begin{frame}{1. 呈现 Locale（最核心的用途）}
+任意一个\textbf{命题 geometric theory} $\mathbb{T}$ 都对应一个 \textbf{classifying locale} $L(\mathbb{T})$。
+
+\begin{itemize}
+    \item $L(\mathbb{T})$ 的 frame of opens 就是 $\mathbb{T}$ 的 geometric formulas 模可证等价形成的 Lindenbaum algebra。
+    \item $L(\mathbb{T})$ 的点恰好对应 $\mathbb{T}$ 的 set-based 模型。
+\end{itemize}
+
+\textbf{具体例子}：
+\begin{itemize}
+    \item Dedekind cuts 的 geometric theory $\to$ 局部实直线
+    \item 满射 $\mathbb{N}\twoheadrightarrow\mathbb{R}$ 的 geometric theory $\to$ 无点但非平凡的 locale
+    \item 给定环 $A$ 的\textbf{素滤子 geometric theory} $\to$ $\operatorname{Spec}(A)$
+\end{itemize}
+
+我们后续所有的 sheaf 和 sheaf semantics 都是建立在这些由 geometric theory 呈现出来的 locale 上的。
+\end{frame}
+
+\begin{frame}[shrink]
+\[
+\boxed{
+\text{命题 geometric theory 通常分类 locale；一般 geometric theory 分类 topos。}
+}
+\]
+
+不能把这两种情况完全混同。
+
+\section*{1. 命题理论对应 classifying locale：基本正确}
+
+如果 $\mathbb T$ 是命题 geometric theory，那么它没有 sort、变量和带参数的关系符号，只有命题符号以及
+
+\[
+\top,\quad\bot,\quad\wedge,\quad\bigvee.
+\]
+
+其公式模可证明等价形成 frame：
+
+\[
+\mathcal O(\mathbb T)
+=
+\{\text{命题 geometric formulas}\}/\mathord{\dashv\vdash_{\mathbb T}}.
+\]
+
+因此得到一个 locale：
+
+\[
+L(\mathbb T).
+\]
+
+在这种情形下：
+
+\[
+\boxed{
+\text{$\mathbb T$ 的 classifying object 是一个 locale。}
+}
+\]
+
+并且它的点对应 $\mathbb T$ 的 set-based models：
+
+\[
+\operatorname{Pt}(L(\mathbb T))
+\cong
+\operatorname{Mod}_{\mathbf{Set}}(\mathbb T).
+\]
+
+更具体地，一个 set-based 模型就是一个真值赋值
+
+\[
+v:\{\text{命题符号}\}\to\Omega
+\]
+
+并满足所有公理；这等价于 Lindenbaum frame 上的 frame homomorphism
+
+\[
+\mathcal O(\mathbb T)\to\Omega,
+\]
+
+也就是完全素滤子。
+
+所以你第 1 点的核心说法是正确的。
+
+不过，``任意一个命题 geometric theory 都对应一个 classifying locale''最好补充：
+
+\begin{quote}
+这里的 classifying locale 是命题理论的 classifying topos 的局部对象；一般 geometric theory 的分类对象不一定是 locale，而是 classifying topos。
+\end{quote}
+\end{frame}
+
+\begin{frame}{2. 定义 Sheaf Model}
+在一个 locale $X$ 上，一个 geometric theory $\mathbb{T}$ 的 \textbf{sheaf model} 是：
+\begin{itemize}
+    \item 把 $\mathbb{T}$ 的每个 sort 解释为 $X$ 上的一个 sheaf；
+    \item 把函数符号解释为 sheaf 之间的态射；
+    \item 把关系符号解释为子 sheaf；
+    \item 并且所有公理（geometric sequents）在 \textbf{sheaf semantics} 下成立。
+\end{itemize}
+
+这正是把普通代数结构（环、域、素滤子……）``提升''到层上的方式。
+\end{frame}
+
+\begin{frame}{3. Generic Model（万有模型）}
+在 classifying locale $L(\mathbb{T})$ 上存在一个\textbf{万有的} sheaf model（称为 generic model）。任何其他 locale 上的 sheaf model 都是这个 generic model 沿着某个 locale morphism 的拉回。
+
+这让我们可以在``最通用的模型''里用 sheaf semantics 进行推理，然后自动得到对所有模型都成立的结果。
+\end{frame}
+
+\begin{frame}
+这里提到的所有 sheaf model（包括 generic model 本身，以及``任何其他 locale 上的 sheaf model''）都是\textbf{同一个 geometric theory \(\mathbb{T}\)} 的模型。
+
+更精确地说：
+
+\begin{itemize}
+\item 固定一个 geometric theory \(\mathbb{T}\)。
+\item 它的 classifying locale 记为 \(L(\mathbb{T})\)。
+\item 在 \(L(\mathbb{T})\) 上有一个\textbf{特殊的} sheaf model，称为 \(\mathbb{T}\) 的 \textbf{generic model}（记作 \(U_{\mathbb{T}}\) 或类似符号）。
+\item 对\textbf{任意} locale \(X\)，\(X\) 上的一个 \(\mathbb{T}\)-sheaf model \(M\)，都对应一个 locale morphism
+  \[
+  f : X \to L(\mathbb{T}),
+  \]
+  使得 \(M\) 恰好是 generic model 沿着 \(f\) 的\textbf{拉回}（pullback）：
+  \[
+  M \simeq f^*(U_{\mathbb{T}}).
+  \]
+\end{itemize}
+
+因此，整个陈述都是在\textbf{固定同一个 geometric theory \(\mathbb{T}\)} 的前提下进行的。不同的 geometric theory 会有不同的 classifying locale 和不同的 generic model。
+\end{frame}
+
+\begin{frame}{4. 在构造性代数中的实际应用}
+最典型的工作流是：
+
+\begin{enumerate}
+    \item 对给定的环 $A$，写出``素滤子的 geometric theory''；
+    \item 得到 classifying locale $\operatorname{Spec}(A)$；
+    \item 在 $\operatorname{Spec}(A)$ 上构造 sheaf $A^\sim$（约化环的``镜像样''）；
+    \item 用 \textbf{sheaf semantics} 在这个宇宙里证明
+    \[
+    \operatorname{Sh}(\operatorname{Spec}(A))\models\text{``$A^\sim$ 是场''};
+    \]
+    \item 由此得到构造性的代数定理（例如注入矩阵的结论、generic freeness 等）。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{总结}
+
+\begin{quote}
+\textbf{Geometric theory} 用来\textbf{造出 locale 和 sheaf model}；\\
+\textbf{Sheaf semantics} 用来\textbf{在这些造出来的宇宙里进行推理}。
+\end{quote}
+
+没有 geometric theory，我们就缺少系统构造``正确舞台''的方法；没有 sheaf semantics，我们在这个舞台上就无法方便地做元素式的直觉主义推理。两者是配合使用的。
+\end{frame}
+
+\begin{frame}[shrink]
+命题理论情形
+
+\begin{enumerate}
+\item 为目标对象写出命题 geometric theory \(\mathbb T\)；
+\item 构造 Lindenbaum frame：
+   \[
+   \mathcal O(\mathbb T);
+   \]
+\item 将其看作 classifying locale：
+   \[
+   L(\mathbb T);
+   \]
+\item 在
+   \[
+   \operatorname{Sh}(L(\mathbb T))
+   \]
+   中得到 generic model；
+\item 使用 Kripke--Joyal/sheaf semantics 进行内部推理；
+\item 由分类性质把结果传递到任意相应模型。
+\end{enumerate}
+
+一般结构理论情形
+
+\begin{enumerate}
+\item 写出带 sorts、函数和关系的 geometric theory \(\mathbb T\)；
+\item 构造 classifying topos：
+   \[
+   \mathbf{Set}[\mathbb T];
+   \]
+\item 在其中取 generic model；
+\item 对任意 topos \(\mathcal E\) 中的模型，通过几何态射拉回；
+\item 在 \(\mathcal E\) 的内部逻辑中使用该模型。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{quote}
+\textbf{Geometric theory 是描述数学结构及其局部稳定公理的语法工具；它的分类对象在命题情形下是 locale、一般情形下是 classifying topos。Sheaf semantics 则是在这些分类对象或任意其他 topos 中解释 geometric theory、构造 generic model，并进行局部的构造性推理。}
+\end{quote}
+\end{frame}
+
+\begin{frame}{Motivation of sheaf semantics}
+\textbf{束语义（Sheaf Semantics）}，又称 \textbf{Kripke-Joyal 语义}，是范畴论、数理逻辑与拓扑学交叉领域中的核心工具。
+
+在经典逻辑与模型论（如 Tarski 语义）中，一个命题的真值只能是``真''或``假''（即二值集合 \(\{0, 1\}\)）。但在拓扑与几何语境下，数学对象的性质往往随``局部区域/参数''改变。
+
+束语义的思想是将真值空间从二值集合扩展为某个空间（或 Locale）\(X\) 的开集格 \(\mathcal{O}(X)\)。一个命题 \(\varphi\) 在开集 \(U \in \mathcal{O}(X)\) 上成立，记作：
+\[
+U \models \varphi
+\]
+
+读作 \textbf{``开集 \(U\) 迫近（Force）或验证了命题 \(\varphi\)''}。
+
+束语义的核心价值在于：\textbf{它允许我们将在空间 \(X\) 上连续变化的对象（即束 Sheaves）看作普通集合，并在束的范畴内部使用直觉主义一阶逻辑（Intuitionistic First-Order Logic）进行推演}。
+\end{frame}
+
+\begin{frame}
+取一个 locale $X$, $X$ 上的 sheaf semantics 是在 $X$ 的 sheaf 组成的范畴 $\mathop{Sh}(X)$ 上定义的。
+\end{frame}
+
+% 参考文献帧，长列表自动分页
+\begin{frame}[allowframebreaks]{参考文献}
+\begin{thebibliography}{99}
+
+\bibitem{wiki_pointless}
+\url{https://en.wikipedia.org/wiki/Pointless_topology}
+
+\bibitem{grok_locale}
+\url{https://grok.com/share/bGVnYWN5_cb4442e7-1b22-4cc0-9732-40b94b858ac6}
+
+\end{thebibliography}
+\end{frame}
+\end{document}
